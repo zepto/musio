@@ -1,0 +1,10 @@
+__pycache__
+*.pyc
+*.pyo
+.*.swp
+.*.swo
+*.wav
+*.ogg
+*.aac
+*.mp4
+*.wav
