@@ -26,7 +26,7 @@
 import ctypes as _ctypes
 import wave
 
-from io_base import MusicIO, io_wrapper
+from io_base import AudioIO, io_wrapper
 
 __supported_dict = {
         'ext': ['.wav'],
@@ -34,19 +34,22 @@ __supported_dict = {
         }
 
 
-class WaveFile(MusicIO):
+class WaveFile(AudioIO):
     """ A class for wav file access.
 
     """
+
+    # Valid bit depths.
+    _valid_depth = (16, 8)
+
+    # Both reading and writing are supported
+    _supported_modes = 'rw'
 
     def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2):
         """ WaveFile(filename, depth=16, rate=44100, channels=2) -> Initialize
         the playback settings of the player.
 
         """
-
-        if depth != 16 and depth != 8:
-            raise Exception("Invalid depth %s, should be 32, 16 or 8." % depth)
 
         self._mode = mode
 

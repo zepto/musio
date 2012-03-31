@@ -30,7 +30,7 @@ from random import randint, seed
 from time import time
 from functools import partial
 
-from io_base import MusicIO, OnDemand, io_wrapper
+from io_base import AudioIO, OnDemand, io_wrapper
 
 _vorbisfile = OnDemand('ogg.vorbisfile', globals(), locals(),
                        ['_vorbisfile'], 0)
@@ -43,10 +43,16 @@ __supported_dict = {
         }
 
 
-class VorbisFile(MusicIO):
+class VorbisFile(AudioIO):
     """ Read and write ogg vorbis files.
 
     """
+
+    # Valid bit depths
+    _valid_depth = (32, 16, 8)
+
+    # Both reading and writing are supported
+    _supported_modes = 'rw'
 
     def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2,
                  bigendian=False, unsigned=False, quality=.5, comment_dict={}):

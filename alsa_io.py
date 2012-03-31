@@ -26,14 +26,20 @@
 
 import alsa.pcm as alsapcm
 
-from io_base import AudioIO, io_wrapper
+from io_base import DevIO, io_wrapper
 
 
-class Alsa(AudioIO):
+class Alsa(DevIO):
     """ A class that provides a file like object to write to an alsa pcm
     object.
 
     """
+
+    # Valid bit depths
+    _valid_depth = (32, 16, 8)
+
+    # Supports reading and writing.
+    _supported_modes = 'rw'
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
                  bigendian=False, unsigned=False, buffer_size=None,
@@ -47,7 +53,7 @@ class Alsa(AudioIO):
         super(Alsa, self).__init__(mode, depth, rate, channels, bigendian,
                                    unsigned, buffer_size, latency)
 
-        if depth == 16 or depth == 32:
+        if depth in (32, 16):
             pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_%s%s_%s' % \
                                        ('U' if unsigned else 'S',
                                         depth, 

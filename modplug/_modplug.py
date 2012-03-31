@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: UTF8 -*-
 #
-# Modplug module. 
-# Copyright (C) 2010 Josiah Gordon <josiahg@gmail.com>
-# 
+# Modplug module.
+# Copyright (C) 2012 Josiah Gordon <josiahg@gmail.com>
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -136,11 +136,12 @@ class _ModPlug_Settings(Structure):
             ('mStereoSeparation', c_int),# Stereo separation, 1 - 256
             ('mMaxMixChannels', c_int),  # Maximum number of mixing channels (polyphony), 32 - 256
 
-	        ('mReverbDepth', c_int),     # Reverb level 0(quiet)-100(loud)     	                                       
+	        ('mReverbDepth', c_int),     # Reverb level 0(quiet)-100(loud)
+
 	        ('mReverbDelay', c_int),     # Reverb delay in ms, usually 40-200ms
-	        ('mBassAmount', c_int),      # XBass level 0(quiet)-100(loud)      
-	        ('mBassRange', c_int),       # XBass cutoff in Hz 10-100           
-	        ('mSurroundDepth', c_int),   # Surround level 0(quiet)-100(heavy)  
+	        ('mBassAmount', c_int),      # XBass level 0(quiet)-100(loud)
+	        ('mBassRange', c_int),       # XBass cutoff in Hz 10-100
+	        ('mSurroundDepth', c_int),   # Surround level 0(quiet)-100(heavy)
 	        ('mSurroundDelay', c_int),   # Surround delay in ms, usually 5-40ms
 	        ('mLoopCount', c_int)        # Number of times to loop.  Zero prevents looping.
                                                 # -1 loops forever.

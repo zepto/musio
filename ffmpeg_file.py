@@ -23,7 +23,7 @@
 
 """
 
-from io_base import MusicIO, OnDemand, io_wrapper
+from io_base import AudioIO, OnDemand, io_wrapper
 
 _av = OnDemand('ffmpeg._av', globals(), locals(), ['_av'], 0)
 
@@ -34,10 +34,13 @@ __supported_dict = {
         }
 
 
-class FFmpegFile(MusicIO):
+class FFmpegFile(AudioIO):
     """ A file like object for reading media files with ffmpeg.
 
     """
+
+    # Only reading is supported
+    _supported_modes = 'r'
 
     def __init__(self, filename, depth=16, rate=44100, channels=2):
         """ FFmpegFile(filename, depth=16, rate=44100, channels=2) ->

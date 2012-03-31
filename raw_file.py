@@ -25,7 +25,7 @@
 
 from os.path import getsize as os_getsize
 
-from io_base import MusicIO, io_wrapper
+from io_base import AudioIO, io_wrapper
 
 __supported_dict = {
         'ext': ['.raw'],
@@ -33,10 +33,13 @@ __supported_dict = {
         }
 
 
-class RawFile(MusicIO):
+class RawFile(AudioIO):
     """ A file like object for reading raws.
 
     """
+
+    # Both reading and writing are supported
+    _supported_modes = 'rw'
 
     def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2):
         """ RawFile(filename, depth=16, rate=44100, channels=2) -> Initialize

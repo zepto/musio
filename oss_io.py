@@ -26,13 +26,20 @@ statement.
 
 import ossaudiodev
 
-from io_base import AudioIO, io_wrapper
+from io_base import DevIO, io_wrapper
 
-class Oss(AudioIO):
+
+class Oss(DevIO):
     """ A class that provides a file like object to write to an oss pcm
     object.
 
     """
+
+    # Valid bit depths.
+    _valid_depth = (16, 8)
+
+    # Supports reading and writing.
+    _supported_modes = 'rw'
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
             bigendian=False, unsigned=False, buffer_size=None):

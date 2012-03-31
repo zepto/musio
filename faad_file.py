@@ -25,7 +25,7 @@
 
 from os.path import getsize as os_getsize
 
-from io_base import MusicIO, OnDemand, io_wrapper
+from io_base import AudioIO, OnDemand, io_wrapper
 
 _neaacdec = OnDemand('faad._neaacdec', globals(), locals(), ['_neaacdec'], 0)
 
@@ -212,10 +212,13 @@ class AACDecoder(object):
             return b''
 
 
-class AACFile(MusicIO):
+class AACFile(AudioIO):
     """ A file like object for reading aacs.
 
     """
+
+    # Only reading is supported
+    _supported_modes = 'r'
 
     def __init__(self, filename, depth=16, rate=44100, channels=2):
         """ AACFile(filename, depth=16, rate=44100, channels=2) -> Initialize

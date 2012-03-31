@@ -24,7 +24,7 @@
 
 from functools import partial
 
-from io_base import MusicIO, OnDemand, io_wrapper
+from io_base import AudioIO, OnDemand, io_wrapper
 
 _fluidsynth = OnDemand('fluidsynth.fluidsynth', globals(), locals(),
                        ['fluidsynth'], 0)
@@ -469,10 +469,13 @@ class AudioDriver(object):
         return self._adriver
 
 
-class FluidsynthFile(MusicIO):
+class FluidsynthFile(AudioIO):
     """ Access a midi file like a regular file.
 
     """
+
+    # Only reading is supported
+    _supported_modes = 'r'
 
     def __init__(self, filename, soundfont, rate=44100, gain=0.2,
                  reverb={'roomsize': 0.2, 'damping': 0.0, 'width': 0.5,

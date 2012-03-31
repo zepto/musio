@@ -25,32 +25,35 @@
 """
 
 from portaudio import portaudio as _portaudio
-from io_base import AudioIO, io_wrapper
+from io_base import DevIO, io_wrapper
 
 def redirect_cstd():
-    """ Redirect ctypes stdout/stderr.
+    """ Redirect ctypes stderr.
 
     """
 
     import sys
     import os
     sys.stdout.flush()
-    # oldstdout = os.dup(1)
     oldstderr = os.dup(2)
     r, w = os.pipe()
-    # os.dup2(w, 1)
     os.dup2(w, 2)
     os.close(w)
     os.close(r)
-    # sys.stdout = os.fdopen(oldstdout, 'w')
     sys.stderr = os.fdopen(oldstderr, 'w')
 
 
-class Portaudio(AudioIO):
+class Portaudio(DevIO):
     """ A class that provides a file like object to write to a portaudio
     stream.
 
     """
+
+    # Valid bit depths
+    _valid_depth = (32, 24, 16, 8)
+
+    # Supports reading and writing.
+    _supported_modes = 'rw'
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
                  unsigned=False, floatp=False, buffer_size=None,

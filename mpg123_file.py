@@ -23,7 +23,7 @@
 
 """
 
-from io_base import MusicIO, OnDemand, io_wrapper
+from io_base import AudioIO, OnDemand, io_wrapper
 
 _mpg123 = OnDemand('mpg123._mpg123', globals(), locals(),
                    ['_mpg123'], 0)
@@ -34,10 +34,13 @@ __supported_dict = {
         }
 
 
-class Mpg123File(MusicIO):
+class Mpg123File(AudioIO):
     """ A file like object for reading mp3s.
 
     """
+
+    # Only reading is supported
+    _supported_modes = 'r'
 
     def __init__(self, filename, depth=16, rate=44100, channels=2,
                  unsigned=False):

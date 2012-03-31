@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# vim: sw=4:ts=4:sts=4:fdm=indent:fdl=0:
 # -*- coding: UTF8 -*-
 #
 # A module to handle the playback of module music using mikmod. 
@@ -26,7 +27,7 @@ from os import remove as os_remove
 from time import sleep as time_sleep
 from multiprocessing import Process, Manager
 
-from io_base import MusicIO, OnDemand, io_wrapper
+from io_base import AudioIO, OnDemand, io_wrapper
 
 _mikmod = OnDemand('mikmod._mikmod', globals(), locals(),
                    ['_mikmod'], 0)
@@ -37,12 +38,18 @@ __supported_dict = {
         }
 
 
-class MikModFile(MusicIO):
+class MikModFile(AudioIO):
     """ A class to use mikmod to play modules.
     After loading a file start needs to be called to start the module.  Then
     update needs to be called until the module is done.
 
     """
+
+    # Valid bit depths.
+    _valid_depth = (16, 8)
+
+    # Only reading is supported
+    _supported_modes = 'r'
 
     def __init__(self, filename, depth=16, rate=44100, channels=2):
         """ MikModFile(filename, depth=16, rate=44100, channels=2) ->
@@ -50,23 +57,19 @@ class MikModFile(MusicIO):
 
         """
 
-        if depth != 16 and depth != 8:
-            raise Exception("Invalid depth %s, should be 16 or 8." % depth)
-
         super(MikModFile, self).__init__(filename, 'r', depth, rate, channels)
 
-        if depth == 16:
-            _mikmod.md_mode.value |= _mikmod.DMODE_16BITS
-        else:
+        if depth == 8:
             _mikmod.md_mode.value &= ~_mikmod.DMODE_16BITS
-
             self._unsigned = True
+        else:
+            _mikmod.md_mode.value |= _mikmod.DMODE_16BITS
 
-        if channels > 1:
+        if channels == 1:
+            _mikmod.md_mode.value &= ~_mikmod.DMODE_STEREO
+        else:
             _mikmod.md_mode.value |= _mikmod.DMODE_STEREO \
                                   | _mikmod.DMODE_HQMIXER
-        else:
-            _mikmod.md_mode.value &= ~_mikmod.DMODE_STEREO
 
         _mikmod.md_mixfreq.value = rate
         #_mikmod.md_device.value = 5
@@ -75,7 +78,6 @@ class MikModFile(MusicIO):
         _mikmod.md_device.value = 2
 
         self._out_filename = 'music.raw'
-        self._out_file = None
 
         self._module = self._open(filename)
         self._length = self._module.contents.numpos
@@ -117,10 +119,9 @@ class MikModFile(MusicIO):
 
         """
 
-        if not isinstance(value, bool):
+        if type(value) is not bool:
             print("Invalid value.  Should be True or False.")
-            return
-        if value:
+        elif value:
             _mikmod.md_mode.value |= _mikmod.DMODE_SURROUND
         else:
             _mikmod.md_mode.value &= ~_mikmod.DMODE_SURROUND
@@ -139,10 +140,9 @@ class MikModFile(MusicIO):
 
         """
 
-        if not isinstance(value, bool):
+        if type(value) is not bool:
             print("Invalid value.  Should be True or False.")
-            return
-        if value:
+        elif value:
             _mikmod.md_mode.value |= _mikmod.DMODE_INTERP
         else:
             _mikmod.md_mode.value &= ~_mikmod.DMODE_INTERP
@@ -193,6 +193,7 @@ class MikModFile(MusicIO):
     @reverb.setter
     def reverb(self, value):
         """ Set the volume.
+        0 = none;  15 = chaos
 
         """
 
@@ -210,6 +211,7 @@ class MikModFile(MusicIO):
 
         if _mikmod.MikMod_Init(b""):
             raise Exception('Error initializing mikmod.')
+
         if _mikmod.MikMod_InitThreads() == 0:
             print("Not thread safe")
 

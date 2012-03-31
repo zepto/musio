@@ -23,10 +23,8 @@
 
 """
 
-from array import array
-import ctypes as _ctypes
-
-from io_base import MusicIO, OnDemand, io_wrapper
+from io_base import AudioIO, OnDemand, io_wrapper
+from au_resample import to_bigendian
 
 _dumb = OnDemand('dumb._dumb', globals(), locals(), ['_dumb'], 0)
 
@@ -37,21 +35,27 @@ __supported_dict = {
         }
 
 
-class Buffer(_ctypes.Union):
+class Buffer(_dumb.Union):
     """ A union for taking the samples from duh_render.
 
     """
 
     _fields_ = [
-            ("s16", _ctypes.c_short * 8192),
-            ("s8", _ctypes.c_ubyte * 16384)
+            ("s16", _dumb.c_short * 8192),
+            ("s8", _dumb.c_ubyte * 16384)
             ]
 
 
-class DumbFile(MusicIO):
+class DumbFile(AudioIO):
     """ File like object to access module music supported by dumb.
 
     """
+
+    # Valid bit depths.
+    _valid_depth = (16, 8)
+
+    # Only reading is supported
+    _supported_modes = 'r'
 
     def __init__(self, filename, depth=16, rate=44100, channels=2,
                  bigendian=False, unsigned=False):
@@ -59,9 +63,6 @@ class DumbFile(MusicIO):
         the playback settings of the player.
 
         """
-
-        if depth not in [8, 16]:
-            raise ValueError("Invalid depth '%s', should be 16 or 8." % depth)
 
         super(DumbFile, self).__init__(filename, 'r', depth, rate, channels)
 
@@ -75,15 +76,16 @@ class DumbFile(MusicIO):
         self._bigendian = bigendian
 
         self._buffer = Buffer()
-        self._buffer_ref = _ctypes.pointer(self._buffer)
+        self._buffer_ref = _dumb.pointer(self._buffer)
+
+        # Set data_list to buffer.s8 or buffer.s16 depending on bit depth.
+        self._data_list = getattr(self._buffer, 's%s' % self._depth)
 
         # Define the conversion function.
-        if self._depth == 8:
-            self._data_list = self._buffer.s8
-            self._convert_func = lambda data_list: data_list
+        if depth == 16 and bigendian:
+            self._convert_func = to_bigendian
         else:
-            self._data_list = self._buffer.s16
-            self._endian_changed()
+            self._convert_func = lambda data_list: data_list
 
         self._max_read_size = _dumb.sizeof(self._data_list)
 
@@ -97,7 +99,7 @@ class DumbFile(MusicIO):
 
         # Setup the loop callback
         self._it_sig_r = _dumb.duh_get_it_sigrenderer(self._sig_r)
-        loop_callback = _ctypes.CFUNCTYPE(_ctypes.c_long, _ctypes.c_void_p)
+        loop_callback = _dumb.CFUNCTYPE(_dumb.c_long, _dumb.c_void_p)
         self._loop_callback_f = loop_callback(self._loop_callback)
         _dumb.dumb_it_set_loop_callback(self._it_sig_r, self._loop_callback_f,
                                         None)
@@ -124,16 +126,6 @@ class DumbFile(MusicIO):
 
         return int(self._loops != -1 and self._loop_count > self._loops)
 
-    def _endian_changed(self):
-        """ Setup the conversion function when the endian changes.
-
-        """
-
-        if self._bigendian:
-            self._convert_func = self._data_proc_be
-        else:
-            self._convert_func = self._data_proc_le
-
     def _set_position(self, position):
         """ Change the position of playback.
 
@@ -149,24 +141,6 @@ class DumbFile(MusicIO):
 
         # Update the position.
         return _dumb.duh_sigrenderer_get_position(self._sig_r)
-
-    def _data_proc_le(self, data_list):
-        """ _data_proc(data_list) -> Convert the data in
-        data_list to a playable format.  Little endian version.
-
-        """
-
-        return data_list
-
-    def _data_proc_be(self, data_list):
-        """ _data_proc(data_list) -> Convert the data in
-        data_list to a playable format.  Big endian version.
-
-        """
-
-        data_array = array('h', data_list)
-        data_array.byteswap()
-        return data_array.tostring()
 
     @property
     def convert_func(self):
@@ -185,6 +159,22 @@ class DumbFile(MusicIO):
         """
 
         self._convert_func = function
+
+    @property
+    def volume(self):
+        """ Get the current volume.
+
+        """
+
+        return self._volume
+
+    @volume.setter
+    def volume(self, value):
+        """ Set the volume.
+
+        """
+
+        self._volume = value
 
     @property
     def speed(self):
@@ -331,7 +321,7 @@ class DumbFile(MusicIO):
                 break
 
             # Get the bytes data from the c buffer.
-            temp_data = _ctypes.string_at(self._data_list, c_size)
+            temp_data = _dumb.string_at(self._data_list, c_size)
 
             # Convert the data to the correct format.
             data += self._convert_func(temp_data)
@@ -348,11 +338,11 @@ class DumbFile(MusicIO):
         func_tup = (_dumb.load_duh, _dumb.dumb_load_xm, _dumb.dumb_load_s3m,
                     _dumb.dumb_load_it, _dumb.dumb_load_mod)
 
-        # Encode the filename outside of the loop.
-        enc_filename = self._filename.encode('utf8', 'replace')
+        # Convert the filename to a bytes object.
+        bytes_filename = self._filename.encode('utf8', 'replace')
 
         for loader in func_tup:
-            duh = loader(enc_filename)
+            duh = loader(bytes_filename)
             if duh:
                 break
         else:

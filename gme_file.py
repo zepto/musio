@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# vim: sw=4:ts=4:sts=4:fdm=indent:fdl=0:
 # -*- coding: UTF8 -*-
 #
 # A module to handle the playback of some chip music. 
@@ -24,7 +25,7 @@
 
 from functools import partial
 
-from io_base import MusicIO, OnDemand, io_wrapper
+from io_base import AudioIO, OnDemand, io_wrapper
 
 _gme = OnDemand('gme._gme', globals(), locals(), ['_gme'], 0)
 
@@ -46,10 +47,13 @@ def _err(func_out):
     return func_out
 
 
-class GMEFile(MusicIO):
+class GMEFile(AudioIO):
     """ An object for accessing files supported by libgme.
 
     """
+
+    # Only reading is supported
+    _supported_modes = 'r'
 
     def __init__(self, filename, track=0, depth=16, rate=44100, channels=2):
         """ GMEFile(filename, depth=16, rate=44100, channels=2) -> Initialize

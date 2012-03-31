@@ -27,7 +27,7 @@ import os
 from time import sleep
 from tempfile import mktemp
 
-from io_base import MusicIO, OnDemand, io_wrapper
+from io_base import AudioIO, OnDemand, io_wrapper
 
 _agw = OnDemand('audiality.audiality', globals(), locals(),
                 ['audiality'], 0)
@@ -56,10 +56,13 @@ def redirect_cstd():
     sys.stderr = os.fdopen(oldstderr, 'w')
 
 
-class AgwFile(MusicIO):
+class AgwFile(AudioIO):
     """ A file like object for reading agws.
 
     """
+
+    # Only reading is supported
+    _supported_modes = 'r'
 
     def __init__(self, filename, depth=16, rate=44100, channels=2, quality=4,
                  latency=50):
@@ -115,7 +118,7 @@ class AgwFile(MusicIO):
 
         agw_id = _agw.ady_wave_load(0, name, -1)
         if agw_id:
-            raise IOError("Error loading %s" % name)
+            raise IOError("Error loading %s, %s" % (name, agw_id))
 
         _agw.ady_set_interface(1, output.encode())
         _agw.ady_start(self._rate, self._latency, 0)
@@ -123,22 +126,11 @@ class AgwFile(MusicIO):
         _agw.ady_channel_control(0, -2, 2, agw_id)
         _agw.ady_channel_play(0, 0, _agw.c_float(60.0), _agw.c_float(1.0))
 
-        while (not _agw.ady_channel_playing(0)):
-            sleep(0.002)
-        _agw.ady_sleep(100)
-
         self._closed = False
 
+        self._agw_id = agw_id
+
         return open(self._raw_filename, 'rb', buffering=0)
-
-    def stop(self):
-        """ stop -> Stop music file playback.
-
-        """
-
-        _agw.ady_channel_stop(-1, -1)
-        _agw.ady_close()
-        super(AgwFile, self).stop()
 
     @io_wrapper
     def read(self, size=None):
@@ -155,10 +147,13 @@ class AgwFile(MusicIO):
         """
 
         try:
-            # Empty the fifo so audiality can stop.
-            self.read()
+            # Change the interface to an empty string to disconnect it
+            # so it can be stopped.
+            _agw.ady_set_interface(1, '')
+
             _agw.ady_channel_stop(-1, -1)
             _agw.ady_close()
+            _agw.ady_wave_free(self._agw_id)
 
             if self._raw_file:
                 self._raw_file.close()
@@ -169,4 +164,3 @@ class AgwFile(MusicIO):
             return True
         except Exception as err:
             return False
-

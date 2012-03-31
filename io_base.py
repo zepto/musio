@@ -23,21 +23,26 @@
 
 """
 
-from os.path import isfile as os_isfile
 from functools import wraps as functools_wraps
 
-# If True only errors will only print a message not fail.
+# If True errors will only print a message.
 IO_SOFT_ERRORS = True
 
 # Codec cache dictionary
 __codec_cache = {}
 
-def get_codec(filename, mod_path=[]):
-    """ get_codec(filename, mod_path=[]) -> Load all the codecs in the path
-    and return the one that can play the file.
+def get_codec(filename, mod_path=[], cached=True):
+    """ get_codec(filename, mod_path=[], cached=True) -> Load the codecs in the
+    path and return the first one that can play the file, or the one with the
+    default attribute set.
+
+        filename        The file the codec needs to handle
+        mod_path        Additional search paths for modules
+        cached          Use cached codecs if available
 
     """
 
+    # Codec cache dictionary
     global __codec_cache
 
     from importlib import import_module
@@ -54,11 +59,12 @@ def get_codec(filename, mod_path=[]):
     # Get protocol.
     file_prot = urlparse(filename).scheme
 
-    # Load and already cached codec.
-    if file_ext in __codec_cache:
-        return __codec_cache[file_ext]
-    elif file_prot in __codec_cache:
-        return __codec_cache[file_prot]
+    if cached:
+        # Load and already cached codec.
+        if file_ext in __codec_cache:
+            return __codec_cache[file_ext]
+        elif file_prot in __codec_cache:
+            return __codec_cache[file_prot]
 
     mod_path = [mod_path] if type(mod_path) is str else mod_path
 
@@ -150,33 +156,43 @@ def io_wrapper(func):
             else:
                 # Re-raise the error.
                 raise
+            if func.__name__ == 'write':
+                return 0
+            elif func.__name__ == 'read':
+                return b''
 
     return wrapper
 
 
-class MusicIO(object):
+class AudioIO(object):
     """ File like access for audio files.
 
     """
 
+    # Valid bit depths
+    _valid_depth = (32, 16, 8)
+
+    # Both reading and writing are supported
+    _supported_modes = 'rw'
+
     def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2):
-        """ MusicIO(filename, [mode='r', depth=16, rate=44100, channels=2])
+        """ AudioIO(filename, [mode='r', depth=16, rate=44100, channels=2])
         -> Open an audio file for file like access to audio files.
 
         """
 
-        if mode not in 'rw':
-            raise ValueError("Mode has to be either 'r' or 'w'.")
+        if mode not in self._supported_modes:
+            raise ValueError("(%s) Mode has to be one of %s." % \
+                             (self.__class__.__name__,
+                             self._supported_modes))
 
-        if 'r' in mode and not os_isfile(filename):
-            raise OSError("(%s) File not found: %s" % (self.__class__.__name__,
-                                                       filename))
+        if depth not in self._valid_depth:
+            raise ValueError("(%s) Invalid depth %s, valid depths are %s" % \
+                             (self.__class__.__name__,
+                              depth,
+                              self._valid_depth))
 
-        if depth != 32 and depth != 16 and depth != 8:
-            raise ValueError("Invalid depth %s, should be 32, 16 or 8." % \
-                             depth)
-
-        super(MusicIO, self).__init__()
+        super(AudioIO, self).__init__()
 
         self._buffer_size = 16384 // (depth // (8 // channels))
 
@@ -189,7 +205,6 @@ class MusicIO(object):
 
         self._width = self._depth // 8
 
-        self._volume = 1
         self._length = 0
 
         self._bigendian = False
@@ -211,6 +226,9 @@ class MusicIO(object):
         str_list = ['\n']
 
         for key, value in self._info_dict.items():
+            if not str(value).strip():
+                continue
+
             if type(value) in (list, tuple, set):
                 str_list.insert(0, '\t%s' % '\n\t'.join(value))
                 str_list.insert(0, "\n%s" % key.lower().capitalize())
@@ -296,13 +314,6 @@ class MusicIO(object):
 
         raise NotImplementedError("Write method not implemented.")
 
-    def close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
-        raise NotImplementedError("Close method not implemented.")
-
     def _open(self):
         """ _open() -> Open the classes file and set it up for read/write
         access.
@@ -311,12 +322,12 @@ class MusicIO(object):
 
         raise NotImplementedError("Open method not implemented.")
 
-    def _endian_changed(self):
-        """ Setup the conversion function when the endian changes.
+    def close(self):
+        """ close -> Closes and cleans up.
 
         """
 
-        pass
+        raise NotImplementedError("Close method not implemented.")
 
     def _set_position(self, position):
         """ Change the position of playback.
@@ -341,22 +352,6 @@ class MusicIO(object):
         return self._closed
 
     @property
-    def volume(self):
-        """ Get the current volume.
-
-        """
-
-        return self._volume
-
-    @volume.setter
-    def volume(self, value):
-        """ Set the volume.
-
-        """
-
-        self._volume = value
-
-    @property
     def loops(self):
         """ How many times the file should loop.
 
@@ -373,41 +368,6 @@ class MusicIO(object):
         """
 
         self._loops = value
-
-    @property
-    def unsigned(self):
-        """ Whether the player is producing signed data.
-
-        """
-
-        return self._unsigned
-
-    @unsigned.setter
-    def unsigned(self, value):
-        """ unsigned(value) -> Set to use unsigned data.  By default it
-        produces signed data.
-
-        """
-
-        self._unsigned = value
-
-    @property
-    def bigendian(self):
-        """ Whether the player is using bigendian.
-
-        """
-
-        return self._bigendian
-
-    @bigendian.setter
-    def bigendian(self, value):
-        """ bigendian(value) -> Set to produce bigendian data.  By default
-        it produces little endian data.
-
-        """
-
-        self._bigendian = value
-        self._endian_changed()
 
     @property
     def position(self):
@@ -465,37 +425,65 @@ class MusicIO(object):
 
         return self._buffer_size
 
+    @property
+    def unsigned(self):
+        """ Whether the player is producing signed data.
 
-class AudioIO(object):
-    """ File like access to audio output.
+        """
+
+        return self._unsigned
+
+    @property
+    def bigendian(self):
+        """ Whether the player is using bigendian.
+
+        """
+
+        return self._bigendian
+
+
+class DevIO(object):
+    """ File like access to audio device.
 
     """
 
+    _valid_depth = (32, 24, 16, 8)
+    _supported_modes = 'rw'
+
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
             bigendian=False, unsigned=False, buffer_size=None, latency=500000):
-        """ Alsa(depth=16, rate=44100, channels=2, bigendian=False,
+        """ DevIO(depth=16, rate=44100, channels=2, bigendian=False,
         unsigned=False, buffer_size=None, latency=500000) -> Initialize an
         audio device for either reading or writing.
 
         """
 
-        if depth != 32 and depth != 16 and depth != 8:
-            raise ValueError("Invalid depth %s, should be 32, 16 or 8." % \
-                             depth)
+        if mode not in self._supported_modes:
+            raise ValueError("(%s) Mode has to be one of %s." % \
+                             self.__class__.__name__,
+                             self._supported_modes)
 
-        super(AudioIO, self).__init__()
+        if depth not in self._valid_depth:
+            raise ValueError("(%s) Invalid depth %s.  Valid depths are: %s" % \
+                             (self.__class__.__name__,
+                             depth,
+                             self._valid_depth))
 
-        if not buffer_size:
-            buffer_size = 16384 // (depth // (8 // channels))
-
-        self._buffer_size = buffer_size
+        super(DevIO, self).__init__()
 
         self._mode = mode
         self._depth = depth
         self._rate = rate
+        self._channels = channels
         self._bigendian = bigendian
         self._unsigned = unsigned
-        self._channels = channels
+
+        if not buffer_size:
+            # Set buffer_size to a sane default.
+            buffer_size = 16384 // (depth // (8 // channels))
+
+        self._buffer_size = buffer_size
+
         self._latency = latency
 
         self._closed = True
@@ -615,7 +603,7 @@ class AudioIO(object):
 
 
 class OnDemand(object):
-    """ Load modules on demand.
+    """ Load modules when accessed.
 
     """
 
@@ -633,7 +621,7 @@ class OnDemand(object):
         self._module = None
 
     def _import(self):
-        """ Import the module.contents
+        """ Import the module.
 
         """
 
