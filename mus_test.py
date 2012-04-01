@@ -21,6 +21,8 @@ def play_proc(msg_dict):
                                         bigendian=music.bigendian,
                                         unsigned=music.unsigned) as audio_out:
         music.loops = 1
+        from conversion_util import ConvertReader
+        # cr = ConvertReader(music)
         print(repr(audio_out))
         print(repr(music))
         print(music)
@@ -88,7 +90,9 @@ if __name__ == '__main__':
         from queued_io import QueuedWriter
 
         filename = sys_argv[1]
-        Music = get_codec(filename)
+        # Music = get_codec(filename)
+        from all_file import AllFile
+        Music = AllFile
 
         if not Music:
             print("Filetype not supported.")

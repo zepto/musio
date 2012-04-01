@@ -26,7 +26,7 @@
 from array import array
 
 from io_base import AudioIO, OnDemand, io_wrapper
-from au_resample import swap_endian
+from conversion_util import swap_endian
 
 _modplug = OnDemand('modplug._modplug', globals(), locals(),
                     ['_modplug'], 0)

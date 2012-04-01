@@ -36,14 +36,15 @@ IO_SOFT_ERRORS = True
 # Codec cache dictionary
 __codec_cache = {}
 
-def get_codec(filename, mod_path=[], cached=True):
-    """ get_codec(filename, mod_path=[], cached=True) -> Load the codecs in the
-    path and return the first one that can play the file, or the one with the
-    default attribute set.
+def get_codec(filename, mod_path=[], cached=True, blacklist=[]):
+    """ get_codec(filename, mod_path=[], cached=True, blacklist=[]) -> Load the
+    codecs in the path and return the first one that can play the file, or the
+    one with the default attribute set.
 
         filename        The file the codec needs to handle
         mod_path        Additional search paths for modules
         cached          Use cached codecs if available
+        blacklist       Modules not to load
 
     """
 
@@ -81,7 +82,8 @@ def get_codec(filename, mod_path=[], cached=True):
     mod_list = ((path, name) for path in sys_path \
                                 if os_isdir(path) \
                                     for name in os_listdir(path) \
-                                        if name.endswith('_file.py'))
+                                        if name.endswith('_file.py') and \
+                                           name not in blacklist)
 
     Music = None
 

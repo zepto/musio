@@ -24,7 +24,7 @@
 """
 
 from io_base import AudioIO, OnDemand, io_wrapper
-from au_resample import swap_endian
+from conversion_util import swap_endian
 
 _dumb = OnDemand('dumb._dumb', globals(), locals(), ['_dumb'], 0)
 
