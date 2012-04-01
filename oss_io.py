@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# vim: sw=4:ts=4:sts=4:fdm=indent:fdl=0:
 # -*- coding: UTF8 -*-
 #
 # Provides a thin wrapper for ossaudiodev to allow for easy access, and
@@ -42,7 +43,7 @@ class Oss(DevIO):
     _supported_modes = 'rw'
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
-            bigendian=False, unsigned=False, buffer_size=None):
+            bigendian=False, unsigned=False, buffer_size=None, **kwargs):
         """ Oss(depth=16, rate=44100, channels=2, bigendian=False,
         unsigned=False, buffer_size=None) -> Initialize the alsa pcm device.
 

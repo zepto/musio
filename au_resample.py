@@ -25,14 +25,65 @@
 
 from array import array
 
-def to_bigendian(data_list):
-    """ to_bigendian(data_list) -> Convert the data in
-    data_list to big endian format.
+def swap_endian(data):
+    """ swap_endian(data) -> Swap the endianness of the data.
 
     """
 
-    data_array = array('h', data_list)
+    data_array = array('h', data)
     data_array.byteswap()
 
     return data_array.tostring()
 
+def convert_read(self, rate, channels, depth, unsigned, size=None):
+    """ Convert the samples to the given rate and makes it mono or stereo
+    depending on the channels value. The data is buffered so 
+
+    """
+
+    if not size:
+        size = self._buffer_size
+
+    read_size = size * channels * (depth >> 3)
+    width = depth // 8
+
+    data = self._convert_buffer
+    while len(data) < read_size:
+        temp_data = self.read()
+        if not temp_data:
+            if self._loops != -1 and self._loop_count >= (self._loops -1):
+                if len(data) != 0:
+                    data += b'\x00' * (read_size - len(data))
+                break
+            else:
+                self._loop_count += 1
+                self.seek(0)
+                continue
+
+        if unsigned != self.unsigned:
+            temp_data = bias(temp_data, self._width, 128)
+
+        if depth > 8 and self._depth == 8:
+            temp_data = lin2lin(temp_data, self._width, width)
+        elif depth == 8 and self._depth > 8:
+            temp_data = lin2lin(temp_data, self._width, width)
+            if unsigned:
+                temp_data = bias(temp_data, width, 128)
+
+        # Make it stereo
+        if self._channels < channels:
+            temp_data = tostereo(temp_data, width, 1, 1)
+        # Make it mono
+        elif self._channels > channels:
+            temp_data = tomono(temp_data, width, 1, 1)
+
+        # Convert the sample rate of the data to the requested rate.
+        if rate != self._rate and temp_data:
+            temp_data, self._state = ratecv(temp_data, width,
+                                            channels, self._rate, rate,
+                                            self._state)
+        data += temp_data
+
+    self._convert_buffer = data[read_size:]
+
+    return data[:read_size]

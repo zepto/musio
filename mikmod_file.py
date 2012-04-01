@@ -25,7 +25,7 @@
 
 from os import remove as os_remove
 from time import sleep as time_sleep
-from multiprocessing import Process, Manager
+from threading import Thread
 
 from io_base import AudioIO, OnDemand, io_wrapper
 
@@ -51,7 +51,7 @@ class MikModFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=44100, channels=2):
+    def __init__(self, filename, depth=16, rate=44100, channels=2, **kwargs):
         """ MikModFile(filename, depth=16, rate=44100, channels=2) ->
         Initialize the playback settings of the player.
 
@@ -221,7 +221,19 @@ class MikModFile(AudioIO):
 
         self._closed = False
 
+        self._update_p = Thread(target=self._update)
+        self._update_p.start()
+
         return module
+
+    def _update(self):
+        """ Update the mikmod player until the mod is closed.
+
+        """
+
+        while not self._closed:
+            _mikmod.MikMod_Update()
+            time_sleep(0.1)
 
     def close(self):
         """ Stops playback and unloads the module.
@@ -243,7 +255,6 @@ class MikModFile(AudioIO):
 
         """
 
-        _mikmod.MikMod_Update()
         try:
             if self.position >= self.length:
                 if self._loops == -1 or self._loop_count >= self._loops:
@@ -256,7 +267,7 @@ class MikModFile(AudioIO):
             return b''
 
     def _load_info(self, module):
-        """ _load_info(duh) -> Load the information such as the module name 
+        """ _load_info(module) -> Load the information such as the module name
         and message and the sample and instrument names.
 
         """
@@ -300,29 +311,3 @@ class MikModFile(AudioIO):
         if comment:
             message = comment.decode('cp437', 'replace')
             self._info_dict['message'] = message.replace('\n', '\n')
-
-    def oplay(self, outfile, delay=0, decay=.75, echo=False):
-        """ play(outfile) -> Play the current file to the specified file.
-
-        """
-
-        print()
-        def play(playing):
-            old_pos = -1
-            while playing['playing']:
-                data = self.read()
-                #if not data and self.loops == -1:
-                    #self.seek(0)
-                    #continue
-                #elif not data and self.loops != -1:
-                    #break
-                if self.length > 0 and self.position != old_pos:
-                    old_pos = self.position
-                    perc_str = 'Position: %.2f%%' % ((self.position * 100)/self.length)
-                    print('\033[%dD\033[K%s' % (len(perc_str)+2, perc_str), end='')
-                    stdout.flush()
-            print("\nDone.")
-        playing = Manager()
-        playing['playing'] = True
-        self._play_t = Process(target=play, args=(playing,))
-        self._play_t.start()

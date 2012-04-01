@@ -481,7 +481,7 @@ class FluidsynthFile(AudioIO):
                  reverb={'roomsize': 0.2, 'damping': 0.0, 'width': 0.5,
                          'level': 0.9}, 
                  chorus={'nr': 3, 'level': 2.0, 'speed': 0.3, 'depth_ms': 8.0,
-                         'type': 0}):
+                         'type': 0}, **kwargs):
         """ FluidsynthFile(filename, soundfont, rate=44100, gain=0.2,
         reverb=(0.2, 0.0, 0.5, 0.9), chorus=(3, 2.0, 0.3, 8.0, 0)) ->
         Initialize the playback settings of the player.

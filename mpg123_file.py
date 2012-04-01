@@ -43,7 +43,7 @@ class Mpg123File(AudioIO):
     _supported_modes = 'r'
 
     def __init__(self, filename, depth=16, rate=44100, channels=2,
-                 unsigned=False):
+                 unsigned=False, **kwargs):
         """ Mpg123File(filename, depth=16, rate=44100, channels=2,
         unsigned=False) -> Initialize the playback settings of the player.
 

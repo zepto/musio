@@ -24,7 +24,7 @@
 """
 
 from io_base import AudioIO, OnDemand, io_wrapper
-from au_resample import to_bigendian
+from au_resample import swap_endian
 
 _dumb = OnDemand('dumb._dumb', globals(), locals(), ['_dumb'], 0)
 
@@ -58,7 +58,7 @@ class DumbFile(AudioIO):
     _supported_modes = 'r'
 
     def __init__(self, filename, depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False):
+                 bigendian=False, unsigned=False, **kwargs):
         """ DumbFile(filename, depth=16, rate=44100, channels=2) -> Initialize
         the playback settings of the player.
 
@@ -83,7 +83,7 @@ class DumbFile(AudioIO):
 
         # Define the conversion function.
         if depth == 16 and bigendian:
-            self._convert_func = to_bigendian
+            self._convert_func = swap_endian
         else:
             self._convert_func = lambda data_list: data_list
 

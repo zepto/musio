@@ -55,7 +55,8 @@ class VorbisFile(AudioIO):
     _supported_modes = 'rw'
 
     def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, quality=.5, comment_dict={}):
+                 bigendian=False, unsigned=False, quality=.5, comment_dict={},
+                 **kwargs):
         """ VorbisFile(filename, mode='r', depth=16, channels=2,
         bigendian=False, unsigned=False,) -> Initialize the file object for
         reading and writing.

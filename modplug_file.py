@@ -26,7 +26,7 @@
 from array import array
 
 from io_base import AudioIO, OnDemand, io_wrapper
-from au_resample import to_bigendian
+from au_resample import swap_endian
 
 _modplug = OnDemand('modplug._modplug', globals(), locals(),
                     ['_modplug'], 0)
@@ -56,9 +56,10 @@ class ModPlugFile(AudioIO):
     _supported_modes = 'r'
 
     def __init__(self, filename, depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False):
-        """ ModPlugFile(filename, depth=16, rate=44100, channels=2) ->
-        Initialize the playback settings of the player.
+                 bigendian=False, unsigned=False, **kwargs):
+        """ ModPlugFile(filename, depth=16, rate=44100, channels=2,
+        bigendian=False, unsigned=False) -> Initialize the playback settings of
+        the player.
 
         """
 
@@ -101,7 +102,7 @@ class ModPlugFile(AudioIO):
 
         # Define the conversion function.
         if depth == 16 and bigendian:
-            self._proc_func = to_bigendian
+            self._proc_func = swap_endian
         else:
             self._proc_func = lambda data_list: data_list
 

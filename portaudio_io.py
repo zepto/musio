@@ -57,10 +57,11 @@ class Portaudio(DevIO):
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
                  unsigned=False, floatp=False, buffer_size=None,
-                 latency=0.0500000, devindex='default', callback=None):
-        """ Portaudio(depth=16, rate=44100, channels=2, unsigned=False,
-        floatp=False, buffer_size=4092, latency=500000, devindex=1,
-        callback=None) -> Initialize the portaudio device.
+                 latency=0.0500000, devindex='default', callback=None,
+                 **kwargs):
+        """ Portaudio(mode='w', depth=16, rate=44100, channels=2,
+        unsigned=False, floatp=False, buffer_size=4092, latency=500000,
+        devindex=1, callback=None) -> Initialize the portaudio device.
 
         """
 

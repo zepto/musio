@@ -45,9 +45,10 @@ class WaveFile(AudioIO):
     # Both reading and writing are supported
     _supported_modes = 'rw'
 
-    def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2):
-        """ WaveFile(filename, depth=16, rate=44100, channels=2) -> Initialize
-        the playback settings of the player.
+    def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2,
+                 **kwargs):
+        """ WaveFile(filename, mode='r', depth=16, rate=44100, channels=2) ->
+        Initialize the playback settings of the player.
 
         """
 

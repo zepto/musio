@@ -220,7 +220,7 @@ class AACFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=44100, channels=2):
+    def __init__(self, filename, depth=16, rate=44100, channels=2, **kwargs):
         """ AACFile(filename, depth=16, rate=44100, channels=2) -> Initialize
         the playback settings of the player.
 

@@ -25,7 +25,7 @@
 
 from functools import partial
 
-from faad_file import AACDecoder
+from aac_file import AACDecoder
 from io_base import AudioIO, OnDemand, io_wrapper
 
 _mp4v2 = OnDemand('mp4v2._mp4v2', globals(), locals(),
@@ -45,7 +45,7 @@ class Mp4File(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=44100, channels=2):
+    def __init__(self, filename, depth=16, rate=44100, channels=2, **kwargs):
         """ Mpg4File(filename, depth=16, rate=44100, channels=2) -> Initialize
         the playback settings of the player.
 

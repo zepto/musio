@@ -55,7 +55,8 @@ class GMEFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, track=0, depth=16, rate=44100, channels=2):
+    def __init__(self, filename, track=0, depth=16, rate=44100, channels=2,
+                 **kwargs):
         """ GMEFile(filename, depth=16, rate=44100, channels=2) -> Initialize
         the playback settings of the player.
 

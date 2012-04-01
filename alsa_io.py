@@ -43,7 +43,7 @@ class Alsa(DevIO):
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
                  bigendian=False, unsigned=False, buffer_size=None,
-                 latency=500000):
+                 latency=500000, **kwargs):
         """ Alsa(depth=16, rate=44100, channels=2, bigendian=False,
         unsigned=False, buffer_size=None, latency=500000) -> Initialize the
         alsa pcm device.

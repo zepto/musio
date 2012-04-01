@@ -65,7 +65,7 @@ class AgwFile(AudioIO):
     _supported_modes = 'r'
 
     def __init__(self, filename, depth=16, rate=44100, channels=2, quality=4,
-                 latency=50):
+                 latency=50, **kwargs):
         """ AgwFile(filename, depth=16, rate=44100, channels=2, quality=4,
         latency=50) -> Initialize
         the playback settings of the player.

@@ -18,13 +18,14 @@ def play_proc(msg_dict):
     with Music(depth=16, channels=2, *args) as music, AudioIO(rate=music.rate,
                                         channels=music.channels,
                                         depth=music.depth,
-                                        # bigendian=music.bigendian,
+                                        bigendian=music.bigendian,
                                         unsigned=music.unsigned) as audio_out:
         music.loops = 1
         print(repr(audio_out))
         print(repr(music))
         print(music)
         for buf in music:
+            # print(len(buf))
             written = audio_out.write(buf)
             # print(written, 'bytes written')
             if music.length > 0:
@@ -93,19 +94,19 @@ if __name__ == '__main__':
             print("Filetype not supported.")
             exit()
 
-        recording = multiprocessing.Manager().dict()
-        recording['recording'] = True
-        recording['filename'] = sys_argv[1]
-        recording['comment_dict'] = {
-                'name': 'temp',
-                'message': "This is a test ogg"
-                }
-        record_t = multiprocessing.Process(target=rec_proc, args=(recording,))
-        record_t.start()
-        input()
-        recording['recording'] = False
-        record_t.join()
-        exit()
+        # recording = multiprocessing.Manager().dict()
+        # recording['recording'] = True
+        # recording['filename'] = sys_argv[1]
+        # recording['comment_dict'] = {
+        #         'name': 'temp',
+        #         'message': "This is a test ogg"
+        #         }
+        # record_t = multiprocessing.Process(target=rec_proc, args=(recording,))
+        # record_t.start()
+        # input()
+        # recording['recording'] = False
+        # record_t.join()
+        # exit()
 
         playing = multiprocessing.Manager().dict()
         playing['playing'] = True

@@ -2,7 +2,7 @@
 # vim: sw=4:ts=4:sts=4:fdm=indent:fdl=0:
 # -*- coding: UTF8 -*-
 #
-# A module to handle the playback of module music.
+# Abstract classes for audio file/device io.
 # Copyright (C) 2012 Josiah Gordon <josiahg@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Base classes for file like access to music files and a player class.
+""" get_codec       Function for loading the default/first filetype codecs
+    io_wrapper      Function for wrapping audio io functions
+
+    AudioIO         Abstract class for audio file IO
+    DevIO           Abstract class for audio device IO
+    OnDemand        Load libraries when they are accessed
 
 """
 
@@ -135,8 +140,6 @@ def io_wrapper(func):
 
             if not args:
                 args = (self._buffer_size,)
-
-            # print(self._buffer_size, args)
         elif func.__name__ == 'write':
             if self._mode == 'r':
                 raise IOError("(%s) Open for reading.  Unable to write." % class_name)
