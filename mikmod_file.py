@@ -250,7 +250,7 @@ class MikModFile(AudioIO):
             pass
 
     @io_wrapper
-    def read(self, size=None):
+    def read(self, size: int) -> bytes:
         """ Continue playing the module.
 
         """

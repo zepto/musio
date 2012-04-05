@@ -119,7 +119,7 @@ class Mp4File(AudioIO):
         self._tags_dict = self._info_dict = info_dict
 
     @io_wrapper
-    def read(self, size=None):
+    def read(self, size: int) -> bytes:
         """ read(size=None) -> Reads size amount of data and returns it.  If
         size is None then read a buffer size.
 
@@ -144,7 +144,7 @@ class Mp4File(AudioIO):
                     continue
 
             # Decode data into a temporary buffer.
-            temp_data = self._aac_decoder.decode(sample.data, sample.size)
+            temp_data = self._aac_decoder.decode(sample.data, sample.size.value)
 
             # Append decoded data to the data buffer.
             data += temp_data

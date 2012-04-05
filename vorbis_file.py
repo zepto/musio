@@ -193,7 +193,7 @@ class VorbisFile(AudioIO):
         return vorbis_file
 
     @io_wrapper
-    def read(self, size=None):
+    def read(self, size: int) -> bytes:
         """ read(size=None) -> Reads size amount of data and returns it.  If
         size is None then read a buffer size.
 
@@ -220,7 +220,7 @@ class VorbisFile(AudioIO):
             # Check how many bytes were read.
             if bytesread == 0:
                 # Check if we should loop.
-                if self._loops != -1 and self._loop_count > self._loops:
+                if self._loops != -1 and self._loop_count >= self._loops:
                     # Fill the rest of the buffer with blank data and
                     # exit.
                     if len(data) != 0:
@@ -296,7 +296,7 @@ class VorbisFile(AudioIO):
         return vorbis_file
 
     @io_wrapper
-    def write(self, data):
+    def write(self, data: bytes) -> int:
         """ write(str) -> Encodes and writes str to an ogg file.
 
         """

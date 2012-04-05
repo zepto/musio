@@ -25,7 +25,7 @@ blocking and clogging up the read.
 
 """
 
-from multiprocessing import Queue, Process
+from multiprocessing import Queue, Process, Manager
 from queue import Empty as queue_Empty
 
 def _queue_writer(func, in_queue, out_queue):

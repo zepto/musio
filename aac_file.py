@@ -113,16 +113,6 @@ class AACDecoder(object):
 
         """
 
-        # Only send ctypes type POINTER(c_ubyte) to the method.
-        if type(init_buf) == bytes:
-            # Cast the data to a C pointer to use in the decoder.
-            init_buf = _neaacdec.cast(init_buf,
-                                      _neaacdec.POINTER(_neaacdec.c_ubyte))
-
-        # Make init_size a ctypes c_ulong.
-        if type(init_size) == int:
-                init_size = _neaacdec.c_ulong(init_size)
-
         # Open the decoder.
         decoder = _neaacdec.NeAACDecOpen()
 
@@ -176,8 +166,6 @@ class AACDecoder(object):
 
         frame_info = self._frame_info
 
-        data_size = data_size if type(data_size) == int else data_size.value
-
         try:
             # Try to decode the next frame.
             sample_buffer = _neaacdec.NeAACDecDecode(self._decoder,
@@ -187,7 +175,7 @@ class AACDecoder(object):
             # Check for errors.
             err = _neaacdec.NeAACDecGetErrorMessage(frame_info.error)
 
-            # Raise an error if not data was consumed.
+            # Raise an error if no data was consumed.
             if not sample_buffer or frame_info.bytesconsumed <= 0:
                 raise BufferError(err.decode())
             elif frame_info.error != 0:
@@ -264,6 +252,12 @@ class AACFile(AudioIO):
         data_size = 4
         data = self._aac_file.read(data_size)
 
+        # Make init_size a ctypes c_ulong.
+        data_size = _neaacdec.c_ulong(data_size)
+
+        # Cast the data to a C pointer to use in the decoder.
+        data = _neaacdec.cast(data, _neaacdec.POINTER(_neaacdec.c_ubyte))
+
         # Seek back to the start.
         self._aac_file.seek(0)
 
@@ -278,7 +272,7 @@ class AACFile(AudioIO):
         return aac_decoder
 
     @io_wrapper
-    def read(self, size):
+    def read(self, size: int) -> bytes:
         """ read(size) -> Reads size amount of data and returns it.
 
         """
@@ -302,6 +296,10 @@ class AACFile(AudioIO):
                 else:
                     self._loop_count += 1
                     self.seek(0)
+
+                    # Reset the read size
+                    r_size = self._aac_decoder.min_stream_size
+
                     continue
 
             # Cast the bytes object to a type POINTER(ctypes.c_ubyte).
@@ -349,4 +347,3 @@ class AACFile(AudioIO):
             return True
         except:
             return False
-

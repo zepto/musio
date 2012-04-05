@@ -26,7 +26,16 @@
 
 import alsa.pcm as alsapcm
 
-from io_base import DevIO, io_wrapper
+from io_base import DevIO, io_wrapper, OnDemand
+
+alsapcm = OnDemand('alsa.pcm', globals(), locals(), ['pcm'], 0)
+
+__supported_dict = {
+        'output': [bytes],
+        'input': [bytes],
+        'handler': 'Alsa',
+        # 'default': True
+        }
 
 
 class Alsa(DevIO):
@@ -82,7 +91,7 @@ class Alsa(DevIO):
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
     @io_wrapper
-    def write(self, data):
+    def write(self, data: bytes) -> int:
         """ write(data) -> Write to the pcm device.
 
         """
@@ -109,7 +118,7 @@ class Alsa(DevIO):
         return rc
 
     @io_wrapper
-    def read(self, size=0):
+    def read(self, size: int) -> bytes:
         """ read(size=0) -> Read length bytes from input.
 
         """

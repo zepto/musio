@@ -41,7 +41,7 @@ class AllFile(AudioIO):
     """
 
     # Valid bit depths.
-    _valid_depth = (16, 8)
+    _valid_depth = (32, 16, 8)
 
     def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2,
                  bigendian=False, unsigned=False, **kwargs):
@@ -54,7 +54,7 @@ class AllFile(AudioIO):
 
         codec = get_codec(filename, blacklist=[__name__])
 
-        self._supported_modes = codec._supported_modes
+        self._supported_modes = getattr(codec, '_supported_modes', 'r')
 
         super(AllFile, self).__init__(filename, mode, depth, rate, channels)
 
@@ -63,10 +63,12 @@ class AllFile(AudioIO):
 
         self._state = None
 
-        self._buffer= b''
-
         self._source = codec(filename, mode=mode)
+
+        self._buffer = b''
+
         self._length = self._source.length
+        self._info_dict = self._source._info_dict
         self.write = self._source.write
 
         self._closed = False
@@ -105,6 +107,20 @@ class AllFile(AudioIO):
                                                              self._state)
         else:
             self._convert_rate = lambda data: (data, self._state)
+
+        if self._bigendian != self._source.bigendian:
+            self._convert_endian = swap_endian
+        else:
+            self._convert_endian = lambda data: data
+
+    def __repr__(self):
+        """ __repr__ -> Returns a python expression to recreate this instance.
+
+        """
+
+        repr_str = "filename='{_filename}', mode='{_mode}', depth={_depth}, rate={_rate}, channels={_channels}, bigendian={_bigendian}, unsigned={_unsigned}".format(**self.__dict__)
+
+        return '%s(%s)' % (self.__class__.__name__, repr_str)
 
     def close(self):
         """ Close.
@@ -148,9 +164,9 @@ class AllFile(AudioIO):
         self._source.loops = value
 
     @io_wrapper
-    def read(self, size=None):
-        """ Convert the samples to the given rate and makes it mono or stereo
-        depending on the channels value. The data is buffered so 
+    def read(self, size: int) -> bytes:
+        """ read(size=None) -> Returns audio data with its format converted if
+        necessary.
 
         """
 
@@ -171,6 +187,8 @@ class AllFile(AudioIO):
             temp_data = self._convert_channels(temp_data)
 
             temp_data, self._state = self._convert_rate(temp_data)
+
+            temp_data = self._convert_endian(temp_data)
 
             data += temp_data
 

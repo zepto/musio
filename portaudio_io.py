@@ -25,7 +25,17 @@
 """
 
 from portaudio import portaudio as _portaudio
-from io_base import DevIO, io_wrapper
+from io_base import DevIO, io_wrapper, OnDemand
+
+_portaudio = OnDemand('portaudio.portaudio', globals(), locals(),
+                      ['portaudio'], 0)
+
+__supported_dict = {
+        'output': [bytes],
+        'input': [bytes],
+        'handler': 'Portaudio',
+        'default': True
+        }
 
 def redirect_cstd():
     """ Redirect ctypes stderr.
@@ -126,7 +136,7 @@ class Portaudio(DevIO):
         return int(self._rate)
 
     @io_wrapper
-    def write(self, data):
+    def write(self, data: bytes) -> int:
         """ write(data) -> Write to the pcm device.
 
         """
@@ -145,7 +155,7 @@ class Portaudio(DevIO):
             if len(data) == 0 and datalen > 0:
                 # Just write the last fiew bytes.
                 self._stream.write(self._data, datalen)
-                self._data = b''
+                # self._data = b''
                 return datalen
             else:
                 return 0
@@ -158,7 +168,7 @@ class Portaudio(DevIO):
         return write_size
 
     @io_wrapper
-    def read(self, size=0):
+    def read(self, size: int) -> bytes:
         """ read(size) -> Read length data from stream.
 
         """

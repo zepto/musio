@@ -12,7 +12,8 @@ def play_proc(msg_dict):
 
     # from oss_io import Oss as AudioIO
     # from alsa_io import Alsa as AudioIO
-    from portaudio_io import Portaudio as AudioIO
+    # from portaudio_io import Portaudio as AudioIO
+    AudioIO = get_io(Music)
 
     print("Playing: %s" % filename)
     with Music(depth=16, channels=2, *args) as music, AudioIO(rate=music.rate,
@@ -20,15 +21,14 @@ def play_proc(msg_dict):
                                         depth=music.depth,
                                         bigendian=music.bigendian,
                                         unsigned=music.unsigned) as audio_out:
-        music.loops = 1
-        from conversion_util import ConvertReader
-        # cr = ConvertReader(music)
+        music.loops = 2
         print(repr(audio_out))
         print(repr(music))
         print(music)
         for buf in music:
             # print(len(buf))
             written = audio_out.write(buf)
+            # written = len(buf)
             # print(written, 'bytes written')
             if music.length > 0:
                 perc_done = (music.position * 100) / music.length
@@ -37,8 +37,10 @@ def play_proc(msg_dict):
                 print('\033[%dD\033[K%s' % (format_len, perc_str), end='')
                 stdout.flush()
             if not msg_dict['playing'] or not buf and not written:
+                # writer.close()
                 stdout.flush()
                 break
+        # audio_out.flush()
     print("\nDone.")
 
 def rec_proc(msg_dict):
@@ -86,13 +88,12 @@ if __name__ == '__main__':
         from sys import stdout, exit
         import multiprocessing
 
-        from io_base import get_codec
+        from io_base import get_codec, get_io
         from queued_io import QueuedWriter
 
         filename = sys_argv[1]
-        # Music = get_codec(filename)
-        from all_file import AllFile
-        Music = AllFile
+        Music = get_codec(filename)
+        # from all_file import AllFile as Music
 
         if not Music:
             print("Filetype not supported.")

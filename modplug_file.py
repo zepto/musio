@@ -189,7 +189,7 @@ class ModPlugFile(AudioIO):
         _modplug.ModPlug_SetSettings(_modplug.byref(self._modplug_settings))
 
     @io_wrapper
-    def read(self, size=None):
+    def read(self, size: int) -> bytes:
         """ read(size=None) -> Reads size amount of data and returns it.
 
         """

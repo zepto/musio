@@ -25,9 +25,16 @@ statement.
 
 """
 
-import ossaudiodev
+from io_base import DevIO, io_wrapper, OnDemand
 
-from io_base import DevIO, io_wrapper
+ossaudiodev = OnDemand('ossaudiodev', globals(), locals(), [], 0)
+
+__supported_dict = {
+        'output': [bytes],
+        'input': [bytes],
+        'handler': 'Oss',
+        # 'default': True
+        }
 
 
 class Oss(DevIO):
@@ -43,7 +50,7 @@ class Oss(DevIO):
     _supported_modes = 'rw'
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
-            bigendian=False, unsigned=False, buffer_size=None, **kwargs):
+                 bigendian=False, unsigned=False, buffer_size=None, **kwargs):
         """ Oss(depth=16, rate=44100, channels=2, bigendian=False,
         unsigned=False, buffer_size=None) -> Initialize the alsa pcm device.
 
@@ -74,7 +81,7 @@ class Oss(DevIO):
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
     @io_wrapper
-    def write(self, data):
+    def write(self, data: bytes) -> int:
         """ write(data) -> Write to the pcm device.
 
         """
@@ -82,7 +89,7 @@ class Oss(DevIO):
         return self._dsp.write(data)
 
     @io_wrapper
-    def read(self, size=0):
+    def read(self, size: int) -> bytes:
         """ read(size=0) -> Read length bytes from input.
 
         """
@@ -103,7 +110,6 @@ class Oss(DevIO):
         self._closed = False
 
         return dsp
-
 
     def close(self):
         """ close -> Close the pcm.

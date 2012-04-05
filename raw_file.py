@@ -83,7 +83,7 @@ class RawFile(AudioIO):
         return open(filename, '%sb' % self._mode, buffering=0)
 
     @io_wrapper
-    def write(self, data):
+    def write(self, data: bytes) -> int:
         """ write(data) -> Write data to raw audio file.
 
         """
@@ -91,7 +91,7 @@ class RawFile(AudioIO):
         return self._file.write(data)
 
     @io_wrapper
-    def read(self, size=None):
+    def read(self, size: int) -> bytes:
         """ read(size=None) -> Reads size amount of data and returns it.  If
         size is None then read a buffer size.
 

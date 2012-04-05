@@ -99,7 +99,7 @@ class WaveFile(AudioIO):
         return self._wave.tell()
 
     @io_wrapper
-    def write(self, data):
+    def write(self, data: bytes) -> int:
         """ write(data) -> Write data to wave file.
 
         """
@@ -107,7 +107,7 @@ class WaveFile(AudioIO):
         return self._wave.writeframes(data)
 
     @io_wrapper
-    def read(self, size=None):
+    def read(self, size: int) -> bytes:
         """ read(size=None) -> Reads size amount of data and returns it.
 
         """

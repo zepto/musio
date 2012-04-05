@@ -133,7 +133,7 @@ class AgwFile(AudioIO):
         return open(self._raw_filename, 'rb', buffering=0)
 
     @io_wrapper
-    def read(self, size=None):
+    def read(self, size: int) -> bytes:
         """ read(size=None) -> Reads size amount of data and returns it.  If
         size is None then read a buffer size.
 

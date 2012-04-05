@@ -42,7 +42,7 @@ class FFmpegFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=44100, channels=2):
+    def __init__(self, filename, depth=16, rate=44100, channels=2, **kwargs):
         """ FFmpegFile(filename, depth=16, rate=44100, channels=2) ->
         Initialize the playback settings of the player.
 
@@ -172,7 +172,7 @@ class FFmpegFile(AudioIO):
         return format_context
 
     @io_wrapper
-    def read(self, size=None):
+    def read(self, size: int) -> bytes:
         """ read(size=None) -> Reads size amount of data and returns it.  If
         size is None read buffer_size of data.
 
@@ -206,7 +206,7 @@ class FFmpegFile(AudioIO):
             if _av.av_read_frame(self.__format_context, av_packet) < 0:
                 # If no data was read then we have reached the end of the
                 # file so restart or exit.
-                if self._loops != -1 and self._loop_count > self._loops:
+                if self._loops != -1 and self._loop_count >= self._loops:
                     # Free the packet.
                     _av.av_free_packet(av_packet)
 
@@ -215,6 +215,9 @@ class FFmpegFile(AudioIO):
                     if len(data) != 0:
                         data += b'\x00' * (size - len(data))
                 else:
+                    # Fill the buffer so we return the requested size.
+                    data += b'\x00' * (size - len(data))
+
                     # Update the loop count and seek to the start.
                     self._loop_count += 1
                     self.seek(0)

@@ -220,7 +220,7 @@ class Mpg123File(AudioIO):
         self._id3_dict = self._info_dict = id3_dict
 
     @io_wrapper
-    def read(self, size=None):
+    def read(self, size: int) -> bytes:
         """ read(size=None) -> Reads size amount of data and returns it.  If
         size is None then read a buffer size.
 
