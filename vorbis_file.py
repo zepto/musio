@@ -136,9 +136,9 @@ class VorbisFile(AudioIO):
         """
 
         if self._mode == 'r':
-            repr_str = "filename='{_filename}', mode='{_mode}', depth={_depth}, rate={_rate}, channels={_channels}, bigendian={_bigendian}, unsigned={_unsigned}".format(**self.__dict__)
+            repr_str = "filename='%(_filename)s', mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s" % self
         else:
-            repr_str = "filename='{_filename}', mode='{_mode}', depth={_depth}, rate={_rate}, channels={_channels}, quality={_quality}, comment_dict={_comment_dict}".format(**self.__dict__)
+            repr_str = "filename='%(_filename)s', mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, quality=%(_quality)s, comment_dict=%(_comment_dict)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -248,15 +248,11 @@ class VorbisFile(AudioIO):
 
         """
 
-        try:
+        if not self.closed:
             _vorbisfile.ov_clear(_vorbisfile.byref(self._vorbis_file))
             self._vorbis_file = None
 
             self._closed = True
-        except:
-            pass
-        finally:
-            return self._closed
 
     def _write_open(self, filename):
         """ _open(filename) -> Load the specified file.
@@ -350,7 +346,7 @@ class VorbisFile(AudioIO):
 
         """
 
-        try:
+        if not self.closed:
             # Finalize the file.
             self._vorbis_file.write(self._encode(None))
 
@@ -365,9 +361,6 @@ class VorbisFile(AudioIO):
 
             # The file is closed.
             self._closed = True
-            return True
-        except:
-            return False
 
 
 class OggStreamState(_vorbisenc.ogg_stream_state):

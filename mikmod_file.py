@@ -240,14 +240,16 @@ class MikModFile(AudioIO):
 
         """
 
-        _mikmod.Player_Stop()
-        _mikmod.Player_Free(self._module)
-        _mikmod.MikMod_Exit()
-        try:
-            self._outfile.close()
-            os_remove(self._out_filename)
-        except:
-            pass
+        if not self.closed:
+            _mikmod.Player_Stop()
+            _mikmod.Player_Free(self._module)
+            _mikmod.MikMod_Exit()
+            try:
+                self._outfile.close()
+                os_remove(self._out_filename)
+            except:
+                pass
+            self._closed = True
 
     @io_wrapper
     def read(self, size: int) -> bytes:

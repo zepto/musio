@@ -71,15 +71,6 @@ class Oss(DevIO):
 
         self._dsp = self._open()
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
-
-        """
-
-        repr_str = "mode='{_mode}', depth={_depth}, rate={_rate}, channels={_channels}, bigendian={_bigendian}, unsigned={_unsigned}, buffer_size={_buffer_size}".format(**self.__dict__)
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
     @io_wrapper
     def write(self, data: bytes) -> int:
         """ write(data) -> Write to the pcm device.
@@ -116,10 +107,8 @@ class Oss(DevIO):
 
         """
 
-        if self._dsp:
+        if not self.closed:
             self._dsp.close()
             self._dsp = None
 
             self._closed = True
-
-        return self._closed

@@ -24,8 +24,10 @@
 
 """
 
-from portaudio import portaudio as _portaudio
+from sys import stderr as sys_stderr
+
 from io_base import DevIO, io_wrapper, OnDemand
+from io_util import silence
 
 _portaudio = OnDemand('portaudio.portaudio', globals(), locals(),
                       ['portaudio'], 0)
@@ -36,21 +38,6 @@ __supported_dict = {
         'handler': 'Portaudio',
         'default': True
         }
-
-def redirect_cstd():
-    """ Redirect ctypes stderr.
-
-    """
-
-    import sys
-    import os
-    sys.stdout.flush()
-    oldstderr = os.dup(2)
-    r, w = os.pipe()
-    os.dup2(w, 2)
-    os.close(w)
-    os.close(r)
-    sys.stderr = os.fdopen(oldstderr, 'w')
 
 
 class Portaudio(DevIO):
@@ -98,9 +85,6 @@ class Portaudio(DevIO):
         self._stream = None
         self._portaudio = None
 
-        # Redirect ctypes stdout
-        redirect_cstd()
-
         self._open()
 
         self._buffer_size = self._stream.buffer_size
@@ -113,7 +97,7 @@ class Portaudio(DevIO):
 
         """
 
-        repr_str = "mode='{_mode}', depth={_depth}, rate={_rate}, channels={_channels}, unsigned={_unsigned}, floatp={_floatp}, buffer_size={_buffer_size}, latency={_latency}, devindex={_devindex}, callback={_callback}".format(**self.__dict__)
+        repr_str = "mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, unsigned=%(_unsigned)s, floatp=%(_floatp)s, buffer_size=%(_buffer_size)s, latency=%(_latency)s, devindex=%(_devindex)s, callback=%(_callback)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -165,7 +149,7 @@ class Portaudio(DevIO):
             self._stream.write(self._data[:write_size], self._buffer_size)
             self._data = self._data[write_size:]
 
-        return write_size
+        return datalen
 
     @io_wrapper
     def read(self, size: int) -> bytes:
@@ -181,7 +165,10 @@ class Portaudio(DevIO):
         """
 
         self._portaudio = _portaudio.Portaudio()
-        self._portaudio.initialize()
+
+        # Silence stderr
+        with silence(sys_stderr):
+            self._portaudio.initialize()
 
         dev_list = self.device_list()
         dev_index = self._devindex
@@ -231,7 +218,7 @@ class Portaudio(DevIO):
 
         """
 
-        if self._stream:
+        if not self.closed:
             self._stream.stop()
             # Wait for the stream to stop.
             while not self._stream.stopped:
@@ -241,5 +228,3 @@ class Portaudio(DevIO):
             self._portaudio.terminate()
 
             self._closed = True
-
-        return self._closed

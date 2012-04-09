@@ -532,7 +532,7 @@ class FluidsynthFile(AudioIO):
 
         """
 
-        repr_str = "filename='{_filename}', soundfont='{_soundfont}', rate={_rate}, gain={_gain}, reverb={_reverb}, chorus={_chorus}".format(**self.__dict__)
+        repr_str = "filename='%(_filename)s', soundfont='%(_soundfont)s', rate=%(_rate)s, gain=%(_gain)s, reverb=%(_reverb)s, chorus=%(_chorus)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -656,7 +656,10 @@ class FluidsynthFile(AudioIO):
 
         """
 
-        self._player.stop()
-        self._player.delete()
-        self._synth.delete()
-        self._settings.delete()
+        if not self.closed:
+            self._player.stop()
+            self._player.delete()
+            self._synth.delete()
+            self._settings.delete()
+
+            self._closed = True

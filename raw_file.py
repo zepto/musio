@@ -109,9 +109,6 @@ class RawFile(AudioIO):
 
         """
 
-        try:
+        if not self.closed:
             self._file.close()
             self._closed = True
-            return True
-        except Exception as err:
-            return False

@@ -160,15 +160,11 @@ class Mp4File(AudioIO):
 
         """
 
-        try:
+        if not self.closed:
             self._mp4_handle.close()
             self._aac_decoder.close()
 
             self._closed = True
-
-            return True
-        except:
-            return False
 
 
 class Mp4Handle(_mp4v2.MP4FileHandle):

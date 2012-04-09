@@ -10,37 +10,32 @@ def play_proc(msg_dict):
     else:
         args = (filename,)
 
-    # from oss_io import Oss as AudioIO
-    # from alsa_io import Alsa as AudioIO
-    # from portaudio_io import Portaudio as AudioIO
-    AudioIO = get_io(Music)
-
     print("Playing: %s" % filename)
-    with Music(depth=16, channels=2, *args) as music, AudioIO(rate=music.rate,
-                                        channels=music.channels,
-                                        depth=music.depth,
-                                        bigendian=music.bigendian,
-                                        unsigned=music.unsigned) as audio_out:
-        music.loops = 2
-        print(repr(audio_out))
-        print(repr(music))
-        print(music)
-        for buf in music:
-            # print(len(buf))
-            written = audio_out.write(buf)
-            # written = len(buf)
-            # print(written, 'bytes written')
-            if music.length > 0:
-                perc_done = (music.position * 100) / music.length
-                perc_str = 'Position: %.2f%%' % perc_done
-                format_len = len(perc_str) + 2
-                print('\033[%dD\033[K%s' % (format_len, perc_str), end='')
-                stdout.flush()
-            if not msg_dict['playing'] or not buf and not written:
-                # writer.close()
-                stdout.flush()
-                break
-        # audio_out.flush()
+    with AudioIO(depth=16, channels=2, *args) as file:
+        DevIO = get_io(file)
+        with DevIO(rate=file.rate, channels=file.channels,
+                   depth=file.depth, bigendian=file.bigendian,
+                   unsigned=file.unsigned) as device:
+            file.loops = 2
+            print(repr(device))
+            print(repr(file))
+            print(file)
+            for buf in file:
+                # print(len(buf))
+                written = device.write(buf)
+                # written = len(buf)
+                # print(written, 'bytes written')
+                if file.length > 0:
+                    perc_done = (file.position * 100) / file.length
+                    perc_str = 'Position: %.2f%%' % perc_done
+                    format_len = len(perc_str) + 2
+                    print('\033[%dD\033[K%s' % (format_len, perc_str), end='')
+                    stdout.flush()
+                if not msg_dict['playing'] or not buf and not written:
+                    # writer.close()
+                    stdout.flush()
+                    break
+            # device.flush()
     print("\nDone.")
 
 def rec_proc(msg_dict):
@@ -52,24 +47,24 @@ def rec_proc(msg_dict):
     comment_dict = msg_dict.get('comment_dict', {})
     kwargs = {'filename': filename, 'mode': 'w', 'depth':16, 'channels':2} #, 'comment_dict': comment_dict}
 
-    # from oss_io import Oss as AudioIO
-    # from alsa_io import Alsa as AudioIO
-    from portaudio_io import Portaudio as AudioIO
+    # from oss_io import Oss as DevIO
+    # from alsa_io import Alsa as DevIO
+    from portaudio_io import Portaudio as DevIO
 
     print("Recording to: %s" % filename)
-    with Music(**kwargs) as music, AudioIO(mode='rw', rate=music.rate,
-                                           channels=music.channels,
-                                           depth=music.depth,
-                                           unsigned=music.unsigned) as audio_in:
+    with AudioIO(**kwargs) as file, DevIO(mode='rw', rate=file.rate,
+                                           channels=file.channels,
+                                           depth=file.depth,
+                                           unsigned=file.unsigned) as device:
 
-        writer = QueuedWriter(music.write)
+        writer = QueuedWriter(file.write)
         print(writer)
-        print(repr(music))
-        print(repr(audio_in))
-        print(music)
+        print(repr(file))
+        print(repr(device))
+        print(file)
         bytes_read = 0
 
-        for buf in audio_in:
+        for buf in device:
             writer(buf)
             bytes_read += len(buf)
             status_str = 'Read: %d' % bytes_read
@@ -88,14 +83,14 @@ if __name__ == '__main__':
         from sys import stdout, exit
         import multiprocessing
 
-        from io_base import get_codec, get_io
+        from io_util import get_codec, get_io
         from queued_io import QueuedWriter
 
         filename = sys_argv[1]
-        Music = get_codec(filename)
-        # from all_file import AllFile as Music
+        # AudioIO = get_codec(filename)
+        from all_file import AllFile as AudioIO
 
-        if not Music:
+        if not AudioIO:
             print("Filetype not supported.")
             exit()
 
@@ -124,4 +119,3 @@ if __name__ == '__main__':
         input()
         playing['playing'] = False
         play_t.join()
-

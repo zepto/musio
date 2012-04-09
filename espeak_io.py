@@ -24,8 +24,10 @@
 """
 
 from time import sleep as time_sleep
+from sys import stderr as sys_stderr
 
 from io_base import DevIO, io_wrapper, OnDemand
+from io_util import silence
 
 _espeak = OnDemand('espeak.espeak', globals(), locals(), ['_espeak'], 0)
 
@@ -35,21 +37,6 @@ __supported_dict = {
         'handler': 'Espeak',
         'default': True
         }
-
-def redirect_cstd():
-    """ Redirect ctypes stderr.
-
-    """
-
-    import sys
-    import os
-    sys.stdout.flush()
-    oldstderr = os.dup(2)
-    r, w = os.pipe()
-    os.dup2(w, 2)
-    os.close(w)
-    os.close(r)
-    sys.stderr = os.fdopen(oldstderr, 'w')
 
 
 class Espeak(DevIO):
@@ -63,8 +50,9 @@ class Espeak(DevIO):
     # Only supports depth 16
     _valid_depth = (16,)
 
-    def __init__(self, mode='w', **kwargs):
-        """ Espeak(mode='w') -> Open espeak and set it up for writing.
+    def __init__(self, mode='w', voice='en-us', **kwargs):
+        """ Espeak(mode='w', voice='en-us') -> Open espeak and set it up for
+        writing.
 
         """
 
@@ -73,10 +61,19 @@ class Espeak(DevIO):
         super(Espeak, self).__init__(mode='w', depth=16,  rate=rate,
                                      channels=1)
 
-        # Redirect c stdout
-        redirect_cstd()
+        self._voice = voice
+        _espeak.set_voice(voice)
 
         self._closed = False
+
+    def __repr__(self):
+        """ __repr__ -> Returns a python expression to recreate this instance.
+
+        """
+
+        repr_str = "mode='%(_mode)s', voice='%(_voice)s'" % self
+
+        return '%s(%s)' % (self.__class__.__name__, repr_str)
 
     @property
     def range(self):
@@ -156,6 +153,7 @@ class Espeak(DevIO):
 
         """
 
+        self._voice = value
         _espeak.set_voice(value)
 
     def list_voices(self):
@@ -170,9 +168,10 @@ class Espeak(DevIO):
 
         """
 
-        _espeak.close()
+        if not self.closed:
+            _espeak.close()
 
-        self._closed = True
+            self._closed = True
 
     def flush(self):
         """ Wait for playing to stop.
@@ -198,9 +197,11 @@ class Espeak(DevIO):
         elif type(data) is not str:
             return 0
 
-        return_val = _espeak.speak_text(data)
+        # Silence stderr
+        with silence(sys_stderr):
+            return_val = _espeak.speak_text(data)
 
-        # Flush output buffer before returning
-        self.flush()
+            # Flush output buffer before returning
+            self.flush()
 
         return return_val

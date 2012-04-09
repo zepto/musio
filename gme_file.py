@@ -80,7 +80,7 @@ class GMEFile(AudioIO):
 
         """
 
-        repr_str = "filename='{_filename}', track={_track}, rate={_rate}".format(**self.__dict__)
+        repr_str = "filename='%(_filename)s', track=%(_track)s, rate=%(_rate)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -223,9 +223,10 @@ class GMEFile(AudioIO):
 
         """
 
-        _gme.gme_delete(self._music_emu)
+        if not self.closed:
+            _gme.gme_delete(self._music_emu)
 
-        self._closed = True
+            self._closed = True
 
 
 class MusicEmu(object):

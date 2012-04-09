@@ -26,8 +26,11 @@
 import os
 from time import sleep
 from tempfile import mktemp
+from sys import stdout as sys_stdout
+from sys import stderr as sys_stderr
 
 from io_base import AudioIO, OnDemand, io_wrapper
+from io_util import silence
 
 _agw = OnDemand('audiality.audiality', globals(), locals(),
                 ['audiality'], 0)
@@ -36,24 +39,6 @@ __supported_dict = {
         'ext': ['.agw'],
         'handler': 'AgwFile'
         }
-
-
-def redirect_cstd():
-    """ Redirect ctypes stdout/stderr.
-
-    """
-
-    import sys
-    sys.stdout.flush()
-    oldstdout = os.dup(1)
-    oldstderr = os.dup(2)
-    r, w = os.pipe()
-    os.dup2(w, 1)
-    os.dup2(w, 2)
-    os.close(w)
-    os.close(r)
-    sys.stdout = os.fdopen(oldstdout, 'w')
-    sys.stderr = os.fdopen(oldstderr, 'w')
 
 
 class AgwFile(AudioIO):
@@ -87,7 +72,7 @@ class AgwFile(AudioIO):
 
         """
 
-        repr_str = "filename='{_filename}', depth={_depth}, rate={_rate}, channels={_channels}, quality={_quality}, latency={_latency}".format(**self.__dict__)
+        repr_str = "filename='%(_filename)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, quality=%(_quality)s, latency=%(_latency)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -99,7 +84,7 @@ class AgwFile(AudioIO):
         filename = filename.encode()
 
         # Stop the audiality library from printing information.
-        redirect_cstd()
+        # redirect_cstd()
 
         name = os.path.basename(filename)
         path = os.path.dirname(filename)
@@ -114,22 +99,35 @@ class AgwFile(AudioIO):
 
         output = 'disk:%s' % self._raw_filename
 
+        # Silence stdout and stderr.
+        with silence(sys_stdout), silence(sys_stderr):
+            # Open the audio engine and startit.
+            _agw.ady_open()
+            _agw.ady_set_interface(1, output.encode())
+            _agw.ady_start(self._rate, self._latency, 0)
+
+        # Set playback quality.
+        _agw.ady_quality(self._quality)
+
+        # Set the path to load data from.
         _agw.ady_set_path(path)
 
+        # Load the file
         agw_id = _agw.ady_wave_load(0, name, -1)
+
         if agw_id:
             raise IOError("Error loading %s, %s" % (name, agw_id))
 
-        _agw.ady_set_interface(1, output.encode())
-        _agw.ady_start(self._rate, self._latency, 0)
-        _agw.ady_quality(self._quality)
-        _agw.ady_channel_control(0, -2, 2, agw_id)
-        _agw.ady_channel_play(0, 0, _agw.c_float(60.0), _agw.c_float(1.0))
-
-        self._closed = False
+        # Start playing.
+        _agw.music_play(1, agw_id)
+        # _agw.ady_channel_control(0, -2, 2, agw_id)
+        # _agw.ady_channel_play(0, 0, _agw.c_float(60.0), _agw.c_float(1.0))
 
         self._agw_id = agw_id
 
+        self._closed = False
+
+        # Open the raw file that is written to.
         return open(self._raw_filename, 'rb', buffering=0)
 
     @io_wrapper
@@ -146,13 +144,13 @@ class AgwFile(AudioIO):
 
         """
 
-        try:
+        if not self.closed:
             # Change the interface to an empty string to disconnect it
             # so it can be stopped.
-            _agw.ady_set_interface(1, '')
+            # _agw.ady_set_interface(1, b'')
 
-            _agw.ady_channel_stop(-1, -1)
-            _agw.ady_close()
+            # _agw.ady_channel_stop(-1, -1)
+            # _agw.ady_close()
             _agw.ady_wave_free(self._agw_id)
 
             if self._raw_file:
@@ -160,7 +158,3 @@ class AgwFile(AudioIO):
                 os.remove(self._raw_filename)
 
             self._closed = True
-
-            return True
-        except Exception as err:
-            return False

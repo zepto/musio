@@ -25,7 +25,8 @@
 
 import audioop
 
-from io_base import AudioIO, io_wrapper, get_codec
+from io_base import AudioIO, io_wrapper
+from io_util import get_codec
 from conversion_util import swap_endian
 
 __supported_dict = {
@@ -65,7 +66,11 @@ class AllFile(AudioIO):
 
         self._source = codec(filename, mode=mode)
 
-        self._buffer = b''
+        annotations = getattr(codec.read, '__annotations__')
+        self.read.__annotations__.update(annotations)
+
+        self._buffer = annotations.get('return', bytes)()
+        self._buffer_size = self._source.buffer_size
 
         self._length = self._source.length
         self._info_dict = self._source._info_dict
@@ -118,7 +123,7 @@ class AllFile(AudioIO):
 
         """
 
-        repr_str = "filename='{_filename}', mode='{_mode}', depth={_depth}, rate={_rate}, channels={_channels}, bigendian={_bigendian}, unsigned={_unsigned}".format(**self.__dict__)
+        repr_str = "filename='%(_filename)s', mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -127,9 +132,10 @@ class AllFile(AudioIO):
 
         """
 
-        self._source.close()
+        if not self.closed:
+            self._source.close()
 
-        self._closed = True
+            self._closed = True
 
     def _set_position(self, position):
         """ Change the position of playback.
@@ -174,6 +180,8 @@ class AllFile(AudioIO):
 
         while len(data) < size:
             temp_data = self._source.read(size)
+            if type(temp_data) is not bytes:
+                return temp_data
 
             if not temp_data:
                 if len(data) != 0:

@@ -80,7 +80,7 @@ class WaveFile(AudioIO):
 
         """
 
-        repr_str = "filename='{_filename}', mode='{_mode}', depth={_depth}, rate={_rate}, channels={_channels}".format(**self.__dict__)
+        repr_str = "filename='%(_filename)s', mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -135,8 +135,7 @@ class WaveFile(AudioIO):
 
         """
 
-        self._wave.close()
+        if not self.closed:
+            self._wave.close()
 
-        self._closed = True
-
-        return self._closed
+            self._closed = True

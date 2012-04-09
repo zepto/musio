@@ -67,7 +67,7 @@ class DummyFile(AudioIO):
 
         """
 
-        repr_str = "filename='{_filename}', mode='{_mode}', depth={_depth}, rate={_rate}, channels={_channels}, bigendian={_bigendian}, unsigned={_unsigned}".format(**self.__dict__)
+        repr_str = "filename='%(_filename)s', mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -76,7 +76,8 @@ class DummyFile(AudioIO):
 
         """
 
-        self._closed = True
+        if not self.closed:
+            self._closed = True
 
     @io_wrapper
     def read(self, size: int) -> bytes:

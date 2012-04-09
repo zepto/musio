@@ -206,13 +206,10 @@ class ModPlugFile(AudioIO):
 
         """
 
-        try:
+        if not self.closed:
             _modplug.ModPlug_Unload(self._modplug_file)
             self._modplug_file = None
             self._closed = True
-            return True
-        except:
-            return False
 
     def _wrap_settings(func):
         """ A wrapper function to update the settings.

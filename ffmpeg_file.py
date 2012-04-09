@@ -284,7 +284,7 @@ class FFmpegFile(AudioIO):
 
         """
 
-        try:
+        if self.closed:
             # Close the file and free all contexts.
             _av.avformat_free_context(self.__format_context)
             self.__format_context = None
@@ -295,6 +295,3 @@ class FFmpegFile(AudioIO):
 
             # This file is closed.
             self._closed = True
-            return True
-        except:
-            return False

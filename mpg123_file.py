@@ -34,6 +34,22 @@ __supported_dict = {
         }
 
 
+def _check(err):
+    """ Check if there was an error and print the result.
+
+    """
+
+    if not err: return err
+
+    if hasattr(err, 'value'):
+        err = err.value
+
+    if err != _mpg123.MPG123_OK:
+        print(_mpg123.mpg123_plain_strerror(err).decode('cp437', 'replace'))
+
+    return err
+
+
 class Mpg123File(AudioIO):
     """ A file like object for reading mp3s.
 
@@ -61,11 +77,9 @@ class Mpg123File(AudioIO):
         self._encoding = encoding
         self._unsigned = unsigned
 
-        self.verbose = False
-
         self._id3_dict = {}
 
-        self._check(_mpg123.mpg123_init())
+        _check(_mpg123.mpg123_init())
 
         self._mpg123_handle = self._open(filename)
 
@@ -75,25 +89,12 @@ class Mpg123File(AudioIO):
 
         self._data = b''
 
-    def _check(self, err):
-        """ Check if there was an error and print the result.
-
-        """
-
-        if type(err) is not int:
-            err = err.value
-
-        if err != _mpg123.MPG123_OK and self.verbose:
-            print(_mpg123.mpg123_plain_strerror(err).decode('cp437', 'replace'))
-
-        return err
-
     def __repr__(self):
         """ __repr__ -> Returns a python expression to recreate this instance.
 
         """
 
-        repr_str = "filename='{_filename}', depth={_depth}, rate={_rate}, channels={_channels}, unsigned={_unsigned}".format(**self.__dict__)
+        repr_str = "filename='%(_filename)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, unsigned=%(_unsigned)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -102,7 +103,7 @@ class Mpg123File(AudioIO):
 
         """
 
-        self._check(_mpg123.mpg123_seek(self._mpg123_handle, position,
+        _check(_mpg123.mpg123_seek(self._mpg123_handle, position,
                                         _mpg123.SEEK_SET))
 
     def _get_position(self):
@@ -121,17 +122,17 @@ class Mpg123File(AudioIO):
         # Create a mpg123 handle.
         err = _mpg123.c_int()
         mpg123_handle = _mpg123.mpg123_new(None, _mpg123.byref(err))
-        self._check(err)
+        _check(err)
 
-        if self._check(_mpg123.mpg123_open(mpg123_handle, filename.encode())):
+        if _check(_mpg123.mpg123_open(mpg123_handle, filename.encode())):
             raise IOError("There was an error opening %s" % filename)
 
 
-        self._check(_mpg123.mpg123_scan(mpg123_handle))
+        _check(_mpg123.mpg123_scan(mpg123_handle))
 
-        self._check(_mpg123.mpg123_format_none(mpg123_handle))
+        _check(_mpg123.mpg123_format_none(mpg123_handle))
 
-        err = self._check(_mpg123.mpg123_format(mpg123_handle,
+        err = _check(_mpg123.mpg123_format(mpg123_handle,
                                                 self._rate, self._channels,
                                                 self._encoding))
 
@@ -139,7 +140,7 @@ class Mpg123File(AudioIO):
         channels = _mpg123.c_int()
         encoding = _mpg123.c_int()
 
-        self._check(_mpg123.mpg123_getformat(mpg123_handle,
+        _check(_mpg123.mpg123_getformat(mpg123_handle,
                                              _mpg123.byref(rate),
                                              _mpg123.byref(channels),
                                              _mpg123.byref(encoding)))
@@ -166,7 +167,7 @@ class Mpg123File(AudioIO):
 
         id3v1 = _mpg123.POINTER(_mpg123.mpg123_id3v1)()
         id3v2 = _mpg123.POINTER(_mpg123.mpg123_id3v2)()
-        self._check(_mpg123.mpg123_id3(self._mpg123_handle,
+        _check(_mpg123.mpg123_id3(self._mpg123_handle,
                                        _mpg123.byref(id3v1),
                                        _mpg123.byref(id3v2)))
 
@@ -230,7 +231,7 @@ class Mpg123File(AudioIO):
         bytes_read = _mpg123.c_size_t(-1)
         data = self._data
         while len(data) < size:
-            err = self._check(_mpg123.mpg123_read(self._mpg123_handle,
+            err = _check(_mpg123.mpg123_read(self._mpg123_handle,
                                                   byte_buffer, size,
                                                   _mpg123.byref(bytes_read)))
 
@@ -251,20 +252,19 @@ class Mpg123File(AudioIO):
 
         return data[:size]
 
-    def close(self):
+    def close(self) -> bool:
         """ close -> Closes and cleans up.
 
         """
 
-        try:
-            self._check(_mpg123.mpg123_close(self._mpg123_handle))
-            self._check(_mpg123.mpg123_delete(self._mpg123_handle))
-            self._check(_mpg123.mpg123_exit())
+        if not self.closed:
+            try:
+                _check(_mpg123.mpg123_close(self._mpg123_handle))
+                _check(_mpg123.mpg123_delete(self._mpg123_handle))
+                _check(_mpg123.mpg123_exit())
 
-            self._mpg123_handle = None
+                self._mpg123_handle = None
 
-            self._closed = True
-
-            return True
-        except:
-            return False
+                self._closed = True
+            except Exception as err:
+                print("(%s.close) Error: %s" % (self.__class__.__name__, err))

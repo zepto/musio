@@ -88,14 +88,16 @@ class QueuedWriter(object):
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
-    def __call__(self, data):
+    def write(self, data):
         """ Send more data down the queue to the processing function.
 
         """
 
         self._data_queue.put(data)
 
-    write = __call__
+        return len(data)
+
+    __call__ = write
 
     def close(self):
         """ Close the queue and writer process.

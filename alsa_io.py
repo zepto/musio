@@ -52,10 +52,10 @@ class Alsa(DevIO):
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
                  bigendian=False, unsigned=False, buffer_size=None,
-                 latency=500000, **kwargs):
-        """ Alsa(depth=16, rate=44100, channels=2, bigendian=False,
-        unsigned=False, buffer_size=None, latency=500000) -> Initialize the
-        alsa pcm device.
+                 latency=500000, device=b'default', **kwargs):
+        """ Alsa(mode='w', depth=16, rate=44100, channels=2, bigendian=False,
+        unsigned=False, buffer_size=None, latency=500000, device=b'default',
+        **kwargs) -> Initialize the alsa pcm device.
 
         """
 
@@ -76,6 +76,7 @@ class Alsa(DevIO):
         self._pcm_format = pcm_format
         self._soft_resample = 1
         self._frame_size = 0
+        self._device = device
 
         self._multiplier = channels * (depth >> 3)
 
@@ -86,7 +87,7 @@ class Alsa(DevIO):
 
         """
 
-        repr_str = "mode='{_mode}', depth={_depth}, rate={_rate}, channels={_channels}, bigendian={_bigendian}, unsigned={_unsigned}, buffer_size={_buffer_size}, latency={_latency}".format(**self.__dict__)
+        repr_str = "mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s, buffer_size=%(_buffer_size)s, latency=%(_latency)s, device=%(_device)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -98,6 +99,7 @@ class Alsa(DevIO):
 
         datalen = len(data)
 
+        # Calculate the frame size.
         frame_size = datalen // (self._depth // (8 // self._channels))
 
         # print(alsapcm.snd_pcm_state_name(alsapcm.snd_pcm_state(self._pcm)))
@@ -106,16 +108,19 @@ class Alsa(DevIO):
 
         if rc == -alsapcm.EPIPE:
             # EPIPE means underrun
+            # Try to correct for the underrun.
             err = alsapcm.snd_pcm_prepare(self._pcm)
             if err < 0:
                 print("Can't recover from underrun prepare failed: %s\n",
                         alsapcm.snd_strerror(err).decode('utf8'))
+            return err
         elif rc < 0:
             print(alsapcm.snd_strerror(rc).decode('utf8'))
         elif rc != frame_size:
             print("Write %d frames" % rc)
 
-        return rc
+        # Return the length of the data written.
+        return datalen
 
     @io_wrapper
     def read(self, size: int) -> bytes:
@@ -168,7 +173,7 @@ class Alsa(DevIO):
         pcm = alsapcm.POINTER(alsapcm.snd_pcm_t)()
 
         # Open PCM device.
-        rc = alsapcm.snd_pcm_open(alsapcm.byref(pcm), b'default',
+        rc = alsapcm.snd_pcm_open(alsapcm.byref(pcm), self._device,
                                   stream_io, pcm_mode)
 
         if rc < 0:
@@ -193,13 +198,11 @@ class Alsa(DevIO):
 
         """
 
-        if self._pcm:
+        if not self.closed:
             alsapcm.snd_pcm_hw_free(self._pcm)
             alsapcm.snd_pcm_close(self._pcm)
 
             self._closed = True
-
-        return self._closed
 
     def _update_params(self, pcm):
         """ _set_params(pcm) -> Set the alsa pcm hardware parameters.

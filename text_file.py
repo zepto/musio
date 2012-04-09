@@ -23,10 +23,29 @@
 
 """
 
+from os.path import getsize as os_getsize
+
 from io_base import AudioIO, io_wrapper
+
+def issupported(filename, *args):
+    """ issupported(filename) -> Returns True if file is supported else False.
+
+    """
+
+    import mimetypes
+
+    mimetypes.init()
+
+    mimetype, encoding = mimetypes.guess_type(filename)
+
+    if not mimetype:
+        return False
+
+    return True if 'text' in mimetype else False
 
 __supported_dict = {
         'ext': ['.txt'],
+        'issupported': issupported,
         'handler': 'TextFile',
         'default': True
         }
@@ -49,10 +68,36 @@ class TextFile(AudioIO):
 
         self._file = open(filename, mode)
 
+        self._length = os_getsize(filename)
+
         self.seek = self._file.seek
         self.tell = self._file.tell
+        self.readline = self._file.readline
 
         self._closed = False
+
+    def __repr__(self):
+        """ __repr__ -> Returns a python expression to recreate this instance.
+
+        """
+
+        repr_str = "filename='%(_filename)s', mode='%(_mode)s'" % self
+
+        return '%s(%s)' % (self.__class__.__name__, repr_str)
+
+    def _set_position(self, position: int):
+        """ Change the position of playback.
+
+        """
+
+        self._file.seek(position)
+
+    def _get_position(self) -> int:
+        """ Returns the current position.
+
+        """
+
+        return self._file.tell()
 
     @io_wrapper
     def write(self, data: str) -> int:
@@ -62,18 +107,34 @@ class TextFile(AudioIO):
 
         return self._file.write(data)
 
+    def sreadlines(self, size: int) -> str:
+        """ Returns size number of lines concatenated into a string.
+
+        """
+
+        return ''.join([self._file.readline() for i in range(size)])
+
     @io_wrapper
     def read(self, size: int) -> str:
         """ Return size or less ammount of text.
 
         """
 
-        return self._file.readlines(size)
+        data = self.sreadlines(size)
+
+        if not data:
+            if self._loops == -1 or self._loop_count < self._loops:
+                self._loop_count += 1
+                self._file.seek(0)
+                data = self.sreadlines(size)
+
+        return data
 
     def close(self):
         """ Close file.
 
         """
 
-        self._file.close()
-        self._closed = True
+        if not self.closed:
+            self._file.close()
+            self._closed = True

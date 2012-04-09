@@ -336,14 +336,10 @@ class AACFile(AudioIO):
 
         """
 
-        try:
+        if not self.closed:
             self._aac_file.close()
             self._aac_decoder.close()
 
             self._aac_file = None
 
             self._closed = True
-
-            return True
-        except:
-            return False

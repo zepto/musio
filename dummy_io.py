@@ -97,9 +97,7 @@ class Dummy(DevIO):
 
         """
 
-        if self._dummy:
+        if not self.closed:
             self._dummy = None
 
             self._closed = True
-
-        return self._closed

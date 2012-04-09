@@ -112,7 +112,7 @@ class DumbFile(AudioIO):
 
         """
 
-        repr_str = "filename='{_filename}', depth={_depth}, rate={_rate}, channels={_channels}, bigendian={_bigendian}, unsigned={_unsigned}".format(**self.__dict__)
+        repr_str = "filename='%(_filename)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
@@ -361,14 +361,10 @@ class DumbFile(AudioIO):
 
         """
 
-        try:
+        if not self.closed:
             _dumb.duh_end_sigrenderer(self._sig_r)
             _dumb.unload_duh(self._duh)
             _dumb.dumb_exit()
 
             self._duh = None
             self._closed = True
-
-            return True
-        except Exception as err:
-            return False
