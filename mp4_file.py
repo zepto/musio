@@ -136,7 +136,7 @@ class Mp4File(AudioIO):
                     if len(data) != 0:
                         # Fill data buffer until it is the requested
                         # size.
-                        data += b'\x00' * (read_size - len(data))
+                        data += b'\x00' * (size - len(data))
                     break
                 else:
                     self._loop_count += 1

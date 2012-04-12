@@ -80,7 +80,7 @@ class Alsa(DevIO):
 
         self._multiplier = channels * (depth >> 3)
 
-        self._pcm = self._open()
+        self._in_pcm, self._out_pcm = self._open()
 
     def __repr__(self):
         """ __repr__ -> Returns a python expression to recreate this instance.
@@ -91,107 +91,153 @@ class Alsa(DevIO):
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
+    def _check_rc(self, rc: int, func_name: str):
+        """ Check the rc and handle the errors.
+
+        """
+
+        # Set the pcm based on the function name.
+        pcm = self._out_pcm if func_name == 'write' else self._in_pcm
+
+        # Get the class name for error information.
+        class_name = self.__class__.__name__
+
+        # Check for underruns
+        if rc == -alsapcm.EPIPE:
+            # EPIPE means underrun
+            err_text = alsapcm.snd_strerror(rc).decode('utf8')
+            print('(%(class_name)s.%(func_name)s): %(err_text)s' % locals())
+
+            # Try to correct for the underrun.
+            err = alsapcm.snd_pcm_prepare(pcm)
+            if err < 0:
+                # Recovery failed so raise IOError.
+                err_str = "(%s.%s) Underrun recovery failed: %s"
+                raise IOError(err_str % (class_name, func_name,
+                            alsapcm.snd_strerror(err).decode('utf8')
+                            )
+                        )
+            else:
+                # Recovery succeeded so return 0.
+                rc = 0
+        elif rc < 0:
+            # Raise IOError on any other error.
+            raise IOError('(%s.%s): %s' % (class_name, func_name,
+                                alsapcm.snd_strerror(rc).decode('utf8')))
+
+        return rc
+
     @io_wrapper
     def write(self, data: bytes) -> int:
         """ write(data) -> Write to the pcm device.
 
         """
 
+        # The length of data.
         datalen = len(data)
 
-        # Calculate the frame size.
+        # Calculate the frame size so writei will write datalen number
+        # of bytes.
         frame_size = datalen // (self._depth // (8 // self._channels))
 
-        # print(alsapcm.snd_pcm_state_name(alsapcm.snd_pcm_state(self._pcm)))
-        rc = alsapcm.snd_pcm_writei(self._pcm, data,
-                                    alsapcm.c_ulong(frame_size))
+        # print(alsapcm.snd_pcm_state_name(alsapcm.snd_pcm_state(self._out_pcm)))
 
-        if rc == -alsapcm.EPIPE:
-            # EPIPE means underrun
-            # Try to correct for the underrun.
-            err = alsapcm.snd_pcm_prepare(self._pcm)
-            if err < 0:
-                print("Can't recover from underrun prepare failed: %s\n",
-                        alsapcm.snd_strerror(err).decode('utf8'))
-            return err
-        elif rc < 0:
-            print(alsapcm.snd_strerror(rc).decode('utf8'))
-        elif rc != frame_size:
-            print("Write %d frames" % rc)
+        # Number of bytes written.
+        rc = 0
+
+        # Loop until all the data is written.
+        while rc != frame_size:
+            # Write the data.
+            rc = alsapcm.snd_pcm_writei(self._out_pcm, data,
+                                        alsapcm.c_ulong(frame_size))
+            # Check the output.
+            rc = self._check_rc(rc, 'write')
+
+            # Check that frame_size bytes were written.
+            if rc > 0 and rc != frame_size:
+                print("Write %d frames" % rc)
 
         # Return the length of the data written.
         return datalen
 
     @io_wrapper
     def read(self, size: int) -> bytes:
-        """ read(size=0) -> Read length bytes from input.
+        """ _read(size=0) -> Read length bytes from input.
 
         """
 
-        # Corrected size based on frame_size.
+        # Calculate the size to pass to readi so it will read size
+        # number of bytes.
         read_size = size // self._frame_size
 
         # Create buffer to hold data.
         read_buffer = alsapcm.create_string_buffer(size)
 
-        # Read data.
-        rc = alsapcm.snd_pcm_readi(self._pcm, read_buffer, read_size)
+        # The return data buffer.
+        data = b''
 
-        if rc == -alsapcm.EPIPE:
-            # EPIPE means underrun
-            err_text = alsapcm.snd_strerror(rc).decode('utf8')
-            print('%s: %s' % (__name__, err_text))
+        # Read up to size number of bytes into data.
+        while len(data) < size:
+            # Read data.
+            rc = alsapcm.snd_pcm_readi(self._in_pcm, read_buffer, read_size)
 
-            # Correct for underrun.
-            err = alsapcm.snd_pcm_prepare(self._pcm)
+            # Check the output.
+            rc = self._check_rc(rc, 'read')
 
-            if err < 0:
-                # Correcting failed.
-                raise IOError(
-                        "Can't recover from underrun prepare failed: %s\n",
-                        alsapcm.snd_strerror(err).decode('utf8')
-                        )
-            else:
-                rc = 0
-        elif rc < 0:
-            raise IOError(alsapcm.snd_strerror(rc).decode('utf8'))
+            # Append the data read to the data buffer.
+            data += alsapcm.string_at(read_buffer, rc * self._frame_size)
 
-        return alsapcm.string_at(read_buffer, rc * self._frame_size)
+        # Only return size number of bytes.
+        return data[:size]
+
+    def _open_pcm(self, mode: str):
+        """ Returns an open pcm device opened with mode.
+
+        """
+
+        # Open in blocking mode.
+        pcm_mode = 0
+
+        if 'r' in mode:
+            stream_io = alsapcm.SND_PCM_STREAM_CAPTURE
+        else:
+            stream_io = alsapcm.SND_PCM_STREAM_PLAYBACK
+
+        pcm = alsapcm.POINTER(alsapcm.snd_pcm_t)()
+
+        # Open PCM device.
+        rc = alsapcm.snd_pcm_open(alsapcm.byref(pcm), self._device, stream_io,
+                                  pcm_mode)
+
+        if rc < 0:
+            raise IOError('(%s.open): %s' % (self.__class__.__name__,
+                            alsapcm.snd_strerror(rc).decode('utf8')))
+            return None
+
+        if 'r' in mode:
+            self._update_params(pcm)
+        else:
+            alsapcm.snd_pcm_set_params(pcm, self._pcm_format,
+                                       alsapcm.SND_PCM_ACCESS_RW_INTERLEAVED,
+                                       self._channels, self._rate,
+                                       self._soft_resample, self._latency)
+
+        return pcm
 
     def _open(self):
         """ open -> Open the pcm audio output.
 
         """
 
-        if 'r' in self._mode:
-            stream_io = alsapcm.SND_PCM_STREAM_CAPTURE
-            pcm_mode = 0 #alsapcm.SND_PCM_NONBLOCK
-        else:
-            stream_io = alsapcm.SND_PCM_STREAM_PLAYBACK
-            pcm_mode = 0
+        # Open the input pcm.
+        in_pcm = self._open_pcm('r') if 'r' in self._mode else None
 
-        pcm = alsapcm.POINTER(alsapcm.snd_pcm_t)()
-
-        # Open PCM device.
-        rc = alsapcm.snd_pcm_open(alsapcm.byref(pcm), self._device,
-                                  stream_io, pcm_mode)
-
-        if rc < 0:
-            raise IOError(alsapcm.snd_strerror(rc).decode('utf8'))
-            return None
-
-        if 'w' in self._mode:
-            alsapcm.snd_pcm_set_params(pcm, self._pcm_format,
-                                    alsapcm.SND_PCM_ACCESS_RW_INTERLEAVED,
-                                    self._channels,
-                                    self._rate,
-                                    self._soft_resample, self._latency)
-        else:
-            self._update_params(pcm)
+        # Open the output pcm.
+        out_pcm = self._open_pcm('w') if 'w' in self._mode else None
 
         self._closed = False
 
-        return pcm
+        return in_pcm, out_pcm
 
     def close(self):
         """ close -> Close the pcm.
@@ -199,8 +245,10 @@ class Alsa(DevIO):
         """
 
         if not self.closed:
-            alsapcm.snd_pcm_hw_free(self._pcm)
-            alsapcm.snd_pcm_close(self._pcm)
+            for pcm in (self._in_pcm, self._out_pcm):
+                if pcm:
+                    alsapcm.snd_pcm_hw_free(pcm)
+                    alsapcm.snd_pcm_close(pcm)
 
             self._closed = True
 

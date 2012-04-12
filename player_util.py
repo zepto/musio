@@ -23,6 +23,12 @@
 
 """
 
+from time import sleep as time_sleep
+from multiprocessing import Process, Manager, Pipe
+from io import SEEK_SET, SEEK_CUR, SEEK_END
+
+from io_util import open_file, open_io
+
 def _play_proc(msg_dict):
     """ Player process
 
@@ -51,8 +57,6 @@ def play(filename, **kwargs):
 
     """
 
-    from multiprocessing import Process, Manager
-
     playing = Manager().dict()
     playing['playing'] = True
     playing['filename'] = filename
@@ -72,3 +76,260 @@ def stop(player_tup):
     playing['playing'] = False
     play_t.join()
 
+
+class AudioPlayer(object):
+    """ Play audio files.
+
+    """
+
+    def __init__(self, filename: str, **kwargs):
+        """ AudioPlayer(filename, **kwargs) -> Open filename and an appropriate
+        audio io for it.
+
+        """
+
+        self._filename = filename
+
+        # Setup the msg_dict for sending messages to the child process.
+        self._msg_dict = Manager().dict()
+        self._msg_dict['filename'] = filename
+        self._msg_dict.update(kwargs)
+
+        # Create a pipe for sending and receiving messages.
+        self._control_conn, self._player_conn = Pipe()
+
+    def __repr__(self) -> str:
+        """ __repr__ -> Returns a python expression to recreate this instance.
+
+        """
+
+        repr_str = "filename='%(_filename)s'" % self.__dict__
+
+        return '%s(%s)' % (self.__class__.__name__, repr_str)
+
+    def __enter__(self):
+        """ Provides the ability to use pythons with statement.
+
+        """
+
+        try:
+            return self
+        except Exception as err:
+            print(err)
+            return None
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """ Stop playback when finished.
+
+        """
+
+        try:
+            self.stop()
+            self._control_conn.close()
+            self._player_conn.close()
+            return not bool(exc_type)
+        except Exception as err:
+            print(err)
+            return False
+
+    def __del__(self):
+        """ Stop playback before deleting.
+
+        """
+
+        self.stop()
+
+    def _play_proc(self, msg_dict: dict, pipe: Pipe):
+        """ Player process
+
+        """
+
+        # Open the file to play.
+        with open_file(msg_dict['filename']) as fileobj:
+
+            # Open an audio output device that can handle the data from
+            # fileobj.
+            with open_io(fileobj, 'w') as device:
+
+                # Set the default number of loops to infinite.
+                fileobj.loops = msg_dict.get('loops', -1)
+
+                # Initialize variable.
+                buf = ' '
+                written = 0
+
+                # Loop until stopped or nothing read or written.
+                while msg_dict['playing'] and (buf or written):
+                    # Keep playing if not paused.
+                    if not msg_dict.get('paused', False):
+                        # Read the next buffer full of data.
+                        buf = fileobj.readline()
+
+                        # Write buf.
+                        written = device.write(buf)
+                    else:
+                        # Sleep so it doesn't use up the processer.
+                        time_sleep(0.1)
+
+                    # Get and process any commands from the parent process.
+                    if pipe.poll():
+                        # Get the data into temp.
+                        command = pipe.recv()
+
+                        if 'getposition' in command:
+                            pipe.send(fileobj.position)
+                        elif 'setposition' in command:
+                            fileobj.position = command['setposition']
+                        elif 'getloops' in command:
+                            pipe.send(fileobj.loops)
+                        elif 'setloops' in command:
+                            fileobj.loops = command['setloops']
+                        elif 'getlength' in command:
+                            pipe.send(fileobj.length)
+                        elif 'getloopcount' in command:
+                            pipe.send(fileobj.loop_count)
+
+        # Set playing to False for the parent.
+        msg_dict['playing'] = False
+
+    def open(self, filename: str):
+        """ open(filename) -> Open an audio file to play.
+
+        """
+
+        self._filename = filename
+        self._msg_dict['filename'] = filename
+
+        # After opening a new file stop the current one from playing.
+        self.stop()
+
+    def play(self):
+        """ play() -> Start playback.
+
+        """
+
+        if not self._msg_dict.get('playing', False):
+            # Set playing to True for the child process.
+            self._msg_dict['playing'] = True
+
+            # Open a new process to play a file in the background.
+            self._play_p = Process(target=self._play_proc,
+                                args=(self._msg_dict,self._player_conn))
+
+            # Start the process.
+            self._play_p.start()
+        elif self._msg_dict.get('paused', True):
+            # Un-pause if paused.
+            self._msg_dict['paused'] = False
+
+    def stop(self):
+        """ stop() -> Stop playback.
+
+        """
+
+        if self._msg_dict.get('playing', False):
+            # Stop playback.
+            self._msg_dict['playing'] = False
+
+            # Wait for the player process to stop.
+            self._play_p.join()
+
+            # Un-Pause.
+            self._msg_dict['paused'] = False
+
+    def pause(self):
+        """ pause() -> Pause playback.
+
+        """
+
+        # Pause playback.
+        self._msg_dict['paused'] = True
+
+    @property
+    def paused(self) -> bool:
+        """ True if playback is paused.
+
+        """
+
+        return self._msg_dict.get('paused', False)
+
+    @property
+    def playing(self) -> bool:
+        """ True if playing.
+
+        """
+
+        return self._msg_dict.get('playing', False)
+
+    @property
+    def position(self) -> int:
+        """ Current position.
+
+        """
+
+        self._control_conn.send('getposition')
+        return self._control_conn.recv()
+
+    @position.setter
+    def position(self, value: int):
+        """ Set the current position.
+
+        """
+
+        self._control_conn.send({'setposition': int(value)})
+
+    @property
+    def loops(self) -> int:
+        """ Number of times to loop (playback time + 1).
+
+        """
+
+        self._control_conn.send('getloops')
+        return self._control_conn.recv()
+
+    @loops.setter
+    def loops(self, value: int):
+        """ Number of times to loop (playback time + 1).
+
+        """
+
+        self._control_conn.send({'setloops': int(value)})
+
+    @property
+    def length(self) -> int:
+        """ Length of audio.
+
+        """
+
+        self._control_conn.send('getlength')
+        return self._control_conn.recv()
+
+    @property
+    def loop_count(self) -> int:
+        """ Number of times the player has looped.
+
+        """
+
+        self._control_conn.send('getloopcount')
+        return self._control_conn.recv()
+
+    def seek(self, offset: int, whence=SEEK_SET) -> int:
+        """ seek(position) -> Seek to position in mod.
+
+        """
+
+        if whence == SEEK_CUR:
+            self.position += offset
+        elif whence == SEEK_END:
+            self.position = self.length - offset
+        else:
+            self.position = offset
+
+        return self.position
+
+    def tell(self) -> int:
+        """ tell -> Returns the current position.
+
+        """
+
+        return self.position

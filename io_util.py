@@ -26,6 +26,8 @@
 
 from contextlib import contextmanager
 
+from io_base import AudioIO, DevIO
+
 # Codec cache dictionary
 __codec_cache = {}
 
@@ -212,6 +214,23 @@ def open_file(filename, mode='r'):
         return None
 
     return codec(filename, mode=mode)
+
+def open_io(fileobj: AudioIO, mode='r') -> DevIO:
+    """ open_io(fileobj, mode='r') -> Returns an open audio device.
+
+    """
+
+    # Get the supported device
+    device = get_io(fileobj)
+
+    if not device:
+        print("Audio format not supported.")
+        return None
+
+    # Open and return the device.
+    return device(mode=mode, rate=fileobj.rate, channels=fileobj.channels,
+                  depth=fileobj.depth, bigendian=fileobj.bigendian,
+                  unsigned=fileobj.unsigned)
 
 @contextmanager
 def silence(fd):

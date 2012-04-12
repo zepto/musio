@@ -24,6 +24,8 @@
 """
 
 from os.path import getsize as os_getsize
+from mmap import mmap, ACCESS_READ
+import re
 
 from io_base import AudioIO, io_wrapper
 
@@ -34,13 +36,17 @@ def issupported(filename, *args):
 
     import mimetypes
 
+    # Initialize mimetypes.
     mimetypes.init()
 
+    # Get the mime type of filename.
     mimetype, encoding = mimetypes.guess_type(filename)
 
+    # If no mimtype was found then filename is not supported.
     if not mimetype:
         return False
 
+    # File containing text are supported.
     return True if 'text' in mimetype else False
 
 __supported_dict = {
@@ -56,23 +62,52 @@ class TextFile(AudioIO):
 
     """
 
-    def __init__(self, filename, mode='r', **kwargs):
-        """ TextFile(filename, mode='r') -> Just a regular file
-        object.
+    def __init__(self, filename, mode='r', sentence_endings='.!?', **kwargs):
+        """ TextFile(filename, mode='r', sentence_endings='.!?') -> Just a
+        regular file object.
 
         """
 
         super(TextFile, self).__init__(filename, mode)
 
+        # Only read one line/sentence at a time.
         self._buffer_size = 1
 
-        self._file = open(filename, mode)
+        # Open the file with the correct mode.
+        self._fileobj = open(filename, mode)
 
-        self._length = os_getsize(filename)
+        # Memory mapped file for quick searching.
+        mmapobj = mmap(self._fileobj.fileno(), 0, access=ACCESS_READ)
 
-        self.seek = self._file.seek
-        self.tell = self._file.tell
-        self.readline = self._file.readline
+        # Regex to match sentences.
+        sentence_endings = '.*?[%s]' % re.escape(sentence_endings)
+        re_flags = re.DOTALL | re.IGNORECASE | re.MULTILINE
+
+        # Compile the sentence regex.
+        sentence_regex = re.compile(sentence_endings.encode(), re_flags)
+
+        # List of sentences in file
+        sentence_list = sentence_regex.findall(mmapobj)
+
+        # No need for the mmap to be open anymore
+        mmapobj.close()
+
+        # Check for sentence endings.
+        if 'r' in mode and sentence_list:
+            self._line_list = [sentence.decode() for sentence in sentence_list]
+        elif 'r' in mode:
+            self._line_list = self._fileobj.readlines()
+        else:
+            self._line_list = []
+
+        if self._line_list:
+            # The length is the length of the line list.
+            self._length = len(self._line_list)
+        else:
+            self._length = os_getsize(filename)
+
+        # Current index.
+        self._index = 0
 
         self._closed = False
 
@@ -90,14 +125,20 @@ class TextFile(AudioIO):
 
         """
 
-        self._file.seek(position)
+        if 'w' in self._mode:
+            self._fileobj.seek(position)
+        else:
+            self._index= int(position)
 
     def _get_position(self) -> int:
         """ Returns the current position.
 
         """
 
-        return self._file.tell()
+        if 'w' in self._mode:
+            return self._fileobj.tell()
+        else:
+            return self._index
 
     @io_wrapper
     def write(self, data: str) -> int:
@@ -105,14 +146,43 @@ class TextFile(AudioIO):
 
         """
 
-        return self._file.write(data)
+        return self._fileobj.write(data)
 
-    def sreadlines(self, size: int) -> str:
-        """ Returns size number of lines concatenated into a string.
+    @io_wrapper
+    def readline(self, size=-1) -> str:
+        """ readline(size=-1) -> Returns the next line or size bytes.
 
         """
 
-        return ''.join([self._file.readline() for i in range(size)])
+        if size == -1:
+            return self.read(self._buffer_size)
+        else:
+            return self.read(self._buffer_size)[:size]
+
+    @io_wrapper
+    def readlines(self, count=-1) -> str:
+        """ readlines(count=-1) -> Returns count lines/sentences if it can.
+
+        """
+
+        # Start index.
+        slice_start = self._index
+
+        # Return all the lines if count is -1.
+        if count == -1:
+            self._index = self._length
+            return self._lines[slice_start:]
+
+        # Calculate the last index to read to.
+        slice_end = slice_start + count
+
+        # Read count number of sentences if available.
+        lines = ' '.join(self._line_list[slice_start:slice_end])
+
+        # Increment the sentence index.
+        self._index += count % ((self._length - slice_start) + count)
+
+        return lines.replace('\n', ' ')
 
     @io_wrapper
     def read(self, size: int) -> str:
@@ -120,13 +190,13 @@ class TextFile(AudioIO):
 
         """
 
-        data = self.sreadlines(size)
+        data = self.readlines(size)
 
         if not data:
             if self._loops == -1 or self._loop_count < self._loops:
                 self._loop_count += 1
-                self._file.seek(0)
-                data = self.sreadlines(size)
+                self.position = 0
+                data = self.read(size)
 
         return data
 
@@ -136,5 +206,6 @@ class TextFile(AudioIO):
         """
 
         if not self.closed:
-            self._file.close()
+            self._fileobj.close()
+            self._line_list = None
             self._closed = True

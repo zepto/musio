@@ -64,7 +64,7 @@ class AllFile(AudioIO):
 
         self._state = None
 
-        self._source = codec(filename, mode=mode)
+        self._source = codec(filename, mode=mode, **kwargs)
 
         annotations = getattr(codec.read, '__annotations__')
         self.read.__annotations__.update(annotations)

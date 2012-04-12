@@ -26,7 +26,7 @@
 from functools import wraps as functools_wraps
 from sys import stderr as sys_stderr
 
-import espeak._espeak as _espeak
+from . import _espeak
 
 speaking = False
 done = False
@@ -49,7 +49,6 @@ def _espeak_callback(wav, numsamples, events):
 
     # Return value 0 means to keep playing 1 means to stop.
     return 0 if speaking and wav else 1
-
 
 def init(output=_espeak.AUDIO_OUTPUT_PLAYBACK, callback=_espeak_callback):
     """ init(output=_espeak.AUDIO_OUTPUT_PLAYBACK) -> Initialize espeak and

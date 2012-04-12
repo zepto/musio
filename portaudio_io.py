@@ -146,7 +146,11 @@ class Portaudio(DevIO):
 
         # Loop through the collected data and write it out.
         for i in range(datalen // write_size):
-            self._stream.write(self._data[:write_size], self._buffer_size)
+            try:
+                self._stream.write(self._data[:write_size], self._buffer_size)
+            except IOError as err:
+                class_name = self.__class__.__name__
+                print("(%s.write) %s" % (class_name, err))
             self._data = self._data[write_size:]
 
         return datalen
@@ -157,7 +161,14 @@ class Portaudio(DevIO):
 
         """
 
-        return self._stream.read(size)
+        data = b''
+        while len(data) < size:
+            try:
+                data += self._stream.read(size)
+            except IOError as err:
+                class_name = self.__class__.__name__
+                print("(%s.read) %s" % (class_name, err))
+        return data[:size]
 
     def _open(self):
         """ open -> Open the pcm audio output.

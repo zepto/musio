@@ -29,6 +29,10 @@
 
 from functools import wraps as functools_wraps
 from io import RawIOBase, SEEK_SET, SEEK_CUR, SEEK_END
+from importlib import abc as imp_abc
+from importlib import util as imp_util
+from types import ModuleType as types_ModuleType
+import sys
 
 # If True errors will only print a message.
 IO_SOFT_ERRORS = True
@@ -274,30 +278,6 @@ class AudioIO(RawIOBase):
         return self.position
 
     @io_wrapper
-    def readinto(self, barray: bytearray) -> int:
-        """ Read up to len(barray) into bytearray barray and return the number
-        of bytes read otherwise returns None.
-
-        """
-
-        # Read len(barray) number of bytes.
-        data = self.readall()[:len(barray)]
-
-        # Return None if no data was read.
-        if not data: return None
-
-        bytes_read = len(data)
-
-        # Convert string data to bytes
-        if type(data) is str: data = data.encode()
-
-        # Set barray to data.
-        barray[:bytes_read] = data
-
-        # Return the number of bytes read
-        return bytes_read
-
-    @io_wrapper
     def read(self, size: int) -> bytes:
         """ read(size=None) -> Reads size amount of data and returns it.
 
@@ -327,6 +307,43 @@ class AudioIO(RawIOBase):
 
         # Return the rest of the file.
         return data
+
+    @io_wrapper
+    def readinto(self, barray: bytearray) -> int:
+        """ Read up to len(barray) into bytearray barray and return the number
+        of bytes read otherwise returns None.
+
+        """
+
+        # Read len(barray) number of bytes.
+        data = self.read(len(barray))
+
+        # Return None if no data was read.
+        if not data: return None
+
+        bytes_read = len(data)
+
+        # Convert string data to bytes
+        if type(data) is str: data = data.encode()
+
+        # Set barray to data.
+        barray[:bytes_read] = data
+
+        # Return the number of bytes read
+        return bytes_read
+
+    @io_wrapper
+    def readline(self, size=-1) -> str:
+        """ readline(size=-1) -> Returns the next line or size bytes.
+
+        """
+
+        if size == -1:
+            # Return a whole buffer.
+            return self.read(self._buffer_size)
+        else:
+            # Return size bytes.
+            return self.read(size)
 
     @io_wrapper
     def write(self, data: bytes) -> int:
@@ -409,6 +426,14 @@ class AudioIO(RawIOBase):
         """
 
         return self._mode
+
+    @property
+    def loop_count(self) -> int:
+        """ How many times the stream has looped.
+
+        """
+
+        return self._loop_count
 
     @property
     def length(self) -> int:
@@ -543,6 +568,14 @@ class DevIO(RawIOBase):
 
         return 'r' in self._mode
 
+    def seekable(self) -> bool:
+        """ Is this stream seekable.
+
+        """
+
+        # It is a device it can't be seeked.
+        return False
+
     @property
     def closed(self) -> bool:
         """ Return true if closed.
@@ -570,7 +603,7 @@ class DevIO(RawIOBase):
 
         """
 
-        return self.read()
+        return self.read(self._buffer_size)
 
     def __enter__(self) -> object:
         """ Provides the ability to use pythons with statement.
@@ -602,6 +635,27 @@ class DevIO(RawIOBase):
         """
 
         raise NotImplementedError("Read method not implemented.")
+
+    @io_wrapper
+    def readinto(self, barray: bytearray) -> int:
+        """ Read up to len(barray) into bytearray barray and return the number
+        of bytes read otherwise returns None.
+
+        """
+
+        # Read len(barray) number of bytes.
+        data = self.read(len(barray))
+
+        # Return None if no data was read.
+        if not data: return None
+
+        bytes_read = len(data)
+
+        # Set barray to data.
+        barray[:bytes_read] = data
+
+        # Return the number of bytes read
+        return bytes_read
 
     @io_wrapper
     def write(self, data: bytes) -> int:
@@ -665,7 +719,8 @@ class OnDemand(object):
 
     """
 
-    def __init__(self, module_name, globals={}, locals={}, fromlist=[], level=0):
+    def __init__(self, module_name, globals={}, locals={}, fromlist=[],
+                 level=0):
         """ OnDemand(module_name, globals={}, locals={}, fromlist=[], level=0)
         -> Load module only when it is needed.
 
@@ -708,3 +763,59 @@ class OnDemand(object):
             self._import()
 
         return vars(self._module)
+
+
+class Module(types_ModuleType):
+    pass
+
+class LazyModule(types_ModuleType):
+    """ LazyModule only loads the module when one of its attributes is
+    accessed.
+
+    """
+
+    def __getattribute__(self, attr):
+        """ Initialize the module and add it to sys.modules.
+
+        """
+
+        self.__class__ = Module
+        self.__loader__ = super(LazyLoader, __loader__)
+        self.__loader__.load_module(self.__name__)
+        return getattr(self, attr)
+
+
+class LazyLoader(imp_abc.Loader):
+    """ LazyLoader uses LazyModule to load the module when one of its
+    attributes is accessed.
+
+    """
+
+    # @imp_util.module_for_loader
+    def load_module(self, fullname):
+        """ Load the module.
+
+        """
+
+        print(fullname, dir(fullname))
+        module = LazyModule(fullname)
+        module.__loader__ = self
+        sys.modules[fullname] = module
+        return module
+
+class LazyFinder(imp_abc.Finder):
+    """ LazyFinder uses LazyLoader.
+
+    """
+
+    def find_module(self, fullname, path=None):
+        """ Used LazyLoader.
+
+        """
+
+        print(fullname, path)
+        # return LazyLoader()
+        return None
+
+# sys.meta_path.append(LazyFinder)
+# sys.path_hooks.append(LazyFinder)
