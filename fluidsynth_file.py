@@ -24,10 +24,14 @@
 
 from functools import partial
 
-from io_base import AudioIO, OnDemand, io_wrapper
+from io_base import AudioIO, io_wrapper
 
-_fluidsynth = OnDemand('fluidsynth.fluidsynth', globals(), locals(),
-                       ['fluidsynth'], 0)
+from fluidsynth import fluidsynth as _fluidsynth
+
+# from import_util import LazyImport
+# 
+# _fluidsynth = LazyImport('fluidsynth.fluidsynth', globals(), locals(),
+#                          ['fluidsynth'], 0)
 
 
 __supported_dict = {

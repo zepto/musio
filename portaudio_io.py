@@ -26,11 +26,13 @@
 
 from sys import stderr as sys_stderr
 
-from io_base import DevIO, io_wrapper, OnDemand
+from io_base import DevIO, io_wrapper
 from io_util import silence
+# from import_util import LazyImport
+from portaudio import portaudio as _portaudio
 
-_portaudio = OnDemand('portaudio.portaudio', globals(), locals(),
-                      ['portaudio'], 0)
+# _portaudio = LazyImport('portaudio.portaudio', globals(), locals(),
+#                         ['portaudio'], 0)
 
 __supported_dict = {
         'output': [bytes],
@@ -145,12 +147,13 @@ class Portaudio(DevIO):
                 return 0
 
         # Loop through the collected data and write it out.
-        for i in range(datalen // write_size):
+        while len(self._data) >= write_size:
             try:
                 self._stream.write(self._data[:write_size], self._buffer_size)
             except IOError as err:
                 class_name = self.__class__.__name__
                 print("(%s.write) %s" % (class_name, err))
+                continue
             self._data = self._data[write_size:]
 
         return datalen

@@ -17,17 +17,17 @@ def play_proc(msg_dict):
                 # print(len(buf))
                 written = device.write(buf)
                 # print(written, 'bytes written')
+                if not msg_dict['playing'] or not buf and not written:
+                    stdout.flush()
+                    break
+                while msg_dict.get('paused', False):
+                    time_sleep(0.1)
                 if file.length > 0:
                     perc_done = (file.position * 100) / file.length
                     perc_str = 'Position: %.2f%%' % perc_done
                     format_len = len(perc_str) + 2
                     print('\033[%dD\033[K%s' % (format_len, perc_str), end='')
                     stdout.flush()
-                if not msg_dict['playing'] or not buf and not written:
-                    stdout.flush()
-                    break
-                while msg_dict.get('paused', False):
-                    time_sleep(0.1)
             device.flush()
     print("\nDone.")
 

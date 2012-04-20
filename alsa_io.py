@@ -26,9 +26,11 @@
 
 import alsa.pcm as alsapcm
 
-from io_base import DevIO, io_wrapper, OnDemand
-
-alsapcm = OnDemand('alsa.pcm', globals(), locals(), ['pcm'], 0)
+from io_base import DevIO, io_wrapper
+from alsa import pcm as alsapcm
+# from import_util import LazyImport
+# 
+# alsapcm = LazyImport('alsa.pcm', globals(), locals(), ['pcm'], 0)
 
 __supported_dict = {
         'output': [bytes],

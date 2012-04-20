@@ -26,6 +26,7 @@
 from time import sleep as time_sleep
 from multiprocessing import Process, Manager, Pipe
 from io import SEEK_SET, SEEK_CUR, SEEK_END
+from functools import wraps as functools_wraps
 
 from io_util import open_file, open_io
 
@@ -82,9 +83,9 @@ class AudioPlayer(object):
 
     """
 
-    def __init__(self, filename: str, **kwargs):
-        """ AudioPlayer(filename, **kwargs) -> Open filename and an appropriate
-        audio io for it.
+    def __init__(self, filename: str, show_position=False, **kwargs):
+        """ AudioPlayer(filename, show_position=False, **kwargs) -> Open
+        filename and an appropriate audio io for it.
 
         """
 
@@ -92,11 +93,24 @@ class AudioPlayer(object):
 
         # Setup the msg_dict for sending messages to the child process.
         self._msg_dict = Manager().dict()
-        self._msg_dict['filename'] = filename
-        self._msg_dict.update(kwargs)
+        self._msg_dict['show_position'] = show_position
 
         # Create a pipe for sending and receiving messages.
         self._control_conn, self._player_conn = Pipe()
+
+        # Open the file.
+        self.open(filename, **kwargs)
+
+    def __str__(self) -> str:
+        """ The information about the open file.
+
+        """
+
+        # Wait for the stream to open.
+        while 'info' not in self._msg_dict: pass
+
+        # Return the info string.
+        return self._msg_dict.get('info', '')
 
     def __repr__(self) -> str:
         """ __repr__ -> Returns a python expression to recreate this instance.
@@ -139,13 +153,38 @@ class AudioPlayer(object):
 
         self.stop()
 
+    def playing_wrapper(func):
+        """ Wrap methods and only call them if the stream is playing
+
+        """
+
+        @functools_wraps(func)
+        def wrapper(self, *args, **kwargs):
+            """ Check if stream is playing and if it is then call func
+            otherwise print a message and exit.
+
+            """
+
+            if not self.playing:
+                print("%(filename)s is not playing." % self._msg_dict)
+                return None
+
+            return func(self, *args, **kwargs)
+
+        return wrapper
+
     def _play_proc(self, msg_dict: dict, pipe: Pipe):
         """ Player process
 
         """
 
+        from sys import stdout as sys_stdout
+
         # Open the file to play.
-        with open_file(msg_dict['filename']) as fileobj:
+        with open_file(**msg_dict) as fileobj:
+
+            # Put the file info in msg_dict.
+            msg_dict['info'] = str(fileobj)
 
             # Open an audio output device that can handle the data from
             # fileobj.
@@ -160,6 +199,28 @@ class AudioPlayer(object):
 
                 # Loop until stopped or nothing read or written.
                 while msg_dict['playing'] and (buf or written):
+                    # Print the stream position.
+                    if msg_dict.get('show_position', False):
+                        # Only print the position if the stream has a
+                        # length.
+                        if fileobj.length > 0:
+                            # Calculate the percentage played.
+                            pos = (fileobj.position * 100) / fileobj.length
+
+                            # Make the string.
+                            pos_str = 'Position: %.2f%%' % pos
+
+                            # Find the length of the string.
+                            format_len = len(pos_str) + 2
+
+                            # Print the string and after erasing the old
+                            # one using ansi escapes.
+                            print('\033[%dD\033[K%s' % (format_len, pos_str),
+                                  end='')
+
+                            # Update stdout.
+                            sys_stdout.flush()
+
                     # Keep playing if not paused.
                     if not msg_dict.get('paused', False):
                         # Read the next buffer full of data.
@@ -192,16 +253,23 @@ class AudioPlayer(object):
         # Set playing to False for the parent.
         msg_dict['playing'] = False
 
-    def open(self, filename: str):
+    def open(self, filename: str, **kwargs):
         """ open(filename) -> Open an audio file to play.
 
         """
 
         self._filename = filename
         self._msg_dict['filename'] = filename
+        self._msg_dict.update(kwargs)
 
         # After opening a new file stop the current one from playing.
         self.stop()
+
+        # Pause it.
+        self.pause()
+
+        # Start it playing so seeking works.
+        self.play()
 
     def play(self):
         """ play() -> Start playback.
@@ -262,6 +330,7 @@ class AudioPlayer(object):
         return self._msg_dict.get('playing', False)
 
     @property
+    @playing_wrapper
     def position(self) -> int:
         """ Current position.
 
@@ -271,6 +340,7 @@ class AudioPlayer(object):
         return self._control_conn.recv()
 
     @position.setter
+    @playing_wrapper
     def position(self, value: int):
         """ Set the current position.
 
@@ -279,6 +349,7 @@ class AudioPlayer(object):
         self._control_conn.send({'setposition': int(value)})
 
     @property
+    @playing_wrapper
     def loops(self) -> int:
         """ Number of times to loop (playback time + 1).
 
@@ -288,6 +359,7 @@ class AudioPlayer(object):
         return self._control_conn.recv()
 
     @loops.setter
+    @playing_wrapper
     def loops(self, value: int):
         """ Number of times to loop (playback time + 1).
 
@@ -296,6 +368,7 @@ class AudioPlayer(object):
         self._control_conn.send({'setloops': int(value)})
 
     @property
+    @playing_wrapper
     def length(self) -> int:
         """ Length of audio.
 
@@ -305,6 +378,7 @@ class AudioPlayer(object):
         return self._control_conn.recv()
 
     @property
+    @playing_wrapper
     def loop_count(self) -> int:
         """ Number of times the player has looped.
 
@@ -313,6 +387,7 @@ class AudioPlayer(object):
         self._control_conn.send('getloopcount')
         return self._control_conn.recv()
 
+    @playing_wrapper
     def seek(self, offset: int, whence=SEEK_SET) -> int:
         """ seek(position) -> Seek to position in mod.
 
@@ -327,6 +402,7 @@ class AudioPlayer(object):
 
         return self.position
 
+    @playing_wrapper
     def tell(self) -> int:
         """ tell -> Returns the current position.
 

@@ -43,8 +43,13 @@ def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
     from sys import path as sys_path
     from os import listdir as os_listdir
     from os.path import isdir as os_isdir
+    from os.path import abspath as os_abspath
+    from os.path import dirname as os_dirname
 
     mod_path = [mod_path] if type(mod_path) is str else mod_path
+
+    # Add the path of this file to the search path.
+    mod_path.append(os_abspath(os_dirname(__file__)))
 
     # Add the path(s) in mod_path to sys.path so we can import from
     # them.
@@ -59,7 +64,7 @@ def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
 
     return mod_list
 
-def get_codec(filename, mod_path=[], cached=True, blacklist=[]):
+def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
     """ get_codec(filename, mod_path=[], cached=True, blacklist=[]) -> Load the
     codecs in the path and return the first one that can play the file, or the
     one with the default attribute set.
@@ -77,12 +82,9 @@ def get_codec(filename, mod_path=[], cached=True, blacklist=[]):
     from importlib import import_module
     from os.path import splitext as os_splitext
     from os.path import join as os_join
-    from os.path import abspath as os_abspath
-    from os.path import dirname as os_dirname
     from urllib.parse import urlparse
 
-    # Add the path of this file to the search path.
-    mod_path.append(os_abspath(os_dirname(__file__)))
+    from import_util import load_lazy_import, unload_lazy_import
 
     # Get the file extension.
     file_ext = os_splitext(filename)[1].lower()
@@ -101,6 +103,9 @@ def get_codec(filename, mod_path=[], cached=True, blacklist=[]):
     mod_list = _build_mod_list(mod_path, '_file.py', blacklist)
 
     codec = None
+
+    # Make importing lazy.
+    load_lazy_import(mod_path=mod_path)
 
     # Load the codec module that can handle file.
     for path, name in mod_list:
@@ -134,9 +139,12 @@ def get_codec(filename, mod_path=[], cached=True, blacklist=[]):
         elif not codec and '.*' in ext:
             codec = handler
 
+    # Turn off lazy imports.
+    unload_lazy_import()
+
     return codec
 
-def get_io(fileobj, mod_path=[], cached=True, blacklist=[]):
+def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
     """ get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> Finds a
     audio device that can take the data read from fileobj and returns it.
 
@@ -147,6 +155,8 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]):
 
     from importlib import import_module
     from os.path import splitext as os_splitext
+
+    from import_util import load_lazy_import, unload_lazy_import
 
     # Get the file input data type.
     annotations = getattr(getattr(fileobj, 'read'), '__annotations__', {})
@@ -167,6 +177,9 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]):
     mod_list = _build_mod_list(mod_path, '_io.py', blacklist)
 
     device = None
+
+    # Make importing lazy.
+    load_lazy_import(mod_path=mod_path)
 
     # Load the codec module that can handle file.
     for path, name in mod_list:
@@ -200,9 +213,12 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]):
             device = handler
             if default: break
 
+    # Turn off lazy imports.
+    unload_lazy_import()
+
     return device
 
-def open_file(filename, mode='r'):
+def open_file(filename: str, mode='r', **kwargs) -> AudioIO:
     """ open_file(filename, mode='r') -> Returns the open file.
 
     """
@@ -213,7 +229,7 @@ def open_file(filename, mode='r'):
         print("Filetype not supported.")
         return None
 
-    return codec(filename, mode=mode)
+    return codec(filename, mode=mode, **kwargs)
 
 def open_io(fileobj: AudioIO, mode='r') -> DevIO:
     """ open_io(fileobj, mode='r') -> Returns an open audio device.

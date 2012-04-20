@@ -27,10 +27,14 @@ from os import remove as os_remove
 from time import sleep as time_sleep
 from threading import Thread
 
-from io_base import AudioIO, OnDemand, io_wrapper
+from io_base import AudioIO, io_wrapper
 
-_mikmod = OnDemand('mikmod._mikmod', globals(), locals(),
-                   ['_mikmod'], 0)
+from mikmod import _mikmod
+
+# from import_util import LazyImport
+# 
+# _mikmod = LazyImport('mikmod._mikmod', globals(), locals(),
+#                      ['_mikmod'], 0)
 
 __supported_dict = {
         'ext': ['.imf', '.mod', '.s3m', '.xm', '.it'],

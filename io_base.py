@@ -23,16 +23,11 @@
 
     AudioIO         Abstract class for audio file IO
     DevIO           Abstract class for audio device IO
-    OnDemand        Load libraries when they are accessed
 
 """
 
 from functools import wraps as functools_wraps
 from io import RawIOBase, SEEK_SET, SEEK_CUR, SEEK_END
-from importlib import abc as imp_abc
-from importlib import util as imp_util
-from types import ModuleType as types_ModuleType
-import sys
 
 # If True errors will only print a message.
 IO_SOFT_ERRORS = True
@@ -712,110 +707,3 @@ class DevIO(RawIOBase):
         """
 
         return self._buffer_size
-
-
-class OnDemand(object):
-    """ Load modules when accessed.
-
-    """
-
-    def __init__(self, module_name, globals={}, locals={}, fromlist=[],
-                 level=0):
-        """ OnDemand(module_name, globals={}, locals={}, fromlist=[], level=0)
-        -> Load module only when it is needed.
-
-        """
-
-        self._module_name = module_name
-        self._globals = globals
-        self._locals = locals
-        self._fromlist = fromlist
-        self._level = level
-        self._module = None
-
-    def _import(self):
-        """ Import the module.
-
-        """
-
-        self._module = __import__(self._module_name, self._globals,
-                                  self._locals, self._fromlist, self._level)
-
-    def __getattr__(self, attr):
-        """ Load the module if it is not already loaded.  Returns the modules
-        attributes.
-
-        """
-
-        if not self._module:
-            self._import()
-
-        return getattr(self._module, attr)
-
-    @property
-    def __dict__(self):
-        """ Load the module if it is not already loaded.  Returns the modules
-        __dict__.
-
-        """
-
-        if not self._module:
-            self._import()
-
-        return vars(self._module)
-
-
-class Module(types_ModuleType):
-    pass
-
-class LazyModule(types_ModuleType):
-    """ LazyModule only loads the module when one of its attributes is
-    accessed.
-
-    """
-
-    def __getattribute__(self, attr):
-        """ Initialize the module and add it to sys.modules.
-
-        """
-
-        self.__class__ = Module
-        self.__loader__ = super(LazyLoader, __loader__)
-        self.__loader__.load_module(self.__name__)
-        return getattr(self, attr)
-
-
-class LazyLoader(imp_abc.Loader):
-    """ LazyLoader uses LazyModule to load the module when one of its
-    attributes is accessed.
-
-    """
-
-    # @imp_util.module_for_loader
-    def load_module(self, fullname):
-        """ Load the module.
-
-        """
-
-        print(fullname, dir(fullname))
-        module = LazyModule(fullname)
-        module.__loader__ = self
-        sys.modules[fullname] = module
-        return module
-
-class LazyFinder(imp_abc.Finder):
-    """ LazyFinder uses LazyLoader.
-
-    """
-
-    def find_module(self, fullname, path=None):
-        """ Used LazyLoader.
-
-        """
-
-        print(fullname, path)
-        # return LazyLoader()
-        return None
-
-# sys.meta_path.append(LazyFinder)
-# sys.path_hooks.append(LazyFinder)
