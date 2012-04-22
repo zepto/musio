@@ -43,7 +43,7 @@ setup(
             'Development  Status :: 4 - Beta',
             'Environment :: Other Environment',
             'Intended Audience :: Developers',
-            'License :: OSI Approved :: GNU General Public License (GPL)',
+            'License :: OSI Approved :: GNU General Public License (GPL3)',
             'Operating System :: Linux',
             'Topic :: Software Development :: Libraries :: Python Modules',
             'Topic :: Audio Processing',
