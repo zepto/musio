@@ -25,14 +25,19 @@
 """
 
 from contextlib import contextmanager
+from importlib import import_module
+from os.path import splitext as os_splitext
+from os.path import join as os_join
+from os.path import basename as os_basename
 
-from io_base import AudioIO, DevIO
+from .io_base import AudioIO, DevIO
 
 # Codec cache dictionary
 __codec_cache = {}
 
 # Audio IO device cache dictionary
 __io_cache = {}
+
 
 def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
     """ _build_mod_list(mod_path, suffix) -> Add all the paths in mod_path to
@@ -56,13 +61,14 @@ def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
     [sys_path.append(path) for path in mod_path if path not in sys_path]
 
     # Build the list of modules ending in suffix in the mod_path(s).
-    mod_list = ((path, name) for path in sys_path \
+    mod_list = ((path, name) for path in mod_path \
                                 if os_isdir(path) \
                                     for name in os_listdir(path) \
                                         if name.endswith(suffix) and \
                                            name not in blacklist)
 
     return mod_list
+
 
 def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
     """ get_codec(filename, mod_path=[], cached=True, blacklist=[]) -> Load the
@@ -79,12 +85,9 @@ def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
     # Codec cache dictionary
     global __codec_cache
 
-    from importlib import import_module
-    from os.path import splitext as os_splitext
-    from os.path import join as os_join
     from urllib.parse import urlparse
 
-    from import_util import load_lazy_import, unload_lazy_import
+    from .import_util import load_lazy_import, unload_lazy_import
 
     # Get the file extension.
     file_ext = os_splitext(filename)[1].lower()
@@ -110,7 +113,7 @@ def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
     # Load the codec module that can handle file.
     for path, name in mod_list:
         # Load the module.
-        module = import_module(os_splitext(name)[0])
+        module = import_module('.%s' % os_splitext(name)[0], os_basename(path))
 
         # Get the filetypes and handler from module.
         supported_dict = getattr(module, '__supported_dict', {})
@@ -144,6 +147,7 @@ def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
 
     return codec
 
+
 def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
     """ get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> Finds a
     audio device that can take the data read from fileobj and returns it.
@@ -153,10 +157,7 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
     # IO device cache dictionary
     global __io_cache
 
-    from importlib import import_module
-    from os.path import splitext as os_splitext
-
-    from import_util import load_lazy_import, unload_lazy_import
+    from .import_util import load_lazy_import, unload_lazy_import
 
     # Get the file input data type.
     annotations = getattr(getattr(fileobj, 'read'), '__annotations__', {})
@@ -184,7 +185,7 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
     # Load the codec module that can handle file.
     for path, name in mod_list:
         # Load the module.
-        module = import_module(os_splitext(name)[0])
+        module = import_module('.%s' % os_splitext(name)[0], os_basename(path))
 
         # Get the filetypes and handler from module.
         supported_dict = getattr(module, '__supported_dict', {})
@@ -218,6 +219,7 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
 
     return device
 
+
 def open_file(filename: str, mode='r', **kwargs) -> AudioIO:
     """ open_file(filename, mode='r') -> Returns the open file.
 
@@ -230,6 +232,7 @@ def open_file(filename: str, mode='r', **kwargs) -> AudioIO:
         return None
 
     return codec(filename, mode=mode, **kwargs)
+
 
 def open_io(fileobj: AudioIO, mode='r') -> DevIO:
     """ open_io(fileobj, mode='r') -> Returns an open audio device.
@@ -247,6 +250,7 @@ def open_io(fileobj: AudioIO, mode='r') -> DevIO:
     return device(mode=mode, rate=fileobj.rate, channels=fileobj.channels,
                   depth=fileobj.depth, bigendian=fileobj.bigendian,
                   unsigned=fileobj.unsigned)
+
 
 @contextmanager
 def silence(fd):

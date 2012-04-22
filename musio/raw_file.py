@@ -25,7 +25,7 @@
 
 from os.path import getsize as os_getsize
 
-from io_base import AudioIO, io_wrapper
+from .io_base import AudioIO, io_wrapper
 
 __supported_dict = {
         'ext': ['.raw'],

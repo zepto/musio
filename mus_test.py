@@ -77,12 +77,12 @@ if __name__ == '__main__':
         from time import sleep as time_sleep
         import multiprocessing
 
-        from io_util import get_codec, get_io
-        from queued_io import QueuedWriter
+        from musio.io_util import get_codec, get_io
+        from musio.queued_io import QueuedWriter
 
         filename = sys_argv[1]
         # AudioIO = get_codec(filename)
-        from all_file import AllFile as AudioIO
+        from musio.all_file import AllFile as AudioIO
 
         if not AudioIO:
             print("Filetype not supported.")

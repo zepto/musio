@@ -25,10 +25,10 @@ statement.
 
 """
 
-from io_base import DevIO, io_wrapper
-# from import_util import LazyImport
+from .io_base import DevIO, io_wrapper
 import ossaudiodev
 
+# from .import_util import LazyImport
 # ossaudiodev = LazyImport('ossaudiodev', globals(), locals(), [], 0)
 
 __supported_dict = {

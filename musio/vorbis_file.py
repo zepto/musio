@@ -30,11 +30,11 @@ from random import randint, seed
 from time import time
 from functools import partial
 
-from io_base import AudioIO, io_wrapper
-# from import_util import LazyImport
+from .io_base import AudioIO, io_wrapper
+from .ogg import vorbisfile as _vorbisfile
+from .ogg import vorbisenc as _vorbisenc
 
-from ogg import vorbisfile as _vorbisfile
-from ogg import vorbisenc as _vorbisenc
+# from .import_util import LazyImport
 
 # _vorbisfile = LazyImport('ogg.vorbisfile', globals(), locals(),
 #                          ['_vorbisfile'], 0)

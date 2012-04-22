@@ -26,7 +26,7 @@
 import ctypes as _ctypes
 import wave
 
-from io_base import AudioIO, io_wrapper
+from .io_base import AudioIO, io_wrapper
 
 __supported_dict = {
         'ext': ['.wav'],

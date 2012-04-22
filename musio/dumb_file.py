@@ -23,12 +23,12 @@
 
 """
 
-from io_base import AudioIO, io_wrapper
-from conversion_util import swap_endian
+from .io_base import AudioIO, io_wrapper
+from .conversion_util import swap_endian
 
-from dumb import _dumb
+from .dumb import _dumb
 
-# from import_util import LazyImport
+# from .import_util import LazyImport
 # 
 # _dumb = LazyImport('dumb._dumb', globals(), locals(), ['_dumb'], 0)
 

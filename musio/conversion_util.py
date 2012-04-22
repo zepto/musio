@@ -26,7 +26,7 @@
 from array import array
 import audioop
 
-from io_base import AudioIO, io_wrapper
+from .io_base import AudioIO, io_wrapper
 
 def swap_endian(data):
     """ swap_endian(data) -> Swap the endianness of the data.

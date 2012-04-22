@@ -23,7 +23,7 @@
 
 """
 
-from  ._portaudio import *
+from ._portaudio import *
 
 class Info(object):
     """ An info class.

@@ -37,7 +37,7 @@ if __name__ == '__main__':
             else:
                 args['soundfont'] = sys_argv[2]
 
-        from player_util import AudioPlayer
+        from musio.player_util import AudioPlayer
 
         print("Playing: %(filename)s" % args)
 

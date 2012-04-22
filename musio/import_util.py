@@ -26,10 +26,12 @@
 
 """
 
-# from importlib import abc as importlib_abc
-from importlib import util as importlib_util
-# from importlib import imp as importlib_imp
-# from importlib import import_module as importlib_import_module
+
+from os import walk as os_walk
+from os.path import isdir as os_isdir
+from os.path import abspath as os_abspath
+from os.path import dirname as os_dirname
+from os.path import basename as os_basename
 from types import ModuleType as types_ModuleType
 import sys
 
@@ -52,6 +54,11 @@ class LazyImport(types_ModuleType):
 
         super(LazyImport, self).__init__(name)
 
+        # package = os_basename(os_dirname(__file__))
+        # print(package, name)
+        # if name.startswith('.'):
+        #     name = '%s%s' % (package, name)
+
         self._globals = globals
         self._locals = locals
 
@@ -63,6 +70,7 @@ class LazyImport(types_ModuleType):
 
         self._level = level
         self.__mod__ = None
+        # self.__name__ = name
 
     def __getattribute__(self, attr):
         """ Import the module and set __getattribute__ so this method is not
@@ -213,28 +221,20 @@ def _build_mod_list(mod_path: list) -> list:
 
     """
 
-    from os import walk as os_walk
-    from os.path import isdir as os_isdir
-    from os.path import abspath as os_abspath
-    from os.path import dirname as os_dirname
-    from os.path import basename as os_basename
-
     mod_path = [mod_path] if type(mod_path) is str else mod_path
 
     # Add the path of this file to the search path.
     mod_path.append(os_abspath(os_dirname(__file__)))
 
     # Build the list of modules in mod_path(s).
-    mod_list = ('%s.%s' % (os_basename(root), name.rsplit('.', 1)[0]) \
+    mod_list = ('{0}.{1}.{2}'.format(os_basename(path), \
+                    os_basename(root).replace(os_basename(path), ''), \
+                    name.rsplit('.', 1)[0]).replace('..', '.') \
                     for path in mod_path \
                         if os_isdir(path) \
                             for root, dirs, files in os_walk(path) \
                                 for name in files \
                                     if name.endswith('.py'))
-
-    # Remove this files dirname from the the mod_list.
-    mod_list = (i.replace('%s.' % os_basename(os_dirname(__file__)), '') \
-                    for i in mod_list)
 
     return mod_list
 
@@ -306,6 +306,7 @@ def load_lazy_import(skip=[], mod_path=[]):
 
     # Make LazyImporter the default importer.
     sys.meta_path.insert(0, LazyImporter(skip, mod_path))
+
 
 def unload_lazy_import():
     """ Remove lazy importer.

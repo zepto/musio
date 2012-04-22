@@ -25,9 +25,9 @@
 
 import audioop
 
-from io_base import AudioIO, io_wrapper
-from io_util import get_codec
-from conversion_util import swap_endian
+from .io_base import AudioIO, io_wrapper
+from .io_util import get_codec
+from .conversion_util import swap_endian
 
 __supported_dict = {
         'ext': ['.*'],

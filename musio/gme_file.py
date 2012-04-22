@@ -25,11 +25,10 @@
 
 from functools import partial
 
-from io_base import AudioIO, io_wrapper
+from .io_base import AudioIO, io_wrapper
+from .gme import _gme
 
-from gme import _gme
-
-# from import_util import LazyImport
+# from .import_util import LazyImport
 # 
 # _gme = LazyImport('gme._gme', globals(), locals(), ['_gme'], 0)
 

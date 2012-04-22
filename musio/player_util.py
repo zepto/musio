@@ -28,7 +28,7 @@ from multiprocessing import Process, Manager, Pipe
 from io import SEEK_SET, SEEK_CUR, SEEK_END
 from functools import wraps as functools_wraps
 
-from io_util import open_file, open_io
+from .io_util import open_file, open_io
 
 def _play_proc(msg_dict):
     """ Player process

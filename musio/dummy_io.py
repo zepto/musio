@@ -23,7 +23,7 @@
 
 """
 
-from io_base import DevIO, io_wrapper
+from .io_base import DevIO, io_wrapper
 
 __supported_dict = {
         'output': [bytes, str],

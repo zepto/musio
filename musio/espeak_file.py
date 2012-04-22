@@ -23,59 +23,45 @@
 
 """
 
-from time import sleep as time_sleep
-from sys import stderr as sys_stderr
+from functools import wraps as functools_wraps
 
-from io_base import DevIO, io_wrapper
-from io_util import silence
-from espeak import espeak as _espeak
-# from import_util import LazyImport
+from .io_base import AudioIO, io_wrapper
+from .espeak import espeak as  _espeak
+# from .import_util import LazyImport
 # 
 # _espeak = LazyImport('espeak.espeak', globals(), locals(), ['_espeak'], 0)
 
 __supported_dict = {
-        'output': [str],
-        'input': [None],
-        'handler': 'Espeak',
-        'default': True
+        'ext': ['.txt'],
+        'handler': 'EspeakFile',
+        # 'default': True
         }
 
 
-class Espeak(DevIO):
-    """ Provide write access to espeak.
+class EspeakFile(AudioIO):
+    """ Espeak wrapper for text to speech synthesis
 
     """
 
-    # Only supports writing
-    _supported_modes = 'w'
-
-    # Only supports depth 16
+    # Valid bit depths.
     _valid_depth = (16,)
 
-    def __init__(self, mode='w', voice='en-us', **kwargs):
-        """ Espeak(mode='w', voice='en-us') -> Open espeak and set it up for
-        writing.
+    # Only reading is supported
+    _supported_modes = 'r'
+
+    def __init__(self, filename, **kwargs):
+        """ Espeak tts object.
 
         """
 
-        rate = _espeak.init()
+        rate = _espeak.init(_espeak._espeak.AUDIO_OUTPUT_RETRIEVAL)
 
-        super(Espeak, self).__init__(mode='w', depth=16,  rate=rate,
-                                     channels=1)
+        super(EspeakFile, self).__init__(filename, 'r', 16, rate, 1)
 
-        self._voice = voice
-        _espeak.set_voice(voice)
+        with open(self._filename, 'r') as txt_file:
+            self._txt = txt_file.read()
 
         self._closed = False
-
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
-
-        """
-
-        repr_str = "mode='%(_mode)s', voice='%(_voice)s'" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
 
     @property
     def range(self):
@@ -91,7 +77,7 @@ class Espeak(DevIO):
 
         """
 
-        _espeak.set_range(int(value))
+        _espeak.set_range(value)
 
     @property
     def pitch(self):
@@ -107,7 +93,7 @@ class Espeak(DevIO):
 
         """
 
-        _espeak.set_pitch(int(value))
+        _espeak.set_pitch(value)
 
     @property
     def volume(self):
@@ -123,7 +109,7 @@ class Espeak(DevIO):
 
         """
 
-        _espeak.set_volume(int(value))
+        _espeak.set_volume(value)
 
     @property
     def speed(self):
@@ -139,7 +125,7 @@ class Espeak(DevIO):
 
         """
 
-        _espeak.set_speed(int(value))
+        _espeak.set_speed(value)
 
     @property
     def voice(self):
@@ -155,8 +141,15 @@ class Espeak(DevIO):
 
         """
 
-        self._voice = value
         _espeak.set_voice(value)
+
+    @property
+    def isplaying(self):
+        """ Is it speaking.
+
+        """
+
+        return _espeak.speaking #isplaying()
 
     def list_voices(self):
         """ Print a list of available voices.
@@ -170,40 +163,32 @@ class Espeak(DevIO):
 
         """
 
-        if not self.closed:
-            _espeak.close()
+        _espeak.close()
 
-            self._closed = True
-
-    def flush(self):
-        """ Wait for playing to stop.
-
-        """
-
-        while _espeak.isplaying():
-            time_sleep(0.02)
+        self._closed = True
 
     @io_wrapper
-    def write(self, data: str) -> int:
-        """ write(data) -> Make espeak say data if it is printable.
+    def read(self, size: int) -> bytes:
+        """ Read from the global data buffer.
 
         """
 
-        # Convert data to type str.
-        if type(data) is int:
-            data = str(data)
-        elif type(data) is bytes:
-            data = data.decode()
-        elif type(data) in (list, tuple, range):
-            data = ' '.join([str(i) for i in data])
-        elif type(data) is not str:
-            return 0
+        if not _espeak.speaking and not _espeak.done:
+            _espeak.speak_text(self._txt)
 
-        # Silence stderr
-        with silence(sys_stderr):
-            return_val = _espeak.speak_text(data)
+        data = b''
+        size = 4096
 
-            # Flush output buffer before returning
-            self.flush()
+        while len(data) < size:
+            size -= len(data)
+            data = _espeak.read(size)
 
-        return return_val
+            if not data:
+                if self._loops == -1 or self._loop_count < self._loops:
+                    self._loop_count += 1
+                    _espeak.speak_text(self._txt)
+                    continue
+                else:
+                    break
+
+        return data

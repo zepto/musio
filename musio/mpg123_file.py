@@ -23,11 +23,12 @@
 
 """
 
-from io_base import AudioIO, io_wrapper
-from import_util import LazyImport
-
-_mpg123 = LazyImport('mpg123._mpg123', globals(), locals(),
-                     ['_mpg123'], 0)
+from .io_base import AudioIO, io_wrapper
+from .mpg123 import _mpg123
+# from .import_util import LazyImport
+# 
+# _mpg123 = LazyImport('mpg123._mpg123', globals(), locals(),
+#                      ['_mpg123'], 0)
 
 __supported_dict = {
         'ext': ['.mp3'],

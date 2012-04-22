@@ -27,7 +27,7 @@ from os.path import getsize as os_getsize
 from mmap import mmap, ACCESS_READ
 import re
 
-from io_base import AudioIO, io_wrapper
+from .io_base import AudioIO, io_wrapper
 
 def issupported(filename, *args):
     """ issupported(filename) -> Returns True if file is supported else False.
