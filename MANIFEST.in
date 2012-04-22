@@ -1,2 +1,3 @@
+include COPYING
 recursive-include examples *.py
 recursive-include utils *.py *.sh
