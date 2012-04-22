@@ -24,6 +24,7 @@
 """
 
 import audioop
+from os.path import basename as os_basename
 
 from .io_base import AudioIO, io_wrapper
 from .io_util import get_codec
@@ -53,7 +54,7 @@ class AllFile(AudioIO):
 
         """
 
-        codec = get_codec(filename, blacklist=[__name__])
+        codec = get_codec(filename, blacklist=[os_basename(__file__)])
 
         self._supported_modes = getattr(codec, '_supported_modes', 'r')
 

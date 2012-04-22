@@ -28,7 +28,7 @@ from multiprocessing import Process, Manager, Pipe
 from io import SEEK_SET, SEEK_CUR, SEEK_END
 from functools import wraps as functools_wraps
 
-from .io_util import open_file, open_io
+from .io_util import open_file, open_device
 
 def _play_proc(msg_dict):
     """ Player process
@@ -181,14 +181,14 @@ class AudioPlayer(object):
         from sys import stdout as sys_stdout
 
         # Open the file to play.
-        with open_file(**msg_dict) as fileobj:
+        with open_file(cached=True, **msg_dict) as fileobj:
 
             # Put the file info in msg_dict.
             msg_dict['info'] = str(fileobj)
 
             # Open an audio output device that can handle the data from
             # fileobj.
-            with open_io(fileobj, 'w') as device:
+            with open_device(fileobj, 'w', cached=True, **msg_dict) as device:
 
                 # Set the default number of loops to infinite.
                 fileobj.loops = msg_dict.get('loops', -1)

@@ -37,7 +37,8 @@ __supported_dict = {
         'output': [str],
         'input': [None],
         'handler': 'Espeak',
-        'default': True
+        'default': True,
+        'dependencies': {'ctypes': ['espeak'], 'python': []}
         }
 
 
@@ -188,6 +189,9 @@ class Espeak(DevIO):
         """ write(data) -> Make espeak say data if it is printable.
 
         """
+
+        # Return 0 if no data was given.
+        if not data: return 0
 
         # Convert data to type str.
         if type(data) is int:

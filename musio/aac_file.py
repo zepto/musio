@@ -34,7 +34,11 @@ from .faad import _neaacdec
 
 __supported_dict= {
         'ext': ['.aac'],
-        'handler': 'AACFile'
+        'handler': 'AACFile',
+        'dependencies': {
+            'ctypes': ['faad'],
+            'python': []
+            }
         }
 
 

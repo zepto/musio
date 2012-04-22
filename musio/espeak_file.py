@@ -35,6 +35,10 @@ __supported_dict = {
         'ext': ['.txt'],
         'handler': 'EspeakFile',
         # 'default': True
+        'dependencies': {
+            'ctypes': ['espeak'],
+            'python': []
+            }
         }
 
 

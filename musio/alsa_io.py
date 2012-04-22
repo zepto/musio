@@ -37,6 +37,10 @@ __supported_dict = {
         'input': [bytes],
         'handler': 'Alsa',
         # 'default': True
+        'dependencies': {
+            'ctypes': ['asound'],
+            'python': []
+            }
         }
 
 

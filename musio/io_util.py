@@ -29,6 +29,11 @@ from importlib import import_module
 from os.path import splitext as os_splitext
 from os.path import join as os_join
 from os.path import basename as os_basename
+from os import listdir as os_listdir
+from os.path import isdir as os_isdir
+from os.path import abspath as os_abspath
+from os.path import dirname as os_dirname
+from ctypes.util import find_library as ctypes_find_library
 
 from .io_base import AudioIO, DevIO
 
@@ -46,10 +51,6 @@ def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
     """
 
     from sys import path as sys_path
-    from os import listdir as os_listdir
-    from os.path import isdir as os_isdir
-    from os.path import abspath as os_abspath
-    from os.path import dirname as os_dirname
 
     mod_path = [mod_path] if type(mod_path) is str else mod_path
 
@@ -61,13 +62,35 @@ def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
     [sys_path.append(path) for path in mod_path if path not in sys_path]
 
     # Build the list of modules ending in suffix in the mod_path(s).
-    mod_list = ((path, name) for path in mod_path \
+    mod_list = ((path, name) for path in sys_path \
                                 if os_isdir(path) \
                                     for name in os_listdir(path) \
                                         if name.endswith(suffix) and \
                                            name not in blacklist)
 
     return mod_list
+
+
+def _check_dependencies(dependencies: dict) -> bool:
+    """ Returns True if all the dependencies pass.
+
+    """
+
+    # Loop through the dependencies and check each one.
+    for key, value in dependencies.items():
+        if key == 'ctypes':
+            # Check for c libraries.
+            if not all((ctypes_find_library(lib) for lib in value)):
+                return False
+        elif key == 'python':
+            # Check for python modules.
+            try:
+                [__import__(mod) for mod in value]
+            except ImportError as err:
+                return False
+
+    # Everything passed.
+    return True
 
 
 def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
@@ -106,19 +129,44 @@ def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
     mod_list = _build_mod_list(mod_path, '_file.py', blacklist)
 
     codec = None
+    dummy = None
 
     # Make importing lazy.
     load_lazy_import(mod_path=mod_path)
 
+    # This packages name.
+    this_pkgname = __name__.split('.', 1)[0]
+
     # Load the codec module that can handle file.
     for path, name in mod_list:
+        # Get the package name from path.
+        pkgname = os_basename(path)
+
+        # Import the package if it is different from this one.
+        if pkgname != this_pkgname:
+            __import__(os_basename(path))
+
         # Load the module.
-        module = import_module('.%s' % os_splitext(name)[0], os_basename(path))
+        module = import_module('.%s' % os_splitext(name)[0], pkgname)
 
         # Get the filetypes and handler from module.
         supported_dict = getattr(module, '__supported_dict', {})
 
-        if 'handler' not in supported_dict:
+        # Get the handler.
+        handler = getattr(module, supported_dict.get('handler', 'dummy'), None)
+
+        # Don't even check this module if it does not have a handler.
+        if not handler:
+            continue
+
+        # Try not to use the dummy handler.
+        if 'dummy' in name:
+            dummy = handler
+            continue
+
+        # Check the module dependencies.
+        dependencies = supported_dict.get('dependencies', {})
+        if not _check_dependencies(dependencies):
             continue
 
         issupported = supported_dict.get('issupported', lambda *a: False)
@@ -126,8 +174,6 @@ def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
         protocol = supported_dict.get('protocol', [])
 
         default = supported_dict.get('default', False)
-
-        handler = getattr(module, supported_dict.get('handler'))
 
         # Add filetype handlers to the codec cache.
         __codec_cache.update(((key, handler) for key in ext))
@@ -144,6 +190,9 @@ def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
 
     # Turn off lazy imports.
     unload_lazy_import()
+
+    # No codec was found so default to the dummy codec.
+    if not codec: codec = dummy
 
     return codec
 
@@ -178,27 +227,48 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
     mod_list = _build_mod_list(mod_path, '_io.py', blacklist)
 
     device = None
+    dummy = None
 
     # Make importing lazy.
     load_lazy_import(mod_path=mod_path)
 
+    # This packages name.
+    this_pkgname = __name__.split('.', 1)[0]
+
     # Load the codec module that can handle file.
     for path, name in mod_list:
+        # Get the package name from path.
+        pkgname = os_basename(path)
+
+        # Import the package if it is different from this one.
+        if pkgname != this_pkgname:
+            __import__(os_basename(path))
+
         # Load the module.
-        module = import_module('.%s' % os_splitext(name)[0], os_basename(path))
+        module = import_module('.%s' % os_splitext(name)[0], pkgname)
 
         # Get the filetypes and handler from module.
         supported_dict = getattr(module, '__supported_dict', {})
 
-        if 'handler' not in supported_dict:
+        handler = getattr(module, supported_dict.get('handler', 'dummy'), None)
+
+        if not handler:
+            continue
+
+        # Try not to use the dummy.
+        if 'dummy' in name:
+            dummy = handler
+            continue
+
+        # Check the module dependencies.
+        dependencies = supported_dict.get('dependencies', {})
+        if not _check_dependencies(dependencies):
             continue
 
         input_t = supported_dict.get('input', [])
         output_t = supported_dict.get('output', [])
 
         default = supported_dict.get('default', False)
-
-        handler = getattr(module, supported_dict.get('handler'))
 
         # Add device input to io cache
         __io_cache.update(((key, handler) for key in input_t))
@@ -217,15 +287,18 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
     # Turn off lazy imports.
     unload_lazy_import()
 
+    # No device was found so use the dummy_io.
+    if not device: device = dummy
+
     return device
 
 
-def open_file(filename: str, mode='r', **kwargs) -> AudioIO:
+def open_file(filename: str, mode='r', mod_path=[], **kwargs) -> AudioIO:
     """ open_file(filename, mode='r') -> Returns the open file.
 
     """
 
-    codec = get_codec(filename)
+    codec = get_codec(filename, mod_path=mod_path)
 
     if not codec:
         print("Filetype not supported.")
@@ -234,13 +307,13 @@ def open_file(filename: str, mode='r', **kwargs) -> AudioIO:
     return codec(filename, mode=mode, **kwargs)
 
 
-def open_io(fileobj: AudioIO, mode='r') -> DevIO:
-    """ open_io(fileobj, mode='r') -> Returns an open audio device.
+def open_device(fileobj: AudioIO, mode='w', mod_path=[], **kwargs) -> DevIO:
+    """ open_device(fileobj, mode='r') -> Returns an open audio device.
 
     """
 
     # Get the supported device
-    device = get_io(fileobj)
+    device = get_io(fileobj, mod_path=mod_path)
 
     if not device:
         print("Audio format not supported.")

@@ -35,7 +35,11 @@ from .dumb import _dumb
 __supported_dict = {
         'ext': ['.xm', '.s3m', '.it', '.mod'],
         'handler': 'DumbFile',
-        'default': True
+        'default': True,
+        'dependencies': {
+            'ctypes': ['dumb'],
+            'python': []
+            }
         }
 
 

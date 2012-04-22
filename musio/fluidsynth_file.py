@@ -36,6 +36,10 @@ from .fluidsynth import fluidsynth as _fluidsynth
 __supported_dict = {
         'ext': ['.mid', '.midi'],
         'handler': 'FluidsynthFile',
+        'dependencies': {
+            'ctypes': ['fluidsynth'],
+            'python': []
+            }
         }
 
 # Interp constants

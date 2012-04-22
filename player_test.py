@@ -23,37 +23,62 @@
 
 """
 
+def main(args: dict) -> None:
+    """ Play args['filename'] args['loops'] times.
+
+    """
+
+    from sys import stdin as sys_stdin
+    from select import select
+    from time import sleep as time_sleep
+
+    from musio.player_util import AudioPlayer
+
+    player = AudioPlayer(show_position=True, **args)
+
+    player.loops = args['loops']
+
+    print("Playing: %(filename)s" % args)
+    print(player)
+
+    player.play()
+
+    while player.playing:
+        # Check for input.
+        r, _, _ = select([sys_stdin], [], [], 0)
+
+        # Get input if there was any otherwise continue.
+        if r:
+            command = r[0].readline().strip().lower()
+        else:
+            time_sleep(0.1)
+            continue
+
+        # Handle input commands.
+        if command.startswith('p'):
+            player.play() if player.paused else player.pause()
+        elif not command:
+            break
+
+    print("\nDone.")
+
+    player.stop()
+
+
 if __name__ == '__main__':
-    from sys import argv as sys_argv
+    from argparse import ArgumentParser
+    parser = ArgumentParser(description="Player test")
+    parser.add_argument('-l', '--loops', action='store', default=-1, type=int,
+                        help='How many times to loop (-1 = infinite)',
+                        dest='loops')
+    parser.add_argument('-t', '--track', action='store', default=0, type=int,
+                        help='Track to play', dest='track')
+    parser.add_argument('-s', '--soundfont', action='store',
+                        default='/usr/share/soundfonts/fluidr3/FluidR3GM.SF2',
+                        help='Soundfont to use when playing midis',
+                        dest='soundfont')
+    parser.add_argument(dest='filename')
+    args = parser.parse_args()
 
-    if sys_argv[1:]:
-
-        args = {}
-        args['filename'] = sys_argv[1]
-
-        if sys_argv[2:]:
-            if sys_argv[2].isdigit():
-                args['track'] = int(sys_argv[2])
-            else:
-                args['soundfont'] = sys_argv[2]
-
-        from musio.player_util import AudioPlayer
-
-        print("Playing: %(filename)s" % args)
-
-        player = AudioPlayer(show_position=True, **args)
-
-        print(player)
-
-        player.play()
-
-        while True:
-            command = input().lower()
-            if command.startswith('p'):
-                player.play() if player.paused else player.pause()
-            elif not command:
-                break
-
-        print("\nDone.")
-
-        player.stop()
+    if args.filename:
+        main(args.__dict__)

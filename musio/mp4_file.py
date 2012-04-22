@@ -36,7 +36,11 @@ from .mp4v2 import _mp4v2
 
 __supported_dict = {
         'ext': ['.mp4', '.m4v'],
-        'handler': 'Mp4File'
+        'handler': 'Mp4File',
+        'dependencies': {
+            'ctypes': ['mp4v2', 'faad'],
+            'python': []
+            }
         }
 
 
@@ -107,7 +111,7 @@ class Mp4File(AudioIO):
 
         tags_dict = self._mp4_handle.get_tag_dict()
 
-        info_dict = {}
+        info_dict = self._info_dict
 
         for i in ['name', 'artist', 'albumArtist', 'album', 'composer',
                 'comments', 'genre', 'releaseDate', 'track', 'disk',

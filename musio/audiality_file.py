@@ -40,7 +40,11 @@ from .audiality import audiality as _agw
 
 __supported_dict = {
         'ext': ['.agw'],
-        'handler': 'AgwFile'
+        'handler': 'AgwFile',
+        'dependencies': {
+            'ctypes': ['audiality'],
+            'python': []
+            }
         }
 
 

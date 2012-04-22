@@ -32,7 +32,11 @@ from .mpg123 import _mpg123
 
 __supported_dict = {
         'ext': ['.mp3'],
-        'handler': 'Mpg123File'
+        'handler': 'Mpg123File',
+        'dependencies': {
+            'ctypes': ['mpg123'],
+            'python': []
+            }
         }
 
 
@@ -173,7 +177,7 @@ class Mpg123File(AudioIO):
                                        _mpg123.byref(id3v1),
                                        _mpg123.byref(id3v2)))
 
-        id3_dict = {}
+        id3_dict = self._info_dict
         for i in ['tag', 'title', 'artist', 'album', 'year', 'comment', 
                   'genre']:
             try:
@@ -212,13 +216,11 @@ class Mpg123File(AudioIO):
         title = id3_dict.get('title', '')
 
         if album and title:
-            name = ('%s - %s' % (album.strip(), title.strip()))
+            id3_dict['name'] = '%(album)s - %(title)s' % id3_dict
         elif artist and title:
-            name = ('%s - %s' % (artist.strip(), title.strip()))
-        else:
-            name = self._filename
-
-        id3_dict['name'] = name
+            id3_dict['name'] = '%(artist)s - %(title)s' % id3_dict
+        elif title:
+            id3_dict['name'] = title.strip()
 
         self._id3_dict = self._info_dict = id3_dict
 

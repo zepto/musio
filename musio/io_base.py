@@ -28,6 +28,7 @@
 
 from functools import wraps as functools_wraps
 from io import RawIOBase, SEEK_SET, SEEK_CUR, SEEK_END
+from os.path import basename as os_basename
 
 # If True errors will only print a message.
 IO_SOFT_ERRORS = True
@@ -147,7 +148,11 @@ class AudioIO(RawIOBase):
 
         self._closed = True
 
-        self._info_dict = {}
+
+        # The default name is the filename minus the extension.
+        name = os_basename(self._filename.rsplit('.', 1)[0])
+
+        self._info_dict = {'name': name}
 
     def __str__(self) -> str:
         """ __str__ -> Return a string representation of the module

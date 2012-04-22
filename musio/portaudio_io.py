@@ -38,7 +38,11 @@ __supported_dict = {
         'output': [bytes],
         'input': [bytes],
         'handler': 'Portaudio',
-        'default': True
+        'default': True,
+        'dependencies': {
+            'ctypes': ['portaudio'],
+            'python': []
+            }
         }
 
 

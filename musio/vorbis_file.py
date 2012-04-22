@@ -43,7 +43,11 @@ from .ogg import vorbisenc as _vorbisenc
 
 __supported_dict = {
         'ext': ['.ogg', '.ogv'],
-        'handler': 'VorbisFile'
+        'handler': 'VorbisFile',
+        'dependencies': {
+            'ctypes': ['vorbis', 'vorbisenc', 'vorbisfile', 'ogg'],
+            'python': []
+            }
         }
 
 

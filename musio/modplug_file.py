@@ -38,7 +38,11 @@ from .modplug import _modplug
 __supported_dict = {
         'ext': ['.mod', '.xm', '.s3m', '.it'],
         'handler': 'ModPlugFile',
-        'default': True
+        'default': True,
+        'dependencies': {
+            'ctypes': ['modplug'],
+            'python': []
+            }
         }
 
 modplug_flags = [

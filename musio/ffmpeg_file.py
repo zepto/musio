@@ -33,7 +33,11 @@ from .ffmpeg import _av
 __supported_dict = {
         'ext': ['.*', '.flv', '.iflv', '.wma', '.wmv', '.avi', '.mpg'],
         'protocol': ['http'],
-        'handler': 'FFmpegFile'
+        'handler': 'FFmpegFile',
+        'dependencies': {
+            'ctypes': ['avcodec', 'avdevice', 'avformat', 'postproc', 'swscale'],
+            'python': []
+            }
         }
 
 

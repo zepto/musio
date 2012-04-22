@@ -35,7 +35,11 @@ from .gme import _gme
 __supported_dict = {
         'ext': ['.ay', '.gps', '.gym', '.hes', '.kss', '.nsf', '.nsfe', 
                 '.sap', '.spc', '.vgm', '.vgz'],
-        'handler': 'GMEFile'
+        'handler': 'GMEFile',
+        'dependencies': {
+            'ctypes': ['gme'],
+            'python': []
+            }
         }
 
 def _err(func_out):
