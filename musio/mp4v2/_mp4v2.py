@@ -165,6 +165,7 @@ MP4_ITMF_BT_XML = 7
 MP4_ITMF_BT_GIF = 12
 MP4_ITMF_BT_HTML = 6
 # def MP4_IS_AUDIO_TRACK_TYPE(type): return (!strcasecmp(type, MP4_AUDIO_TRACK_TYPE)) # macro
+def MP4_IS_AUDIO_TRACK_TYPE(type): return not type.lower() == MP4_AUDIO_TRACK_TYPE # macro
 MP4_ITMF_BT_UTF16 = 2
 # _G_LSEEK64 = __lseek64 # alias
 MP4_ITMF_BT_UTF8 = 1
