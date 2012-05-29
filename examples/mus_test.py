@@ -81,8 +81,9 @@ if __name__ == '__main__':
         from musio.queued_io import QueuedWriter
 
         filename = sys_argv[1]
-        # AudioIO = get_codec(filename)
-        from musio.all_file import AllFile as AudioIO
+        AudioIO = get_codec(filename)
+        # from musio.mp4_file import Mp4File as AudioIO
+        # from musio.all_file import AllFile as AudioIO
 
         if not AudioIO:
             print("Filetype not supported.")
