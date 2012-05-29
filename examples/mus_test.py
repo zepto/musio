@@ -82,8 +82,7 @@ if __name__ == '__main__':
 
         filename = sys_argv[1]
         # AudioIO = get_codec(filename)
-        from musio.mp4_file import Mp4File as AudioIO
-        # from musio.all_file import AllFile as AudioIO
+        from musio.all_file import AllFile as AudioIO
 
         if not AudioIO:
             print("Filetype not supported.")
