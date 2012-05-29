@@ -1,43 +1,45 @@
 from ctypes import *
 
-STRING = c_char_p
 _libraries = {}
 _libraries['/usr/lib/libmp4v2.so'] = CDLL('/usr/lib/libmp4v2.so')
+STRING = c_char_p
 
 
-__u_quad_t = c_ulonglong
-__UQUAD_TYPE = __u_quad_t # alias
-__FSBLKCNT64_T_TYPE = __UQUAD_TYPE # alias
-# __FSBLKCNT_T_TYPE = __ULONGWORD_TYPE # alias
-# __S32_TYPE = int # alias
-# __DADDR_T_TYPE = __S32_TYPE # alias
-__DEV_T_TYPE = __UQUAD_TYPE # alias
-# __CLOCK_T_TYPE = __SLONGWORD_TYPE # alias
-# __CLOCKID_T_TYPE = __S32_TYPE # alias
-# def MP4_IS_MPEG4_AAC_AUDIO_TYPE(mpeg4Type): return (((mpeg4Type) >= MP4_MPEG4_AAC_MAIN_AUDIO_TYPE && (mpeg4Type) <= MP4_MPEG4_AAC_HE_AUDIO_TYPE) || (mpeg4Type) == MP4_MPEG4_AAC_SCALABLE_AUDIO_TYPE || (mpeg4Type) == 17) # macro
-def __va_arg_pack_len(): return __builtin_va_arg_pack_len () # macro
+def __attribute_format_strfmon__(a,b): return __attribute__ ((__format__ (__strfmon__, a, b))) # macro
+# def MP4_IS_MP3_AUDIO_TYPE(type): return ((type) == MP4_MPEG1_AUDIO_TYPE || (type) == MP4_MPEG2_AUDIO_TYPE) # macro
+def __attribute_format_arg__(x): return __attribute__ ((__format_arg__ (x))) # macro
+# def __REDIRECT_NTHNL(name,proto,alias): return name proto __THROWNL __asm__ (__ASMNAME (#alias)) # macro
+def __REDIRECT_NTH_LDBL(name,proto,alias): return __REDIRECT_NTH (name, proto, alias) # macro
+# def __REDIRECT_NTH(name,proto,alias): return name proto __THROW __asm__ (__ASMNAME (#alias)) # macro
+# def MP4_IS_SYSTEMS_TRACK_TYPE(type): return (!strcasecmp(type, MP4_CLOCK_TRACK_TYPE) || !strcasecmp(type, MP4_MPEG7_TRACK_TYPE) || !strcasecmp(type, MP4_OCI_TRACK_TYPE) || !strcasecmp(type, MP4_IPMP_TRACK_TYPE) || !strcasecmp(type, MP4_MPEGJ_TRACK_TYPE)) # macro
+def __STRING(x): return #x # macro
+def __warnattr(msg): return __attribute__((__warning__ (msg))) # macro
+def __PMT(args): return args # macro
+class _IO_FILE(Structure):
+    pass
+stdout = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libmp4v2.so'], 'stdout')
+stdout = stdout # alias
+stdin = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libmp4v2.so'], 'stdin')
+stdin = stdin # alias
+# def __REDIRECT(name,proto,alias): return name proto __asm__ (__ASMNAME (#alias)) # macro
+def __REDIRECT_LDBL(name,proto,alias): return __REDIRECT (name, proto, alias) # macro
 _G_HAVE_SYS_WAIT = 1 # Variable c_int '1'
 _IO_HAVE_SYS_WAIT = _G_HAVE_SYS_WAIT # alias
-# __ID_T_TYPE = __U32_TYPE # alias
-def __va_copy(d,s): return __builtin_va_copy(d,s) # macro
-__quad_t = c_longlong
-__SQUAD_TYPE = __quad_t # alias
-__BLKCNT64_T_TYPE = __SQUAD_TYPE # alias
-# def _IO_getc_unlocked(_fp): return (_IO_BE ((_fp)->_IO_read_ptr >= (_fp)->_IO_read_end, 0) ? __uflow (_fp) : *(unsigned char *) (_fp)->_IO_read_ptr++) # macro
-MP4_ITMF_BT_IMPLICIT = 0
-# def __warndecl(name,msg): return extern void name (void) __attribute__((__warning__ (msg))) # macro
+def MP4_IS_VALID_FILE_HANDLE(x): return ((x) != MP4_INVALID_FILE_HANDLE) # macro
+stderr = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libmp4v2.so'], 'stderr')
+stderr = stderr # alias
+# __S32_TYPE = int # alias
+# __PID_T_TYPE = __S32_TYPE # alias
+# def MP4_IS_HINT_TRACK_TYPE(type): return (!strcasecmp(type, MP4_HINT_TRACK_TYPE)) # macro
+# def __nonnull(params): return __attribute__ ((__nonnull__ params)) # macro
 # def _IO_PENDING_OUTPUT_COUNT(_fp): return ((_fp)->_IO_write_ptr - (_fp)->_IO_write_base) # macro
-# NULL = __null # alias
-# __BLKCNT_T_TYPE = __SLONGWORD_TYPE # alias
-# __BLKSIZE_T_TYPE = __SLONGWORD_TYPE # alias
-# __GID_T_TYPE = __U32_TYPE # alias
-# __FSFILCNT_T_TYPE = __ULONGWORD_TYPE # alias
-size_t = c_uint
-_G_size_t = size_t # alias
-_IO_size_t = _G_size_t # alias
-class _G_fpos_t(Structure):
+# _IO_file_flags = _flags # alias
+def putc(_ch,_fp): return _IO_putc (_ch, _fp) # macro
+def __GLIBC_PREREQ(maj,min): return ((__GLIBC__ << 16) + __GLIBC_MINOR__ >= ((maj) << 16) + (min)) # macro
+class _G_fpos64_t(Structure):
     pass
-__off_t = c_long
+__quad_t = c_longlong
+__off64_t = __quad_t
 class __mbstate_t(Structure):
     pass
 class N11__mbstate_t3DOT_2E(Union):
@@ -50,208 +52,206 @@ __mbstate_t._fields_ = [
     ('__count', c_int),
     ('__value', N11__mbstate_t3DOT_2E),
 ]
-_G_fpos_t._fields_ = [
-    ('__pos', __off_t),
-    ('__state', __mbstate_t),
-]
-_IO_fpos_t = _G_fpos_t # alias
-FILEMODE_UNDEFINED = 0
-__gnuc_va_list = STRING
-_IO_va_list = __gnuc_va_list # alias
-FILEMODE_READ = 1
-FILEMODE_MODIFY = 2
-class _IO_FILE(Structure):
-    pass
-stderr = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libmp4v2.so'], 'stderr')
-stderr = stderr # alias
-FILEMODE_CREATE = 3
-def va_start(v,l): return __builtin_va_start(v,l) # macro
-__uid_t = c_uint
-_G_uid_t = __uid_t # alias
-_IO_uid_t = _G_uid_t # alias
-# __USECONDS_T_TYPE = __U32_TYPE # alias
-def MP4_IS_VALID_FILE_HANDLE(x): return ((x) != MP4_INVALID_FILE_HANDLE) # macro
-_MP4_SDT_RESERVED = 128
-MP4_LOG_NONE = 0
-MP4_SDT_EARLIER_DISPLAY_TIMES_ALLOWED = 64
-MP4_SDT_IS_INDEPENDENT = 32
-MP4_SDT_IS_DEPENDENT = 16
-__codecvt_partial = 1
-MP4_SDT_HAS_DEPENDENTS = 4
-MP4_SDT_HAS_NO_REDUNDANT_CODING = 2
-MP4_SDT_HAS_REDUNDANT_CODING = 1
-__ssize_t = c_int
-_G_ssize_t = __ssize_t # alias
-_IO_ssize_t = _G_ssize_t # alias
-__off64_t = __quad_t
-_G_off64_t = __off64_t # alias
-# _G_stat64 = stat64 # alias
-# def MP4_IS_MPEG2_VIDEO_TYPE(type): return (((type) >= MP4_MPEG2_SIMPLE_VIDEO_TYPE && (type) <= MP4_MPEG2_442_VIDEO_TYPE) || MP4_IS_MPEG1_VIDEO_TYPE(type)) # macro
-_IO_pos_t = _G_fpos_t # alias
-MP4_MPEG2_AAC_MAIN_AUDIO_TYPE = 102 # Variable c_int '102'
-MP4_MPEG2_AAC_AUDIO_TYPE = MP4_MPEG2_AAC_MAIN_AUDIO_TYPE # alias
-def _IO_peekc(_fp): return _IO_peekc_unlocked (_fp) # macro
-# def _IO_peekc_unlocked(_fp): return (_IO_BE ((_fp)->_IO_read_ptr >= (_fp)->_IO_read_end, 0) && __underflow (_fp) == EOF ? EOF : *(unsigned char *) (_fp)->_IO_read_ptr) # macro
-def MP4_IS_MPEG4_VIDEO_TYPE(type): return ((type) == MP4_MPEG4_VIDEO_TYPE) # macro
-__pid_t = c_int
-_G_pid_t = __pid_t # alias
-_IO_pid_t = _G_pid_t # alias
-# _G_OPEN64 = __open64 # alias
-# def MP4_IS_VIDEO_TRACK_TYPE(type): return (!strcasecmp(type, MP4_VIDEO_TRACK_TYPE)) # macro
-__OFF64_T_TYPE = __SQUAD_TYPE # alias
-__INO64_T_TYPE = __UQUAD_TYPE # alias
-# def MP4_IS_AUDIO_TRACK_TYPE(type): return (!strcasecmp(type, MP4_AUDIO_TRACK_TYPE)) # macro
-__codecvt_noconv = 3
-# __SUSECONDS_T_TYPE = __SLONGWORD_TYPE # alias
-MP4_LOG_ERROR = 1
-MP4_SDT_HAS_NO_DEPENDENTS = 8
-# __PID_T_TYPE = __S32_TYPE # alias
-# __OFF_T_TYPE = __SLONGWORD_TYPE # alias
-MP4_LOG_WARNING = 2
-__codecvt_error = 2
-# __SWORD_TYPE = int # alias
-# __SSIZE_T_TYPE = __SWORD_TYPE # alias
-# def MP4_IS_MPEG2_AAC_AUDIO_TYPE(type): return (((type) >= MP4_MPEG2_AAC_MAIN_AUDIO_TYPE && (type) <= MP4_MPEG2_AAC_SSR_AUDIO_TYPE)) # macro
-MP4_LOG_VERBOSE2 = 5
-def __ASMNAME(cname): return __ASMNAME2 (__USER_LABEL_PREFIX__, cname) # macro
-MP4_LOG_INFO = 3
-MP4_ART_BMP = 1
-# __KEY_T_TYPE = __S32_TYPE # alias
-# __INO_T_TYPE = __ULONGWORD_TYPE # alias
-MP4_LOG_VERBOSE3 = 6
-# __UID_T_TYPE = __U32_TYPE # alias
-# def _IO_putc_unlocked(_ch,_fp): return (_IO_BE ((_fp)->_IO_write_ptr >= (_fp)->_IO_write_end, 0) ? __overflow (_fp, (unsigned char) (_ch)) : (unsigned char) (*(_fp)->_IO_write_ptr++ = (_ch))) # macro
-MP4_ART_PNG = 4
-__codecvt_ok = 0
-MP4_ART_JPEG = 3
-__FSFILCNT64_T_TYPE = __UQUAD_TYPE # alias
-__U64_TYPE = __u_quad_t # alias
-MP4_ART_GIF = 2
-# def MP4_IS_AAC_AUDIO_TYPE(type): return (MP4_IS_MPEG2_AAC_AUDIO_TYPE(type) || (type) == MP4_MPEG4_AUDIO_TYPE) # macro
-MP4_LOG_VERBOSE4 = 7
-# __TIME_T_TYPE = __SLONGWORD_TYPE # alias
-def MP4_IS_MPEG1_VIDEO_TYPE(type): return ((type) == MP4_MPEG1_VIDEO_TYPE) # macro
-_G_BUFSIZ = 8192 # Variable c_int '8192'
-_IO_BUFSIZ = _G_BUFSIZ # alias
-BUFSIZ = _IO_BUFSIZ # alias
-MP4_MILLISECONDS_TIME_SCALE = 1000 # Variable c_int '1000'
-MP4_MSECS_TIME_SCALE = MP4_MILLISECONDS_TIME_SCALE # alias
-__RLIM64_T_TYPE = __UQUAD_TYPE # alias
-def __attribute_format_strfmon__(a,b): return __attribute__ ((__format__ (__strfmon__, a, b))) # macro
-# def __LDBL_REDIR(name,proto): return name proto # macro
-MP4_LOG_VERBOSE1 = 4
-MP4_NANOSECONDS_TIME_SCALE = 1000000000 # Variable c_int '1000000000'
-MP4_NSECS_TIME_SCALE = MP4_NANOSECONDS_TIME_SCALE # alias
-def __attribute_format_arg__(x): return __attribute__ ((__format_arg__ (x))) # macro
-# def __REDIRECT_NTHNL(name,proto,alias): return name proto __THROWNL __asm__ (__ASMNAME (#alias)) # macro
-MP4_ART_UNDEFINED = 0
-def __REDIRECT_NTH_LDBL(name,proto,alias): return __REDIRECT_NTH (name, proto, alias) # macro
-# def __REDIRECT_NTH(name,proto,alias): return name proto __THROW __asm__ (__ASMNAME (#alias)) # macro
-MP4_SECONDS_TIME_SCALE = 1 # Variable c_int '1'
-MP4_SECS_TIME_SCALE = MP4_SECONDS_TIME_SCALE # alias
-def __STRING(x): return #x # macro
-def __PMT(args): return args # macro
-MP4_MICROSECONDS_TIME_SCALE = 1000000 # Variable c_int '1000000'
-MP4_USECS_TIME_SCALE = MP4_MICROSECONDS_TIME_SCALE # alias
-# def __REDIRECT(name,proto,alias): return name proto __asm__ (__ASMNAME (#alias)) # macro
-def __bos(ptr): return __builtin_object_size (ptr, __USE_FORTIFY_LEVEL > 1) # macro
-def __REDIRECT_LDBL(name,proto,alias): return __REDIRECT (name, proto, alias) # macro
-# def _IO_feof_unlocked(__fp): return (((__fp)->_flags & _IO_EOF_SEEN) != 0) # macro
-MP4_SDT_UNKNOWN = 0
-# def MP4_IS_HINT_TRACK_TYPE(type): return (!strcasecmp(type, MP4_HINT_TRACK_TYPE)) # macro
-# def MP4_IS_CNTL_TRACK_TYPE(type): return (!strcasecmp(type, MP4_CNTL_TRACK_TYPE)) # macro
-def __GLIBC_PREREQ(maj,min): return ((__GLIBC__ << 16) + __GLIBC_MINOR__ >= ((maj) << 16) + (min)) # macro
-def __GNUC_PREREQ(maj,min): return ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min)) # macro
-# _G_wint_t = wint_t # alias
-MP4_ITMF_BT_BMP = 27
-_G_va_list = __gnuc_va_list # alias
-class _G_fpos64_t(Structure):
-    pass
 _G_fpos64_t._pack_ = 4
 _G_fpos64_t._fields_ = [
     ('__pos', __off64_t),
     ('__state', __mbstate_t),
 ]
 _IO_fpos64_t = _G_fpos64_t # alias
-def __CONCAT(x,y): return x ## y # macro
-# def MP4_IS_OD_TRACK_TYPE(type): return (!strcasecmp(type, MP4_OD_TRACK_TYPE)) # macro
-# def MP4_IS_MP3_AUDIO_TYPE(type): return ((type) == MP4_MPEG1_AUDIO_TYPE || (type) == MP4_MPEG2_AUDIO_TYPE) # macro
-MP4ChapterTypeNone = 0
-_IO_off64_t = _G_off64_t # alias
+# def __LDBL_REDIR(name,proto): return name proto # macro
+def va_arg(v,l): return __builtin_va_arg(v,l) # macro
+# _G_wint_t = wint_t # alias
+def _G_ARGS(ARGLIST): return ARGLIST # macro
+MP4_SECONDS_TIME_SCALE = 1 # Variable c_int '1'
+MP4_SECS_TIME_SCALE = MP4_SECONDS_TIME_SCALE # alias
+def MP4_IS_VALID_DURATION(x): return ((x) != MP4_INVALID_DURATION) # macro
+def MP4_IS_VALID_SAMPLE_ID(x): return ((x) != MP4_INVALID_SAMPLE_ID) # macro
+# __UID_T_TYPE = __U32_TYPE # alias
+_G_BUFSIZ = 8192 # Variable c_int '8192'
+_IO_BUFSIZ = _G_BUFSIZ # alias
+MP4_ITMF_BT_IMPLICIT = 0
+def MP4_IS_VALID_TIMESTAMP(x): return ((x) != MP4_INVALID_TIMESTAMP) # macro
+# def MP4_IS_CNTL_TRACK_TYPE(type): return (!strcasecmp(type, MP4_CNTL_TRACK_TYPE)) # macro
+def _G_FSTAT64(fd,buf): return __fxstat64 (_STAT_VER, fd, buf) # macro
+def MP4_IS_VALID_EDIT_ID(x): return ((x) != MP4_INVALID_EDIT_ID) # macro
+def MP4_IS_VALID_TRACK_ID(x): return ((x) != MP4_INVALID_TRACK_ID) # macro
+def _IO_BE(expr,res): return __builtin_expect ((expr), res) # macro
+# NULL = __null # alias
 def __P(args): return args # macro
-# _IO_wint_t = _G_wint_t # alias
-# def _IO_ferror_unlocked(__fp): return (((__fp)->_flags & _IO_ERR_SEEN) != 0) # macro
 # _IO_iconv_t = _G_iconv_t # alias
+# def _IO_ferror_unlocked(__fp): return (((__fp)->_flags & _IO_ERR_SEEN) != 0) # macro
+# def _IO_getc_unlocked(_fp): return (_IO_BE ((_fp)->_IO_read_ptr >= (_fp)->_IO_read_end, 0) ? __uflow (_fp) : *(unsigned char *) (_fp)->_IO_read_ptr++) # macro
+# __USECONDS_T_TYPE = __U32_TYPE # alias
 # def __LDBL_REDIR_NTH(name,proto): return name proto __THROW # macro
-MP4_ITMF_BT_DURATION = 16
-# __SWBLK_T_TYPE = __SLONGWORD_TYPE # alias
+def _IO_peekc(_fp): return _IO_peekc_unlocked (_fp) # macro
+# def _IO_peekc_unlocked(_fp): return (_IO_BE ((_fp)->_IO_read_ptr >= (_fp)->_IO_read_end, 0) && __underflow (_fp) == EOF ? EOF : *(unsigned char *) (_fp)->_IO_read_ptr) # macro
 # def __NTH(fct): return __LEAF_ATTR fct throw () # macro
-def _PARAMS(protos): return __P(protos) # macro
-# def __LDBL_REDIR1_NTH(name,proto,alias): return name proto __THROW # macro
+__off_t = c_long
 _G_off_t = __off_t # alias
 _IO_off_t = _G_off_t # alias
-stdin = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libmp4v2.so'], 'stdin')
-stdin = stdin # alias
+def __CONCAT(x,y): return x ## y # macro
+class _G_fpos_t(Structure):
+    pass
+_G_fpos_t._fields_ = [
+    ('__pos', __off_t),
+    ('__state', __mbstate_t),
+]
+_IO_fpos_t = _G_fpos_t # alias
+# _G_stat64 = stat64 # alias
+# def __LDBL_REDIR1_NTH(name,proto,alias): return name proto __THROW # macro
+# _IO_wint_t = _G_wint_t # alias
+_G_off64_t = __off64_t # alias
+_IO_off64_t = _G_off64_t # alias
 # def __ASMNAME2(prefix,cname): return __STRING (prefix) cname # macro
-# _IO_HAVE_ST_BLKSIZE = _G_HAVE_ST_BLKSIZE # alias
-def _G_ARGS(ARGLIST): return ARGLIST # macro
-MP4_ITMF_BT_MI3P = 10
-MP4_ITMF_BT_ISRC = 9
-# def __LDBL_REDIR1(name,proto,alias): return name proto # macro
-# _G_wchar_t = wchar_t # alias
-MP4_MPEG2_AUDIO_TYPE = 105 # Variable c_int '105'
-MP4_MP3_AUDIO_TYPE = MP4_MPEG2_AUDIO_TYPE # alias
+size_t = c_uint
+_G_size_t = size_t # alias
+_IO_size_t = _G_size_t # alias
+MP4_LOG_NONE = 0
+MP4_LOG_VERBOSE4 = 7
+__pid_t = c_int
+_G_pid_t = __pid_t # alias
+_IO_pid_t = _G_pid_t # alias
+# def MP4_IS_AAC_AUDIO_TYPE(type): return (MP4_IS_MPEG2_AAC_AUDIO_TYPE(type) || (type) == MP4_MPEG4_AUDIO_TYPE) # macro
 def __bos0(ptr): return __builtin_object_size (ptr, 0) # macro
-# def __nonnull(params): return __attribute__ ((__nonnull__ params)) # macro
-MP4_ITMF_BT_SJIS = 3
+# __KEY_T_TYPE = __S32_TYPE # alias
+# def __errordecl(name,msg): return extern void name (void) __attribute__((__error__ (msg))) # macro
+MP4_MICROSECONDS_TIME_SCALE = 1000000 # Variable c_int '1000000'
+MP4_USECS_TIME_SCALE = MP4_MICROSECONDS_TIME_SCALE # alias
 def __va_arg_pack(): return __builtin_va_arg_pack () # macro
-def __warnattr(msg): return __attribute__((__warning__ (msg))) # macro
-# _G_LSEEK64 = __lseek64 # alias
+def __va_arg_pack_len(): return __builtin_va_arg_pack_len () # macro
+def __va_copy(d,s): return __builtin_va_copy(d,s) # macro
+# def __warndecl(name,msg): return extern void name (void) __attribute__((__warning__ (msg))) # macro
 def getc(_fp): return _IO_getc (_fp) # macro
 def offsetof(TYPE,MEMBER): return __builtin_offsetof (TYPE, MEMBER) # macro
-def putc(_ch,_fp): return _IO_putc (_ch, _fp) # macro
-# def __errordecl(name,msg): return extern void name (void) __attribute__((__error__ (msg))) # macro
-def va_arg(v,l): return __builtin_va_arg(v,l) # macro
+def _PARAMS(protos): return __P(protos) # macro
 def va_copy(d,s): return __builtin_va_copy(d,s) # macro
 def va_end(v): return __builtin_va_end(v) # macro
-# def MP4_IS_SCENE_TRACK_TYPE(type): return (!strcasecmp(type, MP4_SCENE_TRACK_TYPE)) # macro
-# __NLINK_T_TYPE = __UWORD_TYPE # alias
-def MP4_IS_VALID_EDIT_ID(x): return ((x) != MP4_INVALID_EDIT_ID) # macro
-# def MP4_IS_SYSTEMS_TRACK_TYPE(type): return (!strcasecmp(type, MP4_CLOCK_TRACK_TYPE) || !strcasecmp(type, MP4_MPEG7_TRACK_TYPE) || !strcasecmp(type, MP4_OCI_TRACK_TYPE) || !strcasecmp(type, MP4_IPMP_TRACK_TYPE) || !strcasecmp(type, MP4_MPEGJ_TRACK_TYPE)) # macro
-def MP4_IS_VALID_DURATION(x): return ((x) != MP4_INVALID_DURATION) # macro
-__S64_TYPE = __quad_t # alias
-def MP4_IS_VALID_SAMPLE_ID(x): return ((x) != MP4_INVALID_SAMPLE_ID) # macro
-def MP4_IS_VALID_TRACK_ID(x): return ((x) != MP4_INVALID_TRACK_ID) # macro
+def va_start(v,l): return __builtin_va_start(v,l) # macro
+# _G_VTABLE_LABEL_PREFIX_ID = __vt_ # alias
+__codecvt_error = 2
+MP4_LOG_WARNING = 2
 MP4ChapterTypeNero = 4
-MP4_MPEG2_MAIN_VIDEO_TYPE = 97 # Variable c_int '97'
-MP4_MPEG2_VIDEO_TYPE = MP4_MPEG2_MAIN_VIDEO_TYPE # alias
+BUFSIZ = _IO_BUFSIZ # alias
 MP4ChapterTypeQt = 2
+def __ASMNAME(cname): return __ASMNAME2 (__USER_LABEL_PREFIX__, cname) # macro
 MP4ChapterTypeAny = 1
-def MP4_IS_VALID_TIMESTAMP(x): return ((x) != MP4_INVALID_TIMESTAMP) # macro
-def _G_FSTAT64(fd,buf): return __fxstat64 (_STAT_VER, fd, buf) # macro
-stdout = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libmp4v2.so'], 'stdout')
-stdout = stdout # alias
+MP4_MPEG2_AUDIO_TYPE = 105 # Variable c_int '105'
+MP4_MP3_AUDIO_TYPE = MP4_MPEG2_AUDIO_TYPE # alias
+MP4_MPEG2_AAC_MAIN_AUDIO_TYPE = 102 # Variable c_int '102'
+MP4_MPEG2_AAC_AUDIO_TYPE = MP4_MPEG2_AAC_MAIN_AUDIO_TYPE # alias
+__u_quad_t = c_ulonglong
+__UQUAD_TYPE = __u_quad_t # alias
+__FSFILCNT64_T_TYPE = __UQUAD_TYPE # alias
+MP4_MILLISECONDS_TIME_SCALE = 1000 # Variable c_int '1000'
+MP4_MSECS_TIME_SCALE = MP4_MILLISECONDS_TIME_SCALE # alias
+# def _IO_putc_unlocked(_ch,_fp): return (_IO_BE ((_fp)->_IO_write_ptr >= (_fp)->_IO_write_end, 0) ? __overflow (_fp, (unsigned char) (_ch)) : (unsigned char) (*(_fp)->_IO_write_ptr++ = (_ch))) # macro
+MP4_NANOSECONDS_TIME_SCALE = 1000000000 # Variable c_int '1000000000'
+MP4_NSECS_TIME_SCALE = MP4_NANOSECONDS_TIME_SCALE # alias
 MP4_ITMF_BT_UNDEFINED = 255
+MP4_ITMF_BT_BMP = 27
 MP4_ITMF_BT_UPC = 25
 MP4_ITMF_BT_RIAA_PA = 24
 MP4_ITMF_BT_INTEGER = 21
+MP4ChapterTypeNone = 0
 MP4_ITMF_BT_GENRES = 18
 MP4_ITMF_BT_DATETIME = 17
-def _IO_BE(expr,res): return __builtin_expect ((expr), res) # macro
+MP4_ITMF_BT_DURATION = 16
 MP4_ITMF_BT_URL = 15
 MP4_ITMF_BT_PNG = 14
 MP4_ITMF_BT_JPEG = 13
+MP4_ITMF_BT_ISRC = 9
 MP4_ITMF_BT_UUID = 8
 MP4_ITMF_BT_XML = 7
 MP4_ITMF_BT_GIF = 12
-# __MODE_T_TYPE = __U32_TYPE # alias
 MP4_ITMF_BT_HTML = 6
+# def MP4_IS_AUDIO_TRACK_TYPE(type): return (!strcasecmp(type, MP4_AUDIO_TRACK_TYPE)) # macro
 MP4_ITMF_BT_UTF16 = 2
-# _G_MMAP64 = __mmap64 # alias
+# _G_LSEEK64 = __lseek64 # alias
 MP4_ITMF_BT_UTF8 = 1
+MP4_SDT_UNKNOWN = 0
+# __DADDR_T_TYPE = __S32_TYPE # alias
+# __CLOCKID_T_TYPE = __S32_TYPE # alias
+# __CLOCK_T_TYPE = __SLONGWORD_TYPE # alias
+# __BLKSIZE_T_TYPE = __SLONGWORD_TYPE # alias
+# __BLKCNT_T_TYPE = __SLONGWORD_TYPE # alias
+def MP4_IS_MPEG4_VIDEO_TYPE(type): return ((type) == MP4_MPEG4_VIDEO_TYPE) # macro
+MP4_ART_UNDEFINED = 0
+# def _IO_feof_unlocked(__fp): return (((__fp)->_flags & _IO_EOF_SEEN) != 0) # macro
+__DEV_T_TYPE = __UQUAD_TYPE # alias
+# _G_MMAP64 = __mmap64 # alias
+MP4_LOG_VERBOSE3 = 6
+__SQUAD_TYPE = __quad_t # alias
+__BLKCNT64_T_TYPE = __SQUAD_TYPE # alias
+__codecvt_ok = 0
+# __MODE_T_TYPE = __U32_TYPE # alias
+_IO_pos_t = _G_fpos_t # alias
+__S64_TYPE = __quad_t # alias
+# def MP4_IS_VIDEO_TRACK_TYPE(type): return (!strcasecmp(type, MP4_VIDEO_TRACK_TYPE)) # macro
+FILEMODE_UNDEFINED = 0
+MP4_MPEG2_MAIN_VIDEO_TYPE = 97 # Variable c_int '97'
+MP4_MPEG2_VIDEO_TYPE = MP4_MPEG2_MAIN_VIDEO_TYPE # alias
+__uid_t = c_uint
+_G_uid_t = __uid_t # alias
+_IO_uid_t = _G_uid_t # alias
+FILEMODE_READ = 1
+__gnuc_va_list = STRING
+_IO_va_list = __gnuc_va_list # alias
+FILEMODE_MODIFY = 2
+FILEMODE_CREATE = 3
 # __RLIM_T_TYPE = __ULONGWORD_TYPE # alias
-# _IO_file_flags = _flags # alias
-# _G_VTABLE_LABEL_PREFIX_ID = __vt_ # alias
+__ssize_t = c_int
+_G_ssize_t = __ssize_t # alias
+_IO_ssize_t = _G_ssize_t # alias
+_MP4_SDT_RESERVED = 128
+MP4_SDT_EARLIER_DISPLAY_TIMES_ALLOWED = 64
+MP4_SDT_IS_INDEPENDENT = 32
+MP4_SDT_IS_DEPENDENT = 16
+MP4_SDT_HAS_NO_DEPENDENTS = 8
+MP4_SDT_HAS_DEPENDENTS = 4
+MP4_SDT_HAS_NO_REDUNDANT_CODING = 2
+MP4_SDT_HAS_REDUNDANT_CODING = 1
+MP4_ITMF_BT_MI3P = 10
+# def MP4_IS_MPEG4_AAC_AUDIO_TYPE(mpeg4Type): return (((mpeg4Type) >= MP4_MPEG4_AAC_MAIN_AUDIO_TYPE && (mpeg4Type) <= MP4_MPEG4_AAC_HE_AUDIO_TYPE) || (mpeg4Type) == MP4_MPEG4_AAC_SCALABLE_AUDIO_TYPE || (mpeg4Type) == 17) # macro
+def __GNUC_PREREQ(maj,min): return ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min)) # macro
+# __NLINK_T_TYPE = __UWORD_TYPE # alias
+# def MP4_IS_OD_TRACK_TYPE(type): return (!strcasecmp(type, MP4_OD_TRACK_TYPE)) # macro
+def __bos(ptr): return __builtin_object_size (ptr, __USE_FORTIFY_LEVEL > 1) # macro
+MP4_ITMF_BT_SJIS = 3
+# __GID_T_TYPE = __U32_TYPE # alias
+# def MP4_IS_MPEG2_VIDEO_TYPE(type): return (((type) >= MP4_MPEG2_SIMPLE_VIDEO_TYPE && (type) <= MP4_MPEG2_442_VIDEO_TYPE) || MP4_IS_MPEG1_VIDEO_TYPE(type)) # macro
+__U64_TYPE = __u_quad_t # alias
+# __OFF_T_TYPE = __SLONGWORD_TYPE # alias
+# _IO_HAVE_ST_BLKSIZE = _G_HAVE_ST_BLKSIZE # alias
+_G_va_list = __gnuc_va_list # alias
+# __FSFILCNT_T_TYPE = __ULONGWORD_TYPE # alias
+# __SUSECONDS_T_TYPE = __SLONGWORD_TYPE # alias
+MP4_ART_GIF = 2
+MP4_LOG_ERROR = 1
+__FSBLKCNT64_T_TYPE = __UQUAD_TYPE # alias
+__codecvt_noconv = 3
+__codecvt_partial = 1
+# __SWBLK_T_TYPE = __SLONGWORD_TYPE # alias
+# __SWORD_TYPE = int # alias
+# __SSIZE_T_TYPE = __SWORD_TYPE # alias
+# __TIME_T_TYPE = __SLONGWORD_TYPE # alias
+def MP4_IS_MPEG1_VIDEO_TYPE(type): return ((type) == MP4_MPEG1_VIDEO_TYPE) # macro
+MP4_LOG_VERBOSE2 = 5
+# _G_wchar_t = wchar_t # alias
+MP4_LOG_VERBOSE1 = 4
+MP4_LOG_INFO = 3
+MP4_ART_BMP = 1
+MP4_ART_PNG = 4
+MP4_ART_JPEG = 3
+__INO64_T_TYPE = __UQUAD_TYPE # alias
+# __INO_T_TYPE = __ULONGWORD_TYPE # alias
+# def MP4_IS_MPEG2_AAC_AUDIO_TYPE(type): return (((type) >= MP4_MPEG2_AAC_MAIN_AUDIO_TYPE && (type) <= MP4_MPEG2_AAC_SSR_AUDIO_TYPE)) # macro
+__RLIM64_T_TYPE = __UQUAD_TYPE # alias
+# __FSBLKCNT_T_TYPE = __ULONGWORD_TYPE # alias
+# def __LDBL_REDIR1(name,proto,alias): return name proto # macro
+__OFF64_T_TYPE = __SQUAD_TYPE # alias
+# __ID_T_TYPE = __U32_TYPE # alias
+# _G_OPEN64 = __open64 # alias
+# def MP4_IS_SCENE_TRACK_TYPE(type): return (!strcasecmp(type, MP4_SCENE_TRACK_TYPE)) # macro
 MP4_AUDIO_TRACK_TYPE = 'soun' # Variable STRING '(const char*)"soun"'
 _G_HAVE_IO_GETLINE_INFO = 1 # Variable c_int '1'
 _ATFILE_SOURCE = 1 # Variable c_int '1'
@@ -390,7 +390,7 @@ MPEG4_BATP_L2 = 114 # Variable c_int '114'
 MP4_MPEG4_AAC_LC_AUDIO_TYPE = 2 # Variable c_int '2'
 MPEG4_FGSP_L1 = 249 # Variable c_int '249'
 MP4_MPEG4_AAC_SCALABLE_AUDIO_TYPE = 6 # Variable c_int '6'
-_IO_IN_BACKUP = 256 # Variable c_int '256'
+_G_IO_IO_FILE_VERSION = 131073 # Variable c_int '131073'
 _IOS_NOREPLACE = 64 # Variable c_int '64'
 _LARGEFILE_SOURCE = 1 # Variable c_int '1'
 MP4_MPEG4_CELP_AUDIO_TYPE = 8 # Variable c_int '8'
@@ -528,7 +528,7 @@ MPEG4_HP_L2 = 130 # Variable c_int '130'
 _G_HAVE_ATEXIT = 1 # Variable c_int '1'
 _G_HAVE_BOOL = 1 # Variable c_int '1'
 __mbstate_t_defined = 1 # Variable c_int '1'
-_G_IO_IO_FILE_VERSION = 131073 # Variable c_int '131073'
+_IO_IN_BACKUP = 256 # Variable c_int '256'
 MPEG4_S_STUDIO_P_L3 = 227 # Variable c_int '227'
 MPEG4_S_STUDIO_P_L2 = 226 # Variable c_int '226'
 MPEG4_S_STUDIO_P_L1 = 225 # Variable c_int '225'
@@ -2019,13 +2019,13 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            'MP4_CREATE_64BIT_TIME', 'MP4TagsSetAlbum',
            'MP4TagsSetCategory', 'MP4_IS_VALID_SAMPLE_ID',
            '_IO_SKIPWS', 'MP4TagsSetContentID', 'fopen',
-           'MP4_ART_BMP', 'setbuf', 'MP4Duration', '__codecvt_result',
-           '_IO_SCIENTIFIC', 'MP4TagArtworkType_e', '_IO_2_1_stdin_',
-           'MP4HaveAtom', '_IO_ferror', 'MP4EncAndCloneTrack',
-           '_G_FSTAT64', 'MP4_MPEG4_LAYER2_AUDIO_TYPE',
-           '_IO_BOOLALPHA', '__PMT', 'uint_fast8_t',
-           '_LARGEFILE_SOURCE', '__io_read_fn', 'MP4CopySample',
-           'MP4_SDT_UNKNOWN', 'MP4Free', '__mode_t',
+           'MP4_SECONDS_TIME_SCALE', 'setbuf', 'MP4Duration',
+           '__codecvt_result', '_IO_SCIENTIFIC',
+           'MP4TagArtworkType_e', '_IO_2_1_stdin_', 'MP4HaveAtom',
+           '_IO_ferror', 'MP4EncAndCloneTrack', '_G_FSTAT64',
+           'MP4_MPEG4_LAYER2_AUDIO_TYPE', '_IO_BOOLALPHA', '__PMT',
+           'uint_fast8_t', '_G_HAVE_SYS_WAIT', '__io_read_fn',
+           'MP4CopySample', 'MP4_SDT_UNKNOWN', 'MP4Free', '__mode_t',
            'MP4_MPEG4_LAYER3_AUDIO_TYPE', '_IO_DEC', '__off_t',
            'MP4EncAndCopySample', 'fmemopen', 'getchar',
            'MP4_MPEG4_HVXC_AUDIO_TYPE', 'MP4TagsSetEncodingTool',
@@ -2046,7 +2046,7 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            'MPEG4_C_STUDIO_P_L4', '__fsfilcnt64_t', '_IO_pid_t',
            'MP4TagDisk', '_IO_FILE', 'MP4AddPixelAspectRatio',
            'MP4AddHrefTrack', 'MPEG4_FGSP_L4', 'MPEG4_FGSP_L5',
-           'MP4_SECONDS_TIME_SCALE', 'MPEG4_FGSP_L3', 'MPEG4_FGSP_L0',
+           'MP4_ART_BMP', 'MPEG4_FGSP_L3', 'MPEG4_FGSP_L0',
            'MPEG4_FGSP_L1', 'MP4V2_PROJECT_bugreport',
            'MP4TagsSetGenre', '_IO_UNITBUF', 'MP4EncAndCopyTrack',
            'intptr_t', 'off_t', '__fsblkcnt_t', 'MP4TagsFetch',
@@ -2068,11 +2068,10 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            '__GLIBC__', 'MPEG4_CSP_L2', '__USE_ISOC99', 'MP4_ART_GIF',
            'MP4SetTrackLanguage', 'MP4_MPEG2_AAC_SSR_AUDIO_TYPE',
            '_IO_fpos_t', 'MP4Tags_s', 'stdin', '__u_int',
-           'MP4_MPEG4_INVALID_AUDIO_TYPE', 'ssize_t',
-           'MP4GetTrackLanguage', '__clock_t', '__fsfilcnt_t',
-           'MP4_AUDIO_TRACK_TYPE', '_G_HAVE_IO_GETLINE_INFO',
-           'MP4_MPEG2_HIGH_VIDEO_TYPE', 'vscanf',
-           'MP4V2_PROJECT_version_major',
+           '_IO_IN_BACKUP', 'ssize_t', 'MP4GetTrackLanguage',
+           '__clock_t', '__fsfilcnt_t', 'MP4_AUDIO_TRACK_TYPE',
+           '_G_HAVE_IO_GETLINE_INFO', 'MP4_MPEG2_HIGH_VIDEO_TYPE',
+           'vscanf', 'MP4V2_PROJECT_version_major',
            'MP4_SDT_HAS_REDUNDANT_CODING', '_IONBF', 'FILE',
            'ferror_unlocked', 'size_t', '__USE_XOPEN', 'MP4TagDisk_s',
            'TRUE', 'MP4V2_PROJECT_version_point', '__USE_POSIX2',
@@ -2136,8 +2135,7 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            'MP4GetHrefTrackBaseUrl', 'MP4GetSampleSync',
            '__blkcnt64_t', '__STDC_ISO_10646__',
            'MP4_MPEG2_SPATIAL_VIDEO_TYPE', '_IOS_NOCREATE',
-           'MP4_SDT_IS_INDEPENDENT',
-           'MP4_SDT_HAS_NO_REDUNDANT_CODING', 'L_ctermid',
+           'MP4_SDT_IS_INDEPENDENT', '_G_uid_t', 'L_ctermid',
            '_IO_TIED_PUT_GET', 'MPEG4_ARTSP_L4', 'FALSE',
            'MPEG4_ARTSP_L2', 'MPEG4_ARTSP_L1', 'fscanf',
            'uint_fast64_t', 'MP4ReferenceSample', '__USE_LARGEFILE',
@@ -2172,16 +2170,16 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            'putchar_unlocked', 'MP4AddHintTrack', '_IO_USER_BUF',
            '__USE_LARGEFILE64', 'encryptFunc_t', 'MP4V2_PROJECT_irc',
            'MP4AddChapter', '__underflow', 'MP4V2_PROJECT_name',
-           '_G_uid_t', 'MP4_SET_DYNAMIC_PAYLOAD',
-           'MP4_INVALID_TRACK_ID', '_IO_SHOWBASE',
-           'MP4ItmfGetItemsByMeaning', 'fputs', '_IO_LINE_BUF',
-           'MP4FileProvider_s', 'MP4Read', 'MP4_ITMF_BT_UPC',
-           '__loff_t', 'MP4SetStringProperty', 'MP4_OCI_TRACK_TYPE',
-           '_G_config_h', 'MPEG4_BATP_L1', '__RLIM64_T_TYPE',
-           'cookie_seek_function_t', '_IO_FLAGS2_MMAP',
-           '_G_USING_THUNKS', 'MP4AddEncVideoTrack',
-           'MP4ReadRtpPacket', 'MP4Timestamp', 'MPEG4_ARTSP_L3',
-           '__GLIBC_HAVE_LONG_LONG', 'MP4_ART_JPEG',
+           'MP4_SDT_HAS_NO_REDUNDANT_CODING',
+           'MP4_SET_DYNAMIC_PAYLOAD', 'MP4_INVALID_TRACK_ID',
+           '_IO_SHOWBASE', 'MP4ItmfGetItemsByMeaning', 'fputs',
+           '_IO_LINE_BUF', 'MP4FileProvider_s', 'MP4Read',
+           'MP4_ITMF_BT_UPC', '__loff_t', 'MP4SetStringProperty',
+           'MP4_OCI_TRACK_TYPE', '_G_config_h', 'MPEG4_BATP_L1',
+           '__RLIM64_T_TYPE', 'cookie_seek_function_t',
+           '_IO_FLAGS2_MMAP', '_G_USING_THUNKS',
+           'MP4AddEncVideoTrack', 'MP4ReadRtpPacket', 'MP4Timestamp',
+           'MPEG4_ARTSP_L3', '__GLIBC_HAVE_LONG_LONG', 'MP4_ART_JPEG',
            'MP4_INVALID_TIMESTAMP', 'MP4GetSampleRenderingOffset',
            'fileno', 'vdprintf', 'FOPEN_MAX', '_IO_DELETE_DONT_CLOSE',
            'MP4AddSubpicTrack', 'MP4GetTimeScale', 'remove',
@@ -2259,7 +2257,7 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            'uint16_t', '_G_HAVE_BOOL', 'MP4TagsSetTVShow',
            'MP4TagsSetComposer', 'MP4SetTrackESConfiguration',
            '__int64_t', 'FILEMODE_UNDEFINED', 'uint32_t', 'fopen64',
-           'MP4_IS_VALID_FILE_HANDLE', '_G_HAVE_SYS_WAIT',
+           'MP4_IS_VALID_FILE_HANDLE', '_LARGEFILE_SOURCE',
            'MP4ItmfSetItem', 'MP4SetLogCallback', '__USE_XOPEN2KXSI',
            'cookie_write_function_t', 'fread', '_IO_LEFT', '_G_off_t',
            '__fsid_t', 'MP4_MPEG1_VIDEO_TYPE', 'fflush',
@@ -2305,7 +2303,7 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            'MP4SetH263Bitrates', '__USE_BSD', 'fseek', 'sys_errlist',
            'MP4SetH263DecoderVersion', '__CONCAT',
            'clearerr_unlocked', 'MP4LogLevel', 'MP4_LOG_ERROR',
-           '_IO_IN_BACKUP', '_IOS_NOREPLACE',
+           'MP4_MPEG4_INVALID_AUDIO_TYPE', '_IOS_NOREPLACE',
            'MP4GetSampleIdFromTime', 'tempnam', '____FILE_defined',
            'MP4AddH264VideoTrack',
            'MP4GetTrackMediaDataOriginalFormat', 'uint_least64_t',

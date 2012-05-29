@@ -5,34 +5,34 @@
   <Function id="_3" name="__builtin_nans" returns="_991" context="_1" location="f0:21" file="f0" line="21" extern="1" attributes="nothrow const nonnull">
     <Argument name="str" type="_992" location="f0:21" file="f0" line="21"/>
   </Function>
-  <Variable id="_4" name="cpp_sym_MP4V2_PROJECT_name" type="_992" init="(const char*)&quot;MP4v2&quot;" context="_1" location="f1:242" file="f1" line="242"/>
-  <Variable id="_5" name="cpp_sym_MPEG4_FGSP_L0" type="_116c" init="248" context="_1" location="f1:225" file="f1" line="225" static="1"/>
-  <Variable id="_6" name="cpp_sym_MPEG4_FGSP_L1" type="_116c" init="249" context="_1" location="f1:147" file="f1" line="147" static="1"/>
-  <Variable id="_7" name="cpp_sym_MPEG4_FGSP_L2" type="_116c" init="250" context="_1" location="f1:223" file="f1" line="223" static="1"/>
-  <Variable id="_8" name="cpp_sym_MPEG4_FGSP_L3" type="_116c" init="251" context="_1" location="f1:224" file="f1" line="224" static="1"/>
-  <Variable id="_9" name="cpp_sym_MPEG4_FGSP_L4" type="_116c" init="252" context="_1" location="f1:221" file="f1" line="221" static="1"/>
+  <Variable id="_4" name="cpp_sym_MP4V2_PROJECT_name" type="_992" init="(const char*)&quot;MP4v2&quot;" context="_1" location="f1:243" file="f1" line="243"/>
+  <Variable id="_5" name="cpp_sym_MPEG4_FGSP_L0" type="_116c" init="248" context="_1" location="f1:226" file="f1" line="226" static="1"/>
+  <Variable id="_6" name="cpp_sym_MPEG4_FGSP_L1" type="_116c" init="249" context="_1" location="f1:148" file="f1" line="148" static="1"/>
+  <Variable id="_7" name="cpp_sym_MPEG4_FGSP_L2" type="_116c" init="250" context="_1" location="f1:224" file="f1" line="224" static="1"/>
+  <Variable id="_8" name="cpp_sym_MPEG4_FGSP_L3" type="_116c" init="251" context="_1" location="f1:225" file="f1" line="225" static="1"/>
+  <Variable id="_9" name="cpp_sym_MPEG4_FGSP_L4" type="_116c" init="252" context="_1" location="f1:222" file="f1" line="222" static="1"/>
   <Function id="_10" name="__builtin_acosf" returns="_994" context="_1" mangled="acosf" location="f0:25" file="f0" line="25" extern="1" attributes="nothrow">
     <Argument type="_994" location="f0:25" file="f0" line="25"/>
   </Function>
   <Function id="_11" name="__builtin_acosl" returns="_995" context="_1" mangled="acosl" location="f0:26" file="f0" line="26" extern="1" attributes="nothrow">
     <Argument type="_995" location="f0:26" file="f0" line="26"/>
   </Function>
-  <Variable id="_12" name="cpp_sym__IO_IS_FILEBUF" type="_116c" init="8192" context="_1" location="f1:269" file="f1" line="269" static="1"/>
-  <Variable id="_13" name="cpp_sym__IO_FLAGS2_NOTCANCEL" type="_116c" init="2" context="_1" location="f1:295" file="f1" line="295" static="1"/>
-  <Variable id="_14" name="cpp_sym___USE_XOPEN2K8" type="_116c" init="1" context="_1" location="f1:26" file="f1" line="26" static="1"/>
-  <Variable id="_15" name="cpp_sym_MP4_MPEG4_AAC_SSR_AUDIO_TYPE" type="_116c" init="3" context="_1" location="f1:297" file="f1" line="297" static="1"/>
-  <Variable id="_16" name="cpp_sym_MPEG4_ASP_L5" type="_116c" init="245" context="_1" location="f1:17" file="f1" line="17" static="1"/>
+  <Variable id="_12" name="cpp_sym__IO_IS_FILEBUF" type="_116c" init="8192" context="_1" location="f1:270" file="f1" line="270" static="1"/>
+  <Variable id="_13" name="cpp_sym__IO_FLAGS2_NOTCANCEL" type="_116c" init="2" context="_1" location="f1:296" file="f1" line="296" static="1"/>
+  <Variable id="_14" name="cpp_sym___USE_XOPEN2K8" type="_116c" init="1" context="_1" location="f1:27" file="f1" line="27" static="1"/>
+  <Variable id="_15" name="cpp_sym_MP4_MPEG4_AAC_SSR_AUDIO_TYPE" type="_116c" init="3" context="_1" location="f1:298" file="f1" line="298" static="1"/>
+  <Variable id="_16" name="cpp_sym_MPEG4_ASP_L5" type="_116c" init="245" context="_1" location="f1:18" file="f1" line="18" static="1"/>
   <FundamentalType id="_17" name="unsigned int" size="32" align="32"/>
   <Typedef id="_18" name="__socklen_t" type="_17" context="_1" location="f2:192" file="f2" line="192"/>
-  <Variable id="_19" name="cpp_sym__IO_RIGHT" type="_116c" init="4" context="_1" location="f1:44" file="f1" line="44" static="1"/>
+  <Variable id="_19" name="cpp_sym__IO_RIGHT" type="_116c" init="4" context="_1" location="f1:45" file="f1" line="45" static="1"/>
   <Function id="_20" name="__builtin_va_arg_pack" returns="_996" context="_1" location="f0:147" file="f0" line="147" extern="1">
     <Ellipsis/>
   </Function>
   <Function id="_21" name="tmpfile" returns="_997" context="_1" location="f3:196" file="f3" line="196" extern="1"/>
   <FundamentalType id="_22" name="long long unsigned int" size="64" align="64"/>
   <Typedef id="_23" name="uint_least64_t" type="_22" context="_1" location="f4:84" file="f4" line="84"/>
-  <Variable id="_24" name="cpp_sym__IOS_BIN" type="_116c" init="128" context="_1" location="f1:186" file="f1" line="186" static="1"/>
-  <Variable id="_25" name="cpp_sym__IOS_NOCREATE" type="_116c" init="32" context="_1" location="f1:197" file="f1" line="197" static="1"/>
+  <Variable id="_24" name="cpp_sym__IOS_BIN" type="_116c" init="128" context="_1" location="f1:187" file="f1" line="187" static="1"/>
+  <Variable id="_25" name="cpp_sym__IOS_NOCREATE" type="_116c" init="32" context="_1" location="f1:198" file="f1" line="198" static="1"/>
   <Function id="_26" name="MP4GetSampleSync" returns="_823" context="_1" location="f5:553" file="f5" line="553" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f5:553" file="f5" line="553"/>
     <Argument name="trackId" type="_743" location="f5:553" file="f5" line="553"/>
@@ -49,7 +49,7 @@
     <Argument type="_999" location="f7:246" file="f7" line="246"/>
     <Argument type="_1000" location="f7:246" file="f7" line="246"/>
   </Function>
-  <Variable id="_30" name="cpp_sym_MP4_MPEG4_TTSI_AUDIO_TYPE" type="_116c" init="12" context="_1" location="f1:22" file="f1" line="22" static="1"/>
+  <Variable id="_30" name="cpp_sym_MP4_MPEG4_TTSI_AUDIO_TYPE" type="_116c" init="12" context="_1" location="f1:23" file="f1" line="23" static="1"/>
   <Function id="_31" name="MP4GetRtpPacketBFrame" returns="_823" context="_1" location="f8:85" file="f8" line="85" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f8:85" file="f8" line="85"/>
     <Argument name="hintTrackId" type="_743" location="f8:85" file="f8" line="85"/>
@@ -78,7 +78,7 @@
     <Argument name="avgBitrate" type="_401" location="f9:304" file="f9" line="304"/>
     <Argument name="maxBitrate" type="_401" location="f9:304" file="f9" line="304"/>
   </Function>
-  <Variable id="_37" name="cpp_sym_MPEG4_SSP_L1" type="_116c" init="17" context="_1" location="f1:135" file="f1" line="135" static="1"/>
+  <Variable id="_37" name="cpp_sym_MPEG4_SSP_L1" type="_116c" init="17" context="_1" location="f1:136" file="f1" line="136" static="1"/>
   <Function id="_38" name="MP4GetTrackFloatProperty" returns="_996" context="_1" location="f10:289" file="f10" line="289" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f10:289" file="f10" line="289"/>
     <Argument name="trackId" type="_743" location="f10:289" file="f10" line="289"/>
@@ -116,12 +116,12 @@
     <Argument name="__off" type="_804" location="f3:815" file="f3" line="815"/>
     <Argument name="__whence" type="_116" location="f3:815" file="f3" line="815"/>
   </Function>
-  <Variable id="_46" name="cpp_sym_MP4_H261_VIDEO_TYPE" type="_116c" init="243" context="_1" location="f1:236" file="f1" line="236" static="1"/>
+  <Variable id="_46" name="cpp_sym_MP4_H261_VIDEO_TYPE" type="_116c" init="243" context="_1" location="f1:237" file="f1" line="237" static="1"/>
   <Function id="_47" name="popen" returns="_997" context="_1" location="f3:870" file="f3" line="870" extern="1">
     <Argument name="__command" type="_992" location="f3:870" file="f3" line="870"/>
     <Argument name="__modes" type="_992" location="f3:870" file="f3" line="870"/>
   </Function>
-  <Variable id="_48" name="cpp_sym__IO_stdin" type="_1006" init="(const _IO_FILE*)((_IO_FILE*)(&amp; _IO_2_1_stdin_))" context="_1" location="f1:260" file="f1" line="260"/>
+  <Variable id="_48" name="cpp_sym__IO_stdin" type="_1006" init="(const _IO_FILE*)((_IO_FILE*)(&amp; _IO_2_1_stdin_))" context="_1" location="f1:261" file="f1" line="261"/>
   <Enumeration id="_49" name="MP4TagArtworkType_e" context="_1" location="f7:57" file="f7" line="57" artificial="1" size="32" align="32">
     <EnumValue name="MP4_ART_UNDEFINED" init="0"/>
     <EnumValue name="MP4_ART_BMP" init="1"/>
@@ -150,7 +150,7 @@
     <Argument name="pPictHeader" type="_1007" location="f10:231" file="f10" line="231"/>
     <Argument name="pPictHeaderSize" type="_1008" location="f10:231" file="f10" line="231"/>
   </Function>
-  <Variable id="_55" name="cpp_sym_MP4_MPEG4_AAC_SCALABLE_AUDIO_TYPE" type="_116c" init="6" context="_1" location="f1:148" file="f1" line="148" static="1"/>
+  <Variable id="_55" name="cpp_sym_MP4_MPEG4_AAC_SCALABLE_AUDIO_TYPE" type="_116c" init="6" context="_1" location="f1:149" file="f1" line="149" static="1"/>
   <Function id="_56" name="__builtin_isless" returns="_996" context="_1" location="f0:141" file="f0" line="141" extern="1" attributes="nothrow const">
     <Ellipsis/>
   </Function>
@@ -159,9 +159,9 @@
     <Argument name="trackId" type="_743" location="f10:54" file="f10" line="54"/>
   </Function>
   <Struct id="_58" name="mp4v2_ismacryp_session_params" context="_1" mangled="29mp4v2_ismacryp_session_params" demangled="mp4v2_ismacryp_session_params" location="f11:12" file="f11" line="12" artificial="1" size="128" align="32" members="_1009 _1010 _1011 _1012 _1013 _1014 _1015 _1016 _1017 _1018 " bases=""/>
-  <Variable id="_59" name="cpp_sym_MP4_MPEG2_AAC_MAIN_AUDIO_TYPE" type="_116c" init="102" context="_1" location="f1:87" file="f1" line="87" static="1"/>
-  <Variable id="_60" name="cpp_sym_MPEG4_FGSP_L5" type="_116c" init="253" context="_1" location="f1:39" file="f1" line="39" static="1"/>
-  <Variable id="_61" name="cpp_sym_FOPEN_MAX" type="_116c" init="16" context="_1" location="f1:64" file="f1" line="64" static="1"/>
+  <Variable id="_59" name="cpp_sym_MP4_MPEG2_AAC_MAIN_AUDIO_TYPE" type="_116c" init="102" context="_1" location="f1:88" file="f1" line="88" static="1"/>
+  <Variable id="_60" name="cpp_sym_MPEG4_FGSP_L5" type="_116c" init="253" context="_1" location="f1:40" file="f1" line="40" static="1"/>
+  <Variable id="_61" name="cpp_sym_FOPEN_MAX" type="_116c" init="16" context="_1" location="f1:65" file="f1" line="65" static="1"/>
   <Variable id="_62" name="stderr" type="_1019" context="_1" location="f3:171" file="f3" line="171" extern="1"/>
   <Function id="_63" name="vsnprintf" returns="_116" throw="" context="_1" location="f3:393" file="f3" line="393" extern="1" attributes="nothrow __format__(,,) nonnull() format(,,)">
     <Argument name="__s" type="_285r" location="f3:393" file="f3" line="393"/>
@@ -182,9 +182,9 @@
     <Argument name="includeHeader" type="_996" location="f8:102" file="f8" line="102" default="true"/>
     <Argument name="includePayload" type="_996" location="f8:102" file="f8" line="102" default="true"/>
   </Function>
-  <Variable id="_66" name="cpp_sym_TRUE" type="_116c" init="1" context="_1" location="f1:23" file="f1" line="23" static="1"/>
+  <Variable id="_66" name="cpp_sym_TRUE" type="_116c" init="1" context="_1" location="f1:24" file="f1" line="24" static="1"/>
   <Struct id="_67" name="obstack" context="_1" incomplete="1" mangled="7obstack" demangled="obstack" location="f3:893" file="f3" line="893" artificial="1" align="8"/>
-  <Variable id="_68" name="cpp_sym_MP4V2_PROJECT_url_discussion" type="_992" init="(const char*)&quot;http://groups.google.com/group/mp4v2&quot;" context="_1" location="f1:33" file="f1" line="33"/>
+  <Variable id="_68" name="cpp_sym_MP4V2_PROJECT_url_discussion" type="_992" init="(const char*)&quot;http://groups.google.com/group/mp4v2&quot;" context="_1" location="f1:34" file="f1" line="34"/>
   <Struct id="_69" name="_IO_cookie_io_functions_t" context="_1" mangled="25_IO_cookie_io_functions_t" demangled="_IO_cookie_io_functions_t" location="f13:403" file="f13" line="403" size="128" align="32" members="_1023 _1024 _1025 _1026 _1027 _1028 _1029 _1030 " bases=""/>
   <FundamentalType id="_70" name="long int" size="32" align="32"/>
   <Typedef id="_71" name="__swblk_t" type="_70" context="_1" location="f2:154" file="f2" line="154"/>
@@ -220,9 +220,9 @@
     <Argument name="hintTrackId" type="_743" location="f8:62" file="f8" line="62"/>
     <Argument name="sdpString" type="_992" location="f8:62" file="f8" line="62"/>
   </Function>
-  <Variable id="_79" name="cpp_sym_MPEG4_CSP_L1" type="_116c" init="161" context="_1" location="f1:278" file="f1" line="278" static="1"/>
-  <Variable id="_80" name="cpp_sym___USE_POSIX" type="_116c" init="1" context="_1" location="f1:72" file="f1" line="72" static="1"/>
-  <Variable id="_81" name="cpp_sym__G_config_h" type="_116c" init="1" context="_1" location="f1:47" file="f1" line="47" static="1"/>
+  <Variable id="_79" name="cpp_sym_MPEG4_CSP_L1" type="_116c" init="161" context="_1" location="f1:279" file="f1" line="279" static="1"/>
+  <Variable id="_80" name="cpp_sym___USE_POSIX" type="_116c" init="1" context="_1" location="f1:73" file="f1" line="73" static="1"/>
+  <Variable id="_81" name="cpp_sym__G_config_h" type="_116c" init="1" context="_1" location="f1:48" file="f1" line="48" static="1"/>
   <Function id="_82" name="obstack_vprintf" returns="_116" throw="" context="_1" location="f3:902" file="f3" line="902" extern="1" attributes="__format__(,,)">
     <Argument name="__obstack" type="_1034r" location="f3:902" file="f3" line="902"/>
     <Argument name="__format" type="_992r" location="f3:902" file="f3" line="902"/>
@@ -231,8 +231,8 @@
   <Function id="_83" name="fflush" returns="_116" context="_1" location="f3:243" file="f3" line="243" extern="1">
     <Argument name="__stream" type="_997" location="f3:243" file="f3" line="243"/>
   </Function>
-  <Variable id="_84" name="cpp_sym_MPEG4_SSP_L2" type="_116c" init="18" context="_1" location="f1:137" file="f1" line="137" static="1"/>
-  <Variable id="_85" name="cpp_sym_MP4_MPEG4_HVXC_AUDIO_TYPE" type="_116c" init="9" context="_1" location="f1:174" file="f1" line="174" static="1"/>
+  <Variable id="_84" name="cpp_sym_MPEG4_SSP_L2" type="_116c" init="18" context="_1" location="f1:138" file="f1" line="138" static="1"/>
+  <Variable id="_85" name="cpp_sym_MP4_MPEG4_HVXC_AUDIO_TYPE" type="_116c" init="9" context="_1" location="f1:175" file="f1" line="175" static="1"/>
   <Function id="_86" name="MP4ReadProvider" returns="_646" context="_1" location="f15:358" file="f15" line="358" extern="1" attributes="visibility(default)">
     <Argument name="fileName" type="_992" location="f15:358" file="f15" line="358"/>
     <Argument name="fileProvider" type="_1036" location="f15:358" file="f15" line="358" default="0"/>
@@ -270,8 +270,8 @@
   <Function id="_95" name="__builtin_floorl" returns="_995" context="_1" mangled="floorl" location="f0:53" file="f0" line="53" extern="1" attributes="nothrow const">
     <Argument type="_995" location="f0:53" file="f0" line="53"/>
   </Function>
-  <Variable id="_96" name="cpp_sym_MP4_MPEG4_MIDI_AUDIO_TYPE" type="_116c" init="15" context="_1" location="f1:141" file="f1" line="141" static="1"/>
-  <Variable id="_97" name="cpp_sym_MP4V2_PROJECT_repo_rev" type="_116c" init="493" context="_1" location="f1:37" file="f1" line="37" static="1"/>
+  <Variable id="_96" name="cpp_sym_MP4_MPEG4_MIDI_AUDIO_TYPE" type="_116c" init="15" context="_1" location="f1:142" file="f1" line="142" static="1"/>
+  <Variable id="_97" name="cpp_sym_MP4V2_PROJECT_repo_rev" type="_116c" init="493" context="_1" location="f1:38" file="f1" line="38" static="1"/>
   <FundamentalType id="_98" name="void" align="8"/>
   <Typedef id="_99" name="_IO_lock_t" type="_98" context="_1" location="f13:182" file="f13" line="182"/>
   <Function id="_100" name="__builtin_ctanf" returns="_1001" context="_1" mangled="ctanf" location="f0:123" file="f0" line="123" extern="1" attributes="nothrow pure no vops">
@@ -291,7 +291,7 @@
   <Function id="_106" name="MP4ItmfGetItems" returns="_1040" context="_1" location="f16:161" file="f16" line="161" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f16:161" file="f16" line="161"/>
   </Function>
-  <Variable id="_107" name="cpp_sym_MP4_MPEG4_AUDIO_TYPE" type="_116c" init="64" context="_1" location="f1:156" file="f1" line="156" static="1"/>
+  <Variable id="_107" name="cpp_sym_MP4_MPEG4_AUDIO_TYPE" type="_116c" init="64" context="_1" location="f1:157" file="f1" line="157" static="1"/>
   <Function id="_108" name="MP4AddSubpicTrack" returns="_743" context="_1" location="f9:351" file="f9" line="351" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:351" file="f9" line="351"/>
     <Argument name="timescale" type="_401" location="f9:351" file="f9" line="351"/>
@@ -327,10 +327,10 @@
     <EnumValue name="FILEMODE_CREATE" init="3"/>
   </Enumeration>
   <Typedef id="_114" name="MP4FileMode" type="_113" context="_1" location="f15:25" file="f15" line="25"/>
-  <Variable id="_115" name="cpp_sym_MP4_MPEG4_AAC_LC_AUDIO_TYPE" type="_116c" init="2" context="_1" location="f1:146" file="f1" line="146" static="1"/>
+  <Variable id="_115" name="cpp_sym_MP4_MPEG4_AAC_LC_AUDIO_TYPE" type="_116c" init="2" context="_1" location="f1:147" file="f1" line="147" static="1"/>
   <FundamentalType id="_116" name="int" size="32" align="32"/>
   <Typedef id="_117" name="__intptr_t" type="_116" context="_1" location="f2:189" file="f2" line="189"/>
-  <Variable id="_118" name="cpp_sym_MP4_SET_DYNAMIC_PAYLOAD" type="_116c" init="255" context="_1" location="f1:30" file="f1" line="30" static="1"/>
+  <Variable id="_118" name="cpp_sym_MP4_SET_DYNAMIC_PAYLOAD" type="_116c" init="255" context="_1" location="f1:31" file="f1" line="31" static="1"/>
   <Function id="_119" name="__builtin_logf" returns="_994" context="_1" mangled="logf" location="f0:66" file="f0" line="66" extern="1" attributes="nothrow">
     <Argument type="_994" location="f0:66" file="f0" line="66"/>
   </Function>
@@ -394,7 +394,7 @@
   <Function id="_139" name="ftello64" returns="_804" context="_1" location="f3:816" file="f3" line="816" extern="1">
     <Argument name="__stream" type="_997" location="f3:816" file="f3" line="816"/>
   </Function>
-  <Variable id="_140" name="cpp_sym_MP4_AUDIO_TRACK_TYPE" type="_992" init="(const char*)&quot;soun&quot;" context="_1" location="f1:2" file="f1" line="2"/>
+  <Variable id="_140" name="cpp_sym_MP4_AUDIO_TRACK_TYPE" type="_992" init="(const char*)&quot;soun&quot;" context="_1" location="f1:3" file="f1" line="3"/>
   <Typedef id="_141" name="int_fast32_t" type="_116" context="_1" location="f4:98" file="f4" line="98"/>
   <Function id="_142" name="MP4AddVideoTrack" returns="_743" context="_1" location="f9:247" file="f9" line="247" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:247" file="f9" line="247"/>
@@ -409,8 +409,8 @@
     <Argument name="trackId" type="_743" location="f14:299" file="f14" line="299"/>
     <Argument name="editId" type="_845" location="f14:299" file="f14" line="299"/>
   </Function>
-  <Variable id="_144" name="cpp_sym_MP4_MPEG1_AUDIO_TYPE" type="_116c" init="107" context="_1" location="f1:99" file="f1" line="99" static="1"/>
-  <Variable id="_145" name="cpp_sym__STDINT_H" type="_116c" init="1" context="_1" location="f1:190" file="f1" line="190" static="1"/>
+  <Variable id="_144" name="cpp_sym_MP4_MPEG1_AUDIO_TYPE" type="_116c" init="107" context="_1" location="f1:100" file="f1" line="100" static="1"/>
+  <Variable id="_145" name="cpp_sym__STDINT_H" type="_116c" init="1" context="_1" location="f1:191" file="f1" line="191" static="1"/>
   <Function id="_146" name="__builtin_csqrt" returns="_1039" context="_1" mangled="csqrt" location="f0:121" file="f0" line="121" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1039" location="f0:121" file="f0" line="121"/>
   </Function>
@@ -420,10 +420,10 @@
     <Argument name="timeStamp" type="_306" location="f14:393" file="f14" line="393"/>
     <Argument name="timeScale" type="_401" location="f14:393" file="f14" line="393"/>
   </Function>
-  <Variable id="_148" name="cpp_sym__LARGEFILE_SOURCE" type="_116c" init="1" context="_1" location="f1:151" file="f1" line="151" static="1"/>
+  <Variable id="_148" name="cpp_sym__LARGEFILE_SOURCE" type="_116c" init="1" context="_1" location="f1:152" file="f1" line="152" static="1"/>
   <FundamentalType id="_149" name="short int" size="16" align="16"/>
   <Typedef id="_150" name="__int16_t" type="_149" context="_1" location="f2:39" file="f2" line="39"/>
-  <Variable id="_151" name="cpp_sym_MP4V2_PROJECT_url_downloads" type="_992" init="(const char*)&quot;http://code.google.com/p/mp4v2/downloads/list&quot;" context="_1" location="f1:92" file="f1" line="92"/>
+  <Variable id="_151" name="cpp_sym_MP4V2_PROJECT_url_downloads" type="_992" init="(const char*)&quot;http://code.google.com/p/mp4v2/downloads/list&quot;" context="_1" location="f1:93" file="f1" line="93"/>
   <Function id="_152" name="__builtin_sin" returns="_991" context="_1" mangled="sin" location="f0:75" file="f0" line="75" extern="1" attributes="nothrow pure no vops">
     <Argument type="_991" location="f0:75" file="f0" line="75"/>
   </Function>
@@ -444,13 +444,13 @@
     <Argument name="hFile" type="_646" location="f16:203" file="f16" line="203"/>
     <Argument name="item" type="_1085" location="f16:203" file="f16" line="203"/>
   </Function>
-  <Variable id="_159" name="cpp_sym_MP4_MPEG4_AAC_MAIN_AUDIO_TYPE" type="_116c" init="1" context="_1" location="f1:112" file="f1" line="112" static="1"/>
+  <Variable id="_159" name="cpp_sym_MP4_MPEG4_AAC_MAIN_AUDIO_TYPE" type="_116c" init="1" context="_1" location="f1:113" file="f1" line="113" static="1"/>
   <Function id="_160" name="MP4TagsAlloc" returns="_999" context="_1" location="f7:172" file="f7" line="172" extern="1" attributes="visibility(default)"/>
   <Typedef id="_161" name="__rlim64_t" type="_898" context="_1" location="f2:147" file="f2" line="147"/>
   <Function id="_162" name="__underflow" returns="_116" context="_1" location="f13:418" file="f13" line="418" extern="1">
     <Argument type="_1019" location="f13:418" file="f13" line="418"/>
   </Function>
-  <Variable id="_163" name="cpp_sym___STDC_IEC_559_COMPLEX__" type="_116c" init="1" context="_1" location="f1:201" file="f1" line="201" static="1"/>
+  <Variable id="_163" name="cpp_sym___STDC_IEC_559_COMPLEX__" type="_116c" init="1" context="_1" location="f1:202" file="f1" line="202" static="1"/>
   <Function id="_164" name="__builtin_islessequal" returns="_996" context="_1" location="f0:142" file="f0" line="142" extern="1" attributes="nothrow const">
     <Ellipsis/>
   </Function>
@@ -465,7 +465,7 @@
     <Argument name="__modes" type="_116" location="f3:338" file="f3" line="338"/>
     <Argument name="__n" type="_654" location="f3:338" file="f3" line="338"/>
   </Function>
-  <Variable id="_169" name="cpp_sym__IO_LINE_BUF" type="_116c" init="512" context="_1" location="f1:35" file="f1" line="35" static="1"/>
+  <Variable id="_169" name="cpp_sym__IO_LINE_BUF" type="_116c" init="512" context="_1" location="f1:36" file="f1" line="36" static="1"/>
   <Function id="_170" name="fopen64" returns="_997" context="_1" location="f3:299" file="f3" line="299" extern="1">
     <Argument name="__filename" type="_992r" location="f3:299" file="f3" line="299"/>
     <Argument name="__modes" type="_992r" location="f3:299" file="f3" line="299"/>
@@ -474,7 +474,7 @@
     <Argument type="_999" location="f7:282" file="f7" line="282"/>
     <Argument type="_1086" location="f7:282" file="f7" line="282"/>
   </Function>
-  <Variable id="_172" name="cpp_sym___USE_POSIX199506" type="_116c" init="1" context="_1" location="f1:229" file="f1" line="229" static="1"/>
+  <Variable id="_172" name="cpp_sym___USE_POSIX199506" type="_116c" init="1" context="_1" location="f1:230" file="f1" line="230" static="1"/>
   <Function id="_173" name="sprintf" returns="_116" throw="" context="_1" location="f3:366" file="f3" line="366" extern="1" attributes="nothrow nonnull() format(,,)">
     <Argument name="__s" type="_285r" location="f3:366" file="f3" line="366"/>
     <Argument name="__format" type="_992r" location="f3:366" file="f3" line="366"/>
@@ -533,7 +533,7 @@
     <Argument name="type" type="_992" location="f9:392" file="f9" line="392" default="0"/>
     <Argument name="subType" type="_792" location="f9:392" file="f9" line="392" default="0"/>
   </Function>
-  <Variable id="_189" name="cpp_sym__IO_EOF_SEEN" type="_116c" init="16" context="_1" location="f1:32" file="f1" line="32" static="1"/>
+  <Variable id="_189" name="cpp_sym__IO_EOF_SEEN" type="_116c" init="16" context="_1" location="f1:33" file="f1" line="33" static="1"/>
   <Function id="_190" name="getc" returns="_116" context="_1" location="f3:538" file="f3" line="538" extern="1">
     <Argument name="__stream" type="_997" location="f3:538" file="f3" line="538"/>
   </Function>
@@ -554,26 +554,26 @@
   </Function>
   <Struct id="_197" name="MP4Chapter_s" context="_1" mangled="12MP4Chapter_s" demangled="MP4Chapter_s" location="f18:19" file="f18" line="19" artificial="1" size="8256" align="32" members="_1087 _1088 _1089 _1090 _1091 _1092 " bases=""/>
   <Typedef id="_198" name="MP4Chapter_t" type="_197" context="_1" location="f18:22" file="f18" line="22"/>
-  <Variable id="_199" name="cpp_sym__IO_LEFT" type="_116c" init="2" context="_1" location="f1:51" file="f1" line="51" static="1"/>
+  <Variable id="_199" name="cpp_sym__IO_LEFT" type="_116c" init="2" context="_1" location="f1:52" file="f1" line="52" static="1"/>
   <Function id="_200" name="printf" returns="_116" context="_1" location="f3:363" file="f3" line="363" extern="1" attributes="nothrow nonnull() format(,,)">
     <Argument name="__format" type="_992r" location="f3:363" file="f3" line="363"/>
     <Ellipsis/>
   </Function>
-  <Variable id="_201" name="cpp_sym_MP4_CREATE_64BIT_DATA" type="_116c" init="1" context="_1" location="f1:110" file="f1" line="110" static="1"/>
+  <Variable id="_201" name="cpp_sym_MP4_CREATE_64BIT_DATA" type="_116c" init="1" context="_1" location="f1:111" file="f1" line="111" static="1"/>
   <Variable id="_202" name="_IO_2_1_stdout_" type="_904" context="_1" location="f13:349" file="f13" line="349" extern="1"/>
   <Function id="_203" name="__asprintf" returns="_116" throw="" context="_1" location="f3:405" file="f3" line="405" extern="1" attributes="__format__(,,)">
     <Argument name="__ptr" type="_1037r" location="f3:405" file="f3" line="405"/>
     <Argument name="__fmt" type="_992r" location="f3:405" file="f3" line="405"/>
     <Ellipsis/>
   </Function>
-  <Variable id="_204" name="cpp_sym__IONBF" type="_116c" init="2" context="_1" location="f1:16" file="f1" line="16" static="1"/>
-  <Variable id="_205" name="cpp_sym_MP4V2_PROJECT_repo_uuid" type="_992" init="(const char*)&quot;6e6572fa-98a6-11dd-ad9f-f77439c74b79&quot;" context="_1" location="f1:81" file="f1" line="81"/>
-  <Variable id="_206" name="cpp_sym_MP4_PCM16_LITTLE_ENDIAN_AUDIO_TYPE" type="_116c" init="224" context="_1" location="f1:119" file="f1" line="119" static="1"/>
+  <Variable id="_204" name="cpp_sym__IONBF" type="_116c" init="2" context="_1" location="f1:17" file="f1" line="17" static="1"/>
+  <Variable id="_205" name="cpp_sym_MP4V2_PROJECT_repo_uuid" type="_992" init="(const char*)&quot;6e6572fa-98a6-11dd-ad9f-f77439c74b79&quot;" context="_1" location="f1:82" file="f1" line="82"/>
+  <Variable id="_206" name="cpp_sym_MP4_PCM16_LITTLE_ENDIAN_AUDIO_TYPE" type="_116c" init="224" context="_1" location="f1:120" file="f1" line="120" static="1"/>
   <Function id="_207" name="MP4AddRtpESConfigurationPacket" returns="_996" context="_1" location="f8:152" file="f8" line="152" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f8:152" file="f8" line="152"/>
     <Argument name="hintTrackId" type="_743" location="f8:152" file="f8" line="152"/>
   </Function>
-  <Variable id="_208" name="cpp_sym_MP4_AC3_AUDIO_TYPE" type="_116c" init="226" context="_1" location="f1:177" file="f1" line="177" static="1"/>
+  <Variable id="_208" name="cpp_sym_MP4_AC3_AUDIO_TYPE" type="_116c" init="226" context="_1" location="f1:178" file="f1" line="178" static="1"/>
   <Function id="_209" name="MP4AddIPodUUID" returns="_996" context="_1" location="f9:447" file="f9" line="447" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:447" file="f9" line="447"/>
     <Argument name="trackId" type="_743" location="f9:447" file="f9" line="447"/>
@@ -587,19 +587,19 @@
   <Function id="_211" name="__builtin_return" returns="_98" context="_1" location="f0:13" file="f0" line="13" extern="1" attributes="nothrow noreturn">
     <Argument name="RESULT" type="_645" location="f0:13" file="f0" line="13"/>
   </Function>
-  <Variable id="_212" name="cpp_sym_L_tmpnam" type="_116c" init="20" context="_1" location="f1:157" file="f1" line="157" static="1"/>
+  <Variable id="_212" name="cpp_sym_L_tmpnam" type="_116c" init="20" context="_1" location="f1:158" file="f1" line="158" static="1"/>
   <Function id="_213" name="MP4SetBytesProperty" returns="_996" context="_1" location="f12:66" file="f12" line="66" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f12:66" file="f12" line="66"/>
     <Argument name="propName" type="_992" location="f12:66" file="f12" line="66"/>
     <Argument name="pValue" type="_1041" location="f12:66" file="f12" line="66"/>
     <Argument name="valueSize" type="_401" location="f12:66" file="f12" line="66"/>
   </Function>
-  <Variable id="_214" name="cpp_sym_MP4V2_PROJECT_url_website" type="_992" init="(const char*)&quot;http://code.google.com/p/mp4v2&quot;" context="_1" location="f1:195" file="f1" line="195"/>
+  <Variable id="_214" name="cpp_sym_MP4V2_PROJECT_url_website" type="_992" init="(const char*)&quot;http://code.google.com/p/mp4v2&quot;" context="_1" location="f1:196" file="f1" line="196"/>
   <Function id="_215" name="tmpfile64" returns="_997" context="_1" location="f3:206" file="f3" line="206" extern="1"/>
   <Typedef id="_216" name="cookie_io_functions_t" type="_69" context="_1" location="f13:404" file="f13" line="404"/>
   <FundamentalType id="_217" name="short unsigned int" size="16" align="16"/>
   <Typedef id="_218" name="__uint16_t" type="_217" context="_1" location="f2:40" file="f2" line="40"/>
-  <Variable id="_219" name="cpp_sym_MP4V2_PROJECT_name_formal" type="_992" init="(const char*)&quot;MP4v2 2.0.0&quot;" context="_1" location="f1:158" file="f1" line="158"/>
+  <Variable id="_219" name="cpp_sym_MP4V2_PROJECT_name_formal" type="_992" init="(const char*)&quot;MP4v2 2.0.0&quot;" context="_1" location="f1:159" file="f1" line="159"/>
   <Function id="_220" name="fseek" returns="_116" context="_1" location="f3:746" file="f3" line="746" extern="1">
     <Argument name="__stream" type="_997" location="f3:746" file="f3" line="746"/>
     <Argument name="__off" type="_70" location="f3:746" file="f3" line="746"/>
@@ -629,16 +629,16 @@
     <Argument type="_1039" location="f0:130" file="f0" line="130"/>
   </Function>
   <Function id="_226" name="getchar" returns="_116" context="_1" location="f6:45" file="f6" line="45" endline="47" inline="1" attributes="__gnu_inline__"/>
-  <Variable id="_227" name="cpp_sym__IO_stdout" type="_1006" init="(const _IO_FILE*)((_IO_FILE*)(&amp; _IO_2_1_stdout_))" context="_1" location="f1:8" file="f1" line="8"/>
-  <Variable id="_228" name="cpp_sym_MPEG4_ACEP_L1" type="_116c" init="177" context="_1" location="f1:165" file="f1" line="165" static="1"/>
-  <Variable id="_229" name="cpp_sym_MPEG4_ACEP_L4" type="_116c" init="180" context="_1" location="f1:162" file="f1" line="162" static="1"/>
+  <Variable id="_227" name="cpp_sym__IO_stdout" type="_1006" init="(const _IO_FILE*)((_IO_FILE*)(&amp; _IO_2_1_stdout_))" context="_1" location="f1:9" file="f1" line="9"/>
+  <Variable id="_228" name="cpp_sym_MPEG4_ACEP_L1" type="_116c" init="177" context="_1" location="f1:166" file="f1" line="166" static="1"/>
+  <Variable id="_229" name="cpp_sym_MPEG4_ACEP_L4" type="_116c" init="180" context="_1" location="f1:163" file="f1" line="163" static="1"/>
   <Function id="_230" name="fseeko" returns="_116" context="_1" location="f3:770" file="f3" line="770" extern="1">
     <Argument name="__stream" type="_997" location="f3:770" file="f3" line="770"/>
     <Argument name="__off" type="_591" location="f3:770" file="f3" line="770"/>
     <Argument name="__whence" type="_116" location="f3:770" file="f3" line="770"/>
   </Function>
-  <Variable id="_231" name="cpp_sym_SEEK_CUR" type="_116c" init="1" context="_1" location="f1:161" file="f1" line="161" static="1"/>
-  <Variable id="_232" name="cpp_sym__IO_SHOWPOINT" type="_116c" init="256" context="_1" location="f1:255" file="f1" line="255" static="1"/>
+  <Variable id="_231" name="cpp_sym_SEEK_CUR" type="_116c" init="1" context="_1" location="f1:162" file="f1" line="162" static="1"/>
+  <Variable id="_232" name="cpp_sym__IO_SHOWPOINT" type="_116c" init="256" context="_1" location="f1:256" file="f1" line="256" static="1"/>
   <Function id="_233" name="clearerr" returns="_98" throw="" context="_1" location="f3:823" file="f3" line="823" extern="1">
     <Argument name="__stream" type="_997" location="f3:823" file="f3" line="823"/>
   </Function>
@@ -659,23 +659,23 @@
     <Argument name="__stream" type="_997r" location="f3:737" file="f3" line="737"/>
   </Function>
   <Function id="_238" name="getchar_unlocked" returns="_116" context="_1" location="f6:71" file="f6" line="71" endline="73" inline="1" attributes="__gnu_inline__"/>
-  <Variable id="_239" name="cpp_sym__XOPEN_SOURCE_EXTENDED" type="_116c" init="1" context="_1" location="f1:252" file="f1" line="252" static="1"/>
-  <Variable id="_240" name="cpp_sym_MP4_CLOSE_DO_NOT_COMPUTE_BITRATE" type="_116c" init="1" context="_1" location="f1:247" file="f1" line="247" static="1"/>
+  <Variable id="_239" name="cpp_sym__XOPEN_SOURCE_EXTENDED" type="_116c" init="1" context="_1" location="f1:253" file="f1" line="253" static="1"/>
+  <Variable id="_240" name="cpp_sym_MP4_CLOSE_DO_NOT_COMPUTE_BITRATE" type="_116c" init="1" context="_1" location="f1:248" file="f1" line="248" static="1"/>
   <FunctionType id="_241" returns="_526">
     <Argument type="_645"/>
     <Argument type="_992"/>
     <Argument type="_654"/>
   </FunctionType>
   <Typedef id="_242" name="cookie_write_function_t" type="_984" context="_1" location="f13:392" file="f13" line="392"/>
-  <Variable id="_243" name="cpp_sym__OLD_STDIO_MAGIC" type="_17c" init="-88342528u" context="_1" location="f1:263" file="f1" line="263" static="1"/>
+  <Variable id="_243" name="cpp_sym__OLD_STDIO_MAGIC" type="_17c" init="-88342528u" context="_1" location="f1:264" file="f1" line="264" static="1"/>
   <Typedef id="_244" name="int_least32_t" type="_116" context="_1" location="f4:68" file="f4" line="68"/>
   <Function id="_245" name="MP4AddULawAudioTrack" returns="_743" context="_1" location="f9:141" file="f9" line="141" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:141" file="f9" line="141"/>
     <Argument name="timeScale" type="_401" location="f9:141" file="f9" line="141"/>
   </Function>
-  <Variable id="_246" name="cpp_sym_MPEG4_ARTSP_L1" type="_116c" init="145" context="_1" location="f1:208" file="f1" line="208" static="1"/>
-  <Variable id="_247" name="cpp_sym_MPEG4_ARTSP_L2" type="_116c" init="146" context="_1" location="f1:207" file="f1" line="207" static="1"/>
-  <Variable id="_248" name="cpp_sym_MPEG4_ARTSP_L3" type="_116c" init="147" context="_1" location="f1:206" file="f1" line="206" static="1"/>
+  <Variable id="_246" name="cpp_sym_MPEG4_ARTSP_L1" type="_116c" init="145" context="_1" location="f1:209" file="f1" line="209" static="1"/>
+  <Variable id="_247" name="cpp_sym_MPEG4_ARTSP_L2" type="_116c" init="146" context="_1" location="f1:208" file="f1" line="208" static="1"/>
+  <Variable id="_248" name="cpp_sym_MPEG4_ARTSP_L3" type="_116c" init="147" context="_1" location="f1:207" file="f1" line="207" static="1"/>
   <Function id="_249" name="MP4AddNeroChapter" returns="_98" context="_1" location="f18:85" file="f18" line="85" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f18:85" file="f18" line="85"/>
     <Argument name="chapterStart" type="_306" location="f18:85" file="f18" line="85"/>
@@ -693,12 +693,12 @@
     <Argument type="_999" location="f7:245" file="f7" line="245"/>
     <Argument type="_1000" location="f7:245" file="f7" line="245"/>
   </Function>
-  <Variable id="_254" name="cpp_sym__IO_UNITBUF" type="_116c" init="8192" context="_1" location="f1:230" file="f1" line="230" static="1"/>
+  <Variable id="_254" name="cpp_sym__IO_UNITBUF" type="_116c" init="8192" context="_1" location="f1:231" file="f1" line="231" static="1"/>
   <Function id="_255" name="MP4GetTrackAudioMpeg4Type" returns="_792" context="_1" location="f10:177" file="f10" line="177" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f10:177" file="f10" line="177"/>
     <Argument name="trackId" type="_743" location="f10:177" file="f10" line="177"/>
   </Function>
-  <Variable id="_256" name="cpp_sym__IO_TIED_PUT_GET" type="_116c" init="1024" context="_1" location="f1:202" file="f1" line="202" static="1"/>
+  <Variable id="_256" name="cpp_sym__IO_TIED_PUT_GET" type="_116c" init="1024" context="_1" location="f1:203" file="f1" line="203" static="1"/>
   <Function id="_257" name="__builtin_atan2" returns="_991" context="_1" mangled="atan2" location="f0:31" file="f0" line="31" extern="1" attributes="nothrow">
     <Argument type="_991" location="f0:31" file="f0" line="31"/>
     <Argument type="_991" location="f0:31" file="f0" line="31"/>
@@ -708,7 +708,7 @@
     <Argument type="_116" location="f0:12" file="f0" line="12"/>
     <Argument type="_17" location="f0:12" file="f0" line="12"/>
   </Function>
-  <Variable id="_259" name="cpp_sym_EOF" type="_116c" init="-0x000000001" context="_1" location="f1:282" file="f1" line="282" static="1"/>
+  <Variable id="_259" name="cpp_sym_EOF" type="_116c" init="-0x000000001" context="_1" location="f1:283" file="f1" line="283" static="1"/>
   <Function id="_260" name="MP4GetHintTrackSdp" returns="_992" context="_1" location="f8:50" file="f8" line="50" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f8:50" file="f8" line="50"/>
     <Argument name="hintTrackId" type="_743" location="f8:50" file="f8" line="50"/>
@@ -733,20 +733,20 @@
     <Argument name="audioConfig" type="_1094" location="f11:92" file="f11" line="92"/>
     <Argument name="audioConfigLength" type="_401" location="f11:92" file="f11" line="92"/>
   </Function>
-  <Variable id="_265" name="cpp_sym_MP4_MPEG2_HIGH_VIDEO_TYPE" type="_116c" init="100" context="_1" location="f1:7" file="f1" line="7" static="1"/>
+  <Variable id="_265" name="cpp_sym_MP4_MPEG2_HIGH_VIDEO_TYPE" type="_116c" init="100" context="_1" location="f1:8" file="f1" line="8" static="1"/>
   <Function id="_266" name="__builtin_ctan" returns="_1039" context="_1" mangled="ctan" location="f0:124" file="f0" line="124" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1039" location="f0:124" file="f0" line="124"/>
   </Function>
   <Function id="_267" name="__builtin_log" returns="_991" context="_1" mangled="log" location="f0:62" file="f0" line="62" extern="1" attributes="nothrow">
     <Argument type="_991" location="f0:62" file="f0" line="62"/>
   </Function>
-  <Variable id="_268" name="cpp_sym___STDC_ISO_10646__" type="_70c" init="200009l" context="_1" location="f1:71" file="f1" line="71" static="1"/>
+  <Variable id="_268" name="cpp_sym___STDC_ISO_10646__" type="_70c" init="200009l" context="_1" location="f1:72" file="f1" line="72" static="1"/>
   <Function id="_269" name="vsprintf" returns="_116" throw="" context="_1" location="f3:381" file="f3" line="381" extern="1" attributes="nothrow nonnull() format(,,)">
     <Argument name="__s" type="_285r" location="f3:381" file="f3" line="381"/>
     <Argument name="__format" type="_992r" location="f3:381" file="f3" line="381"/>
     <Argument name="__arg" type="_674" location="f3:381" file="f3" line="381"/>
   </Function>
-  <Variable id="_270" name="cpp_sym_MP4_MPEG4_INVALID_AUDIO_TYPE" type="_116c" init="0" context="_1" location="f1:284" file="f1" line="284" static="1"/>
+  <Variable id="_270" name="cpp_sym_MP4_MPEG4_INVALID_AUDIO_TYPE" type="_116c" init="0" context="_1" location="f1:285" file="f1" line="285" static="1"/>
   <Function id="_271" name="MP4AddAmrAudioTrack" returns="_743" context="_1" location="f9:177" file="f9" line="177" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:177" file="f9" line="177"/>
     <Argument name="timeScale" type="_401" location="f9:177" file="f9" line="177"/>
@@ -771,7 +771,7 @@
     <Argument name="newFileName" type="_992" location="f15:309" file="f15" line="309" default="0"/>
   </Function>
   <Typedef id="_275" name="__mode_t" type="_17" context="_1" location="f2:139" file="f2" line="139"/>
-  <Variable id="_276" name="cpp_sym_MP4_MPEG4_LAYER3_AUDIO_TYPE" type="_116c" init="34" context="_1" location="f1:159" file="f1" line="159" static="1"/>
+  <Variable id="_276" name="cpp_sym_MP4_MPEG4_LAYER3_AUDIO_TYPE" type="_116c" init="34" context="_1" location="f1:160" file="f1" line="160" static="1"/>
   <Function id="_277" name="MP4DefaultISMACrypParams" returns="_1004" context="_1" location="f11:27" file="f11" line="27" extern="1" attributes="visibility(default)">
     <Argument name="ptr" type="_1004" location="f11:27" file="f11" line="27"/>
   </Function>
@@ -787,21 +787,21 @@
     <Argument name="timeScale" type="_401" location="f14:400" file="f14" line="400"/>
   </Function>
   <Struct id="_280" name="_G_fpos_t" context="_1" mangled="9_G_fpos_t" demangled="_G_fpos_t" location="f17:26" file="f17" line="26" size="96" align="32" members="_1099 _1100 _1101 _1102 _1103 _1104 " bases=""/>
-  <Variable id="_281" name="cpp_sym_MP4V2_PROJECT_version" type="_992" init="(const char*)&quot;2.0.0&quot;" context="_1" location="f1:222" file="f1" line="222"/>
-  <Variable id="_282" name="cpp_sym_MPEG4_HP_L1" type="_116c" init="129" context="_1" location="f1:286" file="f1" line="286" static="1"/>
-  <Variable id="_283" name="cpp_sym_MPEG4_HP_L2" type="_116c" init="130" context="_1" location="f1:287" file="f1" line="287" static="1"/>
-  <Variable id="_284" name="cpp_sym___USE_BSD" type="_116c" init="1" context="_1" location="f1:138" file="f1" line="138" static="1"/>
+  <Variable id="_281" name="cpp_sym_MP4V2_PROJECT_version" type="_992" init="(const char*)&quot;2.0.0&quot;" context="_1" location="f1:223" file="f1" line="223"/>
+  <Variable id="_282" name="cpp_sym_MPEG4_HP_L1" type="_116c" init="129" context="_1" location="f1:287" file="f1" line="287" static="1"/>
+  <Variable id="_283" name="cpp_sym_MPEG4_HP_L2" type="_116c" init="130" context="_1" location="f1:288" file="f1" line="288" static="1"/>
+  <Variable id="_284" name="cpp_sym___USE_BSD" type="_116c" init="1" context="_1" location="f1:139" file="f1" line="139" static="1"/>
   <PointerType id="_285" type="_1105" size="32" align="32"/>
   <Typedef id="_286" name="va_list" type="_674" context="_1" location="f3:80" file="f3" line="80"/>
-  <Variable id="_287" name="cpp_sym__IO_MAGIC_MASK" type="_17c" init="-65536u" context="_1" location="f1:254" file="f1" line="254" static="1"/>
-  <Variable id="_288" name="cpp_sym_TMP_MAX" type="_116c" init="238328" context="_1" location="f1:60" file="f1" line="60" static="1"/>
-  <Variable id="_289" name="cpp_sym__IO_UNBUFFERED" type="_116c" init="2" context="_1" location="f1:261" file="f1" line="261" static="1"/>
+  <Variable id="_287" name="cpp_sym__IO_MAGIC_MASK" type="_17c" init="-65536u" context="_1" location="f1:255" file="f1" line="255" static="1"/>
+  <Variable id="_288" name="cpp_sym_TMP_MAX" type="_116c" init="238328" context="_1" location="f1:61" file="f1" line="61" static="1"/>
+  <Variable id="_289" name="cpp_sym__IO_UNBUFFERED" type="_116c" init="2" context="_1" location="f1:262" file="f1" line="262" static="1"/>
   <Function id="_290" name="MP4DeleteChapters" returns="_498" context="_1" location="f18:126" file="f18" line="126" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f18:126" file="f18" line="126"/>
     <Argument name="chapterType" type="_498" location="f18:126" file="f18" line="126" default="MP4ChapterTypeQt"/>
     <Argument name="chapterTrackId" type="_743" location="f18:126" file="f18" line="126" default="0u"/>
   </Function>
-  <Variable id="_291" name="cpp_sym_MP4_MICROSECONDS_TIME_SCALE" type="_116c" init="1000000" context="_1" location="f1:55" file="f1" line="55" static="1"/>
+  <Variable id="_291" name="cpp_sym_MP4_MICROSECONDS_TIME_SCALE" type="_116c" init="1000000" context="_1" location="f1:56" file="f1" line="56" static="1"/>
   <Typedef id="_292" name="_G_int32_t" type="_116" context="_1" location="f17:54" file="f17" line="54"/>
   <Function id="_293" name="MP4TagsFetch" returns="_996" context="_1" location="f7:185" file="f7" line="185" extern="1" attributes="visibility(default)">
     <Argument name="tags" type="_999" location="f7:185" file="f7" line="185"/>
@@ -822,24 +822,24 @@
     <Argument name="fileName" type="_992" location="f15:85" file="f15" line="85"/>
     <Argument name="flags" type="_401" location="f15:85" file="f15" line="85" default="0"/>
   </Function>
-  <Variable id="_297" name="cpp_sym_MP4_CNTL_TRACK_TYPE" type="_992" init="(const char*)&quot;cntl&quot;" context="_1" location="f1:90" file="f1" line="90"/>
-  <Variable id="_298" name="cpp_sym__G_USING_THUNKS" type="_116c" init="1" context="_1" location="f1:53" file="f1" line="53" static="1"/>
+  <Variable id="_297" name="cpp_sym_MP4_CNTL_TRACK_TYPE" type="_992" init="(const char*)&quot;cntl&quot;" context="_1" location="f1:91" file="f1" line="91"/>
+  <Variable id="_298" name="cpp_sym__G_USING_THUNKS" type="_116c" init="1" context="_1" location="f1:54" file="f1" line="54" static="1"/>
   <Function id="_299" name="MP4GetChapters" returns="_498" context="_1" location="f18:149" file="f18" line="149" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f18:149" file="f18" line="149"/>
     <Argument name="chapterList" type="_1106" location="f18:149" file="f18" line="149"/>
     <Argument name="chapterCount" type="_1022" location="f18:149" file="f18" line="149"/>
     <Argument name="chapterType" type="_498" location="f18:149" file="f18" line="149" default="MP4ChapterTypeQt"/>
   </Function>
-  <Variable id="_300" name="cpp_sym__G_HAVE_ATEXIT" type="_116c" init="1" context="_1" location="f1:288" file="f1" line="288" static="1"/>
+  <Variable id="_300" name="cpp_sym__G_HAVE_ATEXIT" type="_116c" init="1" context="_1" location="f1:289" file="f1" line="289" static="1"/>
   <Function id="_301" name="MP4TagsSetDescription" returns="_996" context="_1" location="f7:248" file="f7" line="248" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:248" file="f7" line="248"/>
     <Argument type="_992" location="f7:248" file="f7" line="248"/>
   </Function>
-  <Variable id="_302" name="cpp_sym___FD_SETSIZE" type="_116c" init="1024" context="_1" location="f1:116" file="f1" line="116" static="1"/>
+  <Variable id="_302" name="cpp_sym___FD_SETSIZE" type="_116c" init="1024" context="_1" location="f1:117" file="f1" line="117" static="1"/>
   <Function id="_303" name="__builtin_isfinite" returns="_996" context="_1" location="f0:136" file="f0" line="136" extern="1">
     <Ellipsis/>
   </Function>
-  <Variable id="_304" name="cpp_sym___USE_ISOC95" type="_116c" init="1" context="_1" location="f1:276" file="f1" line="276" static="1"/>
+  <Variable id="_304" name="cpp_sym___USE_ISOC95" type="_116c" init="1" context="_1" location="f1:277" file="f1" line="277" static="1"/>
   <Function id="_305" name="__builtin_asin" returns="_991" context="_1" mangled="asin" location="f0:27" file="f0" line="27" extern="1" attributes="nothrow">
     <Argument type="_991" location="f0:27" file="f0" line="27"/>
   </Function>
@@ -847,13 +847,13 @@
   <Function id="_307" name="MP4GetDuration" returns="_562" context="_1" location="f12:71" file="f12" line="71" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f12:71" file="f12" line="71"/>
   </Function>
-  <Variable id="_308" name="cpp_sym___USE_ISOC99" type="_116c" init="1" context="_1" location="f1:183" file="f1" line="183" static="1"/>
-  <Variable id="_309" name="cpp_sym_FALSE" type="_116c" init="0" context="_1" location="f1:58" file="f1" line="58" static="1"/>
+  <Variable id="_308" name="cpp_sym___USE_ISOC99" type="_116c" init="1" context="_1" location="f1:184" file="f1" line="184" static="1"/>
+  <Variable id="_309" name="cpp_sym_FALSE" type="_116c" init="0" context="_1" location="f1:59" file="f1" line="59" static="1"/>
   <Function id="_310" name="__builtin_frexp" returns="_991" context="_1" mangled="frexp" location="f0:56" file="f0" line="56" extern="1" attributes="nothrow">
     <Argument type="_991" location="f0:56" file="f0" line="56"/>
     <Argument type="_1107" location="f0:56" file="f0" line="56"/>
   </Function>
-  <Variable id="_311" name="cpp_sym_MP4_MPEG2_MAIN_VIDEO_TYPE" type="_116c" init="97" context="_1" location="f1:80" file="f1" line="80" static="1"/>
+  <Variable id="_311" name="cpp_sym_MP4_MPEG2_MAIN_VIDEO_TYPE" type="_116c" init="97" context="_1" location="f1:81" file="f1" line="81" static="1"/>
   <Function id="_312" name="fdopen" returns="_997" throw="" context="_1" location="f3:307" file="f3" line="307" extern="1">
     <Argument name="__fd" type="_116" location="f3:307" file="f3" line="307"/>
     <Argument name="__modes" type="_992" location="f3:307" file="f3" line="307"/>
@@ -862,7 +862,7 @@
     <Argument type="_999" location="f7:265" file="f7" line="265"/>
     <Argument type="_992" location="f7:265" file="f7" line="265"/>
   </Function>
-  <Variable id="_314" name="cpp_sym_L_cuserid" type="_116c" init="9" context="_1" location="f1:121" file="f1" line="121" static="1"/>
+  <Variable id="_314" name="cpp_sym_L_cuserid" type="_116c" init="9" context="_1" location="f1:122" file="f1" line="122" static="1"/>
   <Function id="_315" name="MP4TagsSetGapless" returns="_996" context="_1" location="f7:275" file="f7" line="275" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:275" file="f7" line="275"/>
     <Argument type="_1041" location="f7:275" file="f7" line="275"/>
@@ -885,7 +885,7 @@
     <Argument name="hFile" type="_646" location="f10:252" file="f10" line="252"/>
     <Argument name="trackId" type="_743" location="f10:252" file="f10" line="252"/>
   </Function>
-  <Variable id="_320" name="cpp_sym__IO_INTERNAL" type="_116c" init="8" context="_1" location="f1:259" file="f1" line="259" static="1"/>
+  <Variable id="_320" name="cpp_sym__IO_INTERNAL" type="_116c" init="8" context="_1" location="f1:260" file="f1" line="260" static="1"/>
   <Function id="_321" name="MP4GetTrackH264ProfileLevel" returns="_996" context="_1" location="f10:222" file="f10" line="222" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f10:222" file="f10" line="222"/>
     <Argument name="trackId" type="_743" location="f10:222" file="f10" line="222"/>
@@ -897,8 +897,8 @@
   <Function id="_324" name="__builtin_isgreaterequal" returns="_996" context="_1" location="f0:138" file="f0" line="138" extern="1" attributes="nothrow const">
     <Ellipsis/>
   </Function>
-  <Variable id="_325" name="cpp_sym_MP4_MPEG4_VIDEO_TYPE" type="_116c" init="32" context="_1" location="f1:101" file="f1" line="101" static="1"/>
-  <Variable id="_326" name="cpp_sym__STDIO_H" type="_116c" init="1" context="_1" location="f1:232" file="f1" line="232" static="1"/>
+  <Variable id="_325" name="cpp_sym_MP4_MPEG4_VIDEO_TYPE" type="_116c" init="32" context="_1" location="f1:102" file="f1" line="102" static="1"/>
+  <Variable id="_326" name="cpp_sym__STDIO_H" type="_116c" init="1" context="_1" location="f1:233" file="f1" line="233" static="1"/>
   <Function id="_327" name="MP4GetTrackIntegerProperty" returns="_996" context="_1" location="f10:282" file="f10" line="282" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f10:282" file="f10" line="282"/>
     <Argument name="trackId" type="_743" location="f10:282" file="f10" line="282"/>
@@ -909,7 +909,7 @@
   <Function id="_329" name="ftrylockfile" returns="_116" throw="" context="_1" location="f3:914" file="f3" line="914" extern="1">
     <Argument name="__stream" type="_997" location="f3:914" file="f3" line="914"/>
   </Function>
-  <Variable id="_330" name="cpp_sym__G_VTABLE_LABEL_HAS_LENGTH" type="_116c" init="1" context="_1" location="f1:124" file="f1" line="124" static="1"/>
+  <Variable id="_330" name="cpp_sym__G_VTABLE_LABEL_HAS_LENGTH" type="_116c" init="1" context="_1" location="f1:125" file="f1" line="125" static="1"/>
   <Function id="_331" name="MP4TagsSetCompilation" returns="_996" context="_1" location="f7:240" file="f7" line="240" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:240" file="f7" line="240"/>
     <Argument type="_1041" location="f7:240" file="f7" line="240"/>
@@ -939,25 +939,25 @@
     <Argument name="__stream" type="_997r" location="f3:795" file="f3" line="795"/>
     <Argument name="__pos" type="_1127r" location="f3:795" file="f3" line="795"/>
   </Function>
-  <Variable id="_342" name="cpp_sym__G_HAVE_SYS_WAIT" type="_116c" init="1" context="_1" location="f1:50" file="f1" line="50" static="1"/>
+  <Variable id="_342" name="cpp_sym__G_HAVE_SYS_WAIT" type="_116c" init="1" context="_1" location="f1:51" file="f1" line="51" static="1"/>
   <Variable id="_343" name="_sys_nerr" type="_116" context="_1" location="f19:31" file="f19" line="31" extern="1"/>
   <Function id="_344" name="MP4TagsSetGrouping" returns="_996" context="_1" location="f7:231" file="f7" line="231" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:231" file="f7" line="231"/>
     <Argument type="_992" location="f7:231" file="f7" line="231"/>
   </Function>
-  <Variable id="_345" name="cpp_sym__IO_stderr" type="_1006" init="(const _IO_FILE*)((_IO_FILE*)(&amp; _IO_2_1_stderr_))" context="_1" location="f1:238" file="f1" line="238"/>
-  <Variable id="_346" name="cpp_sym_MPEG4_ASP_L0" type="_116c" init="240" context="_1" location="f1:14" file="f1" line="14" static="1"/>
-  <Variable id="_347" name="cpp_sym_MPEG4_ASP_L2" type="_116c" init="242" context="_1" location="f1:12" file="f1" line="12" static="1"/>
-  <Variable id="_348" name="cpp_sym_MPEG4_ASP_L3" type="_116c" init="243" context="_1" location="f1:11" file="f1" line="11" static="1"/>
-  <Variable id="_349" name="cpp_sym_MPEG4_ASP_L4" type="_116c" init="244" context="_1" location="f1:18" file="f1" line="18" static="1"/>
-  <Variable id="_350" name="cpp_sym___USE_XOPEN_EXTENDED" type="_116c" init="1" context="_1" location="f1:204" file="f1" line="204" static="1"/>
+  <Variable id="_345" name="cpp_sym__IO_stderr" type="_1006" init="(const _IO_FILE*)((_IO_FILE*)(&amp; _IO_2_1_stderr_))" context="_1" location="f1:239" file="f1" line="239"/>
+  <Variable id="_346" name="cpp_sym_MPEG4_ASP_L0" type="_116c" init="240" context="_1" location="f1:15" file="f1" line="15" static="1"/>
+  <Variable id="_347" name="cpp_sym_MPEG4_ASP_L2" type="_116c" init="242" context="_1" location="f1:13" file="f1" line="13" static="1"/>
+  <Variable id="_348" name="cpp_sym_MPEG4_ASP_L3" type="_116c" init="243" context="_1" location="f1:12" file="f1" line="12" static="1"/>
+  <Variable id="_349" name="cpp_sym_MPEG4_ASP_L4" type="_116c" init="244" context="_1" location="f1:19" file="f1" line="19" static="1"/>
+  <Variable id="_350" name="cpp_sym___USE_XOPEN_EXTENDED" type="_116c" init="1" context="_1" location="f1:205" file="f1" line="205" static="1"/>
   <Function id="_351" name="MP4AddSceneTrack" returns="_743" context="_1" location="f9:95" file="f9" line="95" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:95" file="f9" line="95"/>
   </Function>
   <Function id="_352" name="__builtin_log10f" returns="_994" context="_1" mangled="log10f" location="f0:64" file="f0" line="64" extern="1" attributes="nothrow">
     <Argument type="_994" location="f0:64" file="f0" line="64"/>
   </Function>
-  <Variable id="_353" name="cpp_sym_MP4_MPEG1_VIDEO_TYPE" type="_116c" init="106" context="_1" location="f1:268" file="f1" line="268" static="1"/>
+  <Variable id="_353" name="cpp_sym_MP4_MPEG1_VIDEO_TYPE" type="_116c" init="106" context="_1" location="f1:269" file="f1" line="269" static="1"/>
   <Function id="_354" name="__builtin_log10l" returns="_995" context="_1" mangled="log10l" location="f0:65" file="f0" line="65" extern="1" attributes="nothrow">
     <Argument type="_995" location="f0:65" file="f0" line="65"/>
   </Function>
@@ -968,7 +968,7 @@
     <Argument name="sampleDuration" type="_562" location="f9:125" file="f9" line="125"/>
     <Argument name="audioType" type="_792" location="f9:125" file="f9" line="125" default="64"/>
   </Function>
-  <Variable id="_357" name="cpp_sym__ISOC99_SOURCE" type="_116c" init="1" context="_1" location="f1:103" file="f1" line="103" static="1"/>
+  <Variable id="_357" name="cpp_sym__ISOC99_SOURCE" type="_116c" init="1" context="_1" location="f1:104" file="f1" line="104" static="1"/>
   <Typedef id="_358" name="mp4v2_ismacrypParams" type="_58" context="_1" location="f11:19" file="f11" line="19"/>
   <Function id="_359" name="MP4TagsSetContentRating" returns="_996" context="_1" location="f7:274" file="f7" line="274" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:274" file="f7" line="274"/>
@@ -1002,7 +1002,7 @@
     <Argument name="trackId" type="_743" location="f10:141" file="f10" line="141"/>
     <Argument name="code" type="_992" location="f10:141" file="f10" line="141"/>
   </Function>
-  <Variable id="_370" name="cpp_sym_____FILE_defined" type="_116c" init="1" context="_1" location="f1:155" file="f1" line="155" static="1"/>
+  <Variable id="_370" name="cpp_sym_____FILE_defined" type="_116c" init="1" context="_1" location="f1:156" file="f1" line="156" static="1"/>
   <FundamentalType id="_371" name="long unsigned int" size="32" align="32"/>
   <Typedef id="_372" name="__ino_t" type="_371" context="_1" location="f2:137" file="f2" line="137"/>
   <Function id="_373" name="putchar_unlocked" returns="_116" context="_1" location="f6:106" file="f6" line="106" endline="108" inline="1" attributes="__gnu_inline__">
@@ -1033,8 +1033,8 @@
     <Argument type="_995" location="f0:69" file="f0" line="69"/>
     <Argument type="_1135" location="f0:69" file="f0" line="69"/>
   </Function>
-  <Variable id="_381" name="cpp_sym___STDC_IEC_559__" type="_116c" init="1" context="_1" location="f1:49" file="f1" line="49" static="1"/>
-  <Variable id="_382" name="cpp_sym_MP4_NANOSECONDS_TIME_SCALE" type="_116c" init="1000000000" context="_1" location="f1:193" file="f1" line="193" static="1"/>
+  <Variable id="_381" name="cpp_sym___STDC_IEC_559__" type="_116c" init="1" context="_1" location="f1:50" file="f1" line="50" static="1"/>
+  <Variable id="_382" name="cpp_sym_MP4_NANOSECONDS_TIME_SCALE" type="_116c" init="1000000000" context="_1" location="f1:194" file="f1" line="194" static="1"/>
   <Function id="_383" name="MP4TagsSetITunesAccount" returns="_996" context="_1" location="f7:277" file="f7" line="277" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:277" file="f7" line="277"/>
     <Argument type="_992" location="f7:277" file="f7" line="277"/>
@@ -1052,25 +1052,25 @@
     <Argument name="trackId" type="_743" location="f14:337" file="f14" line="337"/>
     <Argument name="editId" type="_845" location="f14:337" file="f14" line="337"/>
   </Function>
-  <Variable id="_387" name="cpp_sym__POSIX_C_SOURCE" type="_70c" init="200809l" context="_1" location="f1:153" file="f1" line="153" static="1"/>
-  <Variable id="_388" name="cpp_sym_MP4V2_PROJECT_repo_branch" type="_992" init="(const char*)&quot;2.0.0&quot;" context="_1" location="f1:123" file="f1" line="123"/>
+  <Variable id="_387" name="cpp_sym__POSIX_C_SOURCE" type="_70c" init="200809l" context="_1" location="f1:154" file="f1" line="154" static="1"/>
+  <Variable id="_388" name="cpp_sym_MP4V2_PROJECT_repo_branch" type="_992" init="(const char*)&quot;2.0.0&quot;" context="_1" location="f1:124" file="f1" line="124"/>
   <Function id="_389" name="tempnam" returns="_285" throw="" context="_1" location="f3:229" file="f3" line="229" extern="1" attributes="__malloc__">
     <Argument name="__dir" type="_992" location="f3:229" file="f3" line="229"/>
     <Argument name="__pfx" type="_992" location="f3:229" file="f3" line="229"/>
   </Function>
-  <Variable id="_390" name="cpp_sym_MP4_MILLISECONDS_TIME_SCALE" type="_116c" init="1000" context="_1" location="f1:185" file="f1" line="185" static="1"/>
+  <Variable id="_390" name="cpp_sym_MP4_MILLISECONDS_TIME_SCALE" type="_116c" init="1000" context="_1" location="f1:186" file="f1" line="186" static="1"/>
   <Function id="_391" name="MP4GetTrackType" returns="_992" context="_1" location="f10:49" file="f10" line="49" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f10:49" file="f10" line="49"/>
     <Argument name="trackId" type="_743" location="f10:49" file="f10" line="49"/>
   </Function>
-  <Variable id="_392" name="cpp_sym__BITS_TYPESIZES_H" type="_116c" init="1" context="_1" location="f1:15" file="f1" line="15" static="1"/>
-  <Variable id="_393" name="cpp_sym_MPEG4_SP_L2" type="_116c" init="2" context="_1" location="f1:234" file="f1" line="234" static="1"/>
-  <Variable id="_394" name="cpp_sym__IOS_OUTPUT" type="_116c" init="2" context="_1" location="f1:180" file="f1" line="180" static="1"/>
-  <Variable id="_395" name="cpp_sym__G_HAVE_IO_GETLINE_INFO" type="_116c" init="1" context="_1" location="f1:3" file="f1" line="3" static="1"/>
+  <Variable id="_392" name="cpp_sym__BITS_TYPESIZES_H" type="_116c" init="1" context="_1" location="f1:16" file="f1" line="16" static="1"/>
+  <Variable id="_393" name="cpp_sym_MPEG4_SP_L2" type="_116c" init="2" context="_1" location="f1:235" file="f1" line="235" static="1"/>
+  <Variable id="_394" name="cpp_sym__IOS_OUTPUT" type="_116c" init="2" context="_1" location="f1:181" file="f1" line="181" static="1"/>
+  <Variable id="_395" name="cpp_sym__G_HAVE_IO_GETLINE_INFO" type="_116c" init="1" context="_1" location="f1:4" file="f1" line="4" static="1"/>
   <Function id="_396" name="__builtin_tan" returns="_991" context="_1" mangled="tan" location="f0:84" file="f0" line="84" extern="1" attributes="nothrow pure no vops">
     <Argument type="_991" location="f0:84" file="f0" line="84"/>
   </Function>
-  <Variable id="_397" name="cpp_sym_MPEG4_SP_L3" type="_116c" init="3" context="_1" location="f1:233" file="f1" line="233" static="1"/>
+  <Variable id="_397" name="cpp_sym_MPEG4_SP_L3" type="_116c" init="3" context="_1" location="f1:234" file="f1" line="234" static="1"/>
   <Function id="_398" name="MP4TagsSetSortTVShow" returns="_996" context="_1" location="f7:257" file="f7" line="257" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:257" file="f7" line="257"/>
     <Argument type="_992" location="f7:257" file="f7" line="257"/>
@@ -1091,7 +1091,7 @@
     <Argument name="propName" type="_992" location="f12:53" file="f12" line="53"/>
     <Argument name="value" type="_994" location="f12:53" file="f12" line="53"/>
   </Function>
-  <Variable id="_404" name="cpp_sym___USE_LARGEFILE" type="_116c" init="1" context="_1" location="f1:214" file="f1" line="214" static="1"/>
+  <Variable id="_404" name="cpp_sym___USE_LARGEFILE" type="_116c" init="1" context="_1" location="f1:215" file="f1" line="215" static="1"/>
   <Function id="_405" name="MP4EncAndCopyTrack" returns="_743" context="_1" location="f11:76" file="f11" line="76" extern="1" attributes="visibility(default)">
     <Argument name="srcFile" type="_646" location="f11:76" file="f11" line="76"/>
     <Argument name="srcTrackId" type="_743" location="f11:76" file="f11" line="76"/>
@@ -1102,14 +1102,14 @@
     <Argument name="applyEdits" type="_996" location="f11:76" file="f11" line="76" default="false"/>
     <Argument name="dstHintTrackReferenceTrack" type="_743" location="f11:76" file="f11" line="76" default="0u"/>
   </Function>
-  <Variable id="_406" name="cpp_sym_MPEG4_C_STUDIO_P_L2" type="_116c" init="230" context="_1" location="f1:191" file="f1" line="191" static="1"/>
-  <Variable id="_407" name="cpp_sym_MPEG4_C_STUDIO_P_L4" type="_116c" init="232" context="_1" location="f1:134" file="f1" line="134" static="1"/>
+  <Variable id="_406" name="cpp_sym_MPEG4_C_STUDIO_P_L2" type="_116c" init="230" context="_1" location="f1:192" file="f1" line="192" static="1"/>
+  <Variable id="_407" name="cpp_sym_MPEG4_C_STUDIO_P_L4" type="_116c" init="232" context="_1" location="f1:135" file="f1" line="135" static="1"/>
   <Function id="_408" name="__overflow" returns="_116" context="_1" location="f13:420" file="f13" line="420" extern="1">
     <Argument type="_1019" location="f13:420" file="f13" line="420"/>
     <Argument type="_116" location="f13:420" file="f13" line="420"/>
   </Function>
-  <Variable id="_409" name="cpp_sym_MPEG4_AST_L3" type="_116c" init="211" context="_1" location="f1:187" file="f1" line="187" static="1"/>
-  <Variable id="_410" name="cpp_sym_MP4_SUBPIC_TRACK_TYPE" type="_992" init="(const char*)&quot;subp&quot;" context="_1" location="f1:219" file="f1" line="219"/>
+  <Variable id="_409" name="cpp_sym_MPEG4_AST_L3" type="_116c" init="211" context="_1" location="f1:188" file="f1" line="188" static="1"/>
+  <Variable id="_410" name="cpp_sym_MP4_SUBPIC_TRACK_TYPE" type="_992" init="(const char*)&quot;subp&quot;" context="_1" location="f1:220" file="f1" line="220"/>
   <Function id="_411" name="MP4GetSampleTime" returns="_306" context="_1" location="f5:454" file="f5" line="454" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f5:454" file="f5" line="454"/>
     <Argument name="trackId" type="_743" location="f5:454" file="f5" line="454"/>
@@ -1122,7 +1122,7 @@
     <Argument name="value" type="_401" location="f10:111" file="f10" line="111"/>
   </Function>
   <Struct id="_414" name="_IO_jump_t" context="_1" incomplete="1" mangled="10_IO_jump_t" demangled="_IO_jump_t" location="f13:172" file="f13" line="172" artificial="1" align="8"/>
-  <Variable id="_415" name="cpp_sym_MP4_YUV12_VIDEO_TYPE" type="_116c" init="240" context="_1" location="f1:246" file="f1" line="246" static="1"/>
+  <Variable id="_415" name="cpp_sym_MP4_YUV12_VIDEO_TYPE" type="_116c" init="240" context="_1" location="f1:247" file="f1" line="247" static="1"/>
   <Function id="_416" name="MP4TagsRemoveArtwork" returns="_996" context="_1" location="f7:261" file="f7" line="261" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:261" file="f7" line="261"/>
     <Argument type="_401" location="f7:261" file="f7" line="261"/>
@@ -1135,8 +1135,8 @@
   <Function id="_419" name="MP4ItmfItemListFree" returns="_98" context="_1" location="f16:154" file="f16" line="154" extern="1" attributes="visibility(default)">
     <Argument name="itemList" type="_1040" location="f16:154" file="f16" line="154"/>
   </Function>
-  <Variable id="_420" name="cpp_sym_MPEG4_BATP_L1" type="_116c" init="113" context="_1" location="f1:93" file="f1" line="93" static="1"/>
-  <Variable id="_421" name="cpp_sym_MPEG4_BATP_L2" type="_116c" init="114" context="_1" location="f1:145" file="f1" line="145" static="1"/>
+  <Variable id="_420" name="cpp_sym_MPEG4_BATP_L1" type="_116c" init="113" context="_1" location="f1:94" file="f1" line="94" static="1"/>
+  <Variable id="_421" name="cpp_sym_MPEG4_BATP_L2" type="_116c" init="114" context="_1" location="f1:146" file="f1" line="146" static="1"/>
   <Function id="_422" name="MP4ItmfSetItem" returns="_996" context="_1" location="f16:195" file="f16" line="195" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f16:195" file="f16" line="195"/>
     <Argument name="item" type="_1085" location="f16:195" file="f16" line="195"/>
@@ -1147,14 +1147,14 @@
     <Ellipsis/>
   </Function>
   <Typedef id="_424" name="uint_least32_t" type="_17" context="_1" location="f4:79" file="f4" line="79"/>
-  <Variable id="_425" name="cpp_sym_MP4_OD_TRACK_TYPE" type="_992" init="(const char*)&quot;odsm&quot;" context="_1" location="f1:77" file="f1" line="77"/>
+  <Variable id="_425" name="cpp_sym_MP4_OD_TRACK_TYPE" type="_992" init="(const char*)&quot;odsm&quot;" context="_1" location="f1:78" file="f1" line="78"/>
   <Variable id="_426" name="_IO_2_1_stdin_" type="_904" context="_1" location="f13:348" file="f13" line="348" extern="1"/>
   <Function id="_427" name="MP4FileInfo" returns="_285" context="_1" location="f15:189" file="f15" line="189" extern="1" attributes="visibility(default)">
     <Argument name="fileName" type="_992" location="f15:189" file="f15" line="189"/>
     <Argument name="trackId" type="_743" location="f15:189" file="f15" line="189" default="0u"/>
   </Function>
   <Function id="_428" name="__builtin_inf" returns="_991" context="_1" location="f0:18" file="f0" line="18" extern="1" attributes="nothrow const"/>
-  <Variable id="_429" name="cpp_sym__IO_FLAGS2_USER_WBUF" type="_116c" init="8" context="_1" location="f1:241" file="f1" line="241" static="1"/>
+  <Variable id="_429" name="cpp_sym__IO_FLAGS2_USER_WBUF" type="_116c" init="8" context="_1" location="f1:242" file="f1" line="242" static="1"/>
   <Struct id="_430" name="MP4ItmfData_s" context="_1" mangled="13MP4ItmfData_s" demangled="MP4ItmfData_s" location="f16:101" file="f16" line="101" artificial="1" size="160" align="32" members="_1136 _1137 _1138 _1139 _1140 _1141 _1142 _1143 _1144 " bases=""/>
   <Function id="_431" name="MP4AddTrack" returns="_743" context="_1" location="f9:32" file="f9" line="32" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:32" file="f9" line="32"/>
@@ -1169,16 +1169,16 @@
   </Function>
   <Typedef id="_433" name="__dev_t" type="_898" context="_1" location="f2:134" file="f2" line="134"/>
   <Namespace id="_434" name="__cxxabiv1" context="_1" members="" mangled="_Z10__cxxabiv1" demangled="__cxxabiv1"/>
-  <Variable id="_435" name="cpp_sym_MP4_VORBIS_AUDIO_TYPE" type="_116c" init="225" context="_1" location="f1:36" file="f1" line="36" static="1"/>
+  <Variable id="_435" name="cpp_sym_MP4_VORBIS_AUDIO_TYPE" type="_116c" init="225" context="_1" location="f1:37" file="f1" line="37" static="1"/>
   <Function id="_436" name="perror" returns="_98" context="_1" location="f3:843" file="f3" line="843" extern="1">
     <Argument name="__s" type="_992" location="f3:843" file="f3" line="843"/>
   </Function>
-  <Variable id="_437" name="cpp_sym___USE_POSIX2" type="_116c" init="1" context="_1" location="f1:28" file="f1" line="28" static="1"/>
+  <Variable id="_437" name="cpp_sym___USE_POSIX2" type="_116c" init="1" context="_1" location="f1:29" file="f1" line="29" static="1"/>
   <Function id="_438" name="MP4AddHintTrack" returns="_743" context="_1" location="f9:332" file="f9" line="332" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:332" file="f9" line="332"/>
     <Argument name="refTrackId" type="_743" location="f9:332" file="f9" line="332"/>
   </Function>
-  <Variable id="_439" name="cpp_sym__G_BUFSIZ" type="_116c" init="8192" context="_1" location="f1:63" file="f1" line="63" static="1"/>
+  <Variable id="_439" name="cpp_sym__G_BUFSIZ" type="_116c" init="8192" context="_1" location="f1:64" file="f1" line="64" static="1"/>
   <Function id="_440" name="MP4GetTrackDurationPerChunk" returns="_996" context="_1" location="f9:420" file="f9" line="420" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:420" file="f9" line="420"/>
     <Argument name="trackId" type="_743" location="f9:420" file="f9" line="420"/>
@@ -1201,10 +1201,10 @@
     <Argument name="propName" type="_992" location="f10:325" file="f10" line="325"/>
     <Argument name="value" type="_992" location="f10:325" file="f10" line="325"/>
   </Function>
-  <Variable id="_444" name="cpp_sym_MP4_MPEG7_TRACK_TYPE" type="_992" init="(const char*)&quot;m7sm&quot;" context="_1" location="f1:258" file="f1" line="258"/>
-  <Variable id="_445" name="cpp_sym___USE_XOPEN" type="_116c" init="1" context="_1" location="f1:20" file="f1" line="20" static="1"/>
+  <Variable id="_444" name="cpp_sym_MP4_MPEG7_TRACK_TYPE" type="_992" init="(const char*)&quot;m7sm&quot;" context="_1" location="f1:259" file="f1" line="259"/>
+  <Variable id="_445" name="cpp_sym___USE_XOPEN" type="_116c" init="1" context="_1" location="f1:21" file="f1" line="21" static="1"/>
   <Typedef id="_446" name="__blkcnt64_t" type="_825" context="_1" location="f2:170" file="f2" line="170"/>
-  <Variable id="_447" name="cpp_sym_MP4V2_PROJECT_version_minor" type="_116c" init="0" context="_1" location="f1:113" file="f1" line="113" static="1"/>
+  <Variable id="_447" name="cpp_sym_MP4V2_PROJECT_version_minor" type="_116c" init="0" context="_1" location="f1:114" file="f1" line="114" static="1"/>
   <Function id="_448" name="obstack_printf" returns="_116" throw="" context="_1" location="f3:898" file="f3" line="898" extern="1" attributes="__format__(,,)">
     <Argument name="__obstack" type="_1034r" location="f3:898" file="f3" line="898"/>
     <Argument name="__format" type="_992r" location="f3:898" file="f3" line="898"/>
@@ -1213,14 +1213,14 @@
   <Function id="_449" name="__builtin_frame_address" returns="_645" context="_1" location="f0:15" file="f0" line="15" extern="1">
     <Argument name="LEVEL" type="_17" location="f0:15" file="f0" line="15"/>
   </Function>
-  <Variable id="_450" name="cpp_sym__SYS_CDEFS_H" type="_116c" init="1" context="_1" location="f1:262" file="f1" line="262" static="1"/>
+  <Variable id="_450" name="cpp_sym__SYS_CDEFS_H" type="_116c" init="1" context="_1" location="f1:263" file="f1" line="263" static="1"/>
   <Function id="_451" name="MP4GetVideoProfileLevel" returns="_792" context="_1" location="f12:129" file="f12" line="129" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f12:129" file="f12" line="129"/>
     <Argument name="trackId" type="_743" location="f12:129" file="f12" line="129" default="0u"/>
   </Function>
-  <Variable id="_452" name="cpp_sym___FILE_defined" type="_116c" init="1" context="_1" location="f1:83" file="f1" line="83" static="1"/>
-  <Variable id="_453" name="cpp_sym__IO_HEX" type="_116c" init="64" context="_1" location="f1:216" file="f1" line="216" static="1"/>
-  <Variable id="_454" name="cpp_sym_MPEG4_ACEP_L2" type="_116c" init="178" context="_1" location="f1:164" file="f1" line="164" static="1"/>
+  <Variable id="_452" name="cpp_sym___FILE_defined" type="_116c" init="1" context="_1" location="f1:84" file="f1" line="84" static="1"/>
+  <Variable id="_453" name="cpp_sym__IO_HEX" type="_116c" init="64" context="_1" location="f1:217" file="f1" line="217" static="1"/>
+  <Variable id="_454" name="cpp_sym_MPEG4_ACEP_L2" type="_116c" init="178" context="_1" location="f1:165" file="f1" line="165" static="1"/>
   <Struct id="_455" name="__mbstate_t" context="_1" mangled="11__mbstate_t" demangled="__mbstate_t" location="f20:95" file="f20" line="95" size="64" align="32" members="_1146 _1147 _1148 _1149 _1150 _1151 _1152 " bases=""/>
   <Function id="_456" name="MP4AddH264VideoTrack" returns="_743" context="_1" location="f9:259" file="f9" line="259" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:259" file="f9" line="259"/>
@@ -1243,17 +1243,17 @@
   <Function id="_459" name="ferror" returns="_116" throw="" context="_1" location="f3:827" file="f3" line="827" extern="1">
     <Argument name="__stream" type="_997" location="f3:827" file="f3" line="827"/>
   </Function>
-  <Variable id="_460" name="cpp_sym_MP4_MPEG2_SPATIAL_VIDEO_TYPE" type="_116c" init="99" context="_1" location="f1:213" file="f1" line="213" static="1"/>
-  <Variable id="_461" name="cpp_sym_MPEG4_SP_L0" type="_116c" init="8" context="_1" location="f1:199" file="f1" line="199" static="1"/>
-  <Variable id="_462" name="cpp_sym_MPEG4_SP_L1" type="_116c" init="1" context="_1" location="f1:235" file="f1" line="235" static="1"/>
-  <Variable id="_463" name="cpp_sym_MP4_MPEG2_AUDIO_TYPE" type="_116c" init="105" context="_1" location="f1:91" file="f1" line="91" static="1"/>
-  <Variable id="_464" name="cpp_sym_MP4_MPEG4_ALGORITHMIC_FX_AUDIO_TYPE" type="_116c" init="16" context="_1" location="f1:277" file="f1" line="277" static="1"/>
+  <Variable id="_460" name="cpp_sym_MP4_MPEG2_SPATIAL_VIDEO_TYPE" type="_116c" init="99" context="_1" location="f1:214" file="f1" line="214" static="1"/>
+  <Variable id="_461" name="cpp_sym_MPEG4_SP_L0" type="_116c" init="8" context="_1" location="f1:200" file="f1" line="200" static="1"/>
+  <Variable id="_462" name="cpp_sym_MPEG4_SP_L1" type="_116c" init="1" context="_1" location="f1:236" file="f1" line="236" static="1"/>
+  <Variable id="_463" name="cpp_sym_MP4_MPEG2_AUDIO_TYPE" type="_116c" init="105" context="_1" location="f1:92" file="f1" line="92" static="1"/>
+  <Variable id="_464" name="cpp_sym_MP4_MPEG4_ALGORITHMIC_FX_AUDIO_TYPE" type="_116c" init="16" context="_1" location="f1:278" file="f1" line="278" static="1"/>
   <Function id="_465" name="__builtin_cabs" returns="_991" context="_1" mangled="cabs" location="f0:91" file="f0" line="91" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1039" location="f0:91" file="f0" line="91"/>
   </Function>
   <Struct id="_466" name="MP4ItmfItemList_s" context="_1" mangled="17MP4ItmfItemList_s" demangled="MP4ItmfItemList_s" location="f16:131" file="f16" line="131" artificial="1" size="64" align="32" members="_1153 _1154 _1155 _1156 _1157 _1158 " bases=""/>
   <Typedef id="_467" name="MP4ItmfItemList" type="_466" context="_1" location="f16:134" file="f16" line="134"/>
-  <Variable id="_468" name="cpp_sym___USE_SVID" type="_116c" init="1" context="_1" location="f1:163" file="f1" line="163" static="1"/>
+  <Variable id="_468" name="cpp_sym___USE_SVID" type="_116c" init="1" context="_1" location="f1:164" file="f1" line="164" static="1"/>
   <Function id="_469" name="MP4CopyTrack" returns="_743" context="_1" location="f9:381" file="f9" line="381" extern="1" attributes="visibility(default)">
     <Argument name="srcFile" type="_646" location="f9:381" file="f9" line="381"/>
     <Argument name="srcTrackId" type="_743" location="f9:381" file="f9" line="381"/>
@@ -1261,21 +1261,21 @@
     <Argument name="applyEdits" type="_996" location="f9:381" file="f9" line="381" default="false"/>
     <Argument name="dstHintTrackReferenceTrack" type="_743" location="f9:381" file="f9" line="381" default="0u"/>
   </Function>
-  <Variable id="_470" name="cpp_sym___GLIBC_HAVE_LONG_LONG" type="_116c" init="1" context="_1" location="f1:59" file="f1" line="59" static="1"/>
+  <Variable id="_470" name="cpp_sym___GLIBC_HAVE_LONG_LONG" type="_116c" init="1" context="_1" location="f1:60" file="f1" line="60" static="1"/>
   <Function id="_471" name="vfscanf" returns="_116" context="_1" location="f3:479" file="f3" line="479" extern="1" attributes="nothrow __format__(,,) nonnull() format(,,)">
     <Argument name="__s" type="_997r" location="f3:479" file="f3" line="479"/>
     <Argument name="__format" type="_992r" location="f3:479" file="f3" line="479"/>
     <Argument name="__arg" type="_674" location="f3:479" file="f3" line="479"/>
   </Function>
-  <Variable id="_472" name="cpp_sym__IO_ERR_SEEN" type="_116c" init="32" context="_1" location="f1:125" file="f1" line="125" static="1"/>
+  <Variable id="_472" name="cpp_sym__IO_ERR_SEEN" type="_116c" init="32" context="_1" location="f1:126" file="f1" line="126" static="1"/>
   <Function id="_473" name="MP4SetSampleRenderingOffset" returns="_996" context="_1" location="f5:535" file="f5" line="535" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f5:535" file="f5" line="535"/>
     <Argument name="trackId" type="_743" location="f5:535" file="f5" line="535"/>
     <Argument name="sampleId" type="_337" location="f5:535" file="f5" line="535"/>
     <Argument name="renderingOffset" type="_562" location="f5:535" file="f5" line="535"/>
   </Function>
-  <Variable id="_474" name="cpp_sym_MP4_MPEG4_ALS_AUDIO_TYPE" type="_116c" init="31" context="_1" location="f1:70" file="f1" line="70" static="1"/>
-  <Variable id="_475" name="cpp_sym_MP4_SUBTITLE_TRACK_TYPE" type="_992" init="(const char*)&quot;sbtl&quot;" context="_1" location="f1:182" file="f1" line="182"/>
+  <Variable id="_474" name="cpp_sym_MP4_MPEG4_ALS_AUDIO_TYPE" type="_116c" init="31" context="_1" location="f1:71" file="f1" line="71" static="1"/>
+  <Variable id="_475" name="cpp_sym_MP4_SUBTITLE_TRACK_TYPE" type="_992" init="(const char*)&quot;sbtl&quot;" context="_1" location="f1:183" file="f1" line="183"/>
   <Function id="_476" name="MP4Dump" returns="_996" context="_1" location="f15:148" file="f15" line="148" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f15:148" file="f15" line="148"/>
     <Argument name="dumpImplicits" type="_996" location="f15:148" file="f15" line="148" default="0"/>
@@ -1305,17 +1305,17 @@
     <Argument type="_995" location="f0:33" file="f0" line="33"/>
     <Argument type="_995" location="f0:33" file="f0" line="33"/>
   </Function>
-  <Variable id="_485" name="cpp_sym_MP4V2_PROJECT_version_major" type="_116c" init="2" context="_1" location="f1:10" file="f1" line="10" static="1"/>
+  <Variable id="_485" name="cpp_sym_MP4V2_PROJECT_version_major" type="_116c" init="2" context="_1" location="f1:11" file="f1" line="11" static="1"/>
   <Typedef id="_486" name="int_fast8_t" type="_193" context="_1" location="f4:91" file="f4" line="91"/>
   <Function id="_487" name="__builtin_isinf" returns="_996" context="_1" mangled="isinf" location="f0:139" file="f0" line="139" extern="1" attributes="nothrow const">
     <Ellipsis/>
   </Function>
-  <Variable id="_488" name="cpp_sym_MP4_MPEG2_442_VIDEO_TYPE" type="_116c" init="101" context="_1" location="f1:299" file="f1" line="299" static="1"/>
+  <Variable id="_488" name="cpp_sym_MP4_MPEG2_442_VIDEO_TYPE" type="_116c" init="101" context="_1" location="f1:300" file="f1" line="300" static="1"/>
   <Function id="_489" name="fsetpos" returns="_116" context="_1" location="f3:800" file="f3" line="800" extern="1">
     <Argument name="__stream" type="_997" location="f3:800" file="f3" line="800"/>
     <Argument name="__pos" type="_1160" location="f3:800" file="f3" line="800"/>
   </Function>
-  <Variable id="_490" name="cpp_sym__G_HAVE_MMAP" type="_116c" init="1" context="_1" location="f1:105" file="f1" line="105" static="1"/>
+  <Variable id="_490" name="cpp_sym__G_HAVE_MMAP" type="_116c" init="1" context="_1" location="f1:106" file="f1" line="106" static="1"/>
   <Function id="_491" name="__builtin_fpclassify" returns="_996" context="_1" location="f0:135" file="f0" line="135" extern="1">
     <Ellipsis/>
   </Function>
@@ -1336,7 +1336,7 @@
   </FunctionType>
   <Typedef id="_495" name="cookie_read_function_t" type="_967" context="_1" location="f13:391" file="f13" line="391"/>
   <Typedef id="_496" name="int16_t" type="_149" context="_1" location="f4:38" file="f4" line="38"/>
-  <Variable id="_497" name="cpp_sym_L_ctermid" type="_116c" init="9" context="_1" location="f1:100" file="f1" line="100" static="1"/>
+  <Variable id="_497" name="cpp_sym_L_ctermid" type="_116c" init="9" context="_1" location="f1:101" file="f1" line="101" static="1"/>
   <Enumeration id="_498" name="MP4ChapterType" context="_1" location="f18:32" file="f18" line="32" size="32" align="32">
     <EnumValue name="MP4ChapterTypeNone" init="0"/>
     <EnumValue name="MP4ChapterTypeAny" init="1"/>
@@ -1347,11 +1347,11 @@
     <Argument name="hFile" type="_646" location="f12:98" file="f12" line="98"/>
     <Argument name="value" type="_401" location="f12:98" file="f12" line="98"/>
   </Function>
-  <Variable id="_500" name="cpp_sym_MPEG4_ACP_L1" type="_116c" init="193" context="_1" location="f1:43" file="f1" line="43" static="1"/>
-  <Variable id="_501" name="cpp_sym_MPEG4_ACP_L2" type="_116c" init="194" context="_1" location="f1:42" file="f1" line="42" static="1"/>
+  <Variable id="_500" name="cpp_sym_MPEG4_ACP_L1" type="_116c" init="193" context="_1" location="f1:44" file="f1" line="44" static="1"/>
+  <Variable id="_501" name="cpp_sym_MPEG4_ACP_L2" type="_116c" init="194" context="_1" location="f1:43" file="f1" line="43" static="1"/>
   <Typedef id="_502" name="__daddr_t" type="_116" context="_1" location="f2:153" file="f2" line="153"/>
   <Typedef id="_503" name="int_fast16_t" type="_116" context="_1" location="f4:97" file="f4" line="97"/>
-  <Variable id="_504" name="cpp_sym_MP4_SECONDS_TIME_SCALE" type="_116c" init="1" context="_1" location="f1:136" file="f1" line="136" static="1"/>
+  <Variable id="_504" name="cpp_sym_MP4_SECONDS_TIME_SCALE" type="_116c" init="1" context="_1" location="f1:137" file="f1" line="137" static="1"/>
   <Function id="_505" name="__builtin_ccoshf" returns="_1001" context="_1" mangled="ccoshf" location="f0:105" file="f0" line="105" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1001" location="f0:105" file="f0" line="105"/>
   </Function>
@@ -1434,16 +1434,16 @@
     <Argument name="value" type="_994" location="f10:318" file="f10" line="318"/>
   </Function>
   <Typedef id="_523" name="ptrdiff_t" type="_116" context="_1" location="f21:150" file="f21" line="150"/>
-  <Variable id="_524" name="cpp_sym_MPEG4_CSP_L2" type="_116c" init="162" context="_1" location="f1:281" file="f1" line="281" static="1"/>
-  <Variable id="_525" name="cpp_sym_MPEG4_CSP_L3" type="_116c" init="163" context="_1" location="f1:280" file="f1" line="280" static="1"/>
+  <Variable id="_524" name="cpp_sym_MPEG4_CSP_L2" type="_116c" init="162" context="_1" location="f1:282" file="f1" line="282" static="1"/>
+  <Variable id="_525" name="cpp_sym_MPEG4_CSP_L3" type="_116c" init="163" context="_1" location="f1:281" file="f1" line="281" static="1"/>
   <Typedef id="_526" name="__ssize_t" type="_116" context="_1" location="f2:180" file="f2" line="180"/>
-  <Variable id="_527" name="cpp_sym_SEEK_SET" type="_116c" init="0" context="_1" location="f1:270" file="f1" line="270" static="1"/>
+  <Variable id="_527" name="cpp_sym_SEEK_SET" type="_116c" init="0" context="_1" location="f1:271" file="f1" line="271" static="1"/>
   <Typedef id="_528" name="__fsfilcnt_t" type="_371" context="_1" location="f2:177" file="f2" line="177"/>
   <Function id="_529" name="MP4GetTrackMaxSampleSize" returns="_401" context="_1" location="f5:397" file="f5" line="397" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f5:397" file="f5" line="397"/>
     <Argument name="trackId" type="_743" location="f5:397" file="f5" line="397"/>
   </Function>
-  <Variable id="_530" name="cpp_sym__IO_UPPERCASE" type="_116c" init="512" context="_1" location="f1:198" file="f1" line="198" static="1"/>
+  <Variable id="_530" name="cpp_sym__IO_UPPERCASE" type="_116c" init="512" context="_1" location="f1:199" file="f1" line="199" static="1"/>
   <Function id="_531" name="__builtin_atan" returns="_991" context="_1" mangled="atan" location="f0:30" file="f0" line="30" extern="1" attributes="nothrow pure no vops">
     <Argument type="_991" location="f0:30" file="f0" line="30"/>
   </Function>
@@ -1470,7 +1470,7 @@
     <Argument name="name" type="_992" location="f10:172" file="f10" line="172"/>
   </Function>
   <Typedef id="_539" name="__u_int" type="_17" context="_1" location="f2:33" file="f2" line="33"/>
-  <Variable id="_540" name="cpp_sym__IO_LINKED" type="_116c" init="128" context="_1" location="f1:132" file="f1" line="132" static="1"/>
+  <Variable id="_540" name="cpp_sym__IO_LINKED" type="_116c" init="128" context="_1" location="f1:133" file="f1" line="133" static="1"/>
   <Function id="_541" name="__builtin_frexpf" returns="_994" context="_1" mangled="frexpf" location="f0:57" file="f0" line="57" extern="1" attributes="nothrow">
     <Argument type="_994" location="f0:57" file="f0" line="57"/>
     <Argument type="_1107" location="f0:57" file="f0" line="57"/>
@@ -1495,9 +1495,9 @@
     <Argument name="__stream" type="_997" location="f3:818" file="f3" line="818"/>
     <Argument name="__pos" type="_1169" location="f3:818" file="f3" line="818"/>
   </Function>
-  <Variable id="_547" name="cpp_sym__G_HAVE_MREMAP" type="_116c" init="1" context="_1" location="f1:29" file="f1" line="29" static="1"/>
-  <Variable id="_548" name="cpp_sym__IO_MAGIC" type="_17c" init="-72548352u" context="_1" location="f1:88" file="f1" line="88" static="1"/>
-  <Variable id="_549" name="cpp_sym_MP4_PCM16_BIG_ENDIAN_AUDIO_TYPE" type="_116c" init="230" context="_1" location="f1:130" file="f1" line="130" static="1"/>
+  <Variable id="_547" name="cpp_sym__G_HAVE_MREMAP" type="_116c" init="1" context="_1" location="f1:30" file="f1" line="30" static="1"/>
+  <Variable id="_548" name="cpp_sym__IO_MAGIC" type="_17c" init="-72548352u" context="_1" location="f1:89" file="f1" line="89" static="1"/>
+  <Variable id="_549" name="cpp_sym_MP4_PCM16_BIG_ENDIAN_AUDIO_TYPE" type="_116c" init="230" context="_1" location="f1:131" file="f1" line="131" static="1"/>
   <Typedef id="_550" name="FILE" type="_134" context="_1" location="f3:49" file="f3" line="49"/>
   <Function id="_551" name="MP4GetTrackBitRate" returns="_401" context="_1" location="f10:193" file="f10" line="193" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f10:193" file="f10" line="193"/>
@@ -1508,20 +1508,20 @@
     <Argument type="_645" location="f13:497" file="f13" line="497"/>
     <Argument type="_654" location="f13:497" file="f13" line="497"/>
   </Function>
-  <Variable id="_553" name="cpp_sym_MP4_INVALID_TRACK_ID" type="_17c" init="0u" context="_1" location="f1:31" file="f1" line="31" static="1"/>
+  <Variable id="_553" name="cpp_sym_MP4_INVALID_TRACK_ID" type="_17c" init="0u" context="_1" location="f1:32" file="f1" line="32" static="1"/>
   <Function id="_554" name="clearerr_unlocked" returns="_98" throw="" context="_1" location="f3:832" file="f3" line="832" extern="1">
     <Argument name="__stream" type="_997" location="f3:832" file="f3" line="832"/>
   </Function>
   <PointerType id="_555" type="_1170" size="32" align="32"/>
   <Typedef id="_556" name="encryptFunc_t" type="_555" context="_1" location="f14:44" file="f14" line="44"/>
-  <Variable id="_557" name="cpp_sym___USE_XOPEN2KXSI" type="_116c" init="1" context="_1" location="f1:5" file="f1" line="5" static="1"/>
-  <Variable id="_558" name="cpp_sym__IO_FIXED" type="_116c" init="4096" context="_1" location="f1:106" file="f1" line="106" static="1"/>
+  <Variable id="_557" name="cpp_sym___USE_XOPEN2KXSI" type="_116c" init="1" context="_1" location="f1:6" file="f1" line="6" static="1"/>
+  <Variable id="_558" name="cpp_sym__IO_FIXED" type="_116c" init="4096" context="_1" location="f1:107" file="f1" line="107" static="1"/>
   <Typedef id="_559" name="uint_fast64_t" type="_22" context="_1" location="f4:113" file="f4" line="113"/>
   <Function id="_560" name="MP4ConvertChapters" returns="_498" context="_1" location="f18:105" file="f18" line="105" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f18:105" file="f18" line="105"/>
     <Argument name="toChapterType" type="_498" location="f18:105" file="f18" line="105" default="MP4ChapterTypeQt"/>
   </Function>
-  <Variable id="_561" name="cpp_sym___GLIBC_MINOR__" type="_116c" init="15" context="_1" location="f1:97" file="f1" line="97" static="1"/>
+  <Variable id="_561" name="cpp_sym___GLIBC_MINOR__" type="_116c" init="15" context="_1" location="f1:98" file="f1" line="98" static="1"/>
   <Typedef id="_562" name="MP4Duration" type="_973" context="_1" location="f14:16" file="f14" line="16"/>
   <Function id="_563" name="ctermid" returns="_285" throw="" context="_1" location="f3:882" file="f3" line="882" extern="1">
     <Argument name="__s" type="_285" location="f3:882" file="f3" line="882"/>
@@ -1535,19 +1535,19 @@
     <Argument name="trakId" type="_743" location="f9:195" file="f9" line="195"/>
     <Argument name="modeSet" type="_747" location="f9:195" file="f9" line="195"/>
   </Function>
-  <Variable id="_566" name="cpp_sym__IO_DELETE_DONT_CLOSE" type="_116c" init="64" context="_1" location="f1:65" file="f1" line="65" static="1"/>
+  <Variable id="_566" name="cpp_sym__IO_DELETE_DONT_CLOSE" type="_116c" init="64" context="_1" location="f1:66" file="f1" line="66" static="1"/>
   <Function id="_567" name="MP4ItmfGetItemsByCode" returns="_1040" context="_1" location="f16:169" file="f16" line="169" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f16:169" file="f16" line="169"/>
     <Argument name="code" type="_992" location="f16:169" file="f16" line="169"/>
   </Function>
-  <Variable id="_568" name="cpp_sym__FEATURES_H" type="_116c" init="1" context="_1" location="f1:217" file="f1" line="217" static="1"/>
-  <Variable id="_569" name="cpp_sym_MP4V2_PROJECT_irc" type="_992" init="(const char*)&quot;irc://irc.freenode.net/handbrake&quot;" context="_1" location="f1:24" file="f1" line="24"/>
+  <Variable id="_568" name="cpp_sym__FEATURES_H" type="_116c" init="1" context="_1" location="f1:218" file="f1" line="218" static="1"/>
+  <Variable id="_569" name="cpp_sym_MP4V2_PROJECT_irc" type="_992" init="(const char*)&quot;irc://irc.freenode.net/handbrake&quot;" context="_1" location="f1:25" file="f1" line="25"/>
   <Function id="_570" name="freopen" returns="_997" context="_1" location="f3:281" file="f3" line="281" extern="1">
     <Argument name="__filename" type="_992r" location="f3:281" file="f3" line="281"/>
     <Argument name="__modes" type="_992r" location="f3:281" file="f3" line="281"/>
     <Argument name="__stream" type="_997r" location="f3:281" file="f3" line="281"/>
   </Function>
-  <Variable id="_571" name="cpp_sym_MP4_MPEG4_AAC_LTP_AUDIO_TYPE" type="_116c" init="4" context="_1" location="f1:173" file="f1" line="173" static="1"/>
+  <Variable id="_571" name="cpp_sym_MP4_MPEG4_AAC_LTP_AUDIO_TYPE" type="_116c" init="4" context="_1" location="f1:174" file="f1" line="174" static="1"/>
   <Function id="_572" name="MP4ReadSampleFromTime" returns="_996" context="_1" location="f5:178" file="f5" line="178" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f5:178" file="f5" line="178"/>
     <Argument name="trackId" type="_743" location="f5:178" file="f5" line="178"/>
@@ -1567,7 +1567,7 @@
     <Argument name="__c" type="_116" location="f3:579" file="f3" line="579"/>
     <Argument name="__stream" type="_997" location="f3:579" file="f3" line="579"/>
   </Function>
-  <Variable id="_575" name="cpp_sym_MP4_MPEG4_SLS_AUDIO_TYPE" type="_116c" init="35" context="_1" location="f1:274" file="f1" line="274" static="1"/>
+  <Variable id="_575" name="cpp_sym_MP4_MPEG4_SLS_AUDIO_TYPE" type="_116c" init="35" context="_1" location="f1:275" file="f1" line="275" static="1"/>
   <Function id="_576" name="fputs" returns="_116" context="_1" location="f3:686" file="f3" line="686" extern="1" attributes="nonnull">
     <Argument name="__s" type="_992r" location="f3:686" file="f3" line="686"/>
     <Argument name="__stream" type="_997r" location="f3:686" file="f3" line="686"/>
@@ -1606,11 +1606,11 @@
   <Function id="_584" name="getc_unlocked" returns="_116" context="_1" location="f6:64" file="f6" line="64" endline="66" inline="1" attributes="__gnu_inline__">
     <Argument name="__fp" type="_997" location="f6:64" file="f6" line="64"/>
   </Function>
-  <Variable id="_585" name="cpp_sym__IO_USER_BUF" type="_116c" init="1" context="_1" location="f1:85" file="f1" line="85" static="1"/>
+  <Variable id="_585" name="cpp_sym__IO_USER_BUF" type="_116c" init="1" context="_1" location="f1:86" file="f1" line="86" static="1"/>
   <Function id="_586" name="ftell" returns="_70" context="_1" location="f3:751" file="f3" line="751" extern="1">
     <Argument name="__stream" type="_997" location="f3:751" file="f3" line="751"/>
   </Function>
-  <Variable id="_587" name="cpp_sym___USE_LARGEFILE64" type="_116c" init="1" context="_1" location="f1:142" file="f1" line="142" static="1"/>
+  <Variable id="_587" name="cpp_sym___USE_LARGEFILE64" type="_116c" init="1" context="_1" location="f1:143" file="f1" line="143" static="1"/>
   <Function id="_588" name="MP4ConvertToTrackDuration" returns="_562" context="_1" location="f14:446" file="f14" line="446" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f14:446" file="f14" line="446"/>
     <Argument name="trackId" type="_743" location="f14:446" file="f14" line="446"/>
@@ -1623,10 +1623,10 @@
     <Argument name="chapterDuration" type="_562" location="f18:50" file="f18" line="50"/>
     <Argument name="chapterTitle" type="_992" location="f18:50" file="f18" line="50" default="0"/>
   </Function>
-  <Variable id="_590" name="cpp_sym___USE_EXTERN_INLINES" type="_116c" init="1" context="_1" location="f1:215" file="f1" line="215" static="1"/>
+  <Variable id="_590" name="cpp_sym___USE_EXTERN_INLINES" type="_116c" init="1" context="_1" location="f1:216" file="f1" line="216" static="1"/>
   <Typedef id="_591" name="__off_t" type="_70" context="_1" location="f2:141" file="f2" line="141"/>
-  <Variable id="_592" name="cpp_sym_MP4_MPEGJ_TRACK_TYPE" type="_992" init="(const char*)&quot;mjsm&quot;" context="_1" location="f1:239" file="f1" line="239"/>
-  <Variable id="_593" name="cpp_sym_MP4_JPEG_VIDEO_TYPE" type="_116c" init="108" context="_1" location="f1:61" file="f1" line="61" static="1"/>
+  <Variable id="_592" name="cpp_sym_MP4_MPEGJ_TRACK_TYPE" type="_992" init="(const char*)&quot;mjsm&quot;" context="_1" location="f1:240" file="f1" line="240"/>
+  <Variable id="_593" name="cpp_sym_MP4_JPEG_VIDEO_TYPE" type="_116c" init="108" context="_1" location="f1:62" file="f1" line="62" static="1"/>
   <Function id="_594" name="MP4AddRtpVideoHint" returns="_996" context="_1" location="f8:125" file="f8" line="125" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f8:125" file="f8" line="125"/>
     <Argument name="hintTrackId" type="_743" location="f8:125" file="f8" line="125"/>
@@ -1634,7 +1634,7 @@
     <Argument name="timestampOffset" type="_401" location="f8:125" file="f8" line="125" default="0"/>
   </Function>
   <Struct id="_595" name="_IO_marker" context="_1" mangled="10_IO_marker" demangled="_IO_marker" location="f13:188" file="f13" line="188" artificial="1" size="96" align="32" members="_1176 _1177 _1178 _1179 _1180 _1181 _1182 " bases=""/>
-  <Variable id="_596" name="cpp_sym___GLIBC__" type="_116c" init="2" context="_1" location="f1:171" file="f1" line="171" static="1"/>
+  <Variable id="_596" name="cpp_sym___GLIBC__" type="_116c" init="2" context="_1" location="f1:172" file="f1" line="172" static="1"/>
   <Function id="_597" name="__builtin_tanhf" returns="_994" context="_1" mangled="tanhf" location="f0:87" file="f0" line="87" extern="1" attributes="nothrow pure no vops">
     <Argument type="_994" location="f0:87" file="f0" line="87"/>
   </Function>
@@ -1651,14 +1651,14 @@
   <Function id="_601" name="__builtin_cabsl" returns="_995" context="_1" mangled="cabsl" location="f0:92" file="f0" line="92" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1002" location="f0:92" file="f0" line="92"/>
   </Function>
-  <Variable id="_602" name="cpp_sym_MP4_MPEG2_SNR_VIDEO_TYPE" type="_116c" init="98" context="_1" location="f1:75" file="f1" line="75" static="1"/>
+  <Variable id="_602" name="cpp_sym_MP4_MPEG2_SNR_VIDEO_TYPE" type="_116c" init="98" context="_1" location="f1:76" file="f1" line="76" static="1"/>
   <Typedef id="_603" name="int_least16_t" type="_149" context="_1" location="f4:67" file="f4" line="67"/>
-  <Variable id="_604" name="cpp_sym__IOFBF" type="_116c" init="0" context="_1" location="f1:127" file="f1" line="127" static="1"/>
+  <Variable id="_604" name="cpp_sym__IOFBF" type="_116c" init="0" context="_1" location="f1:128" file="f1" line="128" static="1"/>
   <Function id="_605" name="MP4ItmfItemAlloc" returns="_1159" context="_1" location="f16:142" file="f16" line="142" extern="1" attributes="visibility(default)">
     <Argument name="code" type="_992" location="f16:142" file="f16" line="142"/>
     <Argument name="numData" type="_401" location="f16:142" file="f16" line="142"/>
   </Function>
-  <Variable id="_606" name="cpp_sym_MP4_ALAW_AUDIO_TYPE" type="_116c" init="227" context="_1" location="f1:109" file="f1" line="109" static="1"/>
+  <Variable id="_606" name="cpp_sym_MP4_ALAW_AUDIO_TYPE" type="_116c" init="227" context="_1" location="f1:110" file="f1" line="110" static="1"/>
   <Function id="_607" name="__builtin_powf" returns="_994" context="_1" mangled="powf" location="f0:70" file="f0" line="70" extern="1" attributes="nothrow">
     <Argument type="_994" location="f0:70" file="f0" line="70"/>
     <Argument type="_994" location="f0:70" file="f0" line="70"/>
@@ -1671,14 +1671,14 @@
     <Argument type="_995" location="f0:71" file="f0" line="71"/>
     <Argument type="_995" location="f0:71" file="f0" line="71"/>
   </Function>
-  <Variable id="_610" name="cpp_sym__G_HAVE_LONG_DOUBLE_IO" type="_116c" init="1" context="_1" location="f1:40" file="f1" line="40" static="1"/>
-  <Variable id="_611" name="cpp_sym_MP4_MPEG4_LAYER1_AUDIO_TYPE" type="_116c" init="32" context="_1" location="f1:210" file="f1" line="210" static="1"/>
-  <Variable id="_612" name="cpp_sym_MPEG4_SFAP_L1" type="_116c" init="97" context="_1" location="f1:176" file="f1" line="176" static="1"/>
-  <Variable id="_613" name="cpp_sym_MPEG4_SFAP_L2" type="_116c" init="98" context="_1" location="f1:266" file="f1" line="266" static="1"/>
+  <Variable id="_610" name="cpp_sym__G_HAVE_LONG_DOUBLE_IO" type="_116c" init="1" context="_1" location="f1:41" file="f1" line="41" static="1"/>
+  <Variable id="_611" name="cpp_sym_MP4_MPEG4_LAYER1_AUDIO_TYPE" type="_116c" init="32" context="_1" location="f1:211" file="f1" line="211" static="1"/>
+  <Variable id="_612" name="cpp_sym_MPEG4_SFAP_L1" type="_116c" init="97" context="_1" location="f1:177" file="f1" line="177" static="1"/>
+  <Variable id="_613" name="cpp_sym_MPEG4_SFAP_L2" type="_116c" init="98" context="_1" location="f1:267" file="f1" line="267" static="1"/>
   <Function id="_614" name="MP4GetTimeScale" returns="_401" context="_1" location="f12:84" file="f12" line="84" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f12:84" file="f12" line="84"/>
   </Function>
-  <Variable id="_615" name="cpp_sym___USE_GNU" type="_116c" init="1" context="_1" location="f1:139" file="f1" line="139" static="1"/>
+  <Variable id="_615" name="cpp_sym___USE_GNU" type="_116c" init="1" context="_1" location="f1:140" file="f1" line="140" static="1"/>
   <Function id="_616" name="MP4TagsSetTrack" returns="_996" context="_1" location="f7:237" file="f7" line="237" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:237" file="f7" line="237"/>
     <Argument type="_1183" location="f7:237" file="f7" line="237"/>
@@ -1700,20 +1700,20 @@
     <Argument name="trackId" type="_743" location="f9:404" file="f9" line="404"/>
   </Function>
   <Typedef id="_622" name="__fsblkcnt64_t" type="_898" context="_1" location="f2:174" file="f2" line="174"/>
-  <Variable id="_623" name="cpp_sym_MPEG4_S_STUDIO_P_L1" type="_116c" init="225" context="_1" location="f1:294" file="f1" line="294" static="1"/>
-  <Variable id="_624" name="cpp_sym_MPEG4_S_STUDIO_P_L2" type="_116c" init="226" context="_1" location="f1:293" file="f1" line="293" static="1"/>
-  <Variable id="_625" name="cpp_sym_MPEG4_S_STUDIO_P_L3" type="_116c" init="227" context="_1" location="f1:292" file="f1" line="292" static="1"/>
-  <Variable id="_626" name="cpp_sym_MPEG4_S_STUDIO_P_L4" type="_116c" init="228" context="_1" location="f1:209" file="f1" line="209" static="1"/>
+  <Variable id="_623" name="cpp_sym_MPEG4_S_STUDIO_P_L1" type="_116c" init="225" context="_1" location="f1:295" file="f1" line="295" static="1"/>
+  <Variable id="_624" name="cpp_sym_MPEG4_S_STUDIO_P_L2" type="_116c" init="226" context="_1" location="f1:294" file="f1" line="294" static="1"/>
+  <Variable id="_625" name="cpp_sym_MPEG4_S_STUDIO_P_L3" type="_116c" init="227" context="_1" location="f1:293" file="f1" line="293" static="1"/>
+  <Variable id="_626" name="cpp_sym_MPEG4_S_STUDIO_P_L4" type="_116c" init="228" context="_1" location="f1:210" file="f1" line="210" static="1"/>
   <Typedef id="_627" name="uintptr_t" type="_17" context="_1" location="f4:129" file="f4" line="129"/>
   <Function id="_628" name="MP4DeleteTrackEdit" returns="_996" context="_1" location="f14:288" file="f14" line="288" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f14:288" file="f14" line="288"/>
     <Argument name="trackId" type="_743" location="f14:288" file="f14" line="288"/>
     <Argument name="editId" type="_845" location="f14:288" file="f14" line="288"/>
   </Function>
-  <Variable id="_629" name="cpp_sym_MP4V2_PROJECT_bugreport" type="_992" init="(const char*)&quot;&lt;kidjan@gmail.com&gt;&quot;" context="_1" location="f1:227" file="f1" line="227"/>
-  <Variable id="_630" name="cpp_sym_MPEG4_SFBAP_L1" type="_116c" init="99" context="_1" location="f1:114" file="f1" line="114" static="1"/>
-  <Variable id="_631" name="cpp_sym_MPEG4_SFBAP_L2" type="_116c" init="100" context="_1" location="f1:117" file="f1" line="117" static="1"/>
-  <Variable id="_632" name="cpp_sym_MPEG4_CP_L2" type="_116c" init="34" context="_1" location="f1:188" file="f1" line="188" static="1"/>
+  <Variable id="_629" name="cpp_sym_MP4V2_PROJECT_bugreport" type="_992" init="(const char*)&quot;&lt;kidjan@gmail.com&gt;&quot;" context="_1" location="f1:228" file="f1" line="228"/>
+  <Variable id="_630" name="cpp_sym_MPEG4_SFBAP_L1" type="_116c" init="99" context="_1" location="f1:115" file="f1" line="115" static="1"/>
+  <Variable id="_631" name="cpp_sym_MPEG4_SFBAP_L2" type="_116c" init="100" context="_1" location="f1:118" file="f1" line="118" static="1"/>
+  <Variable id="_632" name="cpp_sym_MPEG4_CP_L2" type="_116c" init="34" context="_1" location="f1:189" file="f1" line="189" static="1"/>
   <Typedef id="_633" name="__ino64_t" type="_898" context="_1" location="f2:138" file="f2" line="138"/>
   <Function id="_634" name="MP4WriteSample" returns="_996" context="_1" location="f5:225" file="f5" line="225" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f5:225" file="f5" line="225"/>
@@ -1733,22 +1733,22 @@
   </Function>
   <Typedef id="_637" name="ssize_t" type="_526" context="_1" location="f3:103" file="f3" line="103"/>
   <Typedef id="_638" name="__int64_t" type="_123" context="_1" location="f2:47" file="f2" line="47"/>
-  <Variable id="_639" name="cpp_sym__G_HAVE_SYS_CDEFS" type="_116c" init="1" context="_1" location="f1:6" file="f1" line="6" static="1"/>
-  <Variable id="_640" name="cpp_sym__G_VTABLE_LABEL_PREFIX" type="_992" init="(const char*)&quot;__vt_&quot;" context="_1" location="f1:248" file="f1" line="248"/>
-  <Variable id="_641" name="cpp_sym_MP4_CLOCK_TRACK_TYPE" type="_992" init="(const char*)&quot;crsm&quot;" context="_1" location="f1:78" file="f1" line="78"/>
+  <Variable id="_639" name="cpp_sym__G_HAVE_SYS_CDEFS" type="_116c" init="1" context="_1" location="f1:7" file="f1" line="7" static="1"/>
+  <Variable id="_640" name="cpp_sym__G_VTABLE_LABEL_PREFIX" type="_992" init="(const char*)&quot;__vt_&quot;" context="_1" location="f1:249" file="f1" line="249"/>
+  <Variable id="_641" name="cpp_sym_MP4_CLOCK_TRACK_TYPE" type="_992" init="(const char*)&quot;crsm&quot;" context="_1" location="f1:79" file="f1" line="79"/>
   <Typedef id="_642" name="__fsblkcnt_t" type="_371" context="_1" location="f2:173" file="f2" line="173"/>
   <Typedef id="_643" name="__clockid_t" type="_116" context="_1" location="f2:158" file="f2" line="158"/>
-  <Variable id="_644" name="cpp_sym_MPEG4_NBP_L2" type="_116c" init="66" context="_1" location="f1:179" file="f1" line="179" static="1"/>
+  <Variable id="_644" name="cpp_sym_MPEG4_NBP_L2" type="_116c" init="66" context="_1" location="f1:180" file="f1" line="180" static="1"/>
   <PointerType id="_645" type="_98" size="32" align="32"/>
   <Typedef id="_646" name="MP4FileHandle" type="_645" context="_1" location="f14:12" file="f14" line="12"/>
-  <Variable id="_647" name="cpp_sym__IOLBF" type="_116c" init="1" context="_1" location="f1:298" file="f1" line="298" static="1"/>
+  <Variable id="_647" name="cpp_sym__IOLBF" type="_116c" init="1" context="_1" location="f1:299" file="f1" line="299" static="1"/>
   <Function id="_648" name="MP4GetSampleIdFromTime" returns="_337" context="_1" location="f5:432" file="f5" line="432" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f5:432" file="f5" line="432"/>
     <Argument name="trackId" type="_743" location="f5:432" file="f5" line="432"/>
     <Argument name="when" type="_306" location="f5:432" file="f5" line="432"/>
     <Argument name="wantSyncSample" type="_996" location="f5:432" file="f5" line="432" default="false"/>
   </Function>
-  <Variable id="_649" name="cpp_sym__IO_STDIO" type="_116c" init="16384" context="_1" location="f1:167" file="f1" line="167" static="1"/>
+  <Variable id="_649" name="cpp_sym__IO_STDIO" type="_116c" init="16384" context="_1" location="f1:168" file="f1" line="168" static="1"/>
   <Function id="_650" name="__builtin_ccos" returns="_1039" context="_1" mangled="ccos" location="f0:103" file="f0" line="103" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1039" location="f0:103" file="f0" line="103"/>
   </Function>
@@ -1756,22 +1756,22 @@
     <Argument name="__fp" type="_1019" location="f13:467" file="f13" line="467"/>
   </Function>
   <Typedef id="_652" name="intptr_t" type="_116" context="_1" location="f4:126" file="f4" line="126"/>
-  <Variable id="_653" name="cpp_sym_MP4_MPEG2_AAC_LC_AUDIO_TYPE" type="_116c" init="103" context="_1" location="f1:264" file="f1" line="264" static="1"/>
+  <Variable id="_653" name="cpp_sym_MP4_MPEG2_AAC_LC_AUDIO_TYPE" type="_116c" init="103" context="_1" location="f1:265" file="f1" line="265" static="1"/>
   <Typedef id="_654" name="size_t" type="_17" context="_1" location="f21:213" file="f21" line="213"/>
   <Struct id="_655" name="MP4Tags_s" context="_1" mangled="9MP4Tags_s" demangled="MP4Tags_s" location="f7:99" file="f7" line="99" artificial="1" size="1632" align="32" members="_1193 _1194 _1195 _1196 _1197 _1198 _1199 _1200 _1201 _1202 _1203 _1204 _1205 _1206 _1207 _1208 _1209 _1210 _1211 _1212 _1213 _1214 _1215 _1216 _1217 _1218 _1219 _1220 _1221 _1222 _1223 _1224 _1225 _1226 _1227 _1228 _1229 _1230 _1231 _1232 _1233 _1234 _1235 _1236 _1237 _1238 _1239 _1240 _1241 _1242 _1243 _1244 _1245 _1246 _1247 " bases=""/>
   <Function id="_656" name="fclose" returns="_116" context="_1" location="f3:238" file="f3" line="238" extern="1">
     <Argument name="__stream" type="_997" location="f3:238" file="f3" line="238"/>
   </Function>
   <Typedef id="_657" name="__fsfilcnt64_t" type="_898" context="_1" location="f2:178" file="f2" line="178"/>
-  <Variable id="_658" name="cpp_sym__IO_DONT_CLOSE" type="_116c" init="32768" context="_1" location="f1:122" file="f1" line="122" static="1"/>
-  <Variable id="_659" name="cpp_sym__ATFILE_SOURCE" type="_116c" init="1" context="_1" location="f1:4" file="f1" line="4" static="1"/>
+  <Variable id="_658" name="cpp_sym__IO_DONT_CLOSE" type="_116c" init="32768" context="_1" location="f1:123" file="f1" line="123" static="1"/>
+  <Variable id="_659" name="cpp_sym__ATFILE_SOURCE" type="_116c" init="1" context="_1" location="f1:5" file="f1" line="5" static="1"/>
   <Function id="_660" name="MP4GetBytesProperty" returns="_996" context="_1" location="f12:41" file="f12" line="41" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f12:41" file="f12" line="41"/>
     <Argument name="propName" type="_992" location="f12:41" file="f12" line="41"/>
     <Argument name="ppValue" type="_1021" location="f12:41" file="f12" line="41"/>
     <Argument name="pValueSize" type="_1022" location="f12:41" file="f12" line="41"/>
   </Function>
-  <Variable id="_661" name="cpp_sym_SEEK_DATA" type="_116c" init="3" context="_1" location="f1:144" file="f1" line="144" static="1"/>
+  <Variable id="_661" name="cpp_sym_SEEK_DATA" type="_116c" init="3" context="_1" location="f1:145" file="f1" line="145" static="1"/>
   <Function id="_662" name="MP4AppendSessionSdp" returns="_996" context="_1" location="f8:45" file="f8" line="45" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f8:45" file="f8" line="45"/>
     <Argument name="sdpString" type="_992" location="f8:45" file="f8" line="45"/>
@@ -1794,7 +1794,7 @@
     <Argument name="pStartTime" type="_1031" location="f14:367" file="f14" line="367" default="0"/>
     <Argument name="pDuration" type="_1032" location="f14:367" file="f14" line="367" default="0"/>
   </Function>
-  <Variable id="_668" name="cpp_sym_MP4_INVALID_DURATION" type="_22c" init="0xffffffffffffffffu" context="_1" location="f1:126" file="f1" line="126" static="1"/>
+  <Variable id="_668" name="cpp_sym_MP4_INVALID_DURATION" type="_22c" init="0xffffffffffffffffu" context="_1" location="f1:127" file="f1" line="127" static="1"/>
   <Function id="_669" name="MP4SetH263Bitrates" returns="_98" context="_1" location="f9:292" file="f9" line="292" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:292" file="f9" line="292"/>
     <Argument name="trackId" type="_743" location="f9:292" file="f9" line="292"/>
@@ -1812,8 +1812,8 @@
     <Argument name="include_mpeg4_esid" type="_996" location="f8:31" file="f8" line="31" default="true"/>
   </Function>
   <Typedef id="_671" name="__uid_t" type="_17" context="_1" location="f2:135" file="f2" line="135"/>
-  <Variable id="_672" name="cpp_sym_MPEG4_ASP_L1" type="_116c" init="241" context="_1" location="f1:13" file="f1" line="13" static="1"/>
-  <Variable id="_673" name="cpp_sym_FILENAME_MAX" type="_116c" init="4096" context="_1" location="f1:200" file="f1" line="200" static="1"/>
+  <Variable id="_672" name="cpp_sym_MPEG4_ASP_L1" type="_116c" init="241" context="_1" location="f1:14" file="f1" line="14" static="1"/>
+  <Variable id="_673" name="cpp_sym_FILENAME_MAX" type="_116c" init="4096" context="_1" location="f1:201" file="f1" line="201" static="1"/>
   <Typedef id="_674" name="__gnuc_va_list" type="_285" context="_1" location="f22:40" file="f22" line="40"/>
   <Function id="_675" name="MP4GetTrackEditTotalDuration" returns="_562" context="_1" location="f14:305" file="f14" line="305" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f14:305" file="f14" line="305"/>
@@ -1823,15 +1823,15 @@
   <Function id="_676" name="_IO_free_backup_area" returns="_98" throw="" context="_1" location="f13:502" file="f13" line="502" extern="1">
     <Argument type="_1019" location="f13:502" file="f13" line="502"/>
   </Function>
-  <Variable id="_677" name="cpp_sym_MPEG4_C_STUDIO_P_L1" type="_116c" init="229" context="_1" location="f1:131" file="f1" line="131" static="1"/>
-  <Variable id="_678" name="cpp_sym___USE_XOPEN2K8XSI" type="_116c" init="1" context="_1" location="f1:256" file="f1" line="256" static="1"/>
+  <Variable id="_677" name="cpp_sym_MPEG4_C_STUDIO_P_L1" type="_116c" init="229" context="_1" location="f1:132" file="f1" line="132" static="1"/>
+  <Variable id="_678" name="cpp_sym___USE_XOPEN2K8XSI" type="_116c" init="1" context="_1" location="f1:257" file="f1" line="257" static="1"/>
   <Function id="_679" name="MP4ReadRtpHint" returns="_996" context="_1" location="f8:74" file="f8" line="74" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f8:74" file="f8" line="74"/>
     <Argument name="hintTrackId" type="_743" location="f8:74" file="f8" line="74"/>
     <Argument name="hintSampleId" type="_337" location="f8:74" file="f8" line="74"/>
     <Argument name="pNumPackets" type="_1145" location="f8:74" file="f8" line="74" default="0"/>
   </Function>
-  <Variable id="_680" name="cpp_sym_MPEG4_C_STUDIO_P_L3" type="_116c" init="231" context="_1" location="f1:129" file="f1" line="129" static="1"/>
+  <Variable id="_680" name="cpp_sym_MPEG4_C_STUDIO_P_L3" type="_116c" init="231" context="_1" location="f1:130" file="f1" line="130" static="1"/>
   <Function id="_681" name="fwrite" returns="_654" context="_1" location="f3:713" file="f3" line="713" extern="1" attributes="nonnull">
     <Argument name="__ptr" type="_1095r" location="f3:713" file="f3" line="713"/>
     <Argument name="__size" type="_654" location="f3:713" file="f3" line="713"/>
@@ -1861,7 +1861,7 @@
   </Function>
   <Typedef id="_688" name="__gid_t" type="_17" context="_1" location="f2:136" file="f2" line="136"/>
   <Typedef id="_689" name="__uint8_t" type="_663" context="_1" location="f2:38" file="f2" line="38"/>
-  <Variable id="_690" name="cpp_sym_MP4_H263_VIDEO_TYPE" type="_116c" init="242" context="_1" location="f1:184" file="f1" line="184" static="1"/>
+  <Variable id="_690" name="cpp_sym_MP4_H263_VIDEO_TYPE" type="_116c" init="242" context="_1" location="f1:185" file="f1" line="185" static="1"/>
   <Function id="_691" name="MP4GetTrackESConfiguration" returns="_996" context="_1" location="f10:207" file="f10" line="207" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f10:207" file="f10" line="207"/>
     <Argument name="trackId" type="_743" location="f10:207" file="f10" line="207"/>
@@ -1879,7 +1879,7 @@
     <Argument name="pData" type="_1041" location="f14:456" file="f14" line="456"/>
     <Argument name="dataSize" type="_401" location="f14:456" file="f14" line="456"/>
   </Function>
-  <Variable id="_697" name="cpp_sym_MP4_G723_AUDIO_TYPE" type="_116c" init="229" context="_1" location="f1:25" file="f1" line="25" static="1"/>
+  <Variable id="_697" name="cpp_sym_MP4_G723_AUDIO_TYPE" type="_116c" init="229" context="_1" location="f1:26" file="f1" line="26" static="1"/>
   <Function id="_698" name="MP4Info" returns="_285" context="_1" location="f15:237" file="f15" line="237" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f15:237" file="f15" line="237"/>
     <Argument name="trackId" type="_743" location="f15:237" file="f15" line="237" default="0u"/>
@@ -1894,30 +1894,30 @@
     <Argument name="dstTrackId" type="_743" location="f5:351" file="f5" line="351" default="0u"/>
     <Argument name="dstSampleDuration" type="_562" location="f5:351" file="f5" line="351" default="0xffffffffffffffffu"/>
   </Function>
-  <Variable id="_700" name="cpp_sym__IO_BAD_SEEN" type="_116c" init="16384" context="_1" location="f1:94" file="f1" line="94" static="1"/>
+  <Variable id="_700" name="cpp_sym__IO_BAD_SEEN" type="_116c" init="16384" context="_1" location="f1:95" file="f1" line="95" static="1"/>
   <Function id="_701" name="MP4TagsSetArtistID" returns="_996" context="_1" location="f7:281" file="f7" line="281" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:281" file="f7" line="281"/>
     <Argument type="_1000" location="f7:281" file="f7" line="281"/>
   </Function>
-  <Variable id="_702" name="cpp_sym_MP4_PRIVATE_AUDIO_TYPE" type="_116c" init="192" context="_1" location="f1:245" file="f1" line="245" static="1"/>
+  <Variable id="_702" name="cpp_sym_MP4_PRIVATE_AUDIO_TYPE" type="_116c" init="192" context="_1" location="f1:246" file="f1" line="246" static="1"/>
   <Function id="_703" name="MP4SetIntegerProperty" returns="_996" context="_1" location="f12:47" file="f12" line="47" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f12:47" file="f12" line="47"/>
     <Argument name="propName" type="_992" location="f12:47" file="f12" line="47"/>
     <Argument name="value" type="_715" location="f12:47" file="f12" line="47"/>
   </Function>
-  <Variable id="_704" name="cpp_sym__BSD_SOURCE" type="_116c" init="1" context="_1" location="f1:296" file="f1" line="296" static="1"/>
-  <Variable id="_705" name="cpp_sym___WCHAR_MAX" type="_70c" init="2147483647l" context="_1" location="f1:86" file="f1" line="86" static="1"/>
+  <Variable id="_704" name="cpp_sym__BSD_SOURCE" type="_116c" init="1" context="_1" location="f1:297" file="f1" line="297" static="1"/>
+  <Variable id="_705" name="cpp_sym___WCHAR_MAX" type="_70c" init="2147483647l" context="_1" location="f1:87" file="f1" line="87" static="1"/>
   <Variable id="_706" name="sys_nerr" type="_116" context="_1" location="f19:27" file="f19" line="27" extern="1"/>
-  <Variable id="_707" name="cpp_sym__G_HAVE_BOOL" type="_116c" init="1" context="_1" location="f1:289" file="f1" line="289" static="1"/>
-  <Variable id="_708" name="cpp_sym_SEEK_END" type="_116c" init="2" context="_1" location="f1:133" file="f1" line="133" static="1"/>
-  <Variable id="_709" name="cpp_sym___USE_XOPEN2K" type="_116c" init="1" context="_1" location="f1:19" file="f1" line="19" static="1"/>
-  <Variable id="_710" name="cpp_sym_MP4_INVALID_EDIT_ID" type="_17c" init="0u" context="_1" location="f1:212" file="f1" line="212" static="1"/>
-  <Variable id="_711" name="cpp_sym_MP4_INVALID_AUDIO_TYPE" type="_116c" init="0" context="_1" location="f1:143" file="f1" line="143" static="1"/>
+  <Variable id="_707" name="cpp_sym__G_HAVE_BOOL" type="_116c" init="1" context="_1" location="f1:290" file="f1" line="290" static="1"/>
+  <Variable id="_708" name="cpp_sym_SEEK_END" type="_116c" init="2" context="_1" location="f1:134" file="f1" line="134" static="1"/>
+  <Variable id="_709" name="cpp_sym___USE_XOPEN2K" type="_116c" init="1" context="_1" location="f1:20" file="f1" line="20" static="1"/>
+  <Variable id="_710" name="cpp_sym_MP4_INVALID_EDIT_ID" type="_17c" init="0u" context="_1" location="f1:213" file="f1" line="213" static="1"/>
+  <Variable id="_711" name="cpp_sym_MP4_INVALID_AUDIO_TYPE" type="_116c" init="0" context="_1" location="f1:144" file="f1" line="144" static="1"/>
   <Typedef id="_712" name="__key_t" type="_116" context="_1" location="f2:155" file="f2" line="155"/>
-  <Variable id="_713" name="cpp_sym_MP4V2_PROJECT_name_upper" type="_992" init="(const char*)&quot;MP4V2&quot;" context="_1" location="f1:273" file="f1" line="273"/>
-  <Variable id="_714" name="cpp_sym_MPEG4_ARTSP_L4" type="_116c" init="148" context="_1" location="f1:54" file="f1" line="54" static="1"/>
+  <Variable id="_713" name="cpp_sym_MP4V2_PROJECT_name_upper" type="_992" init="(const char*)&quot;MP4V2&quot;" context="_1" location="f1:274" file="f1" line="274"/>
+  <Variable id="_714" name="cpp_sym_MPEG4_ARTSP_L4" type="_116c" init="148" context="_1" location="f1:55" file="f1" line="55" static="1"/>
   <Typedef id="_715" name="int64_t" type="_123" context="_1" location="f4:44" file="f4" line="44"/>
-  <Variable id="_716" name="cpp_sym__IO_SKIPWS" type="_116c" init="1" context="_1" location="f1:194" file="f1" line="194" static="1"/>
+  <Variable id="_716" name="cpp_sym__IO_SKIPWS" type="_116c" init="1" context="_1" location="f1:195" file="f1" line="195" static="1"/>
   <Function id="_717" name="MP4AddALawAudioTrack" returns="_743" context="_1" location="f9:157" file="f9" line="157" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:157" file="f9" line="157"/>
     <Argument name="timeScale" type="_401" location="f9:157" file="f9" line="157"/>
@@ -1944,8 +1944,8 @@
     <Argument name="__modes" type="_992r" location="f3:315" file="f3" line="315"/>
     <Argument name="__io_funcs" type="_69" location="f3:315" file="f3" line="315"/>
   </Function>
-  <Variable id="_723" name="cpp_sym_MP4V2_PROJECT_version_hex" type="_116c" init="131072" context="_1" location="f1:107" file="f1" line="107" static="1"/>
-  <Variable id="_724" name="cpp_sym__IO_SHOWPOS" type="_116c" init="1024" context="_1" location="f1:84" file="f1" line="84" static="1"/>
+  <Variable id="_723" name="cpp_sym_MP4V2_PROJECT_version_hex" type="_116c" init="131072" context="_1" location="f1:108" file="f1" line="108" static="1"/>
+  <Variable id="_724" name="cpp_sym__IO_SHOWPOS" type="_116c" init="1024" context="_1" location="f1:85" file="f1" line="85" static="1"/>
   <Function id="_725" name="MP4CreateEx" returns="_646" context="_1" location="f15:122" file="f15" line="122" extern="1" attributes="visibility(default)">
     <Argument name="fileName" type="_992" location="f15:122" file="f15" line="122"/>
     <Argument name="flags" type="_401" location="f15:122" file="f15" line="122" default="0"/>
@@ -1956,7 +1956,7 @@
     <Argument name="compatibleBrands" type="_1037" location="f15:122" file="f15" line="122" default="0"/>
     <Argument name="compatibleBrandsCount" type="_401" location="f15:122" file="f15" line="122" default="0"/>
   </Function>
-  <Variable id="_726" name="cpp_sym__IO_SCIENTIFIC" type="_116c" init="2048" context="_1" location="f1:140" file="f1" line="140" static="1"/>
+  <Variable id="_726" name="cpp_sym__IO_SCIENTIFIC" type="_116c" init="2048" context="_1" location="f1:141" file="f1" line="141" static="1"/>
   <Function id="_727" name="MP4SetSceneProfileLevel" returns="_996" context="_1" location="f12:124" file="f12" line="124" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f12:124" file="f12" line="124"/>
     <Argument name="value" type="_792" location="f12:124" file="f12" line="124"/>
@@ -1978,7 +1978,7 @@
     <Argument type="_999" location="f7:229" file="f7" line="229"/>
     <Argument type="_992" location="f7:229" file="f7" line="229"/>
   </Function>
-  <Variable id="_733" name="cpp_sym_P_tmpdir" type="_992" init="(const char*)&quot;/tmp&quot;" context="_1" location="f1:38" file="f1" line="38"/>
+  <Variable id="_733" name="cpp_sym_P_tmpdir" type="_992" init="(const char*)&quot;/tmp&quot;" context="_1" location="f1:39" file="f1" line="39"/>
   <Function id="_734" name="MP4GetTrackEditDuration" returns="_562" context="_1" location="f14:324" file="f14" line="324" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f14:324" file="f14" line="324"/>
     <Argument name="trackId" type="_743" location="f14:324" file="f14" line="324"/>
@@ -2016,9 +2016,9 @@
     <Argument name="hFile" type="_646" location="f9:55" file="f9" line="55"/>
     <Argument name="type" type="_992" location="f9:55" file="f9" line="55"/>
   </Function>
-  <Variable id="_739" name="cpp_sym__SVID_SOURCE" type="_116c" init="1" context="_1" location="f1:104" file="f1" line="104" static="1"/>
-  <Variable id="_740" name="cpp_sym_MPEG4_AST_L1" type="_116c" init="209" context="_1" location="f1:189" file="f1" line="189" static="1"/>
-  <Variable id="_741" name="cpp_sym_MPEG4_AST_L2" type="_116c" init="210" context="_1" location="f1:300" file="f1" line="300" static="1"/>
+  <Variable id="_739" name="cpp_sym__SVID_SOURCE" type="_116c" init="1" context="_1" location="f1:105" file="f1" line="105" static="1"/>
+  <Variable id="_740" name="cpp_sym_MPEG4_AST_L1" type="_116c" init="209" context="_1" location="f1:190" file="f1" line="190" static="1"/>
+  <Variable id="_741" name="cpp_sym_MPEG4_AST_L2" type="_116c" init="210" context="_1" location="f1:301" file="f1" line="301" static="1"/>
   <Function id="_742" name="__builtin_inff" returns="_994" context="_1" location="f0:19" file="f0" line="19" extern="1" attributes="nothrow const"/>
   <Typedef id="_743" name="MP4TrackId" type="_401" context="_1" location="f14:13" file="f14" line="13"/>
   <Function id="_744" name="__builtin_infl" returns="_995" context="_1" location="f0:20" file="f0" line="20" extern="1" attributes="nothrow const"/>
@@ -2069,7 +2069,7 @@
     <Argument name="deleteIodsAtom" type="_996" location="f14:271" file="f14" line="271" default="true"/>
   </Function>
   <Typedef id="_755" name="MP4ItmfDataList" type="_514" context="_1" location="f16:114" file="f16" line="114"/>
-  <Variable id="_756" name="cpp_sym_MP4_INVALID_FILE_HANDLE" type="_1095" init="(const void*)0u" context="_1" location="f1:34" file="f1" line="34"/>
+  <Variable id="_756" name="cpp_sym_MP4_INVALID_FILE_HANDLE" type="_1095" init="(const void*)0u" context="_1" location="f1:35" file="f1" line="35"/>
   <Function id="_757" name="MP4GetSampleDuration" returns="_562" context="_1" location="f5:476" file="f5" line="476" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f5:476" file="f5" line="476"/>
     <Argument name="trackId" type="_743" location="f5:476" file="f5" line="476"/>
@@ -2098,7 +2098,7 @@
     <Argument type="_991" location="f0:39" file="f0" line="39"/>
   </Function>
   <Typedef id="_763" name="uint_fast8_t" type="_663" context="_1" location="f4:104" file="f4" line="104"/>
-  <Variable id="_764" name="cpp_sym__G_IO_IO_FILE_VERSION" type="_116c" init="131073" context="_1" location="f1:291" file="f1" line="291" static="1"/>
+  <Variable id="_764" name="cpp_sym__G_IO_IO_FILE_VERSION" type="_116c" init="131073" context="_1" location="f1:150" file="f1" line="150" static="1"/>
   <Function id="_765" name="fopen" returns="_997" context="_1" location="f3:274" file="f3" line="274" extern="1">
     <Argument name="__filename" type="_992r" location="f3:274" file="f3" line="274"/>
     <Argument name="__modes" type="_992r" location="f3:274" file="f3" line="274"/>
@@ -2108,14 +2108,14 @@
     <Argument name="hFile" type="_646" location="f10:87" file="f10" line="87"/>
     <Argument name="trackId" type="_743" location="f10:87" file="f10" line="87"/>
   </Function>
-  <Variable id="_768" name="cpp_sym_MP4_HINT_TRACK_TYPE" type="_992" init="(const char*)&quot;hint&quot;" context="_1" location="f1:251" file="f1" line="251"/>
+  <Variable id="_768" name="cpp_sym_MP4_HINT_TRACK_TYPE" type="_992" init="(const char*)&quot;hint&quot;" context="_1" location="f1:252" file="f1" line="252"/>
   <Function id="_769" name="MP4AddH264PictureParameterSet" returns="_98" context="_1" location="f9:273" file="f9" line="273" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:273" file="f9" line="273"/>
     <Argument name="trackId" type="_743" location="f9:273" file="f9" line="273"/>
     <Argument name="pPict" type="_1041" location="f9:273" file="f9" line="273"/>
     <Argument name="pictLen" type="_747" location="f9:273" file="f9" line="273"/>
   </Function>
-  <Variable id="_770" name="cpp_sym__G_HAVE_PRINTF_FP" type="_116c" init="1" context="_1" location="f1:275" file="f1" line="275" static="1"/>
+  <Variable id="_770" name="cpp_sym__G_HAVE_PRINTF_FP" type="_116c" init="1" context="_1" location="f1:276" file="f1" line="276" static="1"/>
   <Function id="_771" name="MP4AddRtpPacket" returns="_996" context="_1" location="f8:132" file="f8" line="132" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f8:132" file="f8" line="132"/>
     <Argument name="hintTrackId" type="_743" location="f8:132" file="f8" line="132"/>
@@ -2143,7 +2143,7 @@
     <Argument name="trackId" type="_743" location="f9:285" file="f9" line="285"/>
     <Argument name="decoderVersion" type="_792" location="f9:285" file="f9" line="285"/>
   </Function>
-  <Variable id="_776" name="cpp_sym__IO_BOOLALPHA" type="_116c" init="65536" context="_1" location="f1:226" file="f1" line="226" static="1"/>
+  <Variable id="_776" name="cpp_sym__IO_BOOLALPHA" type="_116c" init="65536" context="_1" location="f1:227" file="f1" line="227" static="1"/>
   <Function id="_777" name="fprintf" returns="_116" context="_1" location="f3:358" file="f3" line="358" extern="1" attributes="nothrow nonnull() format(,,)">
     <Argument name="__stream" type="_997r" location="f3:358" file="f3" line="358"/>
     <Argument name="__format" type="_992r" location="f3:358" file="f3" line="358"/>
@@ -2156,7 +2156,7 @@
     <Argument type="_999" location="f7:243" file="f7" line="243"/>
     <Argument type="_992" location="f7:243" file="f7" line="243"/>
   </Function>
-  <Variable id="_780" name="cpp_sym___USE_MISC" type="_116c" init="1" context="_1" location="f1:170" file="f1" line="170" static="1"/>
+  <Variable id="_780" name="cpp_sym___USE_MISC" type="_116c" init="1" context="_1" location="f1:171" file="f1" line="171" static="1"/>
   <Typedef id="_781" name="uint_least16_t" type="_217" context="_1" location="f4:78" file="f4" line="78"/>
   <Function id="_782" name="MP4TagsSetCategory" returns="_996" context="_1" location="f7:270" file="f7" line="270" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:270" file="f7" line="270"/>
@@ -2166,14 +2166,14 @@
     <Argument name="hFile" type="_646" location="f16:187" file="f16" line="187"/>
     <Argument name="item" type="_1085" location="f16:187" file="f16" line="187"/>
   </Function>
-  <Variable id="_784" name="cpp_sym__IO_NO_READS" type="_116c" init="4" context="_1" location="f1:253" file="f1" line="253" static="1"/>
-  <Variable id="_785" name="cpp_sym___USE_UNIX98" type="_116c" init="1" context="_1" location="f1:166" file="f1" line="166" static="1"/>
-  <Variable id="_786" name="cpp_sym_MP4_CREATE_64BIT_TIME" type="_116c" init="2" context="_1" location="f1:128" file="f1" line="128" static="1"/>
+  <Variable id="_784" name="cpp_sym__IO_NO_READS" type="_116c" init="4" context="_1" location="f1:254" file="f1" line="254" static="1"/>
+  <Variable id="_785" name="cpp_sym___USE_UNIX98" type="_116c" init="1" context="_1" location="f1:167" file="f1" line="167" static="1"/>
+  <Variable id="_786" name="cpp_sym_MP4_CREATE_64BIT_TIME" type="_116c" init="2" context="_1" location="f1:129" file="f1" line="129" static="1"/>
   <Function id="_787" name="MP4TagsSetGenreID" returns="_996" context="_1" location="f7:283" file="f7" line="283" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:283" file="f7" line="283"/>
     <Argument type="_1000" location="f7:283" file="f7" line="283"/>
   </Function>
-  <Variable id="_788" name="cpp_sym_MP4V2_PROJECT_repo_root" type="_992" init="(const char*)&quot;https://mp4v2.googlecode.com/svn&quot;" context="_1" location="f1:27" file="f1" line="27"/>
+  <Variable id="_788" name="cpp_sym_MP4V2_PROJECT_repo_root" type="_992" init="(const char*)&quot;https://mp4v2.googlecode.com/svn&quot;" context="_1" location="f1:28" file="f1" line="28"/>
   <Function id="_789" name="__builtin_ctz" returns="_116" context="_1" location="f0:96" file="f0" line="96" extern="1" attributes="nothrow const">
     <Argument type="_116" location="f0:96" file="f0" line="96"/>
   </Function>
@@ -2187,12 +2187,12 @@
   <Function id="_793" name="__builtin_isnan" returns="_996" context="_1" mangled="isnan" location="f0:144" file="f0" line="144" extern="1" attributes="nothrow const">
     <Ellipsis/>
   </Function>
-  <Variable id="_794" name="cpp_sym__G_HAVE_IO_FILE_OPEN" type="_116c" init="1" context="_1" location="f1:79" file="f1" line="79" static="1"/>
-  <Variable id="_795" name="cpp_sym_MP4_IPMP_TRACK_TYPE" type="_992" init="(const char*)&quot;ipsm&quot;" context="_1" location="f1:95" file="f1" line="95"/>
-  <Variable id="_796" name="cpp_sym_MP4_MPEG4_WAVETABLE_AUDIO_TYPE" type="_116c" init="14" context="_1" location="f1:41" file="f1" line="41" static="1"/>
+  <Variable id="_794" name="cpp_sym__G_HAVE_IO_FILE_OPEN" type="_116c" init="1" context="_1" location="f1:80" file="f1" line="80" static="1"/>
+  <Variable id="_795" name="cpp_sym_MP4_IPMP_TRACK_TYPE" type="_992" init="(const char*)&quot;ipsm&quot;" context="_1" location="f1:96" file="f1" line="96"/>
+  <Variable id="_796" name="cpp_sym_MP4_MPEG4_WAVETABLE_AUDIO_TYPE" type="_116c" init="14" context="_1" location="f1:42" file="f1" line="42" static="1"/>
   <Typedef id="_797" name="intmax_t" type="_123" context="_1" location="f4:139" file="f4" line="139"/>
-  <Variable id="_798" name="cpp_sym__IOS_ATEND" type="_116c" init="4" context="_1" location="f1:271" file="f1" line="271" static="1"/>
-  <Variable id="_799" name="cpp_sym_MP4_SCENE_TRACK_TYPE" type="_992" init="(const char*)&quot;sdsm&quot;" context="_1" location="f1:240" file="f1" line="240"/>
+  <Variable id="_798" name="cpp_sym__IOS_ATEND" type="_116c" init="4" context="_1" location="f1:272" file="f1" line="272" static="1"/>
+  <Variable id="_799" name="cpp_sym_MP4_SCENE_TRACK_TYPE" type="_992" init="(const char*)&quot;sdsm&quot;" context="_1" location="f1:241" file="f1" line="241"/>
   <Function id="_800" name="dprintf" returns="_116" context="_1" location="f3:422" file="f3" line="422" extern="1" attributes="__format__(,,)">
     <Argument name="__fd" type="_116" location="f3:422" file="f3" line="422"/>
     <Argument name="__fmt" type="_992r" location="f3:422" file="f3" line="422"/>
@@ -2207,7 +2207,7 @@
   <Typedef id="_802" name="__timer_t" type="_645" context="_1" location="f2:161" file="f2" line="161"/>
   <Variable id="_803" name="stdout" type="_1019" context="_1" location="f3:170" file="f3" line="170" extern="1"/>
   <Typedef id="_804" name="__off64_t" type="_825" context="_1" location="f2:142" file="f2" line="142"/>
-  <Variable id="_805" name="cpp_sym_MP4_INVALID_TIMESTAMP" type="_22c" init="0xffffffffffffffffu" context="_1" location="f1:62" file="f1" line="62" static="1"/>
+  <Variable id="_805" name="cpp_sym_MP4_INVALID_TIMESTAMP" type="_22c" init="0xffffffffffffffffu" context="_1" location="f1:63" file="f1" line="63" static="1"/>
   <Typedef id="_806" name="_G_uint32_t" type="_17" context="_1" location="f17:56" file="f17" line="56"/>
   <Function id="_807" name="fread" returns="_654" context="_1" location="f3:707" file="f3" line="707" extern="1">
     <Argument name="__ptr" type="_645r" location="f3:707" file="f3" line="707"/>
@@ -2231,12 +2231,12 @@
   <Function id="_812" name="__builtin_csqrtf" returns="_1001" context="_1" mangled="csqrtf" location="f0:120" file="f0" line="120" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1001" location="f0:120" file="f0" line="120"/>
   </Function>
-  <Variable id="_813" name="cpp_sym__G_NEED_STDARG_H" type="_116c" init="1" context="_1" location="f1:272" file="f1" line="272" static="1"/>
+  <Variable id="_813" name="cpp_sym__G_NEED_STDARG_H" type="_116c" init="1" context="_1" location="f1:273" file="f1" line="273" static="1"/>
   <Function id="_814" name="__builtin_csqrtl" returns="_1002" context="_1" mangled="csqrtl" location="f0:122" file="f0" line="122" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1002" location="f0:122" file="f0" line="122"/>
   </Function>
-  <Variable id="_815" name="cpp_sym___mbstate_t_defined" type="_116c" init="1" context="_1" location="f1:290" file="f1" line="290" static="1"/>
-  <Variable id="_816" name="cpp_sym_MP4V2_CHAPTER_TITLE_MAX" type="_116c" init="1023" context="_1" location="f1:111" file="f1" line="111" static="1"/>
+  <Variable id="_815" name="cpp_sym___mbstate_t_defined" type="_116c" init="1" context="_1" location="f1:291" file="f1" line="291" static="1"/>
+  <Variable id="_816" name="cpp_sym_MP4V2_CHAPTER_TITLE_MAX" type="_116c" init="1023" context="_1" location="f1:112" file="f1" line="112" static="1"/>
   <Function id="_817" name="_IO_seekpos" returns="_804" context="_1" location="f13:500" file="f13" line="500" extern="1">
     <Argument type="_1019" location="f13:500" file="f13" line="500"/>
     <Argument type="_804" location="f13:500" file="f13" line="500"/>
@@ -2251,7 +2251,7 @@
     <Argument name="hFile" type="_646" location="f12:138" file="f12" line="138"/>
     <Argument name="value" type="_792" location="f12:138" file="f12" line="138"/>
   </Function>
-  <Variable id="_820" name="cpp_sym___USE_POSIX199309" type="_116c" init="1" context="_1" location="f1:203" file="f1" line="203" static="1"/>
+  <Variable id="_820" name="cpp_sym___USE_POSIX199309" type="_116c" init="1" context="_1" location="f1:204" file="f1" line="204" static="1"/>
   <Function id="_821" name="fgets_unlocked" returns="_285" context="_1" location="f3:647" file="f3" line="647" extern="1">
     <Argument name="__s" type="_285r" location="f3:647" file="f3" line="647"/>
     <Argument name="__n" type="_116" location="f3:647" file="f3" line="647"/>
@@ -2295,7 +2295,7 @@
     <Argument type="_999" location="f7:278" file="f7" line="278"/>
     <Argument type="_1041" location="f7:278" file="f7" line="278"/>
   </Function>
-  <Variable id="_834" name="cpp_sym__IO_SHOWBASE" type="_116c" init="128" context="_1" location="f1:102" file="f1" line="102" static="1"/>
+  <Variable id="_834" name="cpp_sym__IO_SHOWBASE" type="_116c" init="128" context="_1" location="f1:103" file="f1" line="103" static="1"/>
   <Function id="_835" name="feof_unlocked" returns="_116" throw="" context="_1" location="f6:126" file="f6" line="126" endline="126" inline="1" attributes="__gnu_inline__">
     <Argument name="__stream" type="_997" location="f6:126" file="f6" line="126"/>
   </Function>
@@ -2306,9 +2306,9 @@
   <Function id="_837" name="MP4GetODProfileLevel" returns="_792" context="_1" location="f12:115" file="f12" line="115" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f12:115" file="f12" line="115"/>
   </Function>
-  <Variable id="_838" name="cpp_sym__BITS_WCHAR_H" type="_116c" init="1" context="_1" location="f1:96" file="f1" line="96" static="1"/>
-  <Variable id="_839" name="cpp_sym__XOPEN_SOURCE" type="_116c" init="700" context="_1" location="f1:267" file="f1" line="267" static="1"/>
-  <Variable id="_840" name="cpp_sym___WCHAR_MIN" type="_70c" init="-0x080000000l" context="_1" location="f1:250" file="f1" line="250" static="1"/>
+  <Variable id="_838" name="cpp_sym__BITS_WCHAR_H" type="_116c" init="1" context="_1" location="f1:97" file="f1" line="97" static="1"/>
+  <Variable id="_839" name="cpp_sym__XOPEN_SOURCE" type="_116c" init="700" context="_1" location="f1:268" file="f1" line="268" static="1"/>
+  <Variable id="_840" name="cpp_sym___WCHAR_MIN" type="_70c" init="-0x080000000l" context="_1" location="f1:251" file="f1" line="251" static="1"/>
   <Typedef id="_841" name="MP4Tags" type="_655" context="_1" location="f7:160" file="f7" line="160"/>
   <Function id="_842" name="MP4TagsSetName" returns="_996" context="_1" location="f7:227" file="f7" line="227" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:227" file="f7" line="227"/>
@@ -2321,14 +2321,14 @@
     <Argument name="hFile" type="_646" location="f12:112" file="f12" line="112"/>
     <Argument name="value" type="_401" location="f12:112" file="f12" line="112"/>
   </Function>
-  <Variable id="_847" name="cpp_sym___WORDSIZE" type="_116c" init="32" context="_1" location="f1:257" file="f1" line="257" static="1"/>
+  <Variable id="_847" name="cpp_sym___WORDSIZE" type="_116c" init="32" context="_1" location="f1:258" file="f1" line="258" static="1"/>
   <Function id="_848" name="__builtin_ccosf" returns="_1001" context="_1" mangled="ccosf" location="f0:102" file="f0" line="102" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1001" location="f0:102" file="f0" line="102"/>
   </Function>
   <Function id="_849" name="__builtin_ccosh" returns="_1039" context="_1" mangled="ccosh" location="f0:106" file="f0" line="106" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1039" location="f0:106" file="f0" line="106"/>
   </Function>
-  <Variable id="_850" name="cpp_sym_MP4_VIDEO_TRACK_TYPE" type="_992" init="(const char*)&quot;vide&quot;" context="_1" location="f1:279" file="f1" line="279"/>
+  <Variable id="_850" name="cpp_sym_MP4_VIDEO_TRACK_TYPE" type="_992" init="(const char*)&quot;vide&quot;" context="_1" location="f1:280" file="f1" line="280"/>
   <Function id="_851" name="__builtin_ccosl" returns="_1002" context="_1" mangled="ccosl" location="f0:104" file="f0" line="104" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1002" location="f0:104" file="f0" line="104"/>
   </Function>
@@ -2346,13 +2346,13 @@
     <Argument name="__format" type="_992r" location="f3:373" file="f3" line="373"/>
     <Argument name="__arg" type="_674" location="f3:373" file="f3" line="373"/>
   </Function>
-  <Variable id="_856" name="cpp_sym___USE_ANSI" type="_116c" init="1" context="_1" location="f1:168" file="f1" line="168" static="1"/>
+  <Variable id="_856" name="cpp_sym___USE_ANSI" type="_116c" init="1" context="_1" location="f1:169" file="f1" line="169" static="1"/>
   <Function id="_857" name="MP4SetTrackDurationPerChunk" returns="_996" context="_1" location="f9:436" file="f9" line="436" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:436" file="f9" line="436"/>
     <Argument name="trackId" type="_743" location="f9:436" file="f9" line="436"/>
     <Argument name="duration" type="_562" location="f9:436" file="f9" line="436"/>
   </Function>
-  <Variable id="_858" name="cpp_sym__IO_FLAGS2_MMAP" type="_116c" init="1" context="_1" location="f1:52" file="f1" line="52" static="1"/>
+  <Variable id="_858" name="cpp_sym__IO_FLAGS2_MMAP" type="_116c" init="1" context="_1" location="f1:53" file="f1" line="53" static="1"/>
   <Function id="_859" name="MP4AddEncH264VideoTrack" returns="_743" context="_1" location="f11:57" file="f11" line="57" extern="1" attributes="visibility(default)">
     <Argument name="dstFile" type="_646" location="f11:57" file="f11" line="57"/>
     <Argument name="timeScale" type="_401" location="f11:57" file="f11" line="57"/>
@@ -2363,10 +2363,10 @@
     <Argument name="srcTrackId" type="_743" location="f11:57" file="f11" line="57"/>
     <Argument name="icPp" type="_1004" location="f11:57" file="f11" line="57"/>
   </Function>
-  <Variable id="_860" name="cpp_sym__IO_USER_LOCK" type="_116c" init="32768" context="_1" location="f1:9" file="f1" line="9" static="1"/>
-  <Variable id="_861" name="cpp_sym__IO_NO_WRITES" type="_116c" init="8" context="_1" location="f1:74" file="f1" line="74" static="1"/>
+  <Variable id="_860" name="cpp_sym__IO_USER_LOCK" type="_116c" init="32768" context="_1" location="f1:10" file="f1" line="10" static="1"/>
+  <Variable id="_861" name="cpp_sym__IO_NO_WRITES" type="_116c" init="8" context="_1" location="f1:75" file="f1" line="75" static="1"/>
   <Typedef id="_862" name="MP4SampleDependencyType" type="_745" context="_1" location="f5:25" file="f5" line="25"/>
-  <Variable id="_863" name="cpp_sym__IO_DEC" type="_116c" init="16" context="_1" location="f1:160" file="f1" line="160" static="1"/>
+  <Variable id="_863" name="cpp_sym__IO_DEC" type="_116c" init="16" context="_1" location="f1:161" file="f1" line="161" static="1"/>
   <Function id="_864" name="MP4SetStringProperty" returns="_996" context="_1" location="f12:59" file="f12" line="59" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f12:59" file="f12" line="59"/>
     <Argument name="propName" type="_992" location="f12:59" file="f12" line="59"/>
@@ -2376,24 +2376,24 @@
     <Argument type="_999" location="f7:273" file="f7" line="273"/>
     <Argument type="_1041" location="f7:273" file="f7" line="273"/>
   </Function>
-  <Variable id="_866" name="cpp_sym__IO_CURRENTLY_PUTTING" type="_116c" init="2048" context="_1" location="f1:98" file="f1" line="98" static="1"/>
+  <Variable id="_866" name="cpp_sym__IO_CURRENTLY_PUTTING" type="_116c" init="2048" context="_1" location="f1:99" file="f1" line="99" static="1"/>
   <Function id="_867" name="_IO_getc" returns="_116" context="_1" location="f13:462" file="f13" line="462" extern="1">
     <Argument name="__fp" type="_1019" location="f13:462" file="f13" line="462"/>
   </Function>
-  <Variable id="_868" name="cpp_sym_MP4_MPEG2_AAC_SSR_AUDIO_TYPE" type="_116c" init="104" context="_1" location="f1:285" file="f1" line="285" static="1"/>
-  <Variable id="_869" name="cpp_sym__IO_OCT" type="_116c" init="32" context="_1" location="f1:178" file="f1" line="178" static="1"/>
-  <Variable id="_870" name="cpp_sym_MPEG4_MP_L2" type="_116c" init="50" context="_1" location="f1:108" file="f1" line="108" static="1"/>
-  <Variable id="_871" name="cpp_sym_MPEG4_MP_L3" type="_116c" init="51" context="_1" location="f1:57" file="f1" line="57" static="1"/>
-  <Variable id="_872" name="cpp_sym_MPEG4_MP_L4" type="_116c" init="52" context="_1" location="f1:115" file="f1" line="115" static="1"/>
-  <Variable id="_873" name="cpp_sym_SEEK_HOLE" type="_116c" init="4" context="_1" location="f1:237" file="f1" line="237" static="1"/>
-  <Variable id="_874" name="cpp_sym__IOS_TRUNC" type="_116c" init="16" context="_1" location="f1:181" file="f1" line="181" static="1"/>
+  <Variable id="_868" name="cpp_sym_MP4_MPEG2_AAC_SSR_AUDIO_TYPE" type="_116c" init="104" context="_1" location="f1:286" file="f1" line="286" static="1"/>
+  <Variable id="_869" name="cpp_sym__IO_OCT" type="_116c" init="32" context="_1" location="f1:179" file="f1" line="179" static="1"/>
+  <Variable id="_870" name="cpp_sym_MPEG4_MP_L2" type="_116c" init="50" context="_1" location="f1:109" file="f1" line="109" static="1"/>
+  <Variable id="_871" name="cpp_sym_MPEG4_MP_L3" type="_116c" init="51" context="_1" location="f1:58" file="f1" line="58" static="1"/>
+  <Variable id="_872" name="cpp_sym_MPEG4_MP_L4" type="_116c" init="52" context="_1" location="f1:116" file="f1" line="116" static="1"/>
+  <Variable id="_873" name="cpp_sym_SEEK_HOLE" type="_116c" init="4" context="_1" location="f1:238" file="f1" line="238" static="1"/>
+  <Variable id="_874" name="cpp_sym__IOS_TRUNC" type="_116c" init="16" context="_1" location="f1:182" file="f1" line="182" static="1"/>
   <Function id="_875" name="__builtin_ctanhf" returns="_1001" context="_1" mangled="ctanhf" location="f0:126" file="f0" line="126" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1001" location="f0:126" file="f0" line="126"/>
   </Function>
   <Function id="_876" name="__builtin_ctanhl" returns="_1002" context="_1" mangled="ctanhl" location="f0:128" file="f0" line="128" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1002" location="f0:128" file="f0" line="128"/>
   </Function>
-  <Variable id="_877" name="cpp_sym_MP4_MPEG2_SIMPLE_VIDEO_TYPE" type="_116c" init="96" context="_1" location="f1:118" file="f1" line="118" static="1"/>
+  <Variable id="_877" name="cpp_sym_MP4_MPEG2_SIMPLE_VIDEO_TYPE" type="_116c" init="96" context="_1" location="f1:119" file="f1" line="119" static="1"/>
   <Function id="_878" name="vdprintf" returns="_116" context="_1" location="f3:420" file="f3" line="420" extern="1" attributes="__format__(,,)">
     <Argument name="__fd" type="_116" location="f3:420" file="f3" line="420"/>
     <Argument name="__fmt" type="_992r" location="f3:420" file="f3" line="420"/>
@@ -2419,10 +2419,10 @@
     <EnumValue name="__codecvt_error" init="2"/>
     <EnumValue name="__codecvt_noconv" init="3"/>
   </Enumeration>
-  <Variable id="_883" name="cpp_sym__LARGEFILE64_SOURCE" type="_116c" init="1" context="_1" location="f1:265" file="f1" line="265" static="1"/>
-  <Variable id="_884" name="cpp_sym__ISOC95_SOURCE" type="_116c" init="1" context="_1" location="f1:68" file="f1" line="68" static="1"/>
-  <Variable id="_885" name="cpp_sym___USE_ATFILE" type="_116c" init="1" context="_1" location="f1:56" file="f1" line="56" static="1"/>
-  <Variable id="_886" name="cpp_sym__IOS_APPEND" type="_116c" init="8" context="_1" location="f1:48" file="f1" line="48" static="1"/>
+  <Variable id="_883" name="cpp_sym__LARGEFILE64_SOURCE" type="_116c" init="1" context="_1" location="f1:266" file="f1" line="266" static="1"/>
+  <Variable id="_884" name="cpp_sym__ISOC95_SOURCE" type="_116c" init="1" context="_1" location="f1:69" file="f1" line="69" static="1"/>
+  <Variable id="_885" name="cpp_sym___USE_ATFILE" type="_116c" init="1" context="_1" location="f1:57" file="f1" line="57" static="1"/>
+  <Variable id="_886" name="cpp_sym__IOS_APPEND" type="_116c" init="8" context="_1" location="f1:49" file="f1" line="49" static="1"/>
   <Function id="_887" name="__builtin_ceilf" returns="_994" context="_1" mangled="ceilf" location="f0:37" file="f0" line="37" extern="1" attributes="nothrow const">
     <Argument type="_994" location="f0:37" file="f0" line="37"/>
   </Function>
@@ -2436,7 +2436,7 @@
     <Argument name="hFile" type="_646" location="f14:293" file="f14" line="293"/>
     <Argument name="trackId" type="_743" location="f14:293" file="f14" line="293"/>
   </Function>
-  <Variable id="_893" name="cpp_sym_MPEG4_ACEP_L3" type="_116c" init="179" context="_1" location="f1:73" file="f1" line="73" static="1"/>
+  <Variable id="_893" name="cpp_sym_MPEG4_ACEP_L3" type="_116c" init="179" context="_1" location="f1:74" file="f1" line="74" static="1"/>
   <Function id="_894" name="MP4GetSampleRenderingOffset" returns="_562" context="_1" location="f5:510" file="f5" line="510" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f5:510" file="f5" line="510"/>
     <Argument name="trackId" type="_743" location="f5:510" file="f5" line="510"/>
@@ -2448,8 +2448,8 @@
     <Argument name="ppConfig" type="_1021" location="f10:200" file="f10" line="200"/>
     <Argument name="pConfigSize" type="_1022" location="f10:200" file="f10" line="200"/>
   </Function>
-  <Variable id="_896" name="cpp_sym_MP4_MPEG4_MAIN_SYNTHETIC_AUDIO_TYPE" type="_116c" init="13" context="_1" location="f1:243" file="f1" line="243" static="1"/>
-  <Variable id="_897" name="cpp_sym_MP4_PRIVATE_VIDEO_TYPE" type="_116c" init="208" context="_1" location="f1:82" file="f1" line="82" static="1"/>
+  <Variable id="_896" name="cpp_sym_MP4_MPEG4_MAIN_SYNTHETIC_AUDIO_TYPE" type="_116c" init="13" context="_1" location="f1:244" file="f1" line="244" static="1"/>
+  <Variable id="_897" name="cpp_sym_MP4_PRIVATE_VIDEO_TYPE" type="_116c" init="208" context="_1" location="f1:83" file="f1" line="83" static="1"/>
   <Typedef id="_898" name="__u_quad_t" type="_22" context="_1" location="f2:57" file="f2" line="57"/>
   <Function id="_899" name="__builtin_csinf" returns="_1001" context="_1" mangled="csinf" location="f0:114" file="f0" line="114" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1001" location="f0:114" file="f0" line="114"/>
@@ -2472,19 +2472,19 @@
     <Argument name="dstSampleDuration" type="_562" location="f5:362" file="f5" line="362" default="0xffffffffffffffffu"/>
   </Function>
   <Struct id="_904" name="_IO_FILE_plus" context="_1" incomplete="1" mangled="13_IO_FILE_plus" demangled="_IO_FILE_plus" location="f13:346" file="f13" line="346" artificial="1" align="8"/>
-  <Variable id="_905" name="cpp_sym_MP4_MPEG4_LAYER2_AUDIO_TYPE" type="_116c" init="33" context="_1" location="f1:120" file="f1" line="120" static="1"/>
+  <Variable id="_905" name="cpp_sym_MP4_MPEG4_LAYER2_AUDIO_TYPE" type="_116c" init="33" context="_1" location="f1:121" file="f1" line="121" static="1"/>
   <Typedef id="_906" name="__rlim_t" type="_371" context="_1" location="f2:146" file="f2" line="146"/>
   <Function id="_907" name="rewind" returns="_98" context="_1" location="f3:756" file="f3" line="756" extern="1">
     <Argument name="__stream" type="_997" location="f3:756" file="f3" line="756"/>
   </Function>
-  <Variable id="_908" name="cpp_sym_MP4_INVALID_VIDEO_TYPE" type="_116c" init="0" context="_1" location="f1:244" file="f1" line="244" static="1"/>
+  <Variable id="_908" name="cpp_sym_MP4_INVALID_VIDEO_TYPE" type="_116c" init="0" context="_1" location="f1:245" file="f1" line="245" static="1"/>
   <Function id="_909" name="MP4SetChapters" returns="_498" context="_1" location="f18:172" file="f18" line="172" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f18:172" file="f18" line="172"/>
     <Argument name="chapterList" type="_1259" location="f18:172" file="f18" line="172"/>
     <Argument name="chapterCount" type="_401" location="f18:172" file="f18" line="172"/>
     <Argument name="chapterType" type="_498" location="f18:172" file="f18" line="172" default="MP4ChapterTypeQt"/>
   </Function>
-  <Variable id="_910" name="cpp_sym__IOS_INPUT" type="_116c" init="1" context="_1" location="f1:228" file="f1" line="228" static="1"/>
+  <Variable id="_910" name="cpp_sym__IOS_INPUT" type="_116c" init="1" context="_1" location="f1:229" file="f1" line="229" static="1"/>
   <Function id="_911" name="MP4AddPixelAspectRatio" returns="_743" context="_1" location="f9:358" file="f9" line="358" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:358" file="f9" line="358"/>
     <Argument name="refTrackId" type="_743" location="f9:358" file="f9" line="358"/>
@@ -2552,7 +2552,7 @@
     <Argument name="__stream" type="_997r" location="f3:817" file="f3" line="817"/>
     <Argument name="__pos" type="_1260r" location="f3:817" file="f3" line="817"/>
   </Function>
-  <Variable id="_929" name="cpp_sym_MP4_MPEG4_AAC_HE_AUDIO_TYPE" type="_116c" init="5" context="_1" location="f1:67" file="f1" line="67" static="1"/>
+  <Variable id="_929" name="cpp_sym_MP4_MPEG4_AAC_HE_AUDIO_TYPE" type="_116c" init="5" context="_1" location="f1:68" file="f1" line="68" static="1"/>
   <Function id="_930" name="MP4GetFloatProperty" returns="_996" context="_1" location="f12:28" file="f12" line="28" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f12:28" file="f12" line="28"/>
     <Argument name="propName" type="_992" location="f12:28" file="f12" line="28"/>
@@ -2563,7 +2563,7 @@
     <Argument name="duration" type="_562" location="f14:386" file="f14" line="386"/>
     <Argument name="timeScale" type="_401" location="f14:386" file="f14" line="386"/>
   </Function>
-  <Variable id="_932" name="cpp_sym_MP4V2_PROJECT_name_lower" type="_992" init="(const char*)&quot;mp4v2&quot;" context="_1" location="f1:196" file="f1" line="196"/>
+  <Variable id="_932" name="cpp_sym_MP4V2_PROJECT_name_lower" type="_992" init="(const char*)&quot;mp4v2&quot;" context="_1" location="f1:197" file="f1" line="197"/>
   <Function id="_933" name="MP4TagsSetTVEpisodeID" returns="_996" context="_1" location="f7:244" file="f7" line="244" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:244" file="f7" line="244"/>
     <Argument type="_992" location="f7:244" file="f7" line="244"/>
@@ -2572,10 +2572,10 @@
     <Argument name="hFile" type="_646" location="f8:79" file="f8" line="79"/>
     <Argument name="hintTrackId" type="_743" location="f8:79" file="f8" line="79"/>
   </Function>
-  <Variable id="_935" name="cpp_sym_MP4_TEXT_TRACK_TYPE" type="_992" init="(const char*)&quot;text&quot;" context="_1" location="f1:175" file="f1" line="175"/>
-  <Variable id="_936" name="cpp_sym_MP4V2_PROJECT_repo_type" type="_992" init="(const char*)&quot;stable&quot;" context="_1" location="f1:21" file="f1" line="21"/>
+  <Variable id="_935" name="cpp_sym_MP4_TEXT_TRACK_TYPE" type="_992" init="(const char*)&quot;text&quot;" context="_1" location="f1:176" file="f1" line="176"/>
+  <Variable id="_936" name="cpp_sym_MP4V2_PROJECT_repo_type" type="_992" init="(const char*)&quot;stable&quot;" context="_1" location="f1:22" file="f1" line="22"/>
   <Typedef id="_937" name="MP4TagArtwork" type="_136" context="_1" location="f7:72" file="f7" line="72"/>
-  <Variable id="_938" name="cpp_sym_MP4_MPEG4_CELP_AUDIO_TYPE" type="_116c" init="8" context="_1" location="f1:152" file="f1" line="152" static="1"/>
+  <Variable id="_938" name="cpp_sym_MP4_MPEG4_CELP_AUDIO_TYPE" type="_116c" init="8" context="_1" location="f1:153" file="f1" line="153" static="1"/>
   <Function id="_939" name="MP4SetTrackEditMediaStart" returns="_996" context="_1" location="f14:318" file="f14" line="318" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f14:318" file="f14" line="318"/>
     <Argument name="trackId" type="_743" location="f14:318" file="f14" line="318"/>
@@ -2586,26 +2586,26 @@
     <Argument name="__format" type="_992r" location="f3:486" file="f3" line="486"/>
     <Argument name="__arg" type="_674" location="f3:486" file="f3" line="486"/>
   </Function>
-  <Variable id="_941" name="cpp_sym___USE_FORTIFY_LEVEL" type="_116c" init="0" context="_1" location="f1:192" file="f1" line="192" static="1"/>
-  <Variable id="_942" name="cpp_sym_MP4_INVALID_SAMPLE_ID" type="_17c" init="0u" context="_1" location="f1:205" file="f1" line="205" static="1"/>
-  <Variable id="_943" name="cpp_sym__BITS_TYPES_H" type="_116c" init="1" context="_1" location="f1:231" file="f1" line="231" static="1"/>
-  <Variable id="_944" name="cpp_sym_MP4V2_PROJECT_repo_url" type="_992" init="(const char*)&quot;https://mp4v2.googlecode.com/svn/releases/2.0.0&quot;" context="_1" location="f1:76" file="f1" line="76"/>
+  <Variable id="_941" name="cpp_sym___USE_FORTIFY_LEVEL" type="_116c" init="0" context="_1" location="f1:193" file="f1" line="193" static="1"/>
+  <Variable id="_942" name="cpp_sym_MP4_INVALID_SAMPLE_ID" type="_17c" init="0u" context="_1" location="f1:206" file="f1" line="206" static="1"/>
+  <Variable id="_943" name="cpp_sym__BITS_TYPES_H" type="_116c" init="1" context="_1" location="f1:232" file="f1" line="232" static="1"/>
+  <Variable id="_944" name="cpp_sym_MP4V2_PROJECT_repo_url" type="_992" init="(const char*)&quot;https://mp4v2.googlecode.com/svn/releases/2.0.0&quot;" context="_1" location="f1:77" file="f1" line="77"/>
   <Function id="_945" name="__builtin_isgreater" returns="_996" context="_1" location="f0:137" file="f0" line="137" extern="1" attributes="nothrow const">
     <Ellipsis/>
   </Function>
-  <Variable id="_946" name="cpp_sym_MP4_OCI_TRACK_TYPE" type="_992" init="(const char*)&quot;ocsm&quot;" context="_1" location="f1:46" file="f1" line="46"/>
-  <Variable id="_947" name="cpp_sym_MP4_ULAW_AUDIO_TYPE" type="_116c" init="228" context="_1" location="f1:249" file="f1" line="249" static="1"/>
+  <Variable id="_946" name="cpp_sym_MP4_OCI_TRACK_TYPE" type="_992" init="(const char*)&quot;ocsm&quot;" context="_1" location="f1:47" file="f1" line="47"/>
+  <Variable id="_947" name="cpp_sym_MP4_ULAW_AUDIO_TYPE" type="_116c" init="228" context="_1" location="f1:250" file="f1" line="250" static="1"/>
   <Typedef id="_948" name="__blksize_t" type="_70" context="_1" location="f2:164" file="f2" line="164"/>
   <Function id="_949" name="fgetc" returns="_116" context="_1" location="f3:537" file="f3" line="537" extern="1">
     <Argument name="__stream" type="_997" location="f3:537" file="f3" line="537"/>
   </Function>
-  <Variable id="_950" name="cpp_sym__IO_IS_APPENDING" type="_116c" init="4096" context="_1" location="f1:172" file="f1" line="172" static="1"/>
+  <Variable id="_950" name="cpp_sym__IO_IS_APPENDING" type="_116c" init="4096" context="_1" location="f1:173" file="f1" line="173" static="1"/>
   <Function id="_951" name="fgets" returns="_285" context="_1" location="f3:628" file="f3" line="628" extern="1">
     <Argument name="__s" type="_285r" location="f3:628" file="f3" line="628"/>
     <Argument name="__n" type="_116" location="f3:628" file="f3" line="628"/>
     <Argument name="__stream" type="_997r" location="f3:628" file="f3" line="628"/>
   </Function>
-  <Variable id="_952" name="cpp_sym__IO_UNIFIED_JUMPTABLES" type="_116c" init="1" context="_1" location="f1:211" file="f1" line="211" static="1"/>
+  <Variable id="_952" name="cpp_sym__IO_UNIFIED_JUMPTABLES" type="_116c" init="1" context="_1" location="f1:212" file="f1" line="212" static="1"/>
   <Function id="_953" name="MP4SetTrackEditDwell" returns="_996" context="_1" location="f14:344" file="f14" line="344" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f14:344" file="f14" line="344"/>
     <Argument name="trackId" type="_743" location="f14:344" file="f14" line="344"/>
@@ -2613,12 +2613,12 @@
     <Argument name="dwell" type="_996" location="f14:344" file="f14" line="344"/>
   </Function>
   <Typedef id="_954" name="uint_least8_t" type="_663" context="_1" location="f4:77" file="f4" line="77"/>
-  <Variable id="_955" name="cpp_sym__IOS_NOREPLACE" type="_116c" init="64" context="_1" location="f1:150" file="f1" line="150" static="1"/>
+  <Variable id="_955" name="cpp_sym__IOS_NOREPLACE" type="_116c" init="64" context="_1" location="f1:151" file="f1" line="151" static="1"/>
   <Function id="_956" name="MP4TagsSetTVShow" returns="_996" context="_1" location="f7:242" file="f7" line="242" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:242" file="f7" line="242"/>
     <Argument type="_992" location="f7:242" file="f7" line="242"/>
   </Function>
-  <Variable id="_957" name="cpp_sym_MP4V2_PROJECT_version_point" type="_116c" init="0" context="_1" location="f1:154" file="f1" line="154" static="1"/>
+  <Variable id="_957" name="cpp_sym_MP4V2_PROJECT_version_point" type="_116c" init="0" context="_1" location="f1:155" file="f1" line="155" static="1"/>
   <Function id="_958" name="MP4AddTextTrack" returns="_743" context="_1" location="f9:337" file="f9" line="337" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:337" file="f9" line="337"/>
     <Argument name="refTrackId" type="_743" location="f9:337" file="f9" line="337"/>
@@ -2630,15 +2630,15 @@
     <Argument name="duration" type="_562" location="f14:424" file="f14" line="424"/>
     <Argument name="timeScale" type="_401" location="f14:424" file="f14" line="424"/>
   </Function>
-  <Variable id="_961" name="cpp_sym___GNU_LIBRARY__" type="_116c" init="6" context="_1" location="f1:69" file="f1" line="69" static="1"/>
-  <Variable id="_962" name="cpp_sym__G_NAMES_HAVE_UNDERSCORE" type="_116c" init="0" context="_1" location="f1:89" file="f1" line="89" static="1"/>
+  <Variable id="_961" name="cpp_sym___GNU_LIBRARY__" type="_116c" init="6" context="_1" location="f1:70" file="f1" line="70" static="1"/>
+  <Variable id="_962" name="cpp_sym__G_NAMES_HAVE_UNDERSCORE" type="_116c" init="0" context="_1" location="f1:90" file="f1" line="90" static="1"/>
   <Function id="_963" name="MP4AddRtpImmediateData" returns="_996" context="_1" location="f8:139" file="f8" line="139" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f8:139" file="f8" line="139"/>
     <Argument name="hintTrackId" type="_743" location="f8:139" file="f8" line="139"/>
     <Argument name="pBytes" type="_1041" location="f8:139" file="f8" line="139"/>
     <Argument name="numBytes" type="_401" location="f8:139" file="f8" line="139"/>
   </Function>
-  <Variable id="_964" name="cpp_sym_MPEG4_CP_L1" type="_116c" init="33" context="_1" location="f1:218" file="f1" line="218" static="1"/>
+  <Variable id="_964" name="cpp_sym_MPEG4_CP_L1" type="_116c" init="33" context="_1" location="f1:219" file="f1" line="219" static="1"/>
   <Function id="_965" name="__builtin_sinf" returns="_994" context="_1" mangled="sinf" location="f0:76" file="f0" line="76" extern="1" attributes="nothrow pure no vops">
     <Argument type="_994" location="f0:76" file="f0" line="76"/>
   </Function>
@@ -2649,12 +2649,12 @@
   <Function id="_968" name="__builtin_sinl" returns="_995" context="_1" mangled="sinl" location="f0:80" file="f0" line="80" extern="1" attributes="nothrow pure no vops">
     <Argument type="_995" location="f0:80" file="f0" line="80"/>
   </Function>
-  <Variable id="_969" name="cpp_sym_MP4V2_PROJECT_repo_date" type="_992" init="(const char*)&quot;2012-05-20 15:16:54 -0700 (Sun, 20 May 2012)&quot;" context="_1" location="f1:283" file="f1" line="283"/>
+  <Variable id="_969" name="cpp_sym_MP4V2_PROJECT_repo_date" type="_992" init="(const char*)&quot;2012-05-20 15:16:54 -0700 (Sun, 20 May 2012)&quot;" context="_1" location="f1:284" file="f1" line="284"/>
   <Function id="_970" name="MP4TagsSetXID" returns="_996" context="_1" location="f7:285" file="f7" line="285" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:285" file="f7" line="285"/>
     <Argument type="_992" location="f7:285" file="f7" line="285"/>
   </Function>
-  <Variable id="_971" name="cpp_sym_MP4V2_PROJECT_build" type="_992" init="(const char*)&quot;Mon May 21 22:18:19 UTC 2012&quot;" context="_1" location="f1:220" file="f1" line="220"/>
+  <Variable id="_971" name="cpp_sym_MP4V2_PROJECT_build" type="_992" init="(const char*)&quot;Mon May 21 22:18:19 UTC 2012&quot;" context="_1" location="f1:221" file="f1" line="221"/>
   <Function id="_972" name="MP4ReadSample" returns="_996" context="_1" location="f5:100" file="f5" line="100" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f5:100" file="f5" line="100"/>
     <Argument name="trackId" type="_743" location="f5:100" file="f5" line="100"/>
@@ -2670,8 +2670,8 @@
   <Function id="_974" name="__builtin_csin" returns="_1039" context="_1" mangled="csin" location="f0:115" file="f0" line="115" extern="1" attributes="nothrow pure no vops">
     <Argument type="_1039" location="f0:115" file="f0" line="115"/>
   </Function>
-  <Variable id="_975" name="cpp_sym_MPEG4_STP_L1" type="_116c" init="81" context="_1" location="f1:45" file="f1" line="45" static="1"/>
-  <Variable id="_976" name="cpp_sym_MPEG4_ASP_L3B" type="_116c" init="247" context="_1" location="f1:169" file="f1" line="169" static="1"/>
+  <Variable id="_975" name="cpp_sym_MPEG4_STP_L1" type="_116c" init="81" context="_1" location="f1:46" file="f1" line="46" static="1"/>
+  <Variable id="_976" name="cpp_sym_MPEG4_ASP_L3B" type="_116c" init="247" context="_1" location="f1:170" file="f1" line="170" static="1"/>
   <Typedef id="_977" name="__clock_t" type="_70" context="_1" location="f2:145" file="f2" line="145"/>
   <Function id="_978" name="MP4TagsSetITunesCountry" returns="_996" context="_1" location="f7:279" file="f7" line="279" extern="1" attributes="visibility(default)">
     <Argument type="_999" location="f7:279" file="f7" line="279"/>
@@ -2688,7 +2688,7 @@
     <Argument type="_674" location="f13:493" file="f13" line="493"/>
     <Argument type="_1107r" location="f13:493" file="f13" line="493"/>
   </Function>
-  <Variable id="_981" name="cpp_sym__POSIX_SOURCE" type="_116c" init="1" context="_1" location="f1:66" file="f1" line="66" static="1"/>
+  <Variable id="_981" name="cpp_sym__POSIX_SOURCE" type="_116c" init="1" context="_1" location="f1:67" file="f1" line="67" static="1"/>
   <Function id="_982" name="_IO_ftrylockfile" returns="_116" throw="" context="_1" location="f13:475" file="f13" line="475" extern="1">
     <Argument type="_1019" location="f13:475" file="f13" line="475"/>
   </Function>
@@ -2703,7 +2703,7 @@
     <Argument type="_999" location="f7:264" file="f7" line="264"/>
     <Argument type="_992" location="f7:264" file="f7" line="264"/>
   </Function>
-  <Variable id="_987" name="cpp_sym__IO_IN_BACKUP" type="_116c" init="256" context="_1" location="f1:149" file="f1" line="149" static="1"/>
+  <Variable id="_987" name="cpp_sym__IO_IN_BACKUP" type="_116c" init="256" context="_1" location="f1:292" file="f1" line="292" static="1"/>
   <Function id="_988" name="MP4AddHrefTrack" returns="_743" context="_1" location="f9:207" file="f9" line="207" extern="1" attributes="visibility(default)">
     <Argument name="hFile" type="_646" location="f9:207" file="f9" line="207"/>
     <Argument name="timeScale" type="_401" location="f9:207" file="f9" line="207"/>
@@ -3211,7 +3211,7 @@
   <CvQualifiedType id="_58c" type="_58" const="1"/>
   <PointerType id="_1362" type="_715" size="32" align="32"/>
   <File id="f0" name="/usr/share/gccxml-0.9/GCC/4.7/gccxml_builtins.h"/>
-  <File id="f1" name="/tmp/tmpxy1mPt.cpp"/>
+  <File id="f1" name="/tmp/tmpaHJ90V.cpp"/>
   <File id="f2" name="/usr/include/bits/types.h"/>
   <File id="f3" name="/usr/include/stdio.h"/>
   <File id="f4" name="/usr/include/stdint.h"/>
