@@ -211,7 +211,7 @@ class Mp4Handle(_mp4v2.MP4FileHandle):
         """
 
         if not self._closed:
-            _mp4v2.MP4Close(self)
+            _mp4v2.MP4Close(self, _mp4v2.MP4_CLOSE_DO_NOT_COMPUTE_BITRATE)
             _mp4v2.MP4TagsFree(self._tags)
 
             self._closed = True
