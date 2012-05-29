@@ -27,7 +27,7 @@ from ctypes.util import find_library
 
 mpg123lib_name = find_library('mpg123')
 if not mpg123lib_name:
-    raise Exception("libgme could not be found")
+    raise Exception("libmpg123 could not be found")
 
 _mpg123_lib = cdll.LoadLibrary(mpg123lib_name)
 

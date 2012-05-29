@@ -23,9 +23,18 @@
 """
 
 from ctypes import *
+from ctypes.util import find_library
+
+faadlib_name = find_library('faad')
+if not faadlib_name:
+    raise Exception("libfaad not be found")
+_faad_lib = cdll.LoadLibrary(faadlib_name)
 
 _libraries = {}
-_libraries['libfaad.so.2'] = CDLL('libfaad.so.2')
+_libraries['libfaad.so.2'] = _faad_lib
+
+# _libraries = {}
+# _libraries['libfaad.so.2'] = CDLL('libfaad.so.2')
 STRING = c_char_p
 
 
