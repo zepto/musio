@@ -27,7 +27,7 @@ from ctypes.util import find_library
 mp4lib_name = find_library('mp4v2')
 if not mp4lib_name:
     raise Exception("libmp4v2 not be found")
-_mp4_lib = cdll.LoadLibrary(dumblib_name)
+_mp4_lib = cdll.LoadLibrary(mp4lib_name)
 
 _libraries = {}
 _libraries['libmp4v2.so.1'] = _mp4_lib
