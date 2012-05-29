@@ -112,6 +112,7 @@ __pid_t = c_int
 _G_pid_t = __pid_t # alias
 _IO_pid_t = _G_pid_t # alias
 # def MP4_IS_AAC_AUDIO_TYPE(type): return (MP4_IS_MPEG2_AAC_AUDIO_TYPE(type) || (type) == MP4_MPEG4_AUDIO_TYPE) # macro
+def MP4_IS_AAC_AUDIO_TYPE(type): return (MP4_IS_MPEG2_AAC_AUDIO_TYPE(type) or (type) == MP4_MPEG4_AUDIO_TYPE) # macro
 def __bos0(ptr): return __builtin_object_size (ptr, 0) # macro
 # __KEY_T_TYPE = __S32_TYPE # alias
 # def __errordecl(name,msg): return extern void name (void) __attribute__((__error__ (msg))) # macro
@@ -213,6 +214,7 @@ MP4_SDT_HAS_NO_REDUNDANT_CODING = 2
 MP4_SDT_HAS_REDUNDANT_CODING = 1
 MP4_ITMF_BT_MI3P = 10
 # def MP4_IS_MPEG4_AAC_AUDIO_TYPE(mpeg4Type): return (((mpeg4Type) >= MP4_MPEG4_AAC_MAIN_AUDIO_TYPE && (mpeg4Type) <= MP4_MPEG4_AAC_HE_AUDIO_TYPE) || (mpeg4Type) == MP4_MPEG4_AAC_SCALABLE_AUDIO_TYPE || (mpeg4Type) == 17) # macro
+def MP4_IS_MPEG4_AAC_AUDIO_TYPE(mpeg4Type): return (((mpeg4Type) >= MP4_MPEG4_AAC_MAIN_AUDIO_TYPE and (mpeg4Type) <= MP4_MPEG4_AAC_HE_AUDIO_TYPE) or (mpeg4Type) == MP4_MPEG4_AAC_SCALABLE_AUDIO_TYPE or (mpeg4Type) == 17) # macro
 def __GNUC_PREREQ(maj,min): return ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min)) # macro
 # __NLINK_T_TYPE = __UWORD_TYPE # alias
 # def MP4_IS_OD_TRACK_TYPE(type): return (!strcasecmp(type, MP4_OD_TRACK_TYPE)) # macro
@@ -246,6 +248,7 @@ MP4_ART_JPEG = 3
 __INO64_T_TYPE = __UQUAD_TYPE # alias
 # __INO_T_TYPE = __ULONGWORD_TYPE # alias
 # def MP4_IS_MPEG2_AAC_AUDIO_TYPE(type): return (((type) >= MP4_MPEG2_AAC_MAIN_AUDIO_TYPE && (type) <= MP4_MPEG2_AAC_SSR_AUDIO_TYPE)) # macro
+def MP4_IS_MPEG2_AAC_AUDIO_TYPE(type): return (((type) >= MP4_MPEG2_AAC_MAIN_AUDIO_TYPE and (type) <= MP4_MPEG2_AAC_SSR_AUDIO_TYPE)) # macro
 __RLIM64_T_TYPE = __UQUAD_TYPE # alias
 # __FSBLKCNT_T_TYPE = __ULONGWORD_TYPE # alias
 # def __LDBL_REDIR1(name,proto,alias): return name proto # macro
