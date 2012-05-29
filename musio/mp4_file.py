@@ -23,10 +23,12 @@
 
 """
 
+from sys import stdout as sys_stdout
 from functools import partial
 
 from .aac_file import AACDecoder
 from .io_base import AudioIO, io_wrapper
+from .io_util import silence
 from .mp4v2 import _mp4v2
 
 # from .import_util import LazyImport
@@ -91,7 +93,8 @@ class Mp4File(AudioIO):
 
         """
 
-        mp4_handle = Mp4(filename.encode())
+        with silence(sys_stdout):
+            mp4_handle = Mp4(filename.encode())
 
         # Get the aac decoder.
         self._aac_decoder = AACDecoder(*mp4_handle.get_configuration())

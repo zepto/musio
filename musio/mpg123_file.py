@@ -23,6 +23,9 @@
 
 """
 
+from sys import stderr as sys_stderr
+
+from .io_util import silence
 from .io_base import AudioIO, io_wrapper
 from .mpg123 import _mpg123
 # from .import_util import LazyImport
@@ -51,7 +54,8 @@ def _check(err):
         err = err.value
 
     if err != _mpg123.MPG123_OK:
-        print(_mpg123.mpg123_plain_strerror(err).decode('cp437', 'replace'))
+        err_str =_mpg123.mpg123_plain_strerror(err).decode('cp437', 'replace')
+        print("Error in %s: %s" % (__file__, err_str))
 
     return err
 
@@ -134,7 +138,8 @@ class Mpg123File(AudioIO):
             raise IOError("There was an error opening %s" % filename)
 
 
-        _check(_mpg123.mpg123_scan(mpg123_handle))
+        with silence(sys_stderr):
+            _check(_mpg123.mpg123_scan(mpg123_handle))
 
         _check(_mpg123.mpg123_format_none(mpg123_handle))
 
@@ -147,9 +152,9 @@ class Mpg123File(AudioIO):
         encoding = _mpg123.c_int()
 
         _check(_mpg123.mpg123_getformat(mpg123_handle,
-                                             _mpg123.byref(rate),
-                                             _mpg123.byref(channels),
-                                             _mpg123.byref(encoding)))
+                                            _mpg123.byref(rate),
+                                            _mpg123.byref(channels),
+                                            _mpg123.byref(encoding)))
 
         self._rate = rate.value
         self._channels = channels.value
@@ -235,9 +240,10 @@ class Mpg123File(AudioIO):
         bytes_read = _mpg123.c_size_t(-1)
         data = self._data
         while len(data) < size:
-            err = _check(_mpg123.mpg123_read(self._mpg123_handle,
-                                                  byte_buffer, size,
-                                                  _mpg123.byref(bytes_read)))
+            with silence(sys_stderr):
+                err = _check(_mpg123.mpg123_read(self._mpg123_handle,
+                                                 byte_buffer, size,
+                                                 _mpg123.byref(bytes_read)))
 
             if bytes_read.value == 0:
                 if self._loops != -1 and self._loop_count >= self._loops:
