@@ -1,13 +1,22 @@
 from ctypes import *
 
 _libraries = {}
-_libraries['/usr/lib/libavcodec.so'] = CDLL('/usr/lib/libavcodec.so')
+liblist = ['avcodec', 'avdevice', 'avformat', 'postproc', 'swscale']
+for lib in liblist:
+    lib_name = find_library(lib)
+    if not lib_name:
+        raise Exception("lib%s not be found" % lib)
+    _lib = cdll.LoadLibrary(lib_name)
+
+    _libraries['/usr/lib/lib%s.so' % lib] = _lib
+
+# _libraries['/usr/lib/libavcodec.so'] = CDLL('/usr/lib/libavcodec.so')
+# _libraries['/usr/lib/libavdevice.so'] = CDLL('/usr/lib/libavdevice.so')
+# _libraries['/usr/lib/libavformat.so'] = CDLL('/usr/lib/libavformat.so')
+# _libraries['/usr/lib/libpostproc.so'] = CDLL('/usr/lib/libpostproc.so')
+# _libraries['/usr/lib/libswscale.so'] = CDLL('/usr/lib/libswscale.so')
 STRING = c_char_p
 WSTRING = c_wchar_p
-_libraries['/usr/lib/libavdevice.so'] = CDLL('/usr/lib/libavdevice.so')
-_libraries['/usr/lib/libavformat.so'] = CDLL('/usr/lib/libavformat.so')
-_libraries['/usr/lib/libpostproc.so'] = CDLL('/usr/lib/libpostproc.so')
-_libraries['/usr/lib/libswscale.so'] = CDLL('/usr/lib/libswscale.so')
 
 
 def __toascii_l(c,l): return ((l), __toascii (c)) # macro
