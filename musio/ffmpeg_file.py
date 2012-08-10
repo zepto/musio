@@ -121,9 +121,15 @@ class FFmpegFile(AudioIO):
 
         # Create a format context, open the file and find the stream info.
         format_context = _av.avformat_alloc_context()
-        self._check(_av.av_open_input_file(format_context, filename, None, 0,
-                                           None))
-        self._check(_av.av_find_stream_info(format_context))
+        self._check(_av.avformat_open_input(format_context, filename, None,
+                                             None))
+        self._check(_av.avformat_find_stream_info(format_context, None))
+
+        # Deprecated.
+        # self._check(_av.av_open_input_file(format_context, filename, None, 0,
+        #                                    None))
+        # Deprecated.
+        # self._check(_av.av_find_stream_info(format_context))
 
         # Dump the file info.
         #info = _av.dump_format(format_context, 0, filename, 0)
