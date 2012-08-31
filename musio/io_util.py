@@ -140,11 +140,14 @@ def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
     # Load the codec module that can handle file.
     for path, name in mod_list:
         # Get the package name from path.
-        pkgname = os_basename(path)
+        pkgname = os_basename(path.rstrip('/'))
 
         # Import the package if it is different from this one.
-        if pkgname != this_pkgname:
-            __import__(os_basename(path))
+        if pkgname != this_pkgname and pkgname:
+            try:
+                __import__(pkgname)
+            except ImportError as err:
+                continue
 
         # Load the module.
         module = import_module('.%s' % os_splitext(name)[0], pkgname)
@@ -238,11 +241,14 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
     # Load the codec module that can handle file.
     for path, name in mod_list:
         # Get the package name from path.
-        pkgname = os_basename(path)
+        pkgname = os_basename(path.rstrip('/'))
 
         # Import the package if it is different from this one.
-        if pkgname != this_pkgname:
-            __import__(os_basename(path))
+        if pkgname != this_pkgname and pkgname:
+            try:
+                __import__(pkgname)
+            except ImportError as err:
+                continue
 
         # Load the module.
         module = import_module('.%s' % os_splitext(name)[0], pkgname)
