@@ -30,7 +30,7 @@ setup(
         packages = ['musio', 'musio.audiality', 'musio.alsa', 'musio.dumb',
             'musio.espeak', 'musio.faad', 'musio.ffmpeg', 'musio.fluidsynth',
             'musio.gme', 'musio.mikmod', 'musio.modplug', 'musio.mp4v2',
-            'musio.mpg123', 'musio.ogg', 'musio.portaudio'],
+            'musio.mpg123', 'musio.ogg', 'musio.portaudio', 'musio.xmp'],
         version = '0.5.0',
         description = 'Audio I/O library',
         author = 'Josiah Gordon',

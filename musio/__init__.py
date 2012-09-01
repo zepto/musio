@@ -50,4 +50,5 @@ __all__ = ['aac_file',
            'raw_file',
            'text_file',
            'vorbis_file',
-           'wave_file']
+           'wave_file',
+           'xmp_file']
