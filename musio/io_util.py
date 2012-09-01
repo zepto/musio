@@ -307,13 +307,24 @@ def open_file(filename: str, mode='r', mod_path=[], **kwargs) -> AudioIO:
 
     blacklist = kwargs.get('blacklist', [])
 
-    codec = get_codec(filename, mod_path=mod_path, blacklist=blacklist)
+    open_codec = None
 
-    if not codec:
-        print("Filetype not supported.")
-        return None
+    # Loop until a codec is found that can open the file.
+    while not open_codec:
+        codec = get_codec(filename, mod_path=mod_path, blacklist=blacklist,
+                          cached=False)
+        if not codec:
+            raise IOError("Filetype not supported.")
 
-    return codec(filename, mode=mode, **kwargs)
+        try:
+            open_codec = codec(filename, mode=mode, **kwargs)
+        except IOError as err:
+            mod_name = '%s.py' % codec.__module__.split('.')[-1]
+
+            # Add the module to the blacklist.
+            blacklist.append(mod_name)
+
+    return open_codec
 
 
 def open_device(fileobj: AudioIO, mode='w', mod_path=[], **kwargs) -> DevIO:
