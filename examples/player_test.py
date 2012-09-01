@@ -45,11 +45,7 @@ def main(args: dict) -> None:
     print("Playing: %(filename)s" % args)
     print(player)
 
-    try:
-        player.play()
-    except IOError as err:
-        print("Unsupported audio format: %s" % args['filename'])
-        return 1
+    player.play()
 
     while player.playing:
         # Check for input.
