@@ -68,6 +68,8 @@ class XMPFile(AudioIO):
 
         self._data = b''
 
+        self._load_info()
+
     def _set_position(self, position):
         """ Change the position of playback.
 
@@ -97,14 +99,48 @@ class XMPFile(AudioIO):
         self.__module_info = _xmp.xmp_module_info()
         _xmp.xmp_player_get_info(xmp_context, _xmp.byref(self.__module_info))
 
-        # Load the instrument info.
-        tmp_list = []
-        for i in range(self.__module_info.mod.contents.ins):
-            name = self.__module_info.mod.contents.xxi[i].name
-            if name:
-                tmp_list.append(name.decode('cp437', 'replace'))
-        if tmp_list:
-            self._info_dict['instruments'] = tmp_list
+        # The file is now open.
+        self._closed = False
+
+        _xmp.xmp_player_start(xmp_context, self._rate, 0)
+
+        return xmp_context
+
+    def _load_info(self):
+        """ Load the module music info.
+
+        """
+
+        def load_list(key: str, index: str, count: int) -> list:
+            """ _load_list(key, index, count) -> Load a list of names and
+            filenames into a list.
+
+            """
+
+            fill_list = []
+
+            for i in range(count):
+                tmp = getattr(self.__module_info.mod.contents, index)[i]
+                name = tmp.name.decode('cp437', 'replace')
+                if name:
+                    key_str = '%-8s %02d:' % (key.capitalize(), i)
+                    fill_list.append('%s %s' % (key_str, name))
+
+            return fill_list
+
+        # Load instrument info.
+        num_inst = self.__module_info.mod.contents.ins
+        if num_inst > 0:
+            tmp_list = load_list('instrument', 'xxi', num_inst)
+            if tmp_list:
+                self._info_dict['instruments'] = tmp_list
+
+        # Load sample info.
+        num_smp = self.__module_info.mod.contents.smp
+        if num_smp > 0:
+            tmp_list = load_list('sample', 'xxs', num_smp)
+            if tmp_list:
+                self._info_dict['samples'] = tmp_list
 
         # Get the module name.
         name = self.__module_info.mod.contents.name.decode('cp437', 'replace')
@@ -118,13 +154,6 @@ class XMPFile(AudioIO):
         comment = self.__module_info.comment
         if comment:
             self._info_dict['comment'] = comment.decode('cp437', 'replace')
-
-        # The file is now open.
-        self._closed = False
-
-        _xmp.xmp_player_start(xmp_context, self._rate, 0)
-
-        return xmp_context
 
     @io_wrapper
     def read(self, size: int) -> bytes:
