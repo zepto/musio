@@ -34,14 +34,22 @@ def main(args: dict) -> None:
 
     from musio.player_util import AudioPlayer
 
-    player = AudioPlayer(show_position=True, **args)
+    try:
+        player = AudioPlayer(show_position=True, **args)
+    except IOError as err:
+        print("Unsupported audio format: %s" % args['filename'])
+        return 1
 
     player.loops = args['loops']
 
     print("Playing: %(filename)s" % args)
     print(player)
 
-    player.play()
+    try:
+        player.play()
+    except IOError as err:
+        print("Unsupported audio format: %s" % args['filename'])
+        return 1
 
     while player.playing:
         # Check for input.
@@ -73,8 +81,12 @@ if __name__ == '__main__':
                         dest='loops')
     parser.add_argument('-t', '--track', action='store', default=0, type=int,
                         help='Track to play', dest='track')
-    parser.add_argument('-p', '--path', action='store', default='', type=str,
-                        help='Codec path', dest='mod_path')
+    parser.add_argument('-p', '--path', action='store', default=[],
+                        type=lambda a:a.split(','), help='Codec path',
+                        dest='mod_path')
+    parser.add_argument('-b', '--blacklist', action='store', default=[],
+                        type=lambda a:a.split(','), help='Blacklist a Codec',
+                        dest='blacklist')
     parser.add_argument('-s', '--soundfont', action='store',
                         default='/usr/share/soundfonts/fluidr3/FluidR3GM.SF2',
                         help='Soundfont to use when playing midis',

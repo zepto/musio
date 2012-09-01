@@ -53,6 +53,7 @@ def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
     from sys import path as sys_path
 
     mod_path = [mod_path] if type(mod_path) is str else mod_path
+    blacklist = [blacklist] if type(blacklist) is str else blacklist
 
     # Add the path of this file to the search path.
     mod_path.append(os_abspath(os_dirname(__file__)))
@@ -304,7 +305,9 @@ def open_file(filename: str, mode='r', mod_path=[], **kwargs) -> AudioIO:
 
     """
 
-    codec = get_codec(filename, mod_path=mod_path)
+    blacklist = kwargs.get('blacklist', [])
+
+    codec = get_codec(filename, mod_path=mod_path, blacklist=blacklist)
 
     if not codec:
         print("Filetype not supported.")
