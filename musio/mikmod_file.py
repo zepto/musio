@@ -37,7 +37,9 @@ from .mikmod import _mikmod
 #                      ['_mikmod'], 0)
 
 __supported_dict = {
-        'ext': ['.imf', '.mod', '.s3m', '.xm', '.it'],
+        'ext': ['.669', '.amf', '.dsm', '.far', '.gdm', '.imf', '.it', '.med',
+                '.mod', '.mtm', '.s3m', '.stm', '.stx', '.ult', '.uni',
+                '.apun', '.xm'],
         'handler': 'MikModFile',
         'dependencies': {
             'ctypes': ['mikmod'],
