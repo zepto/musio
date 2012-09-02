@@ -91,7 +91,7 @@ class XMPFile(AudioIO):
 
         filename = filename.encode()
 
-        xmp_context = (_xmp.c_char * 4096)()
+        xmp_context = _xmp.xmp_create_context() #(_xmp.c_char * 4096)()
 
         if _xmp.xmp_load_module(xmp_context, filename) != 0:
             raise IOError("Can't load module: %s" % filename)

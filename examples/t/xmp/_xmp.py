@@ -245,7 +245,7 @@ xmp_module_info._fields_ = [
     ('num_sequences', c_int),
     ('seq_data', POINTER(xmp_sequence)),
 ]
-xmp_context = STRING
+xmp_context = c_void_p
 xmp_version = (STRING).in_dll(_libraries['/usr/lib/libxmp.so'], 'xmp_version')
 xmp_vercode = (c_uint).in_dll(_libraries['/usr/lib/libxmp.so'], 'xmp_vercode')
 xmp_create_context = _libraries['/usr/lib/libxmp.so'].xmp_create_context
