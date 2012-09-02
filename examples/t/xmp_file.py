@@ -67,11 +67,9 @@ class XMPFile(AudioIO):
         self._flags = 0
 
         if depth == 8:
-            print('8bit')
             self._flags = _xmp.XMP_MIX_8BIT
 
         if channels == 1:
-            print('mono')
             self._flags |= _xmp.XMP_MIX_MONO
 
         if unsigned:
