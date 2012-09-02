@@ -49,16 +49,33 @@ class XMPFile(AudioIO):
 
     """
 
+    # Valid bit depths
+    _valid_depth = (16, 8)
+
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=44100, channels=2, **kwargs):
-        """ FFmpegFile(filename, depth=16, rate=44100, channels=2) ->
-        Initialize the playback settings of the player.
+    def __init__(self, filename, depth=16, rate=44100, channels=2,
+                 unsigned=False, **kwargs):
+        """ XMPFile(filename, depth=16, rate=44100, channels=2, unsigned=False)
+        -> Initialize the playback settings of the player.
 
         """
 
-        super(XMPFile, self).__init__(filename, 'r', 16, rate, 2)
+        super(XMPFile, self).__init__(filename, 'r', depth, rate, channels)
+
+        self._flags = 0
+
+        if depth == 8:
+            print('8bit')
+            self._flags = _xmp.XMP_MIX_8BIT
+
+        if channels == 1:
+            print('mono')
+            self._flags |= _xmp.XMP_MIX_MONO
+
+        if unsigned:
+            self._flags |= _xmp.XMP_MIX_UNSIGNED
 
         self.__module_info = None
 
@@ -102,7 +119,7 @@ class XMPFile(AudioIO):
         # The file is now open.
         self._closed = False
 
-        _xmp.xmp_player_start(xmp_context, self._rate, 0)
+        _xmp.xmp_player_start(xmp_context, self._rate, self._flags)
 
         return xmp_context
 
@@ -210,7 +227,7 @@ class XMPFile(AudioIO):
         if not self.closed:
             _xmp.xmp_player_end(self.__xmp_context)
             _xmp.xmp_release_module(self.__xmp_context)
-            # _xmp.xmp_free_context(self.__xmp_context)
+            _xmp.xmp_free_context(self.__xmp_context)
 
             # This file is closed.
             self._closed = True
