@@ -125,7 +125,7 @@ class AudioIO(RawIOBase):
                               depth,
                               self._valid_depth))
 
-        super(AudioIO, self).__init__(filename, mode)
+        super(AudioIO, self).__init__()
 
         self._buffer_size = 8192 #16384 // (depth // (8 // channels))
 
