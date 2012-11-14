@@ -327,7 +327,7 @@ class Stream(object):
                 if self._output_params:
                     buffer_size = Pa_GetStreamWriteAvailable(self._stream)
                     if buffer_size < self._buffer_size:
-                        self._buffer_size = buffer_size
+                        self._buffer_size = buffer_size - (buffer_size % 2)
                 elif self._input_params:
                     buffer_size = Pa_GetStreamReadAvailable(self._stream)
             return ret_val
