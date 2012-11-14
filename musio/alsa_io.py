@@ -288,11 +288,13 @@ class Alsa(DevIO):
         self._channels = val.value
 
         alsapcm.snd_pcm_hw_params_get_rate(params, alsapcm.byref(val),
-                                           alsapcm.c_long(0))
+                                           alsapcm.c_int(0))
         self._rate = val.value
 
+        val = alsapcm.c_ulong()
+
         alsapcm.snd_pcm_hw_params_get_period_size(params, alsapcm.byref(val),
-                                                  alsapcm.c_long(0))
+                                                  alsapcm.c_int(0))
         self._period_size = val.value
 
         fmt = alsapcm.snd_pcm_format_t()
