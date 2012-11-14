@@ -104,7 +104,8 @@ class WaveFile(AudioIO):
 
         """
 
-        return self._wave.writeframes(data)
+        # Do this so it doesn't return None which is not an int.
+        return self._wave.writeframes(data) or 0
 
     @io_wrapper
     def read(self, size: int) -> bytes:
