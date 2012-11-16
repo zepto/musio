@@ -28,12 +28,12 @@ from array import array
 from .io_base import AudioIO, io_wrapper
 from .conversion_util import swap_endian
 
-from .modplug import _modplug
+# from .modplug import _modplug
 
-# from .import_util import LazyImport
-# 
-# _modplug = LazyImport('modplug._modplug', globals(), locals(),
-#                       ['_modplug'], 0)
+from .import_util import LazyImport
+
+_modplug = LazyImport('modplug._modplug', globals(), locals(),
+                      ['_modplug'], 0)
 
 __supported_dict = {
         'ext': ['.mod', '.xm', '.s3m', '.it'],

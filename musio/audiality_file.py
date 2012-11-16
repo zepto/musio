@@ -31,12 +31,12 @@ from sys import stderr as sys_stderr
 
 from .io_base import AudioIO, io_wrapper
 from .io_util import silence
-from .audiality import audiality as _agw
+# from .audiality import audiality as _agw
 
-# from .import_util import LazyImport
-# 
-# _agw = LazyImport('audiality.audiality', globals(), locals(),
-#                   ['audiality'], 0)
+from .import_util import LazyImport
+
+_agw = LazyImport('audiality.audiality', globals(), locals(),
+                  ['audiality'], 0)
 
 __supported_dict = {
         'ext': ['.agw'],

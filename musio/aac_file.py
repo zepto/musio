@@ -26,11 +26,11 @@
 from os.path import getsize as os_getsize
 
 from .io_base import AudioIO, io_wrapper
-from .faad import _neaacdec
+# from .faad import _neaacdec
 
-# from .import_util import LazyImport
-# 
-# _neaacdec = LazyImport('faad._neaacdec', globals(), locals(), ['_neaacdec'], 0)
+from .import_util import LazyImport
+
+_neaacdec = LazyImport('faad._neaacdec', globals(), locals(), ['_neaacdec'], 0)
 
 __supported_dict= {
         'ext': ['.aac'],

@@ -31,15 +31,15 @@ from time import time
 from functools import partial
 
 from .io_base import AudioIO, io_wrapper
-from .ogg import vorbisfile as _vorbisfile
-from .ogg import vorbisenc as _vorbisenc
+from .io_util import slice_buffer
+# from .ogg import vorbisfile as _vorbisfile
+# from .ogg import vorbisenc as _vorbisenc
+from .import_util import LazyImport
 
-# from .import_util import LazyImport
-
-# _vorbisfile = LazyImport('ogg.vorbisfile', globals(), locals(),
-#                          ['_vorbisfile'], 0)
-# _vorbisenc = LazyImport('ogg.vorbisenc', globals(), locals(),
-#                         ['_vorbisenc'], 0)
+_vorbisfile = LazyImport('ogg.vorbisfile', globals(), locals(),
+                         ['_vorbisfile'], 0)
+_vorbisenc = LazyImport('ogg.vorbisenc', globals(), locals(),
+                        ['_vorbisenc'], 0)
 
 __supported_dict = {
         'ext': ['.ogg', '.ogv'],
@@ -305,7 +305,12 @@ class VorbisFile(AudioIO):
 
         """
 
-        return self._vorbis_file.write(self._encode(data))
+        written = 0
+
+        for data_buffer in slice_buffer(data, self._buffer_size):
+            written += self._vorbis_file.write(self._encode(data_buffer))
+
+        return written
 
     def _fill_buffer(self, data):
         """ fill_buffer(data) -> Fill the dsp buffer with data.

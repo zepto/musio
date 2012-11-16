@@ -25,12 +25,12 @@
 from functools import partial
 
 from .io_base import AudioIO, io_wrapper
-from .fluidsynth import fluidsynth as _fluidsynth
+# from .fluidsynth import fluidsynth as _fluidsynth
 
-# from .import_util import LazyImport
-# 
-# _fluidsynth = LazyImport('fluidsynth.fluidsynth', globals(), locals(),
-#                          ['fluidsynth'], 0)
+from .import_util import LazyImport
+
+_fluidsynth = LazyImport('fluidsynth.fluidsynth', globals(), locals(),
+                         ['fluidsynth'], 0)
 
 
 __supported_dict = {

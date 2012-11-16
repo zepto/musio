@@ -28,11 +28,11 @@ from sys import stderr as sys_stderr
 
 from .io_base import DevIO, io_wrapper
 from .io_util import silence
-from .portaudio import portaudio as _portaudio
+# from .portaudio import portaudio as _portaudio
+from import_util import LazyImport
 
-# from import_util import LazyImport
-# _portaudio = LazyImport('portaudio.portaudio', globals(), locals(),
-#                         ['portaudio'], 0)
+_portaudio = LazyImport('portaudio.portaudio', globals(), locals(),
+                        ['portaudio'], 0)
 
 __supported_dict = {
         'output': [bytes],

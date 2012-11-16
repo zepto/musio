@@ -28,10 +28,10 @@ from sys import stderr as sys_stderr
 
 from .io_base import DevIO, io_wrapper
 from .io_util import silence
-from .espeak import espeak as _espeak
-# from .import_util import LazyImport
-# 
-# _espeak = LazyImport('espeak.espeak', globals(), locals(), ['_espeak'], 0)
+# from .espeak import espeak as _espeak
+from .import_util import LazyImport
+
+_espeak = LazyImport('espeak.espeak', globals(), locals(), ['_espeak'], 0)
 
 __supported_dict = {
         'output': [str],

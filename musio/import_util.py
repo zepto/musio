@@ -82,6 +82,8 @@ class LazyImport(types_ModuleType):
         self.__class__ = type('Module', (types_ModuleType,), {})
 
         # print('__getattribute__: ', self.__name__, attr)
+        # if attr == "__package__":
+        #     return getattr(self, "__package__", None)
 
         # Test if this method has been called.
         if not getattr(self, '__mod__', None):
@@ -290,7 +292,9 @@ class LazyImporter(object):
         if '.' not in fullname:
             module.__package__ = None
         else:
-            module.__package__ = fullname.rsplit('.', 1)[0]
+            module.__package__ == fullname.rpartition('.')[0]
+            module.__path__ = []
+
 
         # Add the module to sys.modules.
         sys.modules[fullname] = module

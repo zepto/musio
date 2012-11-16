@@ -24,7 +24,10 @@
 """
 
 from musio.io_base import AudioIO, io_wrapper
-from .xmp import _xmp
+# from .xmp import _xmp
+from .import_util import LazyImport
+
+_xmp = LazyImport('xmp._xmp', globals(), locals(), ['_xmp'], 0)
 
 __supported_dict = {
         'ext': ['.669', '.alm', '.amd', '.amf', '.arch', '.asylum', '.coco',

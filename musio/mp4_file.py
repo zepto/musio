@@ -29,12 +29,12 @@ from functools import partial
 from .aac_file import AACDecoder
 from .io_base import AudioIO, io_wrapper
 from .io_util import silence
-from .mp4v2 import _mp4v2
+# from .mp4v2 import _mp4v2
 
-# from .import_util import LazyImport
-# 
-# _mp4v2 = LazyImport('mp4v2._mp4v2', globals(), locals(),
-#                     ['_mp4v2'], 0)
+from .import_util import LazyImport
+
+_mp4v2 = LazyImport('mp4v2._mp4v2', globals(), locals(),
+                    ['_mp4v2'], 0)
 
 __supported_dict = {
         'ext': ['.mp4', '.m4v'],

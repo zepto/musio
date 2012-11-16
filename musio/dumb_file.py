@@ -26,11 +26,11 @@
 from .io_base import AudioIO, io_wrapper
 from .conversion_util import swap_endian
 
-from .dumb import _dumb
+# from .dumb import _dumb
 
-# from .import_util import LazyImport
-# 
-# _dumb = LazyImport('dumb._dumb', globals(), locals(), ['_dumb'], 0)
+from .import_util import LazyImport
+
+_dumb = LazyImport('dumb._dumb', globals(), locals(), ['_dumb'], 0)
 
 __supported_dict = {
         'ext': ['.xm', '.s3m', '.it', '.mod'],

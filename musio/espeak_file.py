@@ -26,10 +26,10 @@
 from functools import wraps as functools_wraps
 
 from .io_base import AudioIO, io_wrapper
-from .espeak import espeak as  _espeak
-# from .import_util import LazyImport
-# 
-# _espeak = LazyImport('espeak.espeak', globals(), locals(), ['_espeak'], 0)
+# from .espeak import espeak as  _espeak
+from .import_util import LazyImport
+
+_espeak = LazyImport('espeak.espeak', globals(), locals(), ['_espeak'], 0)
 
 __supported_dict = {
         'ext': ['.txt'],

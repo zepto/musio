@@ -29,12 +29,12 @@ from threading import Thread
 
 from .io_base import AudioIO, io_wrapper
 
-from .mikmod import _mikmod
+# from .mikmod import _mikmod
 
-# from .import_util import LazyImport
-# 
-# _mikmod = LazyImport('mikmod._mikmod', globals(), locals(),
-#                      ['_mikmod'], 0)
+from .import_util import LazyImport
+
+_mikmod = LazyImport('mikmod._mikmod', globals(), locals(),
+                     ['_mikmod'], 0)
 
 __supported_dict = {
         'ext': ['.669', '.amf', '.dsm', '.far', '.gdm', '.imf', '.it', '.med',

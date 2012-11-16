@@ -43,6 +43,15 @@ __codec_cache = {}
 # Audio IO device cache dictionary
 __io_cache = {}
 
+def slice_buffer(data: bytes, size: int) -> bytes:
+    """ slice_buffer(data, size) -> A generator that yields slices of bytes
+    from the data buffer.
+
+    """
+
+    for i in range(0, len(data), size):
+        yield data[i:i + size]
+
 
 def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
     """ _build_mod_list(mod_path, suffix) -> Add all the paths in mod_path to
