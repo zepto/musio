@@ -64,6 +64,10 @@ def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
     mod_path = [mod_path] if type(mod_path) is str else mod_path
     blacklist = [blacklist] if type(blacklist) is str else blacklist
 
+    # Add suffix to all names in blacklist.
+    blacklist.extend(['%s%s' % (name, suffix) for name in blacklist \
+                                                if not name.endswith(suffix)])
+
     # Add the path of this file to the search path.
     mod_path.append(os_abspath(os_dirname(__file__)))
 
