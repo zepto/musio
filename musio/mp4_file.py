@@ -330,17 +330,17 @@ class Mp4Track(_mp4v2.MP4TrackId):
 
         """
 
-        data_buffer = _mp4v2.POINTER(_mp4v2.c_uint8)()
+        data_buffer = _mp4v2.POINTER(_mp4v2.c_ubyte)()
         buffer_size = _mp4v2.c_uint32()
 
         ret = self._es_configuration(_mp4v2.byref(data_buffer), buffer_size)
 
-        # Reset the buffer and size if there was now configuration data.
+        # Reset the buffer and size if there was no configuration data.
         if not ret:
-            data_buffer = _mp4v2.POINTER(_mp4v2.c_uint8)()
+            data_buffer = _mp4v2.POINTER(_mp4v2.c_ubyte)()
             buffer_size = _mp4v2.c_uint32()
 
-        return (data_buffer, buffer_size)
+        return (data_buffer, _mp4v2.c_ulong(buffer_size.value))
 
     @property
     def sample_count(self):
