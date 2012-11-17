@@ -146,7 +146,7 @@ def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
     dummy = None
 
     # Make importing lazy.
-    load_lazy_import(mod_path=mod_path)
+    # load_lazy_import(mod_path=mod_path)
 
     # This packages name.
     this_pkgname = __name__.split('.', 1)[0]
@@ -206,7 +206,7 @@ def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
             codec = handler
 
     # Turn off lazy imports.
-    unload_lazy_import()
+    # unload_lazy_import()
 
     # No codec was found so default to the dummy codec.
     if not codec: codec = dummy
@@ -247,7 +247,7 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
     dummy = None
 
     # Make importing lazy.
-    load_lazy_import(mod_path=mod_path)
+    # load_lazy_import(mod_path=mod_path)
 
     # This packages name.
     this_pkgname = __name__.split('.', 1)[0]
@@ -305,7 +305,7 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
             if default: break
 
     # Turn off lazy imports.
-    unload_lazy_import()
+    # unload_lazy_import()
 
     # No device was found so use the dummy_io.
     if not device: device = dummy
