@@ -31,7 +31,7 @@ from .io_util import silence
 # from .espeak import espeak as _espeak
 from .import_util import LazyImport
 
-_espeak = LazyImport('espeak.espeak', globals(), locals(), ['_espeak'], 0)
+_espeak = LazyImport('espeak.espeak', globals(), locals(), ['_espeak'], 1)
 
 __supported_dict = {
         'output': [str],

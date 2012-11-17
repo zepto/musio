@@ -30,7 +30,7 @@ from .io_base import AudioIO, io_wrapper
 
 from .import_util import LazyImport
 
-_gme = LazyImport('gme._gme', globals(), locals(), ['_gme'], 0)
+_gme = LazyImport('gme._gme', globals(), locals(), ['_gme'], 1)
 
 __supported_dict = {
         'ext': ['.ay', '.gps', '.gym', '.hes', '.kss', '.nsf', '.nsfe', 

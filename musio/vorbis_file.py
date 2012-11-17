@@ -37,9 +37,9 @@ from .io_util import slice_buffer
 from .import_util import LazyImport
 
 _vorbisfile = LazyImport('ogg.vorbisfile', globals(), locals(),
-                         ['_vorbisfile'], 0)
+                         ['_vorbisfile'], 1)
 _vorbisenc = LazyImport('ogg.vorbisenc', globals(), locals(),
-                        ['_vorbisenc'], 0)
+                        ['_vorbisenc'], 1)
 
 __supported_dict = {
         'ext': ['.ogg', '.ogv'],

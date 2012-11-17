@@ -30,7 +30,7 @@ from .io_base import AudioIO, io_wrapper
 from .import_util import LazyImport
 
 _fluidsynth = LazyImport('fluidsynth.fluidsynth', globals(), locals(),
-                         ['fluidsynth'], 0)
+                         ['fluidsynth'], 1)
 
 
 __supported_dict = {

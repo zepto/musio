@@ -34,7 +34,7 @@ from .io_base import AudioIO, io_wrapper
 from .import_util import LazyImport
 
 _mikmod = LazyImport('mikmod._mikmod', globals(), locals(),
-                     ['_mikmod'], 0)
+                     ['_mikmod'], 1)
 
 __supported_dict = {
         'ext': ['.669', '.amf', '.dsm', '.far', '.gdm', '.imf', '.it', '.med',

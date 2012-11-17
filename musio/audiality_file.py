@@ -36,7 +36,7 @@ from .io_util import silence
 from .import_util import LazyImport
 
 _agw = LazyImport('audiality.audiality', globals(), locals(),
-                  ['audiality'], 0)
+                  ['audiality'], 1)
 
 __supported_dict = {
         'ext': ['.agw'],

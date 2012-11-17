@@ -34,7 +34,7 @@ from .io_util import silence
 from .import_util import LazyImport
 
 _mp4v2 = LazyImport('mp4v2._mp4v2', globals(), locals(),
-                    ['_mp4v2'], 0)
+                    ['_mp4v2'], 1)
 
 __supported_dict = {
         'ext': ['.mp4', '.m4v'],

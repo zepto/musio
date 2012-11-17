@@ -28,7 +28,7 @@ from .io_base import AudioIO, io_wrapper
 
 from .import_util import LazyImport
 
-_av = LazyImport('ffmpeg._av', globals(), locals(), ['_av'], 0)
+_av = LazyImport('ffmpeg._av', globals(), locals(), ['_av'], 1)
 
 __supported_dict = {
         'ext': ['.*', '.flv', '.iflv', '.wma', '.wmv', '.avi', '.mpg'],

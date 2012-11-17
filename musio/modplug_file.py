@@ -33,7 +33,7 @@ from .conversion_util import swap_endian
 from .import_util import LazyImport
 
 _modplug = LazyImport('modplug._modplug', globals(), locals(),
-                      ['_modplug'], 0)
+                      ['_modplug'], 1)
 
 __supported_dict = {
         'ext': ['.mod', '.xm', '.s3m', '.it'],

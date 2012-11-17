@@ -32,7 +32,7 @@ from .io_util import silence
 from import_util import LazyImport
 
 _portaudio = LazyImport('portaudio.portaudio', globals(), locals(),
-                        ['portaudio'], 0)
+                        ['portaudio'], 1)
 
 __supported_dict = {
         'output': [bytes],

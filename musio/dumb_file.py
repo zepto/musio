@@ -30,7 +30,7 @@ from .conversion_util import swap_endian
 
 from .import_util import LazyImport
 
-_dumb = LazyImport('dumb._dumb', globals(), locals(), ['_dumb'], 0)
+_dumb = LazyImport('dumb._dumb', globals(), locals(), ['_dumb'], 1)
 
 __supported_dict = {
         'ext': ['.xm', '.s3m', '.it', '.mod'],
