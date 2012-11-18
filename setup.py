@@ -35,8 +35,8 @@ setup(
         description = 'Audio I/O library',
         author = 'Josiah Gordon',
         author_email = 'josiahg@gmail.com',
-        url = '',
-        download_url = '',
+        url = 'http://www.github.com/zepto/musio',
+        download_url = 'http://www.github.com/zepto/musio/downloads',
         keywords = ['audio', 'portaudio', 'alsa', 'ffmpeg'],
         classifiers = [
             'Programming Language :: Python :: 3',
