@@ -48,8 +48,8 @@ FLUID_INTERP_LINEAR = 1
 FLUID_INTERP_4THORDER = 4
 FLUID_INTERP_7THORDER = 7
 
-FLUID_INTERP_DEFAULT =  FLUID_INTERP_4THORDER
-FLUID_INTERP_HIGHEST =  FLUID_INTERP_7THORDER
+FLUID_INTERP_DEFAULT = FLUID_INTERP_4THORDER
+FLUID_INTERP_HIGHEST = FLUID_INTERP_7THORDER
 
 # Chorus constants
 FLUID_CHORUS_MOD_SINE = 0
@@ -80,15 +80,22 @@ class Settings(object):
 
         self._settings = _fluidsynth.new_fluid_settings()
 
-        self.setstr = partial(_fluidsynth.fluid_settings_setstr, self._settings)
-        self.setint = partial(_fluidsynth.fluid_settings_setint, self._settings)
-        self.setnum = partial(_fluidsynth.fluid_settings_setnum, self._settings)
+        self.setstr = partial(_fluidsynth.fluid_settings_setstr,
+                              self._settings)
+        self.setint = partial(_fluidsynth.fluid_settings_setint,
+                              self._settings)
+        self.setnum = partial(_fluidsynth.fluid_settings_setnum,
+                              self._settings)
 
-        self.getstr = partial(_fluidsynth.fluid_settings_getstr, self._settings)
-        self.getint = partial(_fluidsynth.fluid_settings_getint, self._settings)
-        self.getnum = partial(_fluidsynth.fluid_settings_getnum, self._settings)
+        self.getstr = partial(_fluidsynth.fluid_settings_getstr,
+                              self._settings)
+        self.getint = partial(_fluidsynth.fluid_settings_getint,
+                              self._settings)
+        self.getnum = partial(_fluidsynth.fluid_settings_getnum,
+                              self._settings)
 
-        self.delete = partial(_fluidsynth.delete_fluid_settings, self._settings)
+        self.delete = partial(_fluidsynth.delete_fluid_settings,
+                              self._settings)
 
     def set(self, key, value):
         """ Set the setting item 'key' to value 'value.'
@@ -145,25 +152,25 @@ class Synth(object):
     """
 
     def __init__(self, settings, address=None):
-        """ Synth(settings) -> Create a new fluid synth object, with the 
+        """ Synth(settings) -> Create a new fluid synth object, with the
         settings 'settings.'
 
         """
 
         self._reverb = {
-                'roomsize': 0.2,
-                'damping': 0.0,
-                'width': 0.5,
-                'level': 0.9
-                }
+            'roomsize': 0.2,
+            'damping': 0.0,
+            'width': 0.5,
+            'level': 0.9
+        }
 
         self._chorus = {
-                'nr': 3,
-                'level': 2.0,
-                'speed': 0.3,
-                'depth_ms': 8.0,
-                'type': 0
-                }
+            'nr': 3,
+            'level': 2.0,
+            'speed': 0.3,
+            'depth_ms': 8.0,
+            'type': 0
+        }
 
         self._settings = settings
 
@@ -180,7 +187,7 @@ class Synth(object):
         self.get_reverb_roomsize = partial(
                 _fluidsynth.fluid_synth_get_reverb_roomsize, self.object)
         self.get_reverb_damp = partial(_fluidsynth.fluid_synth_get_reverb_damp,
-                                  self.object)
+                                       self.object)
         self.get_reverb_level = partial(
                 _fluidsynth.fluid_synth_get_reverb_level, self.object)
         self.get_reverb_width = partial(
@@ -217,9 +224,9 @@ class Synth(object):
         self.set_gain = partial(_fluidsynth.fluid_synth_set_gain, self.object)
 
         self.process = partial(_fluidsynth.fluid_synth_process, self._synth)
-        self.write_s16 = partial(_fluidsynth.fluid_synth_write_s16, 
+        self.write_s16 = partial(_fluidsynth.fluid_synth_write_s16,
                                  self.object)
-        self.write_float = partial(_fluidsynth.fluid_synth_write_float, 
+        self.write_float = partial(_fluidsynth.fluid_synth_write_float,
                                    self.object)
 
         self.delete = partial(_fluidsynth.delete_fluid_synth, self._synth)
@@ -278,8 +285,8 @@ class Synth(object):
         """
 
         return dict(zip(('roomsize', 'damping', 'width', 'level'),
-                         (self.get_reverb_roomsize(), self.get_reverb_damp(),
-                          self.get_reverb_width(), self.get_reverb_level())))
+                        (self.get_reverb_roomsize(), self.get_reverb_damp(),
+                         self.get_reverb_width(), self.get_reverb_level())))
 
     def _dict_to_tup(self, value_dict, keys_tup, defaults):
         """ _dict_to_tup(value_dict, keys_tup, defaults) -> Returns a tuple of
@@ -322,9 +329,9 @@ class Synth(object):
         """
 
         return dict(zip(('nr', 'level', 'speed', 'depth_ms', 'type'),
-                         (self.get_chorus_nr(), self.get_chorus_level(),
-                          self.get_chorus_speed_Hz(),
-                          self.get_chorus_depth_ms(), self.get_chorus_type())))
+                        (self.get_chorus_nr(), self.get_chorus_level(),
+                         self.get_chorus_speed_Hz(),
+                         self.get_chorus_depth_ms(), self.get_chorus_type())))
 
     @chorus.setter
     def chorus(self, value):
@@ -390,7 +397,7 @@ class Player(object):
 
         """
 
-        self.set_tempo = partial(_fluidsynth.fluid_player_set_midi_tempo, 
+        self.set_tempo = partial(_fluidsynth.fluid_player_set_midi_tempo,
                                  self.object)
         self.set_bpm = partial(_fluidsynth.fluid_player_set_bpm, self.object)
 
@@ -402,7 +409,7 @@ class Player(object):
 
         """
 
-        self.get_status = partial(_fluidsynth.fluid_player_get_status, 
+        self.get_status = partial(_fluidsynth.fluid_player_get_status,
                                   self.object)
 
         self.delete = partial(_fluidsynth.delete_fluid_player, self._player)
@@ -442,15 +449,15 @@ class AudioDriver(object):
 
         if not process_func:
             self._adriver = \
-                    _fluidsynth.new_fluid_audio_driver(settings.object,
-                                                       synth.object)
+                _fluidsynth.new_fluid_audio_driver(settings.object,
+                                                   synth.object)
         else:
             self._process_callback = \
-                    _fluidsynth.fluid_audio_func_t(self._process_callback_f)
+                _fluidsynth.fluid_audio_func_t(self._process_callback_f)
             self._adriver = \
-                    _fluidsynth.new_fluid_audio_driver2(settings.object,
-                                                        self._process_callback,
-                                                        synth.object)
+                _fluidsynth.new_fluid_audio_driver2(settings.object,
+                                                    self._process_callback,
+                                                    synth.object)
 
         self.delete = partial(_fluidsynth.delete_fluid_audio_driver,
                               self._adriver)
@@ -486,7 +493,7 @@ class FluidsynthFile(AudioIO):
 
     def __init__(self, filename, soundfont, rate=44100, gain=0.2,
                  reverb={'roomsize': 0.2, 'damping': 0.0, 'width': 0.5,
-                         'level': 0.9}, 
+                         'level': 0.9},
                  chorus={'nr': 3, 'level': 2.0, 'speed': 0.3, 'depth_ms': 8.0,
                          'type': 0}, **kwargs):
         """ FluidsynthFile(filename, soundfont, rate=44100, gain=0.2,

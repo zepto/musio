@@ -117,9 +117,9 @@ class Mp4File(AudioIO):
         info_dict = self._info_dict
 
         for i in ['name', 'artist', 'albumArtist', 'album', 'composer',
-                'comments', 'genre', 'releaseDate', 'track', 'disk',
-                'description', 'longDescription', 'lyrics', 'copyright',
-                'encodedBy']:
+                  'comments', 'genre', 'releaseDate', 'track', 'disk',
+                  'description', 'longDescription', 'lyrics', 'copyright',
+                  'encodedBy']:
             value = getattr(tags_dict, i, None)
             if value:
                 info_dict[i] = value
@@ -154,7 +154,8 @@ class Mp4File(AudioIO):
                     continue
 
             # Decode data into a temporary buffer.
-            temp_data = self._aac_decoder.decode(sample.data, sample.size.value)
+            temp_data = self._aac_decoder.decode(sample.data,
+                                                 sample.size.value)
 
             # Append decoded data to the data buffer.
             data += temp_data
@@ -193,7 +194,7 @@ class Mp4Handle(_mp4v2.MP4FileHandle):
         self.track_es_configuration = partial(_mp4v2.MP4GetTrackESConfiguration,
                                               self)
         self.track_type = partial(_mp4v2.MP4GetTrackType, self)
-        self.track_esds_object_type = partial(_mp4v2.MP4GetTrackEsdsObjectTypeId, 
+        self.track_esds_object_type = partial(_mp4v2.MP4GetTrackEsdsObjectTypeId,
                                               self)
         self.track_audio_mpeg4_type = partial(_mp4v2.MP4GetTrackAudioMpeg4Type,
                                               self)

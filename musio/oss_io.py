@@ -20,7 +20,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A thin ossaudiodev wrapper that allows it to be used with the with 
+""" A thin ossaudiodev wrapper that allows it to be used with the with
 statement.
 
 """
@@ -62,10 +62,10 @@ class Oss(DevIO):
                                   unsigned, buffer_size)
 
         if depth == 8:
-            audio_format = getattr(ossaudiodev, "AFMT_%s8" % \
+            audio_format = getattr(ossaudiodev, "AFMT_%s8" %
                                    ('U' if unsigned else 'S'))
         else:
-            audio_format = getattr(ossaudiodev, "AFMT_%s16_%s" % \
+            audio_format = getattr(ossaudiodev, "AFMT_%s16_%s" %
                                    ('U' if unsigned else 'S',
                                     'BE' if bigendian else 'LE'))
 

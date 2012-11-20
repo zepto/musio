@@ -2,7 +2,7 @@
 # vim: sw=4:ts=4:sts=4:fdm=indent:fdl=0:
 # -*- coding: UTF8 -*-
 #
-# A module to handle the playback of module music using mikmod. 
+# A module to handle the playback of module music using mikmod.
 # Copyright (C) 2012 Josiah Gordon <josiahg@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify

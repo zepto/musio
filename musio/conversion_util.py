@@ -28,6 +28,7 @@ import audioop
 
 from .io_base import AudioIO, io_wrapper
 
+
 def swap_endian(data):
     """ swap_endian(data) -> Swap the endianness of the data.
 
@@ -67,7 +68,7 @@ class ConvertReader(AudioIO):
 
         self._state = 0
 
-        self._buffer= b''
+        self._buffer = b''
 
         self._closed = False
 
@@ -81,7 +82,7 @@ class ConvertReader(AudioIO):
     @io_wrapper
     def read(self, size=None):
         """ Convert the samples to the given rate and makes it mono or stereo
-        depending on the channels value. The data is buffered so 
+        depending on the channels value. The data is buffered so
 
         """
 

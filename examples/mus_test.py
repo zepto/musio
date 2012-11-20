@@ -31,6 +31,7 @@ def play_proc(msg_dict):
             device.flush()
     print("\nDone.")
 
+
 def rec_proc(msg_dict):
     """ Record process
 
@@ -38,7 +39,8 @@ def rec_proc(msg_dict):
 
     filename = msg_dict['filename']
     comment_dict = msg_dict.get('comment_dict', {})
-    kwargs = {'filename': filename, 'mode': 'w', 'depth':16, 'channels':2} #, 'comment_dict': comment_dict}
+    kwargs = {'filename': filename, 'mode': 'w', 'depth': 16, 'channels': 2}
+    #, 'comment_dict': comment_dict}
 
     # from oss_io import Oss as DevIO
     from alsa_io import Alsa as DevIO
@@ -46,9 +48,9 @@ def rec_proc(msg_dict):
 
     print("Recording to: %s" % filename)
     with AudioIO(**kwargs) as file, DevIO(mode='rw', rate=file.rate,
-                                           channels=file.channels,
-                                           depth=file.depth,
-                                           unsigned=file.unsigned) as device:
+                                          channels=file.channels,
+                                          depth=file.depth,
+                                          unsigned=file.unsigned) as device:
 
         writer = QueuedWriter(file.write)
         print(writer)

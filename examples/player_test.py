@@ -23,6 +23,7 @@
 
 """
 
+
 def main(args: dict) -> None:
     """ Play args['filename'] args['loops'] times.
 
@@ -78,10 +79,10 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--track', action='store', default=0, type=int,
                         help='Track to play', dest='track')
     parser.add_argument('-p', '--path', action='store', default=[],
-                        type=lambda a:a.split(','), help='Codec path',
+                        type=lambda a: a.split(','), help='Codec path',
                         dest='mod_path')
     parser.add_argument('-b', '--blacklist', action='store', default=[],
-                        type=lambda a:a.split(','), help='Blacklist a Codec',
+                        type=lambda a: a.split(','), help='Blacklist a Codec',
                         dest='blacklist')
     parser.add_argument('-s', '--soundfont', action='store',
                         default='/usr/share/soundfonts/fluidr3/FluidR3GM.SF2',

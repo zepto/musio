@@ -2,7 +2,7 @@
 # vim: sw=4:ts=4:sts=4:fdm=indent:fdl=0:
 # -*- coding: UTF8 -*-
 #
-# A module to handle the playback of module music using modplug. 
+# A module to handle the playback of module music using modplug.
 # Copyright (C) 2012 Josiah Gordon <josiahg@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@ modplug_flags = [
 
 
 class ModPlugFile(AudioIO):
-    """ A file like interface to module music files (it, xm, s3m, mod) using 
+    """ A file like interface to module music files (it, xm, s3m, mod) using
     the modplug library.
 
     """
@@ -138,13 +138,13 @@ class ModPlugFile(AudioIO):
         return modplug_file
 
     def _load_info(self, modplug_file):
-        """ _load_info(duh) -> Load the information such as the module name 
+        """ _load_info(duh) -> Load the information such as the module name
         and message and the sample and instrument names.
 
         """
 
         def load_list(key, name_func, modplug_file, count):
-            """ _load_list(fill_list, name_func, modplug_file, count) -> 
+            """ _load_list(fill_list, name_func, modplug_file, count) ->
             Load a list of names and filenames from sig_data into fill_list.
 
             """
@@ -385,10 +385,10 @@ class ModPlugFile(AudioIO):
 
         """
 
-        if value ==  0:
+        if value == 0:
             self.flags &= ~ _modplug.MODPLUG_ENABLE_REVERB
         else:
-            self.flags |=  _modplug.MODPLUG_ENABLE_REVERB
+            self.flags |= _modplug.MODPLUG_ENABLE_REVERB
         self._modplug_settings.mReverbDelay = int(value)
 
     @property
@@ -406,10 +406,10 @@ class ModPlugFile(AudioIO):
 
         """
 
-        if value ==  0:
+        if value == 0:
             self.flags &= ~ _modplug.MODPLUG_ENABLE_SURROUND
         else:
-            self.flags |=  _modplug.MODPLUG_ENABLE_SURROUND
+            self.flags |= _modplug.MODPLUG_ENABLE_SURROUND
         self._modplug_settings.mSurroundDepth = int(value)
 
     @property
@@ -444,10 +444,10 @@ class ModPlugFile(AudioIO):
 
         """
 
-        if value ==  0:
+        if value == 0:
             self.flags &= ~ _modplug.MODPLUG_ENABLE_MEGABASS
         else:
-            self.flags |=  _modplug.MODPLUG_ENABLE_MEGABASS
+            self.flags |= _modplug.MODPLUG_ENABLE_MEGABASS
         self._modplug_settings.mBassAmount = int(value)
 
     @property

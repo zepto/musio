@@ -153,7 +153,7 @@ class EspeakFile(AudioIO):
 
         """
 
-        return _espeak.speaking #isplaying()
+        return _espeak.speaking  # isplaying()
 
     def list_voices(self):
         """ Print a list of available voices.

@@ -33,6 +33,7 @@ from os.path import basename as os_basename
 # If True errors will only print a message.
 IO_SOFT_ERRORS = True
 
+
 def io_wrapper(func):
     """ Wrap io methods.
 
@@ -115,19 +116,19 @@ class AudioIO(RawIOBase):
         """
 
         if not all([i in self._supported_modes for i in mode]):
-            raise ValueError("(%s) Mode has to be one of %s." % \
+            raise ValueError("(%s) Mode has to be one of %s." %
                              (self.__class__.__name__,
                              self._supported_modes))
 
         if depth not in self._valid_depth:
-            raise ValueError("(%s) Invalid depth %s, valid depths are %s" % \
+            raise ValueError("(%s) Invalid depth %s, valid depths are %s" %
                              (self.__class__.__name__,
                               depth,
                               self._valid_depth))
 
         super(AudioIO, self).__init__()
 
-        self._buffer_size = 8192 #16384 // (depth // (8 // channels))
+        self._buffer_size = 8192  # 16384 // (depth // (8 // channels))
 
         self._filename = filename
         self._mode = mode
@@ -147,7 +148,6 @@ class AudioIO(RawIOBase):
         self._loop_count = 0
 
         self._closed = True
-
 
         # The default name is the filename minus the extension.
         name = os_basename(self._filename.rsplit('.', 1)[0])
@@ -501,7 +501,8 @@ class DevIO(RawIOBase):
     _supported_modes = 'rw'
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
-            bigendian=False, unsigned=False, buffer_size=None, latency=500000):
+                 bigendian=False, unsigned=False, buffer_size=None,
+                 latency=500000):
         """ DevIO(depth=16, rate=44100, channels=2, bigendian=False,
         unsigned=False, buffer_size=None, latency=500000) -> Initialize an
         audio device for either reading or writing.
@@ -509,12 +510,12 @@ class DevIO(RawIOBase):
         """
 
         if mode not in self._supported_modes:
-            raise ValueError("(%s) Mode has to be one of %s." % \
+            raise ValueError("(%s) Mode has to be one of %s." %
                              self.__class__.__name__,
                              self._supported_modes)
 
         if depth not in self._valid_depth:
-            raise ValueError("(%s) Invalid depth %s.  Valid depths are: %s" % \
+            raise ValueError("(%s) Invalid depth %s.  Valid depths are: %s" %
                              (self.__class__.__name__,
                              depth,
                              self._valid_depth))

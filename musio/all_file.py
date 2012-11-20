@@ -81,13 +81,13 @@ class AllFile(AudioIO):
 
         if self._depth != self._source.depth:
             self._convert_depth = lambda data: \
-                    audioop.lin2lin(data, self._source._width, self._width)
+                audioop.lin2lin(data, self._source._width, self._width)
         else:
             self._convert_depth = lambda data: data
 
         if self._unsigned != self._source.unsigned:
             self._convert_unsigned = lambda data: \
-                    audioop.bias(data, self._source._width, 128)
+                audioop.bias(data, self._source._width, 128)
         else:
             self._convert_unsigned = lambda data: data
 

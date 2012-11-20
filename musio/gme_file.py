@@ -2,7 +2,7 @@
 # vim: sw=4:ts=4:sts=4:fdm=indent:fdl=0:
 # -*- coding: UTF8 -*-
 #
-# A module to handle the playback of some chip music. 
+# A module to handle the playback of some chip music.
 # Copyright (C) 2012 Josiah Gordon <josiahg@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A file like object to play libgme supported chip music. 
+""" A file like object to play libgme supported chip music.
 
 """
 
@@ -41,6 +41,7 @@ __supported_dict = {
         'python': []
     }
 }
+
 
 def _err(func_out):
     """ _err(func_out) -> Check the function output and if it is not
@@ -355,7 +356,7 @@ class MusicEmu(object):
         return _gme.string_at(c_buffer, _gme.sizeof(c_buffer))
 
     def _open(self, filename, sample_rate):
-        """ _open(filename, sample_rate) -> Wrap the _gme.gme_open_file 
+        """ _open(filename, sample_rate) -> Wrap the _gme.gme_open_file
         function.
 
         """

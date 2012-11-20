@@ -29,6 +29,7 @@ import re
 
 from .io_base import AudioIO, io_wrapper
 
+
 def issupported(filename, *args):
     """ issupported(filename) -> Returns True if file is supported else False.
 
@@ -128,7 +129,7 @@ class TextFile(AudioIO):
         if 'w' in self._mode:
             self._fileobj.seek(position)
         else:
-            self._index= int(position)
+            self._index = int(position)
 
     def _get_position(self) -> int:
         """ Returns the current position.

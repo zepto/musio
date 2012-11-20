@@ -272,7 +272,7 @@ class VorbisFile(AudioIO):
         if ret:
             raise IOError("Error initializing vorbis info")
 
-        self._comment["ENCODER"] =  __name__
+        self._comment["ENCODER"] = __name__
         self._info_dict['encoder'] = __name__
 
         self._dsp_state.analysis_init(self._info)
@@ -325,9 +325,11 @@ class VorbisFile(AudioIO):
 
         bytebuffer = array('h', data)
         for i in range(data_size):
-            dsp_buffer[0][i] = (bytebuffer[i * self._channels] | (bytebuffer[i] % 256)) / 32768.0
+            dsp_buffer[0][i] = (bytebuffer[i * self._channels] |
+                                (bytebuffer[i] % 256)) / 32768.0
             if self._channels != 1:
-                dsp_buffer[1][i] = (bytebuffer[i * 2 + 1] | (bytebuffer[i + 1] % 256)) / 32768.0
+                dsp_buffer[1][i] = (bytebuffer[i * 2 + 1] |
+                                    (bytebuffer[i + 1] % 256)) / 32768.0
 
         return data_size
 
@@ -392,7 +394,7 @@ class OggStreamState(_vorbisenc.ogg_stream_state):
         if not serialno:
             seed(time())
             serialno = randint(0, 32767)
-        _vorbisenc.ogg_stream_init(self, serialno);
+        _vorbisenc.ogg_stream_init(self, serialno)
 
         self.packetin = partial(_vorbisenc.ogg_stream_packetin, self)
         self.pageout = partial(_vorbisenc.ogg_stream_pageout, self)
@@ -495,7 +497,7 @@ class VorbisInfo(_vorbisenc.vorbis_info):
         super(VorbisInfo, self).__init__()
         _vorbisenc.vorbis_info_init(_vorbisfile.byref(self))
 
-        self.encode_init_vbr = partial(_vorbisenc.vorbis_encode_init_vbr, 
+        self.encode_init_vbr = partial(_vorbisenc.vorbis_encode_init_vbr,
                                        _vorbisfile.byref(self))
         self.clear = partial(_vorbisenc.vorbis_info_clear,
                              _vorbisfile.byref(self))
@@ -511,7 +513,7 @@ class VorbisComment(_vorbisenc.vorbis_comment):
 
         """
 
-        _vorbisenc.vorbis_comment_init(self);
+        _vorbisenc.vorbis_comment_init(self)
 
         self.clear = partial(_vorbisenc.vorbis_comment_clear, self)
 

@@ -160,6 +160,7 @@ class OnDemand(object):
 
         return vars(self._module)
 
+
 # Try to make a lazy module.
 class LazyModule(types_ModuleType):
     """ LazyModule only loads the module when one of its attributes is
@@ -179,6 +180,7 @@ class LazyModule(types_ModuleType):
         # self.__loader__ = super(LazyImporter, self.__loader__)
         # self.__loader__.load_module(self.__name__)
         return getattr(self, attr, None)
+
 
 # Test class
 class LazyImp(object):
@@ -294,7 +296,6 @@ class LazyImporter(object):
         else:
             module.__package__ == fullname.rpartition('.')[0]
             module.__path__ = []
-
 
         # Add the module to sys.modules.
         sys.modules[fullname] = module

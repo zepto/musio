@@ -28,6 +28,7 @@ blocking and clogging up the read.
 from multiprocessing import Queue, Process, Manager
 from queue import Empty as queue_Empty
 
+
 def _queue_writer(func, in_queue, out_queue):
     """ _queue_writer(func, in_queue, out_queue) -> Read data from queue and
     send it to func until 'EOF' is received.  When exiting it puts the sum of

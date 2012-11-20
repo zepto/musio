@@ -32,7 +32,7 @@ from .import_util import LazyImport
 
 _neaacdec = LazyImport('faad._neaacdec', globals(), locals(), ['_neaacdec'], 1)
 
-__supported_dict= {
+__supported_dict = {
     'ext': ['.aac'],
     'handler': 'AACFile',
     'dependencies': {
@@ -194,7 +194,7 @@ class AACDecoder(object):
 
                 # Calculate the number of bytes read.
                 bytes_read = frame_info.samples * \
-                        _neaacdec.sizeof(_neaacdec.c_short)
+                    _neaacdec.sizeof(_neaacdec.c_short)
 
                 # Put the data in a buffer and return it.
                 byte_buffer = _neaacdec.string_at(sample_buffer, bytes_read)
@@ -311,7 +311,7 @@ class AACFile(AudioIO):
 
             # Cast the bytes object to a type POINTER(ctypes.c_ubyte).
             encoded_ubytes = _neaacdec.cast(encoded_data,
-                                  _neaacdec.POINTER(_neaacdec.c_ubyte))
+                                            _neaacdec.POINTER(_neaacdec.c_ubyte))
 
             # Decode into a temporary buffer.
             temp_data = self._aac_decoder.decode(encoded_ubytes,

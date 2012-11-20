@@ -54,7 +54,7 @@ def _check(err):
         err = err.value
 
     if err != _mpg123.MPG123_OK:
-        err_str =_mpg123.mpg123_plain_strerror(err).decode('cp437', 'replace')
+        err_str = _mpg123.mpg123_plain_strerror(err).decode('cp437', 'replace')
         print("Error in %s: %s" % (__file__, err_str))
 
     return err
@@ -78,9 +78,9 @@ class Mpg123File(AudioIO):
         super(Mpg123File, self).__init__(filename, 'r', depth, rate, channels)
 
         if depth in [8, 16, 32]:
-            encoding = getattr(_mpg123, 'MPG123_ENC_%s_%s' % \
-                                     ('UNSIGNED' if unsigned else 'SIGNED',
-                                      depth))
+            encoding = getattr(_mpg123, 'MPG123_ENC_%s_%s' %
+                               ('UNSIGNED' if unsigned else 'SIGNED',
+                                depth))
         else:
             encoding = _mpg123.MPG123_ENC_SIGNED_16
 
@@ -114,7 +114,7 @@ class Mpg123File(AudioIO):
         """
 
         _check(_mpg123.mpg123_seek(self._mpg123_handle, position,
-                                        _mpg123.SEEK_SET))
+                                   _mpg123.SEEK_SET))
 
     def _get_position(self):
         """ Updates the position variable.
@@ -137,24 +137,23 @@ class Mpg123File(AudioIO):
         if _check(_mpg123.mpg123_open(mpg123_handle, filename.encode())):
             raise IOError("There was an error opening %s" % filename)
 
-
         with silence(sys_stderr):
             _check(_mpg123.mpg123_scan(mpg123_handle))
 
         _check(_mpg123.mpg123_format_none(mpg123_handle))
 
         err = _check(_mpg123.mpg123_format(mpg123_handle,
-                                                self._rate, self._channels,
-                                                self._encoding))
+                                           self._rate, self._channels,
+                                           self._encoding))
 
         rate = _mpg123.c_long()
         channels = _mpg123.c_int()
         encoding = _mpg123.c_int()
 
         _check(_mpg123.mpg123_getformat(mpg123_handle,
-                                            _mpg123.byref(rate),
-                                            _mpg123.byref(channels),
-                                            _mpg123.byref(encoding)))
+                                        _mpg123.byref(rate),
+                                        _mpg123.byref(channels),
+                                        _mpg123.byref(encoding)))
 
         self._rate = rate.value
         self._channels = channels.value
@@ -179,11 +178,11 @@ class Mpg123File(AudioIO):
         id3v1 = _mpg123.POINTER(_mpg123.mpg123_id3v1)()
         id3v2 = _mpg123.POINTER(_mpg123.mpg123_id3v2)()
         _check(_mpg123.mpg123_id3(self._mpg123_handle,
-                                       _mpg123.byref(id3v1),
-                                       _mpg123.byref(id3v2)))
+                                  _mpg123.byref(id3v1),
+                                  _mpg123.byref(id3v2)))
 
         id3_dict = self._info_dict
-        for i in ['tag', 'title', 'artist', 'album', 'year', 'comment', 
+        for i in ['tag', 'title', 'artist', 'album', 'year', 'comment',
                   'genre']:
             try:
                 id3_dict[i] = getattr(id3v1.contents, i)

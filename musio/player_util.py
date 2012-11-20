@@ -30,6 +30,7 @@ from functools import wraps as functools_wraps
 
 from .io_util import open_file, open_device
 
+
 def _play_proc(msg_dict):
     """ Player process
 
@@ -42,15 +43,18 @@ def _play_proc(msg_dict):
     from all_file import AllFile as Music
 
     with Music(**msg_dict) as music, AudioIO(rate=music.rate,
-                                        channels=music.channels,
-                                        depth=music.depth,
-                                        bigendian=music.bigendian,
-                                        unsigned=music.unsigned) as audio_out:
+                                             channels=music.channels,
+                                             depth=music.depth,
+                                             bigendian=music.bigendian,
+                                             unsigned=music.unsigned) as \
+            audio_out:
+
         music.loops = msg_dict.get('loops', -1)
         for buf in music:
             written = audio_out.write(buf)
             if not msg_dict['playing'] or not buf and not written:
                 break
+
 
 def play(filename, **kwargs):
     """ play(filename, soundfont=None, loops=-1) -> Starts playing filename and
@@ -67,6 +71,7 @@ def play(filename, **kwargs):
     play_t.start()
 
     return playing, play_t
+
 
 def stop(player_tup):
     """ stop(player_tup) -> Stop the player.
@@ -282,7 +287,7 @@ class AudioPlayer(object):
 
             # Open a new process to play a file in the background.
             self._play_p = Process(target=self._play_proc,
-                                args=(self._msg_dict,self._player_conn))
+                                   args=(self._msg_dict, self._player_conn))
 
             # Start the process.
             self._play_p.start()

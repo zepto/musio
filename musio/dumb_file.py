@@ -2,7 +2,7 @@
 # vim: sw=4:ts=4:sts=4:fdm=indent:fdl=0:
 # -*- coding: UTF8 -*-
 #
-# A module to handle the playback of module music using dumb. 
+# A module to handle the playback of module music using dumb.
 # Copyright (C) 2012 Josiah Gordon <josiahg@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -49,9 +49,9 @@ class Buffer(_dumb.Union):
     """
 
     _fields_ = [
-            ("s16", _dumb.c_short * 8192),
-            ("s8", _dumb.c_ubyte * 16384)
-            ]
+        ("s16", _dumb.c_short * 8192),
+        ("s8", _dumb.c_ubyte * 16384)
+    ]
 
 
 class DumbFile(AudioIO):
@@ -269,17 +269,17 @@ class DumbFile(AudioIO):
         num_smp = _dumb.dumb_it_sd_get_n_samples(sig_data)
         if num_smp > 0:
             tmp_list = load_list('sample', _dumb.dumb_it_sd_get_sample_name,
-                      _dumb.dumb_it_sd_get_sample_filename,
-                      sig_data, num_smp)
+                                 _dumb.dumb_it_sd_get_sample_filename,
+                                 sig_data, num_smp)
             if tmp_list:
                 self._info_dict['samples'] = tmp_list
 
         num_inst = _dumb.dumb_it_sd_get_n_instruments(sig_data)
         if num_inst > 0:
             tmp_list = load_list('instrument',
-                    _dumb.dumb_it_sd_get_instrument_name,
-                    _dumb.dumb_it_sd_get_instrument_filename, sig_data,
-                    num_inst)
+                                 _dumb.dumb_it_sd_get_instrument_name,
+                                 _dumb.dumb_it_sd_get_instrument_filename,
+                                 sig_data, num_inst)
             if tmp_list:
                 self._info_dict['instruments'] = tmp_list
 

@@ -67,13 +67,13 @@ class Alsa(DevIO):
                                    unsigned, buffer_size, latency)
 
         if depth in (32, 16):
-            pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_%s%s_%s' % \
-                                       ('U' if unsigned else 'S',
-                                        depth, 
-                                        'BE' if bigendian else 'LE'))
+            pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_%s%s_%s' %
+                                ('U' if unsigned else 'S',
+                                 depth,
+                                 'BE' if bigendian else 'LE'))
         elif depth == 8:
-            pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_%s%s' % \
-                                       ('U' if unsigned else 'S', depth))
+            pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_%s%s' %
+                                ('U' if unsigned else 'S', depth))
         else:
             pcm_format = alsapcm.SND_PCM_FORMAT_U16_LE
 
@@ -118,9 +118,9 @@ class Alsa(DevIO):
                 # Recovery failed so raise IOError.
                 err_str = "(%s.%s) Underrun recovery failed: %s"
                 raise IOError(err_str % (class_name, func_name,
-                            alsapcm.snd_strerror(err).decode('utf8')
-                            )
-                        )
+                              alsapcm.snd_strerror(err).decode('utf8')
+                                )
+                             )
             else:
                 # Recovery succeeded so return 0.
                 rc = 0

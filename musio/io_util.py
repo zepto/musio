@@ -43,6 +43,7 @@ __codec_cache = {}
 # Audio IO device cache dictionary
 __io_cache = {}
 
+
 def slice_buffer(data: bytes, size: int) -> bytes:
     """ slice_buffer(data, size) -> A generator that yields slices of bytes
     from the data buffer.
@@ -65,7 +66,7 @@ def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
     blacklist = [blacklist] if type(blacklist) is str else blacklist
 
     # Add suffix to all names in blacklist.
-    blacklist.extend(['%s%s' % (name, suffix) for name in blacklist \
+    blacklist.extend(['%s%s' % (name, suffix) for name in blacklist
                                                 if not name.endswith(suffix)])
 
     # Add the path of this file to the search path.
@@ -76,10 +77,10 @@ def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
     [sys_path.append(path) for path in mod_path if path not in sys_path]
 
     # Build the list of modules ending in suffix in the mod_path(s).
-    mod_list = ((path, name) for path in sys_path \
-                                if os_isdir(path) \
-                                    for name in os_listdir(path) \
-                                        if name.endswith(suffix) and \
+    mod_list = ((path, name) for path in sys_path
+                                if os_isdir(path)
+                                    for name in os_listdir(path)
+                                        if name.endswith(suffix) and
                                            name not in blacklist)
 
     return mod_list
@@ -107,7 +108,8 @@ def _check_dependencies(dependencies: dict) -> bool:
     return True
 
 
-def get_codec(filename: str, mod_path=[], cached=True, blacklist=[]) -> AudioIO:
+def get_codec(filename: str, mod_path=[], cached=True,
+              blacklist=[]) -> AudioIO:
     """ get_codec(filename, mod_path=[], cached=True, blacklist=[]) -> Load the
     codecs in the path and return the first one that can play the file, or the
     one with the default attribute set.
@@ -365,7 +367,7 @@ def silence(fd):
     """
 
     from os import dup as os_dup
-    from os  import pipe as os_pipe
+    from os import pipe as os_pipe
     from os import dup2 as os_dup2
     from os import close as os_close
     from os import fdopen as os_fdopen
