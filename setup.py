@@ -38,7 +38,7 @@ setup(
         author_email = 'josiahg@gmail.com',
         url = 'http://www.github.com/zepto/musio',
         download_url = 'http://www.github.com/zepto/musio/downloads',
-        license = 'LICENSE.txt'
+        license = 'LICENSE.txt',
         keywords = ['audio', 'portaudio', 'alsa', 'ffmpeg'],
         classifiers = [
             'Programming Language :: Python :: 3',
