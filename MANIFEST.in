@@ -1,3 +1,4 @@
-include COPYING
+include *.txt
+recursive-include docs *.txt
 recursive-include examples *.py
 recursive-include utils *.py *.sh
