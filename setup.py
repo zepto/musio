@@ -33,10 +33,12 @@ setup(
             'musio.mpg123', 'musio.ogg', 'musio.portaudio', 'musio.xmp'],
         version = '0.5.0',
         description = 'Audio I/O library',
+        long_description = open('README.txt').read(),
         author = 'Josiah Gordon',
         author_email = 'josiahg@gmail.com',
         url = 'http://www.github.com/zepto/musio',
         download_url = 'http://www.github.com/zepto/musio/downloads',
+        license = 'LICENSE.txt'
         keywords = ['audio', 'portaudio', 'alsa', 'ffmpeg'],
         classifiers = [
             'Programming Language :: Python :: 3',
@@ -48,5 +50,4 @@ setup(
             'Topic :: Software Development :: Libraries :: Python Modules',
             'Topic :: Audio Processing',
             ],
-        long_description = ''' Audio I/O ''',
         )
