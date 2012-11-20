@@ -32,11 +32,11 @@ from .import_util import LazyImport
 ossaudiodev = LazyImport('ossaudiodev', globals(), locals(), [], 1)
 
 __supported_dict = {
-        'output': [bytes],
-        'input': [bytes],
-        'handler': 'Oss',
-        # 'default': True
-        }
+    'output': [bytes],
+    'input': [bytes],
+    'handler': 'Oss',
+    # 'default': True
+}
 
 
 class Oss(DevIO):

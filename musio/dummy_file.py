@@ -26,9 +26,9 @@
 from .io_base import AudioIO, io_wrapper
 
 __supported_dict = {
-        'ext': ['.*'],
-        'handler': 'DummyFile',
-        }
+    'ext': ['.*'],
+    'handler': 'DummyFile',
+}
 
 
 class DummyFile(AudioIO):

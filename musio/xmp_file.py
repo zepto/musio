@@ -30,21 +30,21 @@ from .import_util import LazyImport
 _xmp = LazyImport('xmp._xmp', globals(), locals(), ['_xmp'], 1)
 
 __supported_dict = {
-        'ext': ['.669', '.alm', '.amd', '.amf', '.arch', '.asylum', '.coco',
-                '.dbm', '.digi', '.dmf', '.dt', '.dtt', '.emod', '.far',
-                '.flt', '.fnk', '.ftm', '.gal4', '.gal5', '.gdm', '.gtk',
-                '.hsc', '.ice', '.imf', '.ims', '.it', '.liq', '.masi', '.mdl',
-                '.med2', '.med3', '.med4', '.mfp', '.mgt', '.mmd1', '.mmd3',
-                '.mod', '.mtm', '.no', '.okt', '.polly', '.psm', '.pt3',
-                '.ptm', '.pw', '.rad', '.rtm', '.s3m', '.sfx', '.ssmt', '.stc',
-                '.stim', '.st', '.stm', '.stx', '.sym', '.tcb', '.ult', '.umx',
-                '.xm'],
-        'handler': 'XMPFile',
-        'dependencies': {
-            'ctypes': ['xmp'],
-            'python': []
-            }
-        }
+    'ext': ['.669', '.alm', '.amd', '.amf', '.arch', '.asylum', '.coco',
+            '.dbm', '.digi', '.dmf', '.dt', '.dtt', '.emod', '.far',
+            '.flt', '.fnk', '.ftm', '.gal4', '.gal5', '.gdm', '.gtk',
+            '.hsc', '.ice', '.imf', '.ims', '.it', '.liq', '.masi', '.mdl',
+            '.med2', '.med3', '.med4', '.mfp', '.mgt', '.mmd1', '.mmd3',
+            '.mod', '.mtm', '.no', '.okt', '.polly', '.psm', '.pt3',
+            '.ptm', '.pw', '.rad', '.rtm', '.s3m', '.sfx', '.ssmt', '.stc',
+            '.stim', '.st', '.stm', '.stx', '.sym', '.tcb', '.ult', '.umx',
+            '.xm'],
+    'handler': 'XMPFile',
+    'dependencies': {
+        'ctypes': ['xmp'],
+        'python': []
+    }
+}
 
 
 class XMPFile(AudioIO):

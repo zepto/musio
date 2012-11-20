@@ -34,13 +34,13 @@ _mpg123 = LazyImport('mpg123._mpg123', globals(), locals(),
                      ['_mpg123'], 1)
 
 __supported_dict = {
-        'ext': ['.mp3'],
-        'handler': 'Mpg123File',
-        'dependencies': {
-            'ctypes': ['mpg123'],
-            'python': []
-            }
-        }
+    'ext': ['.mp3'],
+    'handler': 'Mpg123File',
+    'dependencies': {
+        'ctypes': ['mpg123'],
+        'python': []
+    }
+}
 
 
 def _check(err):

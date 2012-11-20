@@ -23,6 +23,8 @@
 
 """
 
+from .io_util import open_file, open_device
+
 __all__ = ['aac_file',
            'all_file',
            'alsa_io',

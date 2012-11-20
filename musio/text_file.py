@@ -50,11 +50,11 @@ def issupported(filename, *args):
     return True if 'text' in mimetype else False
 
 __supported_dict = {
-        'ext': ['.txt'],
-        'issupported': issupported,
-        'handler': 'TextFile',
-        'default': True
-        }
+    'ext': ['.txt'],
+    'issupported': issupported,
+    'handler': 'TextFile',
+    'default': True
+}
 
 
 class TextFile(AudioIO):

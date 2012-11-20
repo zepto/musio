@@ -35,15 +35,15 @@ _portaudio = LazyImport('portaudio.portaudio', globals(), locals(),
                         ['portaudio'], 1)
 
 __supported_dict = {
-        'output': [bytes],
-        'input': [bytes],
-        'handler': 'Portaudio',
-        'default': True,
-        'dependencies': {
-            'ctypes': ['portaudio'],
-            'python': []
-            }
-        }
+    'output': [bytes],
+    'input': [bytes],
+    'handler': 'Portaudio',
+    'default': True,
+    'dependencies': {
+        'ctypes': ['portaudio'],
+        'python': []
+    }
+}
 
 
 class Portaudio(DevIO):

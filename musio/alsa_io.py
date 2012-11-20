@@ -31,15 +31,15 @@ from .import_util import LazyImport
 alsapcm = LazyImport('alsa.pcm', globals(), locals(), ['pcm'], 1)
 
 __supported_dict = {
-        'output': [bytes],
-        'input': [bytes],
-        'handler': 'Alsa',
-        # 'default': True
-        'dependencies': {
-            'ctypes': ['asound'],
-            'python': []
-            }
-        }
+    'output': [bytes],
+    'input': [bytes],
+    'handler': 'Alsa',
+    # 'default': True
+    'dependencies': {
+        'ctypes': ['asound'],
+        'python': []
+    }
+}
 
 
 class Alsa(DevIO):

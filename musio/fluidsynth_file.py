@@ -34,13 +34,13 @@ _fluidsynth = LazyImport('fluidsynth.fluidsynth', globals(), locals(),
 
 
 __supported_dict = {
-        'ext': ['.mid', '.midi'],
-        'handler': 'FluidsynthFile',
-        'dependencies': {
-            'ctypes': ['fluidsynth'],
-            'python': []
-            }
-        }
+    'ext': ['.mid', '.midi'],
+    'handler': 'FluidsynthFile',
+    'dependencies': {
+        'ctypes': ['fluidsynth'],
+        'python': []
+    }
+}
 
 # Interp constants
 FLUID_INTERP_NONE = 0

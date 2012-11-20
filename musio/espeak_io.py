@@ -34,12 +34,12 @@ from .import_util import LazyImport
 _espeak = LazyImport('espeak.espeak', globals(), locals(), ['_espeak'], 1)
 
 __supported_dict = {
-        'output': [str],
-        'input': [None],
-        'handler': 'Espeak',
-        'default': True,
-        'dependencies': {'ctypes': ['espeak'], 'python': []}
-        }
+    'output': [str],
+    'input': [None],
+    'handler': 'Espeak',
+    'default': True,
+    'dependencies': {'ctypes': ['espeak'], 'python': []}
+}
 
 
 class Espeak(DevIO):

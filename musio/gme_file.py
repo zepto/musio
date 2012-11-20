@@ -33,14 +33,14 @@ from .import_util import LazyImport
 _gme = LazyImport('gme._gme', globals(), locals(), ['_gme'], 1)
 
 __supported_dict = {
-        'ext': ['.ay', '.gps', '.gym', '.hes', '.kss', '.nsf', '.nsfe', 
-                '.sap', '.spc', '.vgm', '.vgz'],
-        'handler': 'GMEFile',
-        'dependencies': {
-            'ctypes': ['gme'],
-            'python': []
-            }
-        }
+    'ext': ['.ay', '.gps', '.gym', '.hes', '.kss', '.nsf', '.nsfe',
+            '.sap', '.spc', '.vgm', '.vgz'],
+    'handler': 'GMEFile',
+    'dependencies': {
+        'ctypes': ['gme'],
+        'python': []
+    }
+}
 
 def _err(func_out):
     """ _err(func_out) -> Check the function output and if it is not

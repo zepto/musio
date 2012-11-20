@@ -32,14 +32,14 @@ from .import_util import LazyImport
 _espeak = LazyImport('espeak.espeak', globals(), locals(), ['_espeak'], 1)
 
 __supported_dict = {
-        'ext': ['.txt'],
-        'handler': 'EspeakFile',
-        # 'default': True
-        'dependencies': {
-            'ctypes': ['espeak'],
-            'python': []
-            }
-        }
+    'ext': ['.txt'],
+    'handler': 'EspeakFile',
+    # 'default': True
+    'dependencies': {
+        'ctypes': ['espeak'],
+        'python': []
+    }
+}
 
 
 class EspeakFile(AudioIO):

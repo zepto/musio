@@ -37,13 +37,13 @@ _mp4v2 = LazyImport('mp4v2._mp4v2', globals(), locals(),
                     ['_mp4v2'], 1)
 
 __supported_dict = {
-        'ext': ['.mp4', '.m4v'],
-        'handler': 'Mp4File',
-        'dependencies': {
-            'ctypes': ['mp4v2', 'faad'],
-            'python': []
-            }
-        }
+    'ext': ['.mp4', '.m4v'],
+    'handler': 'Mp4File',
+    'dependencies': {
+        'ctypes': ['mp4v2', 'faad'],
+        'python': []
+    }
+}
 
 
 class Mp4File(AudioIO):

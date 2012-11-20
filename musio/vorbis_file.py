@@ -42,13 +42,13 @@ _vorbisenc = LazyImport('ogg.vorbisenc', globals(), locals(),
                         ['_vorbisenc'], 1)
 
 __supported_dict = {
-        'ext': ['.ogg', '.ogv'],
-        'handler': 'VorbisFile',
-        'dependencies': {
-            'ctypes': ['vorbis', 'vorbisenc', 'vorbisfile', 'ogg'],
-            'python': []
-            }
-        }
+    'ext': ['.ogg', '.ogv'],
+    'handler': 'VorbisFile',
+    'dependencies': {
+        'ctypes': ['vorbis', 'vorbisenc', 'vorbisfile', 'ogg'],
+        'python': []
+    }
+}
 
 
 class VorbisFile(AudioIO):

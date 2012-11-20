@@ -37,15 +37,15 @@ _mikmod = LazyImport('mikmod._mikmod', globals(), locals(),
                      ['_mikmod'], 1)
 
 __supported_dict = {
-        'ext': ['.669', '.amf', '.dsm', '.far', '.gdm', '.imf', '.it', '.med',
-                '.mod', '.mtm', '.s3m', '.stm', '.stx', '.ult', '.uni',
-                '.apun', '.xm'],
-        'handler': 'MikModFile',
-        'dependencies': {
-            'ctypes': ['mikmod'],
-            'python': []
-            }
-        }
+    'ext': ['.669', '.amf', '.dsm', '.far', '.gdm', '.imf', '.it', '.med',
+            '.mod', '.mtm', '.s3m', '.stm', '.stx', '.ult', '.uni',
+            '.apun', '.xm'],
+    'handler': 'MikModFile',
+    'dependencies': {
+        'ctypes': ['mikmod'],
+        'python': []
+    }
+}
 
 
 class MikModFile(AudioIO):

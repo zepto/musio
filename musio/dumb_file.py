@@ -33,14 +33,14 @@ from .import_util import LazyImport
 _dumb = LazyImport('dumb._dumb', globals(), locals(), ['_dumb'], 1)
 
 __supported_dict = {
-        'ext': ['.xm', '.s3m', '.it', '.mod'],
-        'handler': 'DumbFile',
-        'default': True,
-        'dependencies': {
-            'ctypes': ['dumb'],
-            'python': []
-            }
-        }
+    'ext': ['.xm', '.s3m', '.it', '.mod'],
+    'handler': 'DumbFile',
+    'default': True,
+    'dependencies': {
+        'ctypes': ['dumb'],
+        'python': []
+    }
+}
 
 
 class Buffer(_dumb.Union):

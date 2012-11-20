@@ -26,11 +26,11 @@
 from .io_base import DevIO, io_wrapper
 
 __supported_dict = {
-        'output': [bytes, str],
-        'input': [bytes, str],
-        'handler': 'Dummy',
-        # 'default': True
-        }
+    'output': [bytes, str],
+    'input': [bytes, str],
+    'handler': 'Dummy',
+    # 'default': True
+}
 
 
 class Dummy(DevIO):

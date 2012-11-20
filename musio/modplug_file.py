@@ -36,22 +36,22 @@ _modplug = LazyImport('modplug._modplug', globals(), locals(),
                       ['_modplug'], 1)
 
 __supported_dict = {
-        'ext': ['.mod', '.xm', '.s3m', '.it'],
-        'handler': 'ModPlugFile',
-        'default': True,
-        'dependencies': {
-            'ctypes': ['modplug'],
-            'python': []
-            }
-        }
+    'ext': ['.mod', '.xm', '.s3m', '.it'],
+    'handler': 'ModPlugFile',
+    'default': True,
+    'dependencies': {
+        'ctypes': ['modplug'],
+        'python': []
+    }
+}
 
 modplug_flags = [
-        _modplug.MODPLUG_ENABLE_OVERSAMPLING,
-        _modplug.MODPLUG_ENABLE_NOISE_REDUCTION,
-        _modplug.MODPLUG_ENABLE_REVERB,
-        _modplug.MODPLUG_ENABLE_MEGABASS,
-        _modplug.MODPLUG_ENABLE_SURROUND
-        ]
+    _modplug.MODPLUG_ENABLE_OVERSAMPLING,
+    _modplug.MODPLUG_ENABLE_NOISE_REDUCTION,
+    _modplug.MODPLUG_ENABLE_REVERB,
+    _modplug.MODPLUG_ENABLE_MEGABASS,
+    _modplug.MODPLUG_ENABLE_SURROUND
+]
 
 
 class ModPlugFile(AudioIO):

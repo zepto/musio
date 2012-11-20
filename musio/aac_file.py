@@ -33,13 +33,13 @@ from .import_util import LazyImport
 _neaacdec = LazyImport('faad._neaacdec', globals(), locals(), ['_neaacdec'], 1)
 
 __supported_dict= {
-        'ext': ['.aac'],
-        'handler': 'AACFile',
-        'dependencies': {
-            'ctypes': ['faad'],
-            'python': []
-            }
-        }
+    'ext': ['.aac'],
+    'handler': 'AACFile',
+    'dependencies': {
+        'ctypes': ['faad'],
+        'python': []
+    }
+}
 
 
 class AACDecoder(object):

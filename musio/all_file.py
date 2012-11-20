@@ -31,10 +31,10 @@ from .io_util import get_codec
 from .conversion_util import swap_endian
 
 __supported_dict = {
-        'ext': ['.*'],
-        'handler': 'AllFile',
-        'default': True
-        }
+    'ext': ['.*'],
+    'handler': 'AllFile',
+    'default': True
+}
 
 
 class AllFile(AudioIO):

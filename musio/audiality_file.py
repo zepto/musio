@@ -39,13 +39,13 @@ _agw = LazyImport('audiality.audiality', globals(), locals(),
                   ['audiality'], 1)
 
 __supported_dict = {
-        'ext': ['.agw'],
-        'handler': 'AgwFile',
-        'dependencies': {
-            'ctypes': ['audiality'],
-            'python': []
-            }
-        }
+    'ext': ['.agw'],
+    'handler': 'AgwFile',
+    'dependencies': {
+        'ctypes': ['audiality'],
+        'python': []
+    }
+}
 
 
 class AgwFile(AudioIO):

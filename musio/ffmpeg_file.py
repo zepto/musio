@@ -31,14 +31,14 @@ from .import_util import LazyImport
 _av = LazyImport('ffmpeg._av', globals(), locals(), ['_av'], 1)
 
 __supported_dict = {
-        'ext': ['.*', '.flv', '.iflv', '.wma', '.wmv', '.avi', '.mpg'],
-        'protocol': ['http'],
-        'handler': 'FFmpegFile',
-        'dependencies': {
-            'ctypes': ['avcodec', 'avdevice', 'avformat', 'postproc', 'swscale'],
-            'python': []
-            }
-        }
+    'ext': ['.*', '.flv', '.iflv', '.wma', '.wmv', '.avi', '.mpg'],
+    'protocol': ['http'],
+    'handler': 'FFmpegFile',
+    'dependencies': {
+        'ctypes': ['avcodec', 'avdevice', 'avformat', 'postproc', 'swscale'],
+        'python': []
+    }
+}
 
 
 class FFmpegFile(AudioIO):

@@ -2,7 +2,7 @@
 # vim: sw=4:ts=4:sts=4:fdm=indent:fdl=0:
 # -*- coding: UTF8 -*-
 #
-# A module to handle the playback of wave audio. 
+# A module to handle the playback of wave audio.
 # Copyright (C) 2012 Josiah Gordon <josiahg@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
@@ -23,15 +23,14 @@
 
 """
 
-import ctypes as _ctypes
 import wave
 
 from .io_base import AudioIO, io_wrapper
 
 __supported_dict = {
-        'ext': ['.wav'],
-        'handler': 'WaveFile'
-        }
+    'ext': ['.wav'],
+    'handler': 'WaveFile'
+}
 
 
 class WaveFile(AudioIO):
