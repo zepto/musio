@@ -183,8 +183,6 @@ class AudioPlayer(object):
 
         """
 
-        from sys import stdout as sys_stdout
-
         # Open the file to play.
         with open_file(cached=True, **msg_dict) as fileobj:
 
@@ -221,10 +219,7 @@ class AudioPlayer(object):
                             # Print the string and after erasing the old
                             # one using ansi escapes.
                             print('\033[%dD\033[K%s' % (format_len, pos_str),
-                                  end='')
-
-                            # Update stdout.
-                            sys_stdout.flush()
+                                  end='', flush=True)
 
                     # Keep playing if not paused.
                     if not msg_dict.get('paused', False):
