@@ -108,8 +108,8 @@ def _check_dependencies(dependencies: dict) -> bool:
     return True
 
 
-def get_codec(filename: str, mod_path=[], cached=True,
-              blacklist=[]) -> AudioIO:
+def get_codec(filename: str, mod_path: list = [], cached: bool = True,
+              blacklist: list = []) -> AudioIO:
     """ get_codec(filename, mod_path=[], cached=True, blacklist=[]) -> Load the
     codecs in the path and return the first one that can play the file, or the
     one with the default attribute set.
@@ -216,7 +216,8 @@ def get_codec(filename: str, mod_path=[], cached=True,
     return codec
 
 
-def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
+def get_io(fileobj: AudioIO, mod_path: list = [], cached: bool = True,
+           blacklist: list = []) -> DevIO:
     """ get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> Finds a
     audio device that can take the data read from fileobj and returns it.
 
@@ -315,7 +316,8 @@ def get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> DevIO:
     return device
 
 
-def open_file(filename: str, mode='r', mod_path=[], **kwargs) -> AudioIO:
+def open_file(filename: str, mode: str = 'r', mod_path: list = [],
+              **kwargs: dict) -> AudioIO:
     """ open_file(filename, mode='r') -> Returns the open file.
 
     """
@@ -342,7 +344,8 @@ def open_file(filename: str, mode='r', mod_path=[], **kwargs) -> AudioIO:
     return open_codec
 
 
-def open_device(fileobj: AudioIO, mode='w', mod_path=[], **kwargs) -> DevIO:
+def open_device(fileobj: AudioIO, mode: str = 'w', mod_path: list = [],
+                **kwargs: dict) -> DevIO:
     """ open_device(fileobj, mode='r') -> Returns an open audio device.
 
     """
@@ -361,7 +364,7 @@ def open_device(fileobj: AudioIO, mode='w', mod_path=[], **kwargs) -> DevIO:
 
 
 @contextmanager
-def silence(fd):
+def silence(fd: "File descripter"):
     """ silence(fd) -> Silence any output from fd.
 
     """

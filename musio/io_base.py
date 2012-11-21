@@ -255,8 +255,8 @@ class AudioIO(RawIOBase):
         return self._length >= 0
 
     @io_wrapper
-    def seek(self, offset: int, whence=SEEK_SET) -> int:
-        """ seek(position) -> Seek to position in mod.
+    def seek(self, offset: int, whence: int = SEEK_SET) -> int:
+        """ seek(offset, whence) -> Seek to position in mod.
 
         """
 
@@ -279,7 +279,7 @@ class AudioIO(RawIOBase):
 
     @io_wrapper
     def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.
+        """ read(size) -> Reads size amount of data and returns it.
 
         """
 
@@ -333,7 +333,7 @@ class AudioIO(RawIOBase):
         return bytes_read
 
     @io_wrapper
-    def readline(self, size=-1) -> str:
+    def readline(self, size: int = -1) -> str:
         """ readline(size=-1) -> Returns the next line or size bytes.
 
         """

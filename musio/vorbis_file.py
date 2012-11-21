@@ -202,7 +202,7 @@ class VorbisFile(AudioIO):
 
     @io_wrapper
     def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.  If
+        """ read(size) -> Reads size amount of data and returns it.  If
         size is None then read a buffer size.
 
         """
