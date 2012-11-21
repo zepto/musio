@@ -197,7 +197,7 @@ class AudioPlayer(object):
                 fileobj.loops = msg_dict.get('loops', -1)
 
                 # Initialize variable.
-                buf = ' '
+                buf = b'\x00' * device.buffer_size
                 written = 0
 
                 # Loop until stopped or nothing read or written.
@@ -230,7 +230,11 @@ class AudioPlayer(object):
                         written = device.write(buf)
                     else:
                         # Sleep so it doesn't use up the processer.
-                        time_sleep(0.1)
+                        # time_sleep(0.1)
+
+                        # Write a buffer of null bytes so the audio
+                        # system can keep its buffer full.
+                        device.write(b'\x00' * device.buffer_size)
 
                     # Get and process any commands from the parent process.
                     if pipe.poll():
