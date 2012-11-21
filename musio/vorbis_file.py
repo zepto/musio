@@ -181,6 +181,11 @@ class VorbisFile(AudioIO):
             if not comment: break
 
             comment_list = comment.decode('utf8', 'replace').split('=')
+
+            # Handle invalid comments (without '=')
+            if '=' not in comment:
+                comment_list.insert(0, 'misc')
+
             comment_list[0] = comment_list[0].lower()
 
             self._info_dict.update(dict((comment_list,)))
