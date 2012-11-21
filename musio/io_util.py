@@ -350,8 +350,10 @@ def open_device(fileobj: AudioIO, mode: str = 'w', mod_path: list = [],
 
     """
 
+    blacklist = kwargs.get('blacklist', [])
+
     # Get the supported device
-    device = get_io(fileobj, mod_path=mod_path)
+    device = get_io(fileobj, mod_path=mod_path, blacklist=blacklist)
 
     if not device:
         print("Audio format not supported.")
