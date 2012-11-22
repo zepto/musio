@@ -162,6 +162,8 @@ class AudioIO(RawIOBase):
 
         str_list = ['\n']
 
+        max_key_len = 0
+
         for key, value in self._info_dict.items():
             if not str(value).strip():
                 continue
@@ -171,7 +173,11 @@ class AudioIO(RawIOBase):
                 str_list.insert(0, "\n%s" % key.lower().capitalize())
                 continue
             value = str(value).strip()
-            str_list.append("%-12s: %s" % (key.lower().capitalize(), value))
+
+            max_key_len = max([max_key_len, len(key)])
+
+            str_list.append("%-*s: %s" % (max_key_len,
+                                          key.lower().capitalize(), value))
 
         return '\n'.join(str_list)
 
