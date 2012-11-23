@@ -194,6 +194,7 @@ class AudioPlayer(object):
 
             # Put the file info in msg_dict.
             msg_dict['info'] = str(fileobj)
+            msg_dict['length'] = fileobj.length
 
             # Open an audio output device that can handle the data from
             # fileobj.
@@ -252,8 +253,6 @@ class AudioPlayer(object):
                             pipe.send(fileobj.loops)
                         elif 'setloops' in command:
                             fileobj.loops = command['setloops']
-                        elif 'getlength' in command:
-                            pipe.send(fileobj.length)
                         elif 'getloopcount' in command:
                             pipe.send(fileobj.loop_count)
 
@@ -337,6 +336,14 @@ class AudioPlayer(object):
         return self._msg_dict.get('playing', False)
 
     @property
+    def length(self) -> int:
+        """ Length of audio.
+
+        """
+
+        return self._msg_dict.get('length', 0)
+
+    @property
     @playing_wrapper
     def position(self) -> int:
         """ Current position.
@@ -373,16 +380,6 @@ class AudioPlayer(object):
         """
 
         self._control_conn.send({'setloops': int(value)})
-
-    @property
-    @playing_wrapper
-    def length(self) -> int:
-        """ Length of audio.
-
-        """
-
-        self._control_conn.send('getlength')
-        return self._control_conn.recv()
 
     @property
     @playing_wrapper
