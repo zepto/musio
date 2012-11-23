@@ -32,6 +32,7 @@ def main(args: dict) -> None:
     from sys import stdin as sys_stdin
     from select import select
     from time import sleep as time_sleep
+    from subprocess import call as subproc_call
 
     from musio.player_util import AudioPlayer
 
@@ -47,6 +48,9 @@ def main(args: dict) -> None:
     print(player)
 
     player.play()
+
+    # Do not wait for key press and don't echo.
+    subproc_call('stty' + ' -icanon time 0 min 0 -echo', shell=True)
 
     while player.playing:
         # Check for input.
@@ -66,6 +70,9 @@ def main(args: dict) -> None:
             break
 
     print("\nDone.")
+
+    # Turn on echo and wait for keys.
+    subproc_call('stty' + ' icanon echo', shell=True)
 
     player.stop()
 
