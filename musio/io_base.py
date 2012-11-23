@@ -201,6 +201,13 @@ class AudioIO(RawIOBase):
 
         return getattr(self, item)
 
+    def __len__(self):
+        """ The length of the file if it has one.
+
+        """
+
+        return self._length
+
     def __enter__(self):
         """ Provides the ability to use pythons with statement.
 

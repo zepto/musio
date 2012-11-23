@@ -158,6 +158,13 @@ class AudioPlayer(object):
 
         self.stop()
 
+    def __len__(self):
+        """ The length of the file if it has one.
+
+        """
+
+        return self.length
+
     def playing_wrapper(func):
         """ Wrap methods and only call them if the stream is playing
 
