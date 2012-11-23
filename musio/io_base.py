@@ -206,7 +206,7 @@ class AudioIO(RawIOBase):
 
         """
 
-        return self._length
+        return self._length if self._length >= 0 else 0
 
     def __enter__(self):
         """ Provides the ability to use pythons with statement.
