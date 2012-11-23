@@ -23,7 +23,6 @@
 
 """
 
-from time import sleep as time_sleep
 from multiprocessing import Process, Manager, Pipe
 from io import SEEK_SET, SEEK_CUR, SEEK_END
 from functools import wraps as functools_wraps
@@ -236,9 +235,6 @@ class AudioPlayer(object):
                         # Write buf.
                         written = device.write(buf)
                     else:
-                        # Sleep so it doesn't use up the processer.
-                        # time_sleep(0.1)
-
                         # Write a buffer of null bytes so the audio
                         # system can keep its buffer full.
                         device.write(b'\x00' * device.buffer_size)
