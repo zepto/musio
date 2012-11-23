@@ -174,8 +174,14 @@ class AudioIO(RawIOBase):
                 continue
             value = str(value).strip()
 
-            str_list.append("%-*s: %s" % (max_key_len,
-                                          key.lower().capitalize(), value))
+            # str_list.append("%-*s: %s" % (max_key_len,
+            #                               key.lower().capitalize(), value))
+
+            # Format the info in a list as follows:
+            # key (right align by space max_key_len): value
+            str_list.append("{1:<{0}}: {2}".format(max_key_len,
+                                                   key.lower().capitalize(),
+                                                   value))
 
         return '\n'.join(str_list)
 
