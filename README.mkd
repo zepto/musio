@@ -1,6 +1,5 @@
-=========
 Musio
-=========
+=====
 
 Musio provides an easy interface to audio devices and media files.  It can
 be used in the following way::
@@ -17,7 +16,7 @@ be used in the following way::
 
 
 Player util
-===============
+-----------
 
 The player util provides an easy way to play audio from media files as in the
 following example::

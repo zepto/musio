@@ -34,7 +34,7 @@ setup(
               'musio.portaudio', 'musio.xmp'],
     version='0.5.0',
     description='Audio I/O library',
-    long_description=open('README.txt').read(),
+    long_description=open('README.mkd').read(),
     author='Josiah Gordon',
     author_email='josiahg@gmail.com',
     url='http://www.github.com/zepto/musio',
