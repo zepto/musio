@@ -1,5 +1,6 @@
 include *.txt
 include *.mkd
+include MANIFEST.in
 recursive-include docs *.txt
 recursive-include examples *.py
 recursive-include utils *.py *.sh
