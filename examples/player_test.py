@@ -32,7 +32,7 @@ def main(args: dict) -> None:
     from sys import stdin as sys_stdin
     from select import select
     from time import sleep as time_sleep
-    from subprocess import call as subproc_call
+    from termios import tcgetattr, tcsetattr, ECHO, ICANON, TCSANOW
 
     from musio.player_util import AudioPlayer
 
@@ -49,8 +49,15 @@ def main(args: dict) -> None:
 
     player.play()
 
+    # Save the current terminal state.
+    normal = tcgetattr(sys_stdin)
+    quiet = tcgetattr(sys_stdin)
+
     # Do not wait for key press and don't echo.
-    subproc_call('stty' + ' -icanon time 0 min 0 -echo', shell=True)
+    quiet[3] &= ~(ECHO | ICANON)
+
+    # Set the new terminal state.
+    tcsetattr(sys_stdin, TCSANOW, quiet)
 
     while player.playing:
         # Check for input.
@@ -66,13 +73,17 @@ def main(args: dict) -> None:
         # Handle input commands.
         if command.startswith('p'):
             player.play() if player.paused else player.pause()
-        elif not command:
+        if command.startswith('l'):
+            player.position += 65535
+        if command.startswith('h'):
+            player.position -= 65535
+        elif not command or command.startswith('q'):
             break
 
     print("\nDone.")
 
-    # Turn on echo and wait for keys.
-    subproc_call('stty' + ' icanon echo', shell=True)
+    # Re-set the terminal state.
+    tcsetattr(sys_stdin, TCSANOW, normal)
 
     player.stop()
 
