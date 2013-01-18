@@ -32,8 +32,8 @@ def main(args: dict) -> None:
     from sys import stdin as sys_stdin
     from select import select
     from time import sleep as time_sleep
-    from termios import tcgetattr, tcsetattr
-    from termios import ECHO, ICANON, TCSANOW, VTIME, VMIN
+    from termios import tcgetattr, tcsetattr, ECHO, ICANON, TCSANOW
+    from termios import VMIN, VTIME
 
     from musio.player_util import AudioPlayer
 
@@ -56,8 +56,8 @@ def main(args: dict) -> None:
 
     # Do not wait for key press and don't echo.
     quiet[3] &= ~(ECHO | ICANON)
-    quiet[6][VTIME] = 0
     quiet[6][VMIN] = 0
+    quiet[6][VTIME] = 0
 
     # Set the new terminal state.
     tcsetattr(sys_stdin, TCSANOW, quiet)
@@ -77,9 +77,9 @@ def main(args: dict) -> None:
         if command.startswith('p'):
             player.play() if player.paused else player.pause()
         if command.startswith('l'):
-            player.position += 65535
+            player.position += player.length / 100
         if command.startswith('h'):
-            player.position -= 65535
+            player.position -= player.length / 100
         elif not command or command.startswith('q'):
             break
 
