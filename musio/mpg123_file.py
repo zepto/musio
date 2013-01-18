@@ -124,7 +124,7 @@ class Mpg123File(AudioIO):
         # Update the position.
         return _mpg123.mpg123_tell(self._mpg123_handle)
 
-    def _open(self, filename):
+    def _open(self, filename: str):
         """ _open(filename) -> Load the specified file.
 
         """
