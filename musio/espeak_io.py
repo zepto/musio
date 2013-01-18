@@ -28,10 +28,10 @@ from sys import stderr as sys_stderr
 
 from .io_base import DevIO, io_wrapper
 from .io_util import silence
-# from .espeak import espeak as _espeak
+# from .espeak import _espeak
 from .import_util import LazyImport
 
-_espeak = LazyImport('espeak.espeak', globals(), locals(), ['_espeak'], 1)
+_espeak = LazyImport('espeak._espeak', globals(), locals(), ['_espeak'], 1)
 
 __supported_dict = {
     'output': [str],
@@ -59,13 +59,14 @@ class Espeak(DevIO):
 
         """
 
-        rate = _espeak.init()
+        output = _espeak.AUDIO_OUTPUT_PLAYBACK
+        rate = self._err_check(_espeak.espeak_Initialize(output, 0, None, 0))
 
         super(Espeak, self).__init__(mode='w', depth=16,  rate=rate,
                                      channels=1)
 
         self._voice = voice
-        _espeak.set_voice(voice)
+        self.voice = voice
 
         self._closed = False
 
@@ -78,13 +79,25 @@ class Espeak(DevIO):
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
+    def _err_check(self, ret_val):
+        """ Checks the 'ret_val' for error status (<0) and prints and error
+        message.  Returns 'ret_val' for the calling function to use.
+
+        """
+        try:
+            assert(ret_val >= 0)
+        except Exception as err:
+            print("There was and error %s %s" % (err, ret_val), file=sys_stderr)
+
+        return ret_val
+
     @property
     def range(self):
         """ The current inflection range.
 
         """
 
-        return _espeak.get_range()
+        return _espeak.espeak_GetParameter(_espeak.espeakRANGE, 1)
 
     @range.setter
     def range(self, value):
@@ -92,7 +105,8 @@ class Espeak(DevIO):
 
         """
 
-        _espeak.set_range(int(value))
+        self._err_check(_espeak.espeak_SetParameter(_espeak.espeakRANGE,
+                                                    int(value), 0))
 
     @property
     def pitch(self):
@@ -100,7 +114,7 @@ class Espeak(DevIO):
 
         """
 
-        return _espeak.get_pitch()
+        return _espeak.espeak_GetParameter(_espeak.espeakPITCH, 1)
 
     @pitch.setter
     def pitch(self, value):
@@ -108,7 +122,8 @@ class Espeak(DevIO):
 
         """
 
-        _espeak.set_pitch(int(value))
+        self._err_check(_espeak.espeak_SetParameter(_espeak.espeakPITCH,
+                                                    int(value), 0))
 
     @property
     def volume(self):
@@ -116,7 +131,7 @@ class Espeak(DevIO):
 
         """
 
-        return _espeak.get_volume()
+        return _espeak.espeak_GetParameter(_espeak.espeakVOLUME, 1)
 
     @volume.setter
     def volume(self, value):
@@ -124,7 +139,8 @@ class Espeak(DevIO):
 
         """
 
-        _espeak.set_volume(int(value))
+        self._err_check(_espeak.espeak_SetParameter(_espeak.espeakVOLUME,
+                                                    int(value), 0))
 
     @property
     def speed(self):
@@ -132,7 +148,7 @@ class Espeak(DevIO):
 
         """
 
-        return _espeak.get_speed()
+        return _espeak.espeak_GetParameter(_espeak.espeakRATE, 1)
 
     @speed.setter
     def speed(self, value):
@@ -140,7 +156,8 @@ class Espeak(DevIO):
 
         """
 
-        _espeak.set_speed(int(value))
+        self._err_check(_espeak.espeak_SetParameter(_espeak.espeakRATE,
+                                                    int(value), 0))
 
     @property
     def voice(self):
@@ -148,7 +165,8 @@ class Espeak(DevIO):
 
         """
 
-        return _espeak.get_voice()
+        voice = _espeak.espeak_GetCurrentVoice()
+        return voice.contents.languages[1:].decode()
 
     @voice.setter
     def voice(self, value):
@@ -157,14 +175,28 @@ class Espeak(DevIO):
         """
 
         self._voice = value
-        _espeak.set_voice(value)
+
+        if not isinstance(value, bytes):
+            value = value.encode()
+
+        self._err_check(_espeak.espeak_SetVoiceByName(value))
 
     def list_voices(self):
         """ Print a list of available voices.
 
         """
 
-        _espeak.list_voices()
+        voices = _espeak.espeak_ListVoices(None)
+        print("%-21s %-22s %s" % ("Language", "Name", "Identifier"))
+        print('-'*55)
+        for voice in voices:
+            if not voice:
+                break
+            voice = voice.contents
+            lang = voice.languages.decode()
+            name = voice.name.decode()
+            ident = voice.identifier.decode()
+            print("%-22s %-22s %s" % (lang, name, ident))
 
     def close(self):
         """ Stop speaking.
@@ -172,7 +204,8 @@ class Espeak(DevIO):
         """
 
         if not self.closed:
-            _espeak.close()
+            self._err_check(_espeak.espeak_Cancel())
+            self._err_check(_espeak.espeak_Terminate())
 
             self._closed = True
 
@@ -181,7 +214,7 @@ class Espeak(DevIO):
 
         """
 
-        while _espeak.isplaying():
+        while bool(_espeak.espeak_IsPlaying()):
             time_sleep(0.02)
 
     @io_wrapper
@@ -203,11 +236,19 @@ class Espeak(DevIO):
         elif type(data) is not str:
             return 0
 
+        # Cleanup the input and get its length.
+        text = data.strip().encode() + b'\0'
+        text_length = len(text)
+
         # Silence stderr
         with silence(sys_stderr):
-            return_val = _espeak.speak_text(data)
+            # Speak the text.
+            self._err_check(_espeak.espeak_Synth(text, text_length, 0,
+                                                 _espeak.POS_CHARACTER, 0,
+                                                 _espeak.espeakCHARS_UTF8,
+                                                 None, None))
 
             # Flush output buffer before returning
             self.flush()
 
-        return return_val
+        return text_length
