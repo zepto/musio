@@ -249,6 +249,10 @@ class Alsa(DevIO):
         """
 
         if not self.closed:
+            # Let the pcm finish writing out all its data.
+            alsapcm.snd_pcm_drain(self._out_pcm)
+
+            # Close all open pcms.
             for pcm in (self._in_pcm, self._out_pcm):
                 if pcm:
                     alsapcm.snd_pcm_hw_free(pcm)
