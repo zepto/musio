@@ -304,10 +304,11 @@ class EspeakFile(AudioIO):
         """
 
         if not self.closed:
+            self._speaking = False
+
             self._err_check(_espeak.espeak_Cancel())
             self._err_check(_espeak.espeak_Terminate())
 
-            self._speaking = False
             self._closed = True
 
     @io_wrapper
