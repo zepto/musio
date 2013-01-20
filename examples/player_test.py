@@ -86,9 +86,9 @@ def main(args: dict) -> None:
             # Handle input commands.
             if command.startswith('p') or command.startswith(' '):
                 player.play() if player.paused else player.pause()
-            if command.startswith('l'):
+            if command.startswith('l') or command.endswith('\033[c'):
                 player.position += player.length / 100
-            if command.startswith('h'):
+            if command.startswith('h') or command.endswith('\033[d'):
                 player.position -= player.length / 100
             elif command.startswith('q'):
                 quit_val = False
