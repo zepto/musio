@@ -28,6 +28,7 @@ from functools import wraps as functools_wraps
 from sys import stderr as sys_stderr
 
 from .io_base import AudioIO, io_wrapper
+from .io_util import msg_out
 from .import_util import LazyImport
 # from .espeak import _espeak
 
@@ -163,7 +164,7 @@ class EspeakFile(AudioIO):
         try:
             assert(ret_val >= 0)
         except Exception as err:
-            print("There was and error %s %s" % (err, ret_val),
+            msg_out("There was and error %s %s" % (err, ret_val),
                   file=sys_stderr)
 
         return ret_val

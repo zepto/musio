@@ -25,7 +25,7 @@
 
 from sys import stderr as sys_stderr
 
-from .io_util import silence
+from .io_util import silence, msg_out
 from .io_base import AudioIO, io_wrapper
 # from .mpg123 import _mpg123
 from .import_util import LazyImport
@@ -43,10 +43,6 @@ __supported_dict = {
 }
 
 
-# If True no error messages will be printed.
-SILENT=True
-
-
 def _check(err):
     """ Check if there was an error and print the result.
 
@@ -57,11 +53,9 @@ def _check(err):
     if hasattr(err, 'value'):
         err = err.value
 
-    if SILENT: return err
-
     if err != _mpg123.MPG123_OK:
         err_str = _mpg123.mpg123_plain_strerror(err).decode('cp437', 'replace')
-        print("Error in %s: %s" % (__file__, err_str))
+        msg_out("Error in %s: %s" % (__file__, err_str))
 
     return err
 
@@ -282,4 +276,4 @@ class Mpg123File(AudioIO):
 
                 self._closed = True
             except Exception as err:
-                print("(%s.close) Error: %s" % (self.__class__.__name__, err))
+                msg_out("(%s.close) Error: %s" % (self.__class__.__name__, err))

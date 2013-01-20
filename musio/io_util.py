@@ -43,6 +43,18 @@ __codec_cache = {}
 # Audio IO device cache dictionary
 __io_cache = {}
 
+# Set to True to enable debut output
+DEBUG=False
+
+
+def msg_out(message: str):
+    """ Print message if DEBUG is True.
+
+    """
+
+    if DEBUG:
+        msg_out(message, flush=True)
+
 
 def slice_buffer(data: bytes, size: int) -> bytes:
     """ slice_buffer(data, size) -> A generator that yields slices of bytes
@@ -406,3 +418,38 @@ def silence(fd: "File descripter"):
         # Return the fd back to its original state.
         os_dup2(fd.fileno(), old_fd.fileno())
         fd = old_fd
+
+@contextmanager
+def py_silence(new_stdout: "File descripter"=None,
+               new_stderr: "File descripter"=None):
+    """ py_silence(new_stdout, new_stderr) -> Silence any output from fd.  In
+    python.
+
+    """
+
+    from os import devnull as os_devnull
+    import sys
+
+    stdout = new_stdout or sys.stdout
+    stderr = new_stderr or sys.stderr
+
+    # Backup the file
+    old_stdout = sys.stdout
+    old_stderr = sys.stderr
+
+    # Flush the file so it can be silenced properly.
+    sys.stdout.flush()
+    sys.stderr.flush()
+
+    sys.stdout, sys.stderr = new_stdout, new_stderr
+
+    try:
+        # Run the commands in the 'with' statement.
+        yield
+    finally:
+        old_stdout.flush()
+        old_stderr.flush()
+
+        # Return the fd back to its original state.
+        sys.stdout = old_stdout
+        sys.stderr = old_stderr

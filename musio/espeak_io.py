@@ -27,7 +27,7 @@ from time import sleep as time_sleep
 from sys import stderr as sys_stderr
 
 from .io_base import DevIO, io_wrapper
-from .io_util import silence
+from .io_util import silence, msg_out
 # from .espeak import _espeak
 from .import_util import LazyImport
 
@@ -87,7 +87,7 @@ class Espeak(DevIO):
         try:
             assert(ret_val >= 0)
         except Exception as err:
-            print("There was and error %s %s" % (err, ret_val), file=sys_stderr)
+            msg_out("There was and error %s %s" % (err, ret_val), file=sys_stderr)
 
         return ret_val
 

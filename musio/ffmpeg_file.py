@@ -24,6 +24,7 @@
 """
 
 from .io_base import AudioIO, io_wrapper
+from .io_util import msg_out
 # from .ffmpeg import _av
 
 from .import_util import LazyImport
@@ -79,7 +80,7 @@ class FFmpegFile(AudioIO):
         if err < 0:
             errbuf = _av.create_string_buffer(128)
             _av.av_strerror(err, errbuf, _av.sizeof(errbuf))
-            print(err, errbuf.raw.decode('utf8', 'replace'))
+            msg_out(err, errbuf.raw.decode('utf8', 'replace'))
 
         return err
 
