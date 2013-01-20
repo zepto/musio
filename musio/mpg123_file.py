@@ -43,6 +43,10 @@ __supported_dict = {
 }
 
 
+# If True no error messages will be printed.
+SILENT=True
+
+
 def _check(err):
     """ Check if there was an error and print the result.
 
@@ -52,6 +56,8 @@ def _check(err):
 
     if hasattr(err, 'value'):
         err = err.value
+
+    if SILENT: return err
 
     if err != _mpg123.MPG123_OK:
         err_str = _mpg123.mpg123_plain_strerror(err).decode('cp437', 'replace')
