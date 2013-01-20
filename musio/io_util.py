@@ -47,13 +47,13 @@ __io_cache = {}
 DEBUG=False
 
 
-def msg_out(message: str):
+def msg_out(message: str, *args):
     """ Print message if DEBUG is True.
 
     """
 
     if DEBUG:
-        msg_out(message, flush=True)
+        print(message, *args)
 
 
 def slice_buffer(data: bytes, size: int) -> bytes:
