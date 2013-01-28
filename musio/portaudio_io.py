@@ -117,6 +117,24 @@ class Portaudio(DevIO):
 
         return [name_func(i) for i in range(dev_count)]
 
+    def stop_stream(self):
+        """ Temporaraly stop the stream.  Use after a write if there won't be
+        another for a while.
+
+        Instead of using this write silence until there is something else to
+        write.
+
+        """
+
+        return self._stream.stop()
+
+    def start_stream(self):
+        """ Start the stream.  Use before writing and after calling stop_stream.
+
+        """
+
+        return self._stream.start()
+
     @property
     def rate(self):
         """ The sample current sample rate.
@@ -143,7 +161,7 @@ class Portaudio(DevIO):
         # otherwise nothing will play.
         if datalen < write_size:
             if len(data) == 0 and datalen > 0:
-                # Just write the last fiew bytes.
+                # Just write the last few bytes.
                 self._stream.write(self._data, datalen)
                 # self._data = b''
                 return datalen
