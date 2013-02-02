@@ -208,7 +208,7 @@ class AudioPlayer(object):
                 written = 0
 
                 # Loop until stopped or nothing read or written.
-                while msg_dict['playing'] and (buf or written):
+                while msg_dict['playing'] and (buf or msg_dict['paused']):
                     # Print the stream position.
                     if msg_dict.get('show_position', False):
                         # Only print the position if the stream has a
