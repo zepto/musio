@@ -169,6 +169,10 @@ class FFmpegFile(AudioIO):
         self._rate = int(codec_context.contents.sample_rate)
         self._channels = int(codec_context.contents.channels)
 
+        # Get the bit depth.
+        depth = _av.av_get_bytes_per_sample(codec_context.contents.sample_fmt)
+        self._depth = depth * 8 #if depth < 4 else 16
+
         # Use the sample format string to determine the depth and whether it is
         # signed.
         d_str = _av.av_get_sample_fmt_name(codec_context.contents.sample_fmt)
@@ -176,8 +180,19 @@ class FFmpegFile(AudioIO):
 
         # Extract the signed and depth properties from the sample format
         # string.
-        self._unsigned = d_str[0].lower() == 'u'
-        self._depth = int(d_str[1:])
+        self._unsigned = 'u' in d_str.lower()
+
+        # if 'flt' in d_str:
+        #     self._floatp = True
+
+        # self._unsigned = d_str[0].lower() == 'u'
+        # self._depth = int(d_str[1:])
+
+        self._sample_fmt = getattr(_av, 'AV_SAMPLE_FMT_%s%s' %
+                                   ('U' if self._unsigned else 'S',
+                                    self._depth))
+
+        self._avr = self._get_avr(codec_context)
 
         self.__codec_context = codec_context
 
@@ -185,6 +200,35 @@ class FFmpegFile(AudioIO):
         self._closed = False
 
         return format_context
+
+    def _get_avr(self, codec_context):
+        """ Return an allocated AVResampleContext.
+
+        """
+
+        avr = _av.avresample_alloc_context()
+        if not avr:
+            raise(Exception("Unable to allocate avresample context"))
+
+        if codec_context.contents.channel_layout == 0:
+            channel_layout = _av.AV_CH_LAYOUT_STEREO
+        else:
+            channel_layout = codec_context.contents.channel_layout
+
+        _av.av_opt_set_int(avr, b"in_channel_layout", channel_layout, 0)
+        _av.av_opt_set_int(avr, b"out_channel_layout", channel_layout, 0)
+        _av.av_opt_set_int(avr, b"in_sample_fmt",
+                           codec_context.contents.sample_fmt, 0)
+        _av.av_opt_set_int(avr, b"out_sample_fmt", self._sample_fmt, 0)
+        _av.av_opt_set_int(avr, b"in_sample_rate",
+                           codec_context.contents.sample_rate, 0)
+        _av.av_opt_set_int(avr, b"out_sample_rate",
+                           codec_context.contents.sample_rate, 0)
+        # _av.av_opt_set_int(avr, b"force_resampling", 1, 0)
+
+        _av.avresample_open(avr)
+
+        return avr
 
     @io_wrapper
     def read(self, size: int) -> bytes:
@@ -202,6 +246,10 @@ class FFmpegFile(AudioIO):
         # Create and setup a frame to read the data into.
         frame = _av.avcodec_alloc_frame()
         _av.avcodec_get_frame_defaults(frame)
+
+        # Create and setup a frame to read the data into.
+        outframe = _av.avcodec_alloc_frame()
+        _av.avcodec_get_frame_defaults(outframe)
 
         # Used to tell if we read a frame or not.
         got_frame = _av.c_int()
@@ -261,11 +309,11 @@ class FFmpegFile(AudioIO):
                                                      av_packet)
 
                 # Don't finish the loop if we didn't get a frame.
-                if not got_frame:
-                    continue
+                # if not got_frame:
+                #     continue
 
                 # Calculate the size of the decoded data.
-                data_size = _av.av_samples_get_buffer_size(None,
+                data_size = _av.av_samples_get_buffer_size(frame.contents.linesize,
                         self.__codec_context.contents.channels,
                         frame.contents.nb_samples,
                         self.__codec_context.contents.sample_fmt, 1)
@@ -279,7 +327,8 @@ class FFmpegFile(AudioIO):
                 _av.memmove(av_packet.data, av_packet.data, av_packet.size)
 
                 # Append the decoded data to the buffer.
-                data += _av.string_at(frame.contents.data[0], data_size)
+                # data += _av.string_at(output, out_linesize)
+                data += self._resample(frame)
 
             # Free the packet.
             _av.av_free_packet(av_packet)
@@ -294,12 +343,52 @@ class FFmpegFile(AudioIO):
         # Make sure we return only the number of bytes requested.
         return data[:size]
 
+    def _resample(self, frame):
+        """ Resample the data in frame and return a byte string of the result.
+
+        """
+
+        output = _av.POINTER(_av.uint8_t)()
+        out_linesize = _av.c_int()
+
+        # Calculate how many resampled samples there will be.
+        r_rnd = _av.av_rescale_rnd(_av.avresample_get_delay(self._avr) +
+                                   frame.contents.nb_samples,
+                                   self.__codec_context.contents.sample_rate,
+                                   self.__codec_context.contents.sample_rate,
+                                   _av.AV_ROUND_UP)
+        out_samples = _av.avresample_available(self._avr) + r_rnd
+
+        # Allocate a buffer large enough to hold the resampled data.
+        _av.av_samples_alloc(_av.byref(output), _av.byref(out_linesize),
+                             self.__codec_context.contents.channels,
+                             out_samples, self._sample_fmt, 0)
+
+        # Resample the data in the frame to match the settings in avr.
+        _av.avresample_convert(self._avr, _av.byref(output), out_linesize,
+                               out_samples, frame.contents.data,
+                               frame.contents.linesize[0],
+                               frame.contents.nb_samples)
+        # print(_av.avresample_available(avr))
+        # print(_av.avresample_read(avr, outframe.contents.data, frame.contents.nb_samples))
+
+        # Get the bytes in the output buffer.
+        data = _av.string_at(output, out_linesize)
+
+        # Free the output buffer.
+        _av.av_freep(_av.byref(output))
+
+        return data
+
     def close(self):
         """ close -> Closes and cleans up.
 
         """
 
         if not self.closed:
+            # Close and free the resample context.
+            _av.avresample_free(self._avr)
+
             # Close the file and free all contexts.
             _av.avformat_free_context(self.__format_context)
             self.__format_context = None
