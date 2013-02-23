@@ -55,8 +55,9 @@ class Alsa(DevIO):
     _supported_modes = 'rw'
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, buffer_size=None,
-                 latency=500000, device=b'default', **kwargs):
+                 bigendian=False, unsigned=False, floatp=False,
+                 buffer_size=None, latency=500000, device=b'default',
+                 **kwargs):
         """ Alsa(mode='w', depth=16, rate=44100, channels=2, bigendian=False,
         unsigned=False, buffer_size=None, latency=500000, device=b'default',
         **kwargs) -> Initialize the alsa pcm device.
@@ -66,7 +67,10 @@ class Alsa(DevIO):
         super(Alsa, self).__init__(mode, depth, rate, channels, bigendian,
                                    unsigned, buffer_size, latency)
 
-        if depth in (32, 16):
+        if floatp:
+            pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_FLOAT_%s' %
+                                ('BE' if bigendian else 'LE'))
+        elif depth in (32, 16):
             pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_%s%s_%s' %
                                 ('U' if unsigned else 'S',
                                  depth,
