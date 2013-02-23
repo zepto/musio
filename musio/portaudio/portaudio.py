@@ -140,10 +140,10 @@ class StreamParams(PaStreamParameters):
 
     """
 
-    def __init__(self, device_index=0, channels=2, samp_format=paInt16, 
+    def __init__(self, device_index=0, channels=2, samp_format=paInt16,
             latency=500000):
-        """ StreamParams(device_index=1, channels=2, samp_format=paInt16, 
-        latency=500000) -> Create a parameter object.  Use when creating 
+        """ StreamParams(device_index=1, channels=2, samp_format=paInt16,
+        latency=500000) -> Create a parameter object.  Use when creating
         a stream.
 
         """
