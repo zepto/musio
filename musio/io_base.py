@@ -136,6 +136,7 @@ class AudioIO(RawIOBase):
         self._depth = depth
         self._rate = rate
         self._channels = channels
+        self._floatp = False
 
         self._width = self._depth // 8
 
@@ -466,6 +467,14 @@ class AudioIO(RawIOBase):
         """
 
         return self._length
+
+    @property
+    def floatp(self) -> int:
+        """ Get the if the audio is floating point.
+
+        """
+
+        return self._floatp
 
     @property
     def depth(self) -> int:
