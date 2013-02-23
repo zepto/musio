@@ -58,14 +58,17 @@ class AllFile(AudioIO):
 
         self._supported_modes = getattr(codec, '_supported_modes', 'r')
 
-        super(AllFile, self).__init__(filename, mode, depth, rate, channels)
+        source = codec(filename, mode=mode, **kwargs)
+
+        super(AllFile, self).__init__(filename, mode, source.depth,
+                                      source.rate, source.channels)
+
+        self._source = source
 
         self._bigendian = bigendian
         self._unsigned = unsigned
 
         self._state = None
-
-        self._source = codec(filename, mode=mode, **kwargs)
 
         annotations = getattr(codec.read, '__annotations__')
         self.read.__annotations__.update(annotations)
