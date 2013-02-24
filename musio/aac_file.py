@@ -143,7 +143,7 @@ class AACDecoder(object):
 
         # Initialize the decoder and get the sample rate and channel
         # count.
-        ret = _neaacdec.NeAACDecInit(decoder, init_buf, init_size,
+        ret = _neaacdec.NeAACDecInit2(decoder, init_buf, init_size,
                                      _neaacdec.byref(rate),
                                      _neaacdec.byref(channels))
 
