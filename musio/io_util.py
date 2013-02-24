@@ -86,7 +86,9 @@ def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
 
     # Add the path(s) in mod_path to sys.path so we can import from
     # them.
-    [sys_path.append(path) for path in mod_path if path not in sys_path]
+    [sys_path.extend((path, os_dirname(path.rstrip('/'))))
+                        for path in mod_path
+                            if path not in sys_path]
 
     # Build the list of modules ending in suffix in the mod_path(s).
     mod_list = ((path, name) for path in sys_path
