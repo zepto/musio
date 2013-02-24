@@ -97,6 +97,8 @@ class FFmpegFile(AudioIO):
 
         """
 
+        # return _av.avio_seek(self.__format_context.contents.pb, 0, _av.SEEK_CUR)
+
         # Update the position.
         stream = self.__format_context.contents.streams[self.__audio_stream]
         # We have to multiply the current position by the time base units so it
@@ -347,6 +349,10 @@ class FFmpegFile(AudioIO):
         """ Resample the data in frame and return a byte string of the result.
 
         """
+
+        # Don't resample null data.
+        if not frame.contents.linesize[0]:
+            return b''
 
         output = _av.POINTER(_av.uint8_t)()
         out_linesize = _av.c_int()
