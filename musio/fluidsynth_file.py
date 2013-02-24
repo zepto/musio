@@ -430,6 +430,22 @@ class Player(object):
 
         return self.get_status() == _fluidsynth.FLUID_PLAYER_DONE
 
+    @property
+    def ready(self):
+        """ True if player is ready.
+
+        """
+
+        return self.get_status() == _fluidsynth.FLUID_PLAYER_READY
+
+    @property
+    def playing(self):
+        """ True if player is playing
+
+        """
+
+        return self.get_status() == _fluidsynth.FLUID_PLAYER_PLAYING
+
 
 class AudioDriver(object):
     """ A fluidsynth audio driver.
@@ -537,10 +553,6 @@ class FluidsynthFile(AudioIO):
             raise IOError("Error loading midi '%s' and soundfont '%s'" % \
                           (filename, soundfont))
 
-        # Start rendering the midi to audio data that we can read when
-        # we want it.
-        self._player.play()
-
     def __repr__(self):
         """ __repr__ -> Returns a python expression to recreate this instance.
 
@@ -566,14 +578,15 @@ class FluidsynthFile(AudioIO):
 
         """
 
-        self._loops = value
+        if self._player.ready:
+            self._loops = value
 
-        if value != -1:
-            # Values greater than -1 will be how many times to play, so
-            # 0 would play 0 times and 1 would play 1 time.
-            self._player.set_loop(value + 1)
-        else:
-            self._player.set_loop(value)
+            if value != -1:
+                # Values greater than -1 will be how many times to play,
+                # so 0 would play 0 times and 1 would play 1 time.
+                self._player.set_loop(value + 1)
+            else:
+                self._player.set_loop(value)
 
     @property
     def gain(self):
@@ -666,6 +679,13 @@ class FluidsynthFile(AudioIO):
         """ read(size=None) -> Reads size amount of data and returns it.
 
         """
+
+        if self._player.done:
+            return b''
+        elif self._player.ready and not self._player.playing:
+            # Start rendering the midi to audio data that we can read when
+            # we want it.
+            self._player.play()
 
         size //= self._channels * 2
 
