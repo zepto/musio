@@ -96,7 +96,7 @@ def main(args: dict) -> None:
             elif command == '\n':
                 break
     except Exception as err:
-        print("Error: %s", flush=True)
+        print("Error: %s" % err, flush=True)
     finally:
         # Re-set the terminal state.
         tcsetattr(sys_stdin, TCSANOW, normal)
