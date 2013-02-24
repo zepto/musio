@@ -567,7 +567,13 @@ class FluidsynthFile(AudioIO):
         """
 
         self._loops = value
-        self._player.set_loop(value)
+
+        if value != -1:
+            # Values greater than -1 will be how many times to play, so
+            # 0 would play 0 times and 1 would play 1 time.
+            self._player.set_loop(value + 1)
+        else:
+            self._player.set_loop(value)
 
     @property
     def gain(self):
