@@ -9,543 +9,72 @@ _libraries['/usr/lib/libavformat.so'] = CDLL('/usr/lib/libavformat.so')
 _libraries['/usr/lib/libswscale.so'] = CDLL('/usr/lib/libswscale.so')
 
 
-def __isgraph_l(c,l): return __isctype_l((c), _ISgraph, (l)) # macro
-CODEC_ID_TGQ = 123
-__NFDBITS = 64 # Variable c_int '64'
-NFDBITS = __NFDBITS # alias
-AV_OPT_TYPE_SAMPLE_FMT = 1397116244
-CODEC_ID_NUV = 86
-FF_OPT_TYPE_FLAGS = 0
-AV_CODEC_ID_PCM_U32BE = 65547
-AV_CODEC_ID_UTVIDEO = 155
-__codecvt_noconv = 3
-AV_CODEC_ID_BINKAUDIO_DCT = 86065
-PIX_FMT_GBRP14LE = 316
-PIX_FMT_GBRP12LE = 314
-AV_ROUND_ZERO = 0
-AV_CODEC_ID_DXA = 100
-FF_OPT_TYPE_INT = 1
-PIX_FMT_YUV422P14BE = 307
-AV_CODEC_ID_SP5X = 11
-# av_clip64 = av_clip64_c # alias
-PIX_FMT_YUV422P12LE = 306
-PIX_FMT_YUV422P12BE = 305
-def putc(_ch,_fp): return _IO_putc (_ch, _fp) # macro
-CODEC_ID_KGV1 = 140
-PIX_FMT_YUV420P14LE = 304
-PIX_FMT_YUVA444P = 299
-CODEC_ID_SMACKVIDEO = 85
-PIX_FMT_RGB0 = 296
-AV_CODEC_ID_PCM_U32LE = 65546
-PIX_FMT_0RGB = 295
-AV_CODEC_ID_VC1IMAGE = 154
-AV_PIX_FMT_BGR555LE = 50
-def av_printf_format(fmtpos,attrpos): return __attribute__((__format__(__printf__, fmtpos, attrpos))) # macro
-CODEC_ID_WAVPACK = 86041
-PIX_FMT_GBRP9LE = 84
-AV_PIX_FMT_BGR565LE = 48
-AV_CODEC_ID_MTS2 = 167
-PIX_FMT_YUV422P9BE = 79
-PIX_FMT_YUV444P9BE = 75
-PIX_FMT_YUV422P10LE = 74
-# def _IO_getc_unlocked(_fp): return (_IO_BE ((_fp)->_IO_read_ptr >= (_fp)->_IO_read_end, 0) ? __uflow (_fp) : *(unsigned char *) (_fp)->_IO_read_ptr++) # macro
-AV_PIX_FMT_RGB555BE = 45
-CODEC_ID_MSMPEG4V3 = 17
-def INT16_C(c): return c # macro
-# PIX_FMT_GBRP12 = AV_PIX_FMT_GBRP12 # alias
-CODEC_ID_AVS = 84
-ME_LOG = 3
-AV_CODEC_ID_WMV3IMAGE = 153
-AV_CODEC_ID_H261 = 4
-CODEC_ID_PTX = 106
-AVCHROMA_LOC_UNSPECIFIED = 0
-AV_OPT_TYPE_FLOAT = 4
-def FD_SET(fd,fdsetp): return __FD_SET (fd, fdsetp) # macro
-AV_CLASS_CATEGORY_INPUT = 1
-# PIX_FMT_RGB32_1 = AV_PIX_FMT_RGB32_1 # alias
-AV_CODEC_ID_WMV1 = 18
-AV_CODEC_ID_MSRLE = 46
-class _IO_FILE(Structure):
-    pass
-stdin = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libavcodec.so'], 'stdin')
-stdin = stdin # alias
-AV_PIX_FMT_RGB48BE = 41
-# av_sat_dadd32 = av_sat_dadd32_c # alias
-# LONG_LONG_MAX = __LONG_LONG_MAX__ # alias
-AV_PIX_FMT_RGB444LE = 62
-# av_popcount64 = av_popcount64_c # alias
-AV_OPT_TYPE_IMAGE_SIZE = 1397316165
-AV_PIX_FMT_VDPAU_VC1 = 40
-# av_sat_add32 = av_sat_add32_c # alias
-# av_clip_uint8 = av_clip_uint8_c # alias
-# av_clip_int8 = av_clip_int8_c # alias
-AV_PIX_FMT_VDPAU_WMV3 = 39
-# av_clip_int16 = av_clip_int16_c # alias
-# _IO_HAVE_ST_BLKSIZE = _G_HAVE_ST_BLKSIZE # alias
-# av_ceil_log2 = av_ceil_log2_c # alias
-PIX_FMT_BGR8 = 19
-AV_CODEC_ID_ADPCM_IMA_QT = 69632
-# __gwchar_t = wchar_t # alias
-PIX_FMT_NB = 317
-PIX_FMT_RGB24 = 2
-# def _IO_feof_unlocked(__fp): return (((__fp)->_flags & _IO_EOF_SEEN) != 0) # macro
-AV_CODEC_ID_VOXWARE = 86048
-# __SYSCALL_SLONG_TYPE = __SLONGWORD_TYPE # alias
-CODEC_ID_TTA = 86038
-# LLONG_MAX = __LONG_LONG_MAX__ # alias
-AV_CODEC_ID_PCM_ALAW = 65543
-AV_AUDIO_SERVICE_TYPE_VOICE_OVER = 7
-AV_CODEC_ID_VC1 = 72
-CODEC_ID_PROBE = 102400
-PIX_FMT_YUV444P14LE = 312
-PIX_FMT_YUV444P14BE = 311
-__LITTLE_ENDIAN = 1234 # Variable c_int '1234'
-LITTLE_ENDIAN = __LITTLE_ENDIAN # alias
-# PIX_FMT_BGR48 = AV_PIX_FMT_BGR48 # alias
-PIX_FMT_YUV444P12LE = 310
-AV_OPT_TYPE_BINARY = 7
-AV_CODEC_ID_PRORES = 150
-__codecvt_error = 2
-CODEC_ID_TRUESPEECH = 86037
-CODEC_ID_SGI = 103
-CODEC_ID_OTF = 5198918
-# PIX_FMT_BGR32_1 = AV_PIX_FMT_BGR32_1 # alias
-AV_RESAMPLE_DITHER_NONE = 0
-AV_PIX_FMT_YUV422P14BE = 307
-def __attribute_format_arg__(x): return __attribute__ ((__format_arg__ (x))) # macro
-AV_AUDIO_SERVICE_TYPE_NB = 9
-AV_PIX_FMT_YUVA444P16LE = 108
-CODEC_ID_BMP = 80
-AV_OPT_TYPE_RATIONAL = 6
-AV_CODEC_ID_BFI = 119
-AV_CODEC_ID_LAGARITH = 149
-# __S32_TYPE = int # alias
-AV_AUDIO_SERVICE_TYPE_KARAOKE = 8
-AV_CODEC_ID_PCM_U24BE = 65551
-# __PID_T_TYPE = __S32_TYPE # alias
-# __OFF_T_TYPE = __SYSCALL_SLONG_TYPE # alias
-AV_CODEC_ID_PCM_S24LE = 65548
-CODEC_ID_IDF = 4801606
-# NULL = __null # alias
-# __OFF64_T_TYPE = __SQUAD_TYPE # alias
-# __SYSCALL_ULONG_TYPE = __ULONGWORD_TYPE # alias
-# __NLINK_T_TYPE = __SYSCALL_ULONG_TYPE # alias
-AV_CODEC_ID_ADPCM_IMA_EA_SEAD = 69655
-PIX_FMT_YUV420P14BE = 303
-ME_UMH = 8
-AV_CODEC_ID_TSCC2 = 166
-AV_AUDIO_SERVICE_TYPE_EMERGENCY = 6
-# __KEY_T_TYPE = __S32_TYPE # alias
-AV_CODEC_ID_RAWVIDEO = 14
-# __ID_T_TYPE = __U32_TYPE # alias
-# __GID_T_TYPE = __U32_TYPE # alias
-# INT_MAX = __INT_MAX__ # alias
-# NL_SETMAX = INT_MAX # alias
-PIX_FMT_YUV420P12BE = 301
-AV_CODEC_ID_MVC1 = 1297498929
-ME_X1 = 6
-# __FSFILCNT64_T_TYPE = __UQUAD_TYPE # alias
-AV_CODEC_ID_CPIA = 1129335105
-CODEC_ID_PCM_DVD = 65555
-PIX_FMT_YUVA422P = 300
-AV_CODEC_ID_PCM_S8 = 65540
-# __DEV_T_TYPE = __UQUAD_TYPE # alias
-# __DADDR_T_TYPE = __S32_TYPE # alias
-# __CLOCK_T_TYPE = __SYSCALL_SLONG_TYPE # alias
-# __MODE_T_TYPE = __U32_TYPE # alias
-# __BLKCNT_T_TYPE = __SYSCALL_SLONG_TYPE # alias
-CODEC_ID_XBIN = 1480739150
-AV_AUDIO_SERVICE_TYPE_VISUALLY_IMPAIRED = 2
-# __BLKCNT64_T_TYPE = __SQUAD_TYPE # alias
-_POSIX_UIO_MAXIOV = 16 # Variable c_int '16'
-_XOPEN_IOV_MAX = _POSIX_UIO_MAXIOV # alias
-# PIX_FMT_GRAY16 = AV_PIX_FMT_GRAY16 # alias
-_POSIX_PIPE_BUF = 512 # Variable c_int '512'
-_POSIX_HIWAT = _POSIX_PIPE_BUF # alias
-_POSIX_OPEN_MAX = 20 # Variable c_int '20'
-_POSIX_FD_SETSIZE = _POSIX_OPEN_MAX # alias
-def isspace_l(c,l): return __isspace_l ((c), (l)) # macro
-# _IO_wint_t = wint_t # alias
-PIX_FMT_0BGR = 297
-AV_CODEC_ID_MPEG4 = 13
-size_t = c_ulong
-_IO_size_t = size_t # alias
-AV_AUDIO_SERVICE_TYPE_MAIN = 0
-CODEC_ID_FLASHSV2 = 133
-# _IO_iconv_t = _G_iconv_t # alias
-class _G_fpos_t(Structure):
-    pass
-__off_t = c_long
-class __mbstate_t(Structure):
-    pass
-class N11__mbstate_t3DOT_7E(Union):
-    pass
-N11__mbstate_t3DOT_7E._fields_ = [
-    ('__wch', c_uint),
-    ('__wchb', c_char * 4),
-]
-__mbstate_t._fields_ = [
-    ('__count', c_int),
-    ('__value', N11__mbstate_t3DOT_7E),
-]
-_G_fpos_t._fields_ = [
-    ('__pos', __off_t),
-    ('__state', __mbstate_t),
-]
-_IO_fpos_t = _G_fpos_t # alias
-ME_ZERO = 1
-AV_CODEC_ID_BMP = 80
-# _IO_file_flags = _flags # alias
-# LONG_MAX = __LONG_MAX__ # alias
-_G_BUFSIZ = 8192 # Variable c_int '8192'
-_IO_BUFSIZ = _G_BUFSIZ # alias
-AV_CODEC_ID_KMVC = 87
-# SHRT_MAX = __SHRT_MAX__ # alias
-int8_t = c_int8
-QP_STORE_T = int8_t # alias
-AV_PICTURE_TYPE_NONE = 0
-# SCHAR_MAX = __SCHAR_MAX__ # alias
-def AV_VERSION_INT(a,b,c): return (a<<16 | b<<8 | c) # macro
-CODEC_ID_BINTEXT = 1112823892
-AV_CODEC_ID_ADPCM_EA_R3 = 69653
-PIX_FMT_BGRA64BE = 293
-PIX_FMT_GBRP12BE = 313
-def __W_EXITCODE(ret,sig): return ((ret) << 8 | (sig)) # macro
-LIBAVRESAMPLE_VERSION_INT = 65537 # Variable c_int '65537'
-LIBAVRESAMPLE_BUILD = LIBAVRESAMPLE_VERSION_INT # alias
-AV_CODEC_ID_JPEGLS = 12
-# PIX_FMT_YUV422P14 = AV_PIX_FMT_YUV422P14 # alias
-PIX_FMT_RGBA64BE = 291
-AV_CODEC_ID_TRUEMOTION2 = 79
-LIBPOSTPROC_VERSION_INT = 3408484 # Variable c_int '3408484'
-LIBPOSTPROC_BUILD = LIBPOSTPROC_VERSION_INT # alias
-_POSIX2_LINE_MAX = 2048 # Variable c_int '2048'
-LINE_MAX = _POSIX2_LINE_MAX # alias
-AV_PIX_FMT_YUVA422P16BE = 105
-AV_PKT_DATA_SUBTITLE_POSITION = 73
-AVCOL_PRI_FILM = 8
-CODEC_ID_IFF_BYTERUN1 = 139
-AV_CODEC_ID_PCM_U16LE = 65538
-CODEC_ID_WESTWOOD_SND1 = 86033
-PIX_FMT_GBRP16BE = 87
-FP_NAN = 0
-CODEC_ID_TTF = 98304
-def __WTERMSIG(status): return ((status) & 0x7f) # macro
-AV_CODEC_ID_THEORA = 31
-PIX_FMT_GBRP10BE = 85
-# def __isctype_l(c,type,locale): return ((locale)->__ctype_b[(int) (c)] & (unsigned short int) type) # macro
-AV_CODEC_ID_MSS1 = 164
-CODEC_ID_MJPEGB = 9
-CODEC_ID_PCM_S24DAUD = 65552
-AV_PKT_DATA_STRINGS_METADATA = 72
-AV_CODEC_ID_DFA = 152
-AV_OPT_TYPE_INT64 = 2
-AV_CODEC_ID_IFF_ILBM = 138
-# PIX_FMT_YUV444P16 = AV_PIX_FMT_YUV444P16 # alias
-def isascii_l(c,l): return __isascii_l ((c), (l)) # macro
-AV_CODEC_ID_PGMYUV = 67
-AVCOL_RANGE_NB = 3
-AVCOL_RANGE_JPEG = 2
-AV_CODEC_ID_MP2 = 86016
-
-# values for enumeration 'AVPixelFormat'
-AV_PIX_FMT_NONE = -1
-AV_PIX_FMT_YUV420P = 0
-AV_PIX_FMT_YUYV422 = 1
-AV_PIX_FMT_RGB24 = 2
-AV_PIX_FMT_BGR24 = 3
-AV_PIX_FMT_YUV422P = 4
-AV_PIX_FMT_YUV444P = 5
-AV_PIX_FMT_YUV410P = 6
-AV_PIX_FMT_YUV411P = 7
-AV_PIX_FMT_GRAY8 = 8
-AV_PIX_FMT_MONOWHITE = 9
-AV_PIX_FMT_MONOBLACK = 10
-AV_PIX_FMT_PAL8 = 11
-AV_PIX_FMT_YUVJ420P = 12
-AV_PIX_FMT_YUVJ422P = 13
-AV_PIX_FMT_YUVJ444P = 14
-AV_PIX_FMT_XVMC_MPEG2_MC = 15
-AV_PIX_FMT_XVMC_MPEG2_IDCT = 16
-AV_PIX_FMT_UYVY422 = 17
-AV_PIX_FMT_UYYVYY411 = 18
-AV_PIX_FMT_BGR8 = 19
-AV_PIX_FMT_BGR4 = 20
-AV_PIX_FMT_BGR4_BYTE = 21
-AV_PIX_FMT_RGB8 = 22
-AV_PIX_FMT_RGB4 = 23
-AV_PIX_FMT_RGB4_BYTE = 24
-AV_PIX_FMT_NV12 = 25
-AV_PIX_FMT_NV21 = 26
-AV_PIX_FMT_ARGB = 27
-AV_PIX_FMT_RGBA = 28
-AV_PIX_FMT_ABGR = 29
-AV_PIX_FMT_BGRA = 30
-AV_PIX_FMT_GRAY16BE = 31
-AV_PIX_FMT_GRAY16LE = 32
-AV_PIX_FMT_YUV440P = 33
-AV_PIX_FMT_YUVJ440P = 34
-AV_PIX_FMT_YUVA420P = 35
-AV_PIX_FMT_VDPAU_H264 = 36
-AV_PIX_FMT_VDPAU_MPEG1 = 37
-AV_PIX_FMT_VDPAU_MPEG2 = 38
-AV_PIX_FMT_RGB48LE = 42
-AV_PIX_FMT_RGB565BE = 43
-AV_PIX_FMT_RGB565LE = 44
-AV_PIX_FMT_RGB555LE = 46
-AV_PIX_FMT_BGR565BE = 47
-AV_PIX_FMT_BGR555BE = 49
-AV_PIX_FMT_VAAPI_MOCO = 51
-AV_PIX_FMT_VAAPI_IDCT = 52
-AV_PIX_FMT_VAAPI_VLD = 53
-AV_PIX_FMT_YUV420P16LE = 54
-AV_PIX_FMT_YUV420P16BE = 55
-AV_PIX_FMT_YUV422P16LE = 56
-AV_PIX_FMT_YUV422P16BE = 57
-AV_PIX_FMT_YUV444P16LE = 58
-AV_PIX_FMT_YUV444P16BE = 59
-AV_PIX_FMT_VDPAU_MPEG4 = 60
-AV_PIX_FMT_DXVA2_VLD = 61
-AV_PIX_FMT_RGB444BE = 63
-AV_PIX_FMT_BGR444LE = 64
-AV_PIX_FMT_BGR444BE = 65
-AV_PIX_FMT_GRAY8A = 66
-AV_PIX_FMT_BGR48BE = 67
-AV_PIX_FMT_BGR48LE = 68
-AV_PIX_FMT_YUV420P9BE = 69
-AV_PIX_FMT_YUV420P9LE = 70
-AV_PIX_FMT_YUV420P10BE = 71
-AV_PIX_FMT_YUV420P10LE = 72
-AV_PIX_FMT_YUV422P10BE = 73
-AV_PIX_FMT_YUV422P10LE = 74
-AV_PIX_FMT_YUV444P9BE = 75
-AV_PIX_FMT_YUV444P9LE = 76
-AV_PIX_FMT_YUV444P10BE = 77
-AV_PIX_FMT_YUV444P10LE = 78
-AV_PIX_FMT_YUV422P9BE = 79
-AV_PIX_FMT_YUV422P9LE = 80
-AV_PIX_FMT_VDA_VLD = 81
-AV_PIX_FMT_GBRP = 82
-AV_PIX_FMT_GBRP9BE = 83
-AV_PIX_FMT_GBRP9LE = 84
-AV_PIX_FMT_GBRP10BE = 85
-AV_PIX_FMT_GBRP10LE = 86
-AV_PIX_FMT_GBRP16BE = 87
-AV_PIX_FMT_GBRP16LE = 88
-AV_PIX_FMT_YUVA422P_LIBAV = 89
-AV_PIX_FMT_YUVA444P_LIBAV = 90
-AV_PIX_FMT_YUVA420P9BE = 91
-AV_PIX_FMT_YUVA420P9LE = 92
-AV_PIX_FMT_YUVA422P9BE = 93
-AV_PIX_FMT_YUVA422P9LE = 94
-AV_PIX_FMT_YUVA444P9BE = 95
-AV_PIX_FMT_YUVA444P9LE = 96
-AV_PIX_FMT_YUVA420P10BE = 97
-AV_PIX_FMT_YUVA420P10LE = 98
-AV_PIX_FMT_YUVA422P10BE = 99
-AV_PIX_FMT_YUVA422P10LE = 100
-AV_PIX_FMT_YUVA444P10BE = 101
-AV_PIX_FMT_YUVA444P10LE = 102
-AV_PIX_FMT_YUVA420P16BE = 103
-AV_PIX_FMT_YUVA420P16LE = 104
-AV_PIX_FMT_YUVA422P16LE = 106
-AV_PIX_FMT_YUVA444P16BE = 107
-AV_PIX_FMT_RGBA64BE = 291
-AV_PIX_FMT_RGBA64LE = 292
-AV_PIX_FMT_BGRA64BE = 293
-AV_PIX_FMT_BGRA64LE = 294
-AV_PIX_FMT_0RGB = 295
-AV_PIX_FMT_RGB0 = 296
-AV_PIX_FMT_0BGR = 297
-AV_PIX_FMT_BGR0 = 298
-AV_PIX_FMT_YUVA444P = 299
-AV_PIX_FMT_YUVA422P = 300
-AV_PIX_FMT_YUV420P12BE = 301
-AV_PIX_FMT_YUV420P12LE = 302
-AV_PIX_FMT_YUV420P14BE = 303
-AV_PIX_FMT_YUV420P14LE = 304
-AV_PIX_FMT_YUV422P12BE = 305
-AV_PIX_FMT_YUV422P12LE = 306
-AV_PIX_FMT_YUV422P14LE = 308
-AV_PIX_FMT_YUV444P12BE = 309
-AV_PIX_FMT_YUV444P12LE = 310
-AV_PIX_FMT_YUV444P14BE = 311
-AV_PIX_FMT_YUV444P14LE = 312
-AV_PIX_FMT_GBRP12BE = 313
-AV_PIX_FMT_GBRP12LE = 314
-AV_PIX_FMT_GBRP14BE = 315
-AV_PIX_FMT_GBRP14LE = 316
-AV_PIX_FMT_NB = 317
-PIX_FMT_NONE = -1
-PIX_FMT_YUV420P = 0
-PIX_FMT_YUYV422 = 1
-PIX_FMT_BGR24 = 3
-PIX_FMT_YUV422P = 4
-PIX_FMT_YUV444P = 5
-PIX_FMT_YUV410P = 6
-PIX_FMT_YUV411P = 7
-PIX_FMT_GRAY8 = 8
-PIX_FMT_MONOWHITE = 9
-PIX_FMT_MONOBLACK = 10
-PIX_FMT_PAL8 = 11
-PIX_FMT_YUVJ420P = 12
-PIX_FMT_YUVJ422P = 13
-PIX_FMT_YUVJ444P = 14
-PIX_FMT_XVMC_MPEG2_MC = 15
-PIX_FMT_XVMC_MPEG2_IDCT = 16
-PIX_FMT_UYVY422 = 17
-PIX_FMT_UYYVYY411 = 18
-PIX_FMT_BGR4 = 20
-PIX_FMT_BGR4_BYTE = 21
-PIX_FMT_RGB8 = 22
-PIX_FMT_RGB4 = 23
-PIX_FMT_RGB4_BYTE = 24
-PIX_FMT_NV12 = 25
-PIX_FMT_NV21 = 26
-PIX_FMT_ARGB = 27
-PIX_FMT_RGBA = 28
-PIX_FMT_ABGR = 29
-PIX_FMT_BGRA = 30
-PIX_FMT_GRAY16BE = 31
-PIX_FMT_GRAY16LE = 32
-PIX_FMT_YUV440P = 33
-PIX_FMT_YUVJ440P = 34
-PIX_FMT_YUVA420P = 35
-PIX_FMT_VDPAU_H264 = 36
-PIX_FMT_VDPAU_MPEG1 = 37
-PIX_FMT_VDPAU_MPEG2 = 38
-PIX_FMT_VDPAU_WMV3 = 39
-PIX_FMT_VDPAU_VC1 = 40
-PIX_FMT_RGB48BE = 41
-PIX_FMT_RGB48LE = 42
-PIX_FMT_RGB565BE = 43
-PIX_FMT_RGB565LE = 44
-PIX_FMT_RGB555BE = 45
-PIX_FMT_RGB555LE = 46
-PIX_FMT_BGR565BE = 47
-PIX_FMT_BGR565LE = 48
-PIX_FMT_BGR555BE = 49
-PIX_FMT_BGR555LE = 50
-PIX_FMT_VAAPI_MOCO = 51
-PIX_FMT_VAAPI_IDCT = 52
-PIX_FMT_VAAPI_VLD = 53
-PIX_FMT_YUV420P16LE = 54
-PIX_FMT_YUV420P16BE = 55
-PIX_FMT_YUV422P16LE = 56
-PIX_FMT_YUV422P16BE = 57
-PIX_FMT_YUV444P16LE = 58
-PIX_FMT_YUV444P16BE = 59
-PIX_FMT_VDPAU_MPEG4 = 60
-PIX_FMT_DXVA2_VLD = 61
-PIX_FMT_RGB444LE = 62
-PIX_FMT_RGB444BE = 63
-PIX_FMT_BGR444LE = 64
-PIX_FMT_BGR444BE = 65
-PIX_FMT_GRAY8A = 66
-PIX_FMT_BGR48BE = 67
-PIX_FMT_BGR48LE = 68
-PIX_FMT_YUV420P9BE = 69
-PIX_FMT_YUV420P9LE = 70
-PIX_FMT_YUV420P10BE = 71
-PIX_FMT_YUV420P10LE = 72
-PIX_FMT_YUV422P10BE = 73
-PIX_FMT_YUV444P9LE = 76
-PIX_FMT_YUV444P10BE = 77
-PIX_FMT_YUV444P10LE = 78
-PIX_FMT_YUV422P9LE = 80
-PIX_FMT_VDA_VLD = 81
-PIX_FMT_GBRP = 82
-PIX_FMT_GBRP9BE = 83
-PIX_FMT_GBRP10LE = 86
-PIX_FMT_GBRP16LE = 88
-PIX_FMT_RGBA64LE = 292
-PIX_FMT_BGRA64LE = 294
-PIX_FMT_BGR0 = 298
-PIX_FMT_YUV420P12LE = 302
-PIX_FMT_YUV422P14LE = 308
-PIX_FMT_YUV444P12BE = 309
-PIX_FMT_GBRP14BE = 315
-AVPixelFormat = c_int # enum
-PixelFormat = AVPixelFormat # alias
-_POSIX_THREAD_DESTRUCTOR_ITERATIONS = 4 # Variable c_int '4'
-PTHREAD_DESTRUCTOR_ITERATIONS = _POSIX_THREAD_DESTRUCTOR_ITERATIONS # alias
-AV_CODEC_ID_TIFF = 98
-# def RSHIFT(a,b): return ((a) > 0 ? ((a) + ((1<<(b))>>1))>>(b) : ((a) + ((1<<(b))>>1)-1)>>(b)) # macro
-# PIX_FMT_YUV444P14 = AV_PIX_FMT_YUV444P14 # alias
-def htole32(x): return (x) # macro
-# PIX_FMT_YUV444P10 = AV_PIX_FMT_YUV444P10 # alias
-# PIX_FMT_YUV422P9 = AV_PIX_FMT_YUV422P9 # alias
-LIBAVFORMAT_VERSION_INT = 3554154 # Variable c_int '3554154'
-LIBAVFORMAT_BUILD = LIBAVFORMAT_VERSION_INT # alias
-CODEC_ID_ADPCM_XA = 69640
-CODEC_ID_MJPEG = 8
-AV_CODEC_ID_INDEO2 = 77
-LIBAVUTIL_VERSION_INT = 3411300 # Variable c_int '3411300'
-LIBAVUTIL_BUILD = LIBAVUTIL_VERSION_INT # alias
-# PIX_FMT_YUV420P9 = AV_PIX_FMT_YUV420P9 # alias
-# PIX_FMT_YUV420P16 = AV_PIX_FMT_YUV420P16 # alias
-def UINT8_C(c): return c # macro
-AV_CODEC_ID_ANSI = 144
-# PIX_FMT_YUV420P14 = AV_PIX_FMT_YUV420P14 # alias
-# PIX_FMT_YUV420P12 = AV_PIX_FMT_YUV420P12 # alias
-# PIX_FMT_YUV420P10 = AV_PIX_FMT_YUV420P10 # alias
-AV_ROUND_UP = 3
-AV_PIX_FMT_Y400A = AV_PIX_FMT_GRAY8A # alias
-PIX_FMT_Y400A = AV_PIX_FMT_Y400A # alias
-# PIX_FMT_RGBA64 = AV_PIX_FMT_RGBA64 # alias
-# PIX_FMT_RGB565 = AV_PIX_FMT_RGB565 # alias
-# PIX_FMT_RGB555 = AV_PIX_FMT_RGB555 # alias
-# PIX_FMT_RGB48 = AV_PIX_FMT_RGB48 # alias
-AV_CODEC_ID_MSA1 = 165
-LIBAVDEVICE_VERSION_INT = 3539814 # Variable c_int '3539814'
-LIBAVDEVICE_BUILD = LIBAVDEVICE_VERSION_INT # alias
-# PIX_FMT_RGB32 = AV_PIX_FMT_RGB32 # alias
-AV_CODEC_ID_ZMBV = 83
-# PIX_FMT_GBRP9 = AV_PIX_FMT_GBRP9 # alias
-CODEC_ID_V210 = 129
-AV_PIX_FMT_GBR24P = AV_PIX_FMT_GBRP # alias
-PIX_FMT_GBR24P = AV_PIX_FMT_GBR24P # alias
-# PIX_FMT_BGR565 = AV_PIX_FMT_BGR565 # alias
-AV_CODEC_ID_AASC = 76
-LIBAVCODEC_VERSION_INT = 3561060 # Variable c_int '3561060'
-LIBAVCODEC_BUILD = LIBAVCODEC_VERSION_INT # alias
-__PDP_ENDIAN = 3412 # Variable c_int '3412'
-PDP_ENDIAN = __PDP_ENDIAN # alias
-def isascii(c): return __isascii (c) # macro
-AV_AUDIO_SERVICE_TYPE_COMMENTARY = 5
-AV_AUDIO_SERVICE_TYPE_DIALOGUE = 4
-AV_AUDIO_SERVICE_TYPE_HEARING_IMPAIRED = 3
-AV_AUDIO_SERVICE_TYPE_EFFECTS = 1
-def isblank_l(c,l): return __isblank_l ((c), (l)) # macro
-CODEC_ID_PCM_S16LE_PLANAR = 65554
-LIBSWSCALE_VERSION_INT = 131431 # Variable c_int '131431'
-LIBSWSCALE_BUILD = LIBSWSCALE_VERSION_INT # alias
-CODEC_ID_8SVX_RAW = 944985688
-AV_CODEC_ID_ADPCM_IMA_ISS = 69659
-def isalpha_l(c,l): return __isalpha_l ((c), (l)) # macro
 FF_LAMBDA_SCALE = 128 # Variable c_int '128'
 FF_QUALITY_SCALE = FF_LAMBDA_SCALE # alias
-__FD_SETSIZE = 1024 # Variable c_int '1024'
-FD_SETSIZE = __FD_SETSIZE # alias
-# def av_alloc_size(...): return __attribute__((alloc_size(__VA_ARGS__))) # macro
-def AV_STRINGIFY(s): return AV_TOSTRING(s) # macro
-AV_CODEC_ID_ADPCM_EA_MAXIS_XA = 69658
-CODEC_ID_MPEG2TS = 131072
+AVCOL_RANGE_UNSPECIFIED = 0
+AV_PIX_FMT_YUV410P = 6
+CODEC_ID_XAN_WC3 = 41
+AV_CODEC_ID_MSS2 = 169
+__PDP_ENDIAN = 3412 # Variable c_int '3412'
+PDP_ENDIAN = __PDP_ENDIAN # alias
+CODEC_ID_ATRAC3P = 86056
+AV_PIX_FMT_NB = 317
+AV_FIELD_TB = 4
+CODEC_ID_VP6A = 108
+def __CONCAT(x,y): return x ## y # macro
+CODEC_ID_JPEGLS = 12
+AV_CODEC_ID_AAC = 86018
+CODEC_ID_DSICINAUDIO = 86042
+AV_PIX_FMT_YUV444P10BE = 77
+CODEC_ID_RV40 = 71
+PIX_FMT_YUV444P9LE = 76
+class _IO_FILE(Structure):
+    pass
+stdout = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libavcodec.so'], 'stdout')
+stdout = stdout # alias
+stdin = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libavcodec.so'], 'stdin')
+stdin = stdin # alias
+stderr = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libavcodec.so'], 'stderr')
+stderr = stderr # alias
+AV_PIX_FMT_XVMC_MPEG2_MC = 15
+EOPNOTSUPP = 95 # Variable c_int '95'
+ENOTSUP = EOPNOTSUPP # alias
+# av_sat_dadd32 = av_sat_dadd32_c # alias
+PIX_FMT_RGB555LE = 46
+CODEC_ID_BETHSOFTVID = 105
+def islower_l(c,l): return __islower_l ((c), (l)) # macro
+# av_restrict = restrict # alias
+CODEC_ID_ADPCM_G726 = 69643
+def __isspace_l(c,l): return __isctype_l((c), _ISspace, (l)) # macro
+# av_popcount = av_popcount_c # alias
+CODEC_ID_TIFF = 98
+# av_clipl_int32 = av_clipl_int32_c # alias
+AV_CODEC_ID_CLLC = 168
+# av_clipf = av_clipf_c # alias
+# av_clip_uint8 = av_clip_uint8_c # alias
+AV_PIX_FMT_GBRP14LE = 316
+# av_clip_uint16 = av_clip_uint16_c # alias
 
 # values for enumeration 'AVCodecID'
 AV_CODEC_ID_NONE = 0
 AV_CODEC_ID_MPEG1VIDEO = 1
 AV_CODEC_ID_MPEG2VIDEO = 2
 AV_CODEC_ID_MPEG2VIDEO_XVMC = 3
+AV_CODEC_ID_H261 = 4
 AV_CODEC_ID_H263 = 5
 AV_CODEC_ID_RV10 = 6
 AV_CODEC_ID_RV20 = 7
 AV_CODEC_ID_MJPEG = 8
 AV_CODEC_ID_MJPEGB = 9
 AV_CODEC_ID_LJPEG = 10
+AV_CODEC_ID_SP5X = 11
+AV_CODEC_ID_JPEGLS = 12
+AV_CODEC_ID_MPEG4 = 13
+AV_CODEC_ID_RAWVIDEO = 14
 AV_CODEC_ID_MSMPEG4V1 = 15
 AV_CODEC_ID_MSMPEG4V2 = 16
 AV_CODEC_ID_MSMPEG4V3 = 17
+AV_CODEC_ID_WMV1 = 18
 AV_CODEC_ID_WMV2 = 19
 AV_CODEC_ID_H263P = 20
 AV_CODEC_ID_H263I = 21
@@ -558,6 +87,7 @@ AV_CODEC_ID_CYUV = 27
 AV_CODEC_ID_H264 = 28
 AV_CODEC_ID_INDEO3 = 29
 AV_CODEC_ID_VP3 = 30
+AV_CODEC_ID_THEORA = 31
 AV_CODEC_ID_ASV1 = 32
 AV_CODEC_ID_ASV2 = 33
 AV_CODEC_ID_FFV1 = 34
@@ -572,6 +102,7 @@ AV_CODEC_ID_XAN_WC4 = 42
 AV_CODEC_ID_RPZA = 43
 AV_CODEC_ID_CINEPAK = 44
 AV_CODEC_ID_WS_VQA = 45
+AV_CODEC_ID_MSRLE = 46
 AV_CODEC_ID_MSVIDEO1 = 47
 AV_CODEC_ID_IDCIN = 48
 AV_CODEC_ID_8BPS = 49
@@ -592,19 +123,27 @@ AV_CODEC_ID_PNG = 63
 AV_CODEC_ID_PPM = 64
 AV_CODEC_ID_PBM = 65
 AV_CODEC_ID_PGM = 66
+AV_CODEC_ID_PGMYUV = 67
 AV_CODEC_ID_PAM = 68
 AV_CODEC_ID_FFVHUFF = 69
 AV_CODEC_ID_RV30 = 70
 AV_CODEC_ID_RV40 = 71
+AV_CODEC_ID_VC1 = 72
 AV_CODEC_ID_WMV3 = 73
 AV_CODEC_ID_LOCO = 74
 AV_CODEC_ID_WNV1 = 75
+AV_CODEC_ID_AASC = 76
+AV_CODEC_ID_INDEO2 = 77
 AV_CODEC_ID_FRAPS = 78
+AV_CODEC_ID_TRUEMOTION2 = 79
+AV_CODEC_ID_BMP = 80
 AV_CODEC_ID_CSCD = 81
 AV_CODEC_ID_MMVIDEO = 82
+AV_CODEC_ID_ZMBV = 83
 AV_CODEC_ID_AVS = 84
 AV_CODEC_ID_SMACKVIDEO = 85
 AV_CODEC_ID_NUV = 86
+AV_CODEC_ID_KMVC = 87
 AV_CODEC_ID_FLASHSV = 88
 AV_CODEC_ID_CAVS = 89
 AV_CODEC_ID_JPEG2000 = 90
@@ -615,7 +154,9 @@ AV_CODEC_ID_VP6F = 94
 AV_CODEC_ID_TARGA = 95
 AV_CODEC_ID_DSICINVIDEO = 96
 AV_CODEC_ID_TIERTEXSEQVIDEO = 97
+AV_CODEC_ID_TIFF = 98
 AV_CODEC_ID_GIF = 99
+AV_CODEC_ID_DXA = 100
 AV_CODEC_ID_DNXHD = 101
 AV_CODEC_ID_THP = 102
 AV_CODEC_ID_SGI = 103
@@ -634,6 +175,7 @@ AV_CODEC_ID_MIMIC = 115
 AV_CODEC_ID_RL2 = 116
 AV_CODEC_ID_ESCAPE124 = 117
 AV_CODEC_ID_DIRAC = 118
+AV_CODEC_ID_BFI = 119
 AV_CODEC_ID_CMV = 120
 AV_CODEC_ID_MOTIONPIXELS = 121
 AV_CODEC_ID_TGV = 122
@@ -652,16 +194,24 @@ AV_CODEC_ID_CDGRAPHICS = 134
 AV_CODEC_ID_R210 = 135
 AV_CODEC_ID_ANM = 136
 AV_CODEC_ID_BINKVIDEO = 137
+AV_CODEC_ID_IFF_ILBM = 138
 AV_CODEC_ID_IFF_BYTERUN1 = 139
 AV_CODEC_ID_KGV1 = 140
 AV_CODEC_ID_YOP = 141
 AV_CODEC_ID_VP8 = 142
 AV_CODEC_ID_PICTOR = 143
+AV_CODEC_ID_ANSI = 144
 AV_CODEC_ID_A64_MULTI = 145
 AV_CODEC_ID_A64_MULTI5 = 146
 AV_CODEC_ID_R10K = 147
 AV_CODEC_ID_MXPEG = 148
+AV_CODEC_ID_LAGARITH = 149
+AV_CODEC_ID_PRORES = 150
 AV_CODEC_ID_JV = 151
+AV_CODEC_ID_DFA = 152
+AV_CODEC_ID_WMV3IMAGE = 153
+AV_CODEC_ID_VC1IMAGE = 154
+AV_CODEC_ID_UTVIDEO = 155
 AV_CODEC_ID_BMV_VIDEO = 156
 AV_CODEC_ID_VBLE = 157
 AV_CODEC_ID_DXTORY = 158
@@ -670,8 +220,10 @@ AV_CODEC_ID_XWD = 160
 AV_CODEC_ID_CDXL = 161
 AV_CODEC_ID_XBM = 162
 AV_CODEC_ID_ZEROCODEC = 163
-AV_CODEC_ID_CLLC = 168
-AV_CODEC_ID_MSS2 = 169
+AV_CODEC_ID_MSS1 = 164
+AV_CODEC_ID_MSA1 = 165
+AV_CODEC_ID_TSCC2 = 166
+AV_CODEC_ID_MTS2 = 167
 AV_CODEC_ID_BRENDER_PIX = 1112557912
 AV_CODEC_ID_Y41P = 1496592720
 AV_CODEC_ID_ESCAPE130 = 1160852272
@@ -688,19 +240,28 @@ AV_CODEC_ID_YUV4 = 1498764852
 AV_CODEC_ID_SANM = 1396788813
 AV_CODEC_ID_PAF_VIDEO = 1346455126
 AV_CODEC_ID_AVRN = 1096176238
+AV_CODEC_ID_CPIA = 1129335105
 AV_CODEC_ID_XFACE = 1480999235
 AV_CODEC_ID_SGIRLE = 1397180754
+AV_CODEC_ID_MVC1 = 1297498929
 AV_CODEC_ID_MVC2 = 1297498930
 AV_CODEC_ID_FIRST_AUDIO = 65536
 AV_CODEC_ID_PCM_S16LE = 65536
 AV_CODEC_ID_PCM_S16BE = 65537
+AV_CODEC_ID_PCM_U16LE = 65538
 AV_CODEC_ID_PCM_U16BE = 65539
+AV_CODEC_ID_PCM_S8 = 65540
 AV_CODEC_ID_PCM_U8 = 65541
 AV_CODEC_ID_PCM_MULAW = 65542
+AV_CODEC_ID_PCM_ALAW = 65543
 AV_CODEC_ID_PCM_S32LE = 65544
 AV_CODEC_ID_PCM_S32BE = 65545
+AV_CODEC_ID_PCM_U32LE = 65546
+AV_CODEC_ID_PCM_U32BE = 65547
+AV_CODEC_ID_PCM_S24LE = 65548
 AV_CODEC_ID_PCM_S24BE = 65549
 AV_CODEC_ID_PCM_U24LE = 65550
+AV_CODEC_ID_PCM_U24BE = 65551
 AV_CODEC_ID_PCM_S24DAUD = 65552
 AV_CODEC_ID_PCM_ZORK = 65553
 AV_CODEC_ID_PCM_S16LE_PLANAR = 65554
@@ -716,6 +277,7 @@ AV_CODEC_ID_PCM_S8_PLANAR = 65563
 AV_CODEC_ID_PCM_S24LE_PLANAR = 407917392
 AV_CODEC_ID_PCM_S32LE_PLANAR = 542135120
 AV_CODEC_ID_PCM_S16BE_PLANAR = 1347637264
+AV_CODEC_ID_ADPCM_IMA_QT = 69632
 AV_CODEC_ID_ADPCM_IMA_WAV = 69633
 AV_CODEC_ID_ADPCM_IMA_DK3 = 69634
 AV_CODEC_ID_ADPCM_IMA_DK4 = 69635
@@ -736,9 +298,13 @@ AV_CODEC_ID_ADPCM_SBPRO_2 = 69649
 AV_CODEC_ID_ADPCM_THP = 69650
 AV_CODEC_ID_ADPCM_IMA_AMV = 69651
 AV_CODEC_ID_ADPCM_EA_R1 = 69652
+AV_CODEC_ID_ADPCM_EA_R3 = 69653
 AV_CODEC_ID_ADPCM_EA_R2 = 69654
+AV_CODEC_ID_ADPCM_IMA_EA_SEAD = 69655
 AV_CODEC_ID_ADPCM_IMA_EA_EACS = 69656
 AV_CODEC_ID_ADPCM_EA_XAS = 69657
+AV_CODEC_ID_ADPCM_EA_MAXIS_XA = 69658
+AV_CODEC_ID_ADPCM_IMA_ISS = 69659
 AV_CODEC_ID_ADPCM_G722 = 69660
 AV_CODEC_ID_ADPCM_IMA_APC = 69661
 AV_CODEC_ID_VIMA = 1447644481
@@ -752,8 +318,8 @@ AV_CODEC_ID_ROQ_DPCM = 81920
 AV_CODEC_ID_INTERPLAY_DPCM = 81921
 AV_CODEC_ID_XAN_DPCM = 81922
 AV_CODEC_ID_SOL_DPCM = 81923
+AV_CODEC_ID_MP2 = 86016
 AV_CODEC_ID_MP3 = 86017
-AV_CODEC_ID_AAC = 86018
 AV_CODEC_ID_AC3 = 86019
 AV_CODEC_ID_DTS = 86020
 AV_CODEC_ID_VORBIS = 86021
@@ -783,6 +349,7 @@ AV_CODEC_ID_MUSEPACK7 = 86044
 AV_CODEC_ID_MLP = 86045
 AV_CODEC_ID_GSM_MS = 86046
 AV_CODEC_ID_ATRAC3 = 86047
+AV_CODEC_ID_VOXWARE = 86048
 AV_CODEC_ID_APE = 86049
 AV_CODEC_ID_NELLYMOSER = 86050
 AV_CODEC_ID_MUSEPACK8 = 86051
@@ -799,6 +366,7 @@ AV_CODEC_ID_TRUEHD = 86061
 AV_CODEC_ID_MP4ALS = 86062
 AV_CODEC_ID_ATRAC1 = 86063
 AV_CODEC_ID_BINKAUDIO_RDFT = 86064
+AV_CODEC_ID_BINKAUDIO_DCT = 86065
 AV_CODEC_ID_AAC_LATM = 86066
 AV_CODEC_ID_QDMC = 86067
 AV_CODEC_ID_CELT = 86068
@@ -861,13 +429,15 @@ CODEC_ID_H261 = 4
 CODEC_ID_H263 = 5
 CODEC_ID_RV10 = 6
 CODEC_ID_RV20 = 7
+CODEC_ID_MJPEG = 8
+CODEC_ID_MJPEGB = 9
 CODEC_ID_LJPEG = 10
 CODEC_ID_SP5X = 11
-CODEC_ID_JPEGLS = 12
 CODEC_ID_MPEG4 = 13
 CODEC_ID_RAWVIDEO = 14
 CODEC_ID_MSMPEG4V1 = 15
 CODEC_ID_MSMPEG4V2 = 16
+CODEC_ID_MSMPEG4V3 = 17
 CODEC_ID_WMV1 = 18
 CODEC_ID_WMV2 = 19
 CODEC_ID_H263P = 20
@@ -891,7 +461,6 @@ CODEC_ID_CLJR = 37
 CODEC_ID_MDEC = 38
 CODEC_ID_ROQ = 39
 CODEC_ID_INTERPLAY_VIDEO = 40
-CODEC_ID_XAN_WC3 = 41
 CODEC_ID_XAN_WC4 = 42
 CODEC_ID_RPZA = 43
 CODEC_ID_CINEPAK = 44
@@ -921,7 +490,6 @@ CODEC_ID_PGMYUV = 67
 CODEC_ID_PAM = 68
 CODEC_ID_FFVHUFF = 69
 CODEC_ID_RV30 = 70
-CODEC_ID_RV40 = 71
 CODEC_ID_VC1 = 72
 CODEC_ID_WMV3 = 73
 CODEC_ID_LOCO = 74
@@ -930,9 +498,13 @@ CODEC_ID_AASC = 76
 CODEC_ID_INDEO2 = 77
 CODEC_ID_FRAPS = 78
 CODEC_ID_TRUEMOTION2 = 79
+CODEC_ID_BMP = 80
 CODEC_ID_CSCD = 81
 CODEC_ID_MMVIDEO = 82
 CODEC_ID_ZMBV = 83
+CODEC_ID_AVS = 84
+CODEC_ID_SMACKVIDEO = 85
+CODEC_ID_NUV = 86
 CODEC_ID_KMVC = 87
 CODEC_ID_FLASHSV = 88
 CODEC_ID_CAVS = 89
@@ -944,15 +516,14 @@ CODEC_ID_VP6F = 94
 CODEC_ID_TARGA = 95
 CODEC_ID_DSICINVIDEO = 96
 CODEC_ID_TIERTEXSEQVIDEO = 97
-CODEC_ID_TIFF = 98
 CODEC_ID_GIF = 99
 CODEC_ID_DXA = 100
 CODEC_ID_DNXHD = 101
 CODEC_ID_THP = 102
+CODEC_ID_SGI = 103
 CODEC_ID_C93 = 104
-CODEC_ID_BETHSOFTVID = 105
+CODEC_ID_PTX = 106
 CODEC_ID_TXD = 107
-CODEC_ID_VP6A = 108
 CODEC_ID_AMV = 109
 CODEC_ID_VB = 110
 CODEC_ID_PCX = 111
@@ -967,19 +538,24 @@ CODEC_ID_BFI = 119
 CODEC_ID_CMV = 120
 CODEC_ID_MOTIONPIXELS = 121
 CODEC_ID_TGV = 122
+CODEC_ID_TGQ = 123
 CODEC_ID_TQI = 124
 CODEC_ID_AURA = 125
 CODEC_ID_AURA2 = 126
 CODEC_ID_V210X = 127
 CODEC_ID_TMV = 128
+CODEC_ID_V210 = 129
 CODEC_ID_DPX = 130
 CODEC_ID_MAD = 131
 CODEC_ID_FRWU = 132
+CODEC_ID_FLASHSV2 = 133
 CODEC_ID_CDGRAPHICS = 134
 CODEC_ID_R210 = 135
 CODEC_ID_ANM = 136
 CODEC_ID_BINKVIDEO = 137
 CODEC_ID_IFF_ILBM = 138
+CODEC_ID_IFF_BYTERUN1 = 139
+CODEC_ID_KGV1 = 140
 CODEC_ID_YOP = 141
 CODEC_ID_VP8 = 142
 CODEC_ID_PICTOR = 143
@@ -1037,7 +613,10 @@ CODEC_ID_PCM_S24LE = 65548
 CODEC_ID_PCM_S24BE = 65549
 CODEC_ID_PCM_U24LE = 65550
 CODEC_ID_PCM_U24BE = 65551
+CODEC_ID_PCM_S24DAUD = 65552
 CODEC_ID_PCM_ZORK = 65553
+CODEC_ID_PCM_S16LE_PLANAR = 65554
+CODEC_ID_PCM_DVD = 65555
 CODEC_ID_PCM_F32BE = 65556
 CODEC_ID_PCM_F32LE = 65557
 CODEC_ID_PCM_F64BE = 65558
@@ -1054,9 +633,9 @@ CODEC_ID_ADPCM_IMA_WS = 69636
 CODEC_ID_ADPCM_IMA_SMJPEG = 69637
 CODEC_ID_ADPCM_MS = 69638
 CODEC_ID_ADPCM_4XM = 69639
+CODEC_ID_ADPCM_XA = 69640
 CODEC_ID_ADPCM_ADX = 69641
 CODEC_ID_ADPCM_EA = 69642
-CODEC_ID_ADPCM_G726 = 69643
 CODEC_ID_ADPCM_CT = 69644
 CODEC_ID_ADPCM_SWF = 69645
 CODEC_ID_ADPCM_YAMAHA = 69646
@@ -1101,12 +680,15 @@ CODEC_ID_MP3ADU = 86029
 CODEC_ID_MP3ON4 = 86030
 CODEC_ID_SHORTEN = 86031
 CODEC_ID_ALAC = 86032
+CODEC_ID_WESTWOOD_SND1 = 86033
 CODEC_ID_GSM = 86034
 CODEC_ID_QDM2 = 86035
 CODEC_ID_COOK = 86036
+CODEC_ID_TRUESPEECH = 86037
+CODEC_ID_TTA = 86038
 CODEC_ID_SMACKAUDIO = 86039
 CODEC_ID_QCELP = 86040
-CODEC_ID_DSICINAUDIO = 86042
+CODEC_ID_WAVPACK = 86041
 CODEC_ID_IMC = 86043
 CODEC_ID_MUSEPACK7 = 86044
 CODEC_ID_MLP = 86045
@@ -1120,7 +702,6 @@ CODEC_ID_SPEEX = 86052
 CODEC_ID_WMAVOICE = 86053
 CODEC_ID_WMAPRO = 86054
 CODEC_ID_WMALOSSLESS = 86055
-CODEC_ID_ATRAC3P = 86056
 CODEC_ID_EAC3 = 86057
 CODEC_ID_SIPR = 86058
 CODEC_ID_MP1 = 86059
@@ -1142,6 +723,7 @@ CODEC_ID_RALF = 86074
 CODEC_ID_IAC = 86075
 CODEC_ID_ILBC = 86076
 CODEC_ID_FFWAVESYNTH = 1179014995
+CODEC_ID_8SVX_RAW = 944985688
 CODEC_ID_SONIC = 1397706307
 CODEC_ID_SONIC_LS = 1397706316
 CODEC_ID_PAF_AUDIO = 1346455105
@@ -1163,471 +745,889 @@ CODEC_ID_SAMI = 1396788553
 CODEC_ID_REALTEXT = 1381259348
 CODEC_ID_SUBVIEWER = 1400201814
 CODEC_ID_FIRST_UNKNOWN = 98304
+CODEC_ID_TTF = 98304
+CODEC_ID_BINTEXT = 1112823892
+CODEC_ID_XBIN = 1480739150
+CODEC_ID_IDF = 4801606
+CODEC_ID_OTF = 5198918
+CODEC_ID_PROBE = 102400
+CODEC_ID_MPEG2TS = 131072
 CODEC_ID_MPEG4SYSTEMS = 131073
 CODEC_ID_FFMETADATA = 135168
 AVCodecID = c_int # enum
 CodecID = AVCodecID # alias
-def __warnattr(msg): return __attribute__((__warning__ (msg))) # macro
-EOPNOTSUPP = 95 # Variable c_int '95'
-ENOTSUP = EOPNOTSUPP # alias
-_POSIX2_BC_BASE_MAX = 99 # Variable c_int '99'
-BC_BASE_MAX = _POSIX2_BC_BASE_MAX # alias
-def __isupper_l(c,l): return __isctype_l((c), _ISupper, (l)) # macro
-AVCHROMA_LOC_BOTTOMLEFT = 5
-AVCHROMA_LOC_TOP = 4
-# PIX_FMT_YUV444P12 = AV_PIX_FMT_YUV444P12 # alias
-def __isblank_l(c,l): return __isctype_l((c), _ISblank, (l)) # macro
-# def __isctype_f(type): return __extern_inline int is ##type (int __c) __THROW { return (*__ctype_b_loc ())[(int) (__c)] & (unsigned short int) _IS ##type; } # macro
-def isupper_l(c,l): return __isupper_l ((c), (l)) # macro
-def isalnum_l(c,l): return __isalnum_l ((c), (l)) # macro
-def isunordered(u,v): return __builtin_isunordered(u, v) # macro
-_POSIX2_BC_SCALE_MAX = 99 # Variable c_int '99'
-BC_SCALE_MAX = _POSIX2_BC_SCALE_MAX # alias
-AVCOL_PRI_BT470BG = 5
-# def __tobody(c,f,a,args): return (__extension__ ({ int __res; if (sizeof (c) > 1) { if (__builtin_constant_p (c)) { int __c = (c); __res = __c < -128 || __c > 255 ? __c : (a)[__c]; } else __res = f args; } else __res = (a)[(int) (c)]; __res; })) # macro
-def va_start(v,l): return __builtin_va_start(v,l) # macro
-def UINT64_C(c): return c ## UL # macro
-LIBAVFILTER_VERSION_INT = 204900 # Variable c_int '204900'
-LIBAVFILTER_BUILD = LIBAVFILTER_VERSION_INT # alias
-def htole64(x): return (x) # macro
-# PIX_FMT_GBRP16 = AV_PIX_FMT_GBRP16 # alias
-# __RLIM_T_TYPE = __SYSCALL_ULONG_TYPE # alias
-def islower_l(c,l): return __islower_l ((c), (l)) # macro
-def __toascii_l(c,l): return ((l), __toascii (c)) # macro
-def va_end(v): return __builtin_va_end(v) # macro
-AVCHROMA_LOC_CENTER = 2
-AV_CLASS_CATEGORY_SWSCALER = 9
-stdout = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libavcodec.so'], 'stdout')
-stdout = stdout # alias
-stderr = (POINTER(_IO_FILE)).in_dll(_libraries['/usr/lib/libavcodec.so'], 'stderr')
-stderr = stderr # alias
-# PIX_FMT_YUV422P16 = AV_PIX_FMT_YUV422P16 # alias
-def va_copy(d,s): return __builtin_va_copy(d,s) # macro
-def htole16(x): return (x) # macro
-# av_restrict = restrict # alias
-# __RLIM64_T_TYPE = __UQUAD_TYPE # alias
-SUBTITLE_NONE = 0
-# def __FD_MASK(d): return ((__fd_mask) 1 << ((d) % __NFDBITS)) # macro
-def __iscntrl_l(c,l): return __isctype_l((c), _IScntrl, (l)) # macro
-# av_popcount = av_popcount_c # alias
-# av_extern_inline = inline # alias
-AV_CLASS_CATEGORY_SWRESAMPLER = 10
-AVCOL_RANGE_UNSPECIFIED = 0
-# def isfinite(x): return (sizeof (x) == sizeof (float) ? __finitef (x) : sizeof (x) == sizeof (double) ? __finite (x) : __finitel (x)) # macro
-def htobe64(x): return __bswap_64 (x) # macro
-def _toupper(c): return ((int) (*__ctype_toupper_loc ())[(int) (c)]) # macro
-# av_clipf = av_clipf_c # alias
-def __WEXITSTATUS(status): return (((status) & 0xff00) >> 8) # macro
-# def __intN_t(N,MODE): return typedef int int ##N ##_t __attribute__ ((__mode__ (MODE))) # macro
-# av_clip_uintp2 = av_clip_uintp2_c # alias
-AV_FIELD_PROGRESSIVE = 1
-AV_FIELD_UNKNOWN = 0
-# av_clip_uint16 = av_clip_uint16_c # alias
-def va_arg(v,l): return __builtin_va_arg(v,l) # macro
-def htobe32(x): return __bswap_32 (x) # macro
-def __WCOREDUMP(status): return ((status) & __WCOREFLAG) # macro
-# def PUT_UTF8(val,tmp,PUT_BYTE): return { int bytes, shift; uint32_t in = val; if (in < 0x80) { tmp = in; PUT_BYTE } else { bytes = (av_log2(in) + 4) / 5; shift = (bytes - 1) * 6; tmp = (256 - (256 >> bytes)) | (in >> shift); PUT_BYTE while (shift >= 6) { shift -= 6; tmp = 0x80 | ((in >> shift) & 0x3f); PUT_BYTE } } } # macro
-ME_TESA = 10
-# av_clip = av_clip_c # alias
-AV_CLASS_CATEGORY_BITSTREAM_FILTER = 8
-def htobe16(x): return __bswap_16 (x) # macro
+# av_clip_int16 = av_clip_int16_c # alias
+# av_clip64 = av_clip64_c # alias
+# av_ceil_log2 = av_ceil_log2_c # alias
 # av_builtin_constant_p = __builtin_constant_p # alias
-AVCOL_PRI_NB = 9
-# def PUT_UTF16(val,tmp,PUT_16BIT): return { uint32_t in = val; if (in < 0x10000) { tmp = in; PUT_16BIT } else { tmp = 0xD800 | ((in - 0x10000) >> 10); PUT_16BIT tmp = 0xDC00 | ((in - 0x10000) & 0x3FF); PUT_16BIT } } # macro
+PIX_FMT_YUV411P = 7
+# __gwchar_t = wchar_t # alias
 # __USECONDS_T_TYPE = __U32_TYPE # alias
-# PIX_FMT_YUV422P12 = AV_PIX_FMT_YUV422P12 # alias
-AVCOL_RANGE_MPEG = 1
 # __UID_T_TYPE = __U32_TYPE # alias
+def __isgraph_l(c,l): return __isctype_l((c), _ISgraph, (l)) # macro
+# __SYSCALL_SLONG_TYPE = __SLONGWORD_TYPE # alias
 # __TIME_T_TYPE = __SYSCALL_SLONG_TYPE # alias
-ME_ITER = 9
-ME_EPZS = 5
-ME_PHODS = 4
-ME_FULL = 2
-AV_CLASS_CATEGORY_DECODER = 6
-AV_RESAMPLE_FILTER_TYPE_BLACKMAN_NUTTALL = 1
-# def fpclassify(x): return (sizeof (x) == sizeof (float) ? __fpclassifyf (x) : sizeof (x) == sizeof (double) ? __fpclassify (x) : __fpclassifyl (x)) # macro
-AVCOL_TRC_NB = 8
-AVCOL_TRC_SMPTE240M = 7
-def isgreater(x,y): return __builtin_isgreater(x, y) # macro
-AVCOL_TRC_GAMMA28 = 5
-AVCOL_TRC_GAMMA22 = 4
-AVCOL_TRC_UNSPECIFIED = 2
-AVCOL_TRC_BT709 = 1
-# __SUSECONDS_T_TYPE = __SYSCALL_SLONG_TYPE # alias
-ME_HEX = 7
-# __SSIZE_T_TYPE = __SWORD_TYPE # alias
-AV_CLASS_CATEGORY_ENCODER = 5
-AVCOL_PRI_SMPTE170M = 6
-def MKTAG(a,b,c,d): return ((a) | ((b) << 8) | ((c) << 16) | ((unsigned)(d) << 24)) # macro
-_POSIX2_EXPR_NEST_MAX = 32 # Variable c_int '32'
-EXPR_NEST_MAX = _POSIX2_EXPR_NEST_MAX # alias
-# def strndupa(s,n): return (__extension__ ({ const char *__old = (s); size_t __len = strnlen (__old, (n)); char *__new = (char *) __builtin_alloca (__len + 1); __new[__len] = '\0'; (char *) memcpy (__new, __old, __len); })) # macro
-def be32toh(x): return __bswap_32 (x) # macro
-def MKBETAG(a,b,c,d): return ((d) | ((c) << 8) | ((b) << 16) | ((unsigned)(a) << 24)) # macro
-# def GET_UTF8(val,GET_BYTE,ERROR): return val= GET_BYTE; { uint32_t top = (val & 128) >> 1; if ((val & 0xc0) == 0x80) ERROR while (val & top) { int tmp= GET_BYTE - 128; if(tmp>>6) ERROR val= (val<<6) + tmp; top <<= 5; } val &= (top << 1) - 1; } # macro
-AV_SAMPLE_FMT_NB = 10
-AV_SAMPLE_FMT_DBLP = 9
-AV_SAMPLE_FMT_FLTP = 8
-AV_SAMPLE_FMT_S32P = 7
-AV_SAMPLE_FMT_S16P = 6
-AV_SAMPLE_FMT_U8P = 5
-AV_SAMPLE_FMT_DBL = 4
-AV_SAMPLE_FMT_FLT = 3
-AV_SAMPLE_FMT_S32 = 2
-AV_SAMPLE_FMT_U8 = 0
-AV_SAMPLE_FMT_NONE = -1
-FP_NORMAL = 4
-# __FSWORD_T_TYPE = __SYSCALL_SLONG_TYPE # alias
-_ISalnum = 8
-_ISpunct = 4
-_IScntrl = 2
-EAGAIN = 11 # Variable c_int '11'
-EWOULDBLOCK = EAGAIN # alias
-_ISprint = 16384
-_ISspace = 8192
-_ISxdigit = 4096
-_ISdigit = 2048
-# def signbit(x): return (sizeof (x) == sizeof (float) ? __signbitf (x) : sizeof (x) == sizeof (double) ? __signbit (x) : __signbitl (x)) # macro
-_ISlower = 512
-# av_clipl_int32 = av_clipl_int32_c # alias
-_ISupper = 256
-AVSTREAM_PARSE_FULL_RAW = 1463898624
-AVSTREAM_PARSE_FULL_ONCE = 4
-AVSTREAM_PARSE_TIMESTAMPS = 3
-AVSTREAM_PARSE_HEADERS = 2
-AVSTREAM_PARSE_FULL = 1
-AVSTREAM_PARSE_NONE = 0
-# NL_TEXTMAX = INT_MAX # alias
-AV_SAMPLE_FMT_S16 = 1
-# __CLOCKID_T_TYPE = __S32_TYPE # alias
-def __FD_ELT(d): return ((d) / __NFDBITS) # macro
-__BYTE_ORDER = __LITTLE_ENDIAN # alias
-BYTE_ORDER = __BYTE_ORDER # alias
-def __isascii_l(c,l): return ((l), __isascii (c)) # macro
-AV_MATRIX_ENCODING_NB = 3
-EDEADLK = 35 # Variable c_int '35'
-EDEADLOCK = EDEADLK # alias
-def offsetof(TYPE,MEMBER): return __builtin_offsetof (TYPE, MEMBER) # macro
-AV_MATRIX_ENCODING_DOLBY = 1
-# def av_err2str(errnum): return av_make_error_string((char[AV_ERROR_MAX_STRING_SIZE]){0}, AV_ERROR_MAX_STRING_SIZE, errnum) # macro
-# def __LDBL_REDIR1(name,proto,alias): return name proto # macro
-def minor(dev): return gnu_dev_minor (dev) # macro
-# def av_dlog(pctx,...): return do { if (0) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__); } while (0) # macro
-SCHAR_MIN = -128 # Variable c_int '-0x00000000000000080'
-CHAR_MIN = SCHAR_MIN # alias
-def makedev(maj,min): return gnu_dev_makedev (maj, min) # macro
-# __INO64_T_TYPE = __UQUAD_TYPE # alias
-_ISblank = 1
-_ISgraph = 32768
-# CHAR_MAX = SCHAR_MAX # alias
-def alloca(size): return __builtin_alloca (size) # macro
-AVDISCARD_NONE = -16
-FF_OPT_TYPE_CONST = 128
-FF_OPT_TYPE_BINARY = 7
-def INT64_C(c): return c ## L # macro
-FF_OPT_TYPE_STRING = 5
+PIX_FMT_YUV444P9BE = 75
 # CHAR_BIT = __CHAR_BIT__ # alias
-AV_OPT_TYPE_PIXEL_FMT = 1346784596
-AV_OPT_TYPE_CONST = 128
-def major(dev): return gnu_dev_major (dev) # macro
-AV_OPT_TYPE_STRING = 5
-AV_LOCK_DESTROY = 3
-AV_OPT_TYPE_DOUBLE = 3
-def _IO_peekc(_fp): return _IO_peekc_unlocked (_fp) # macro
-AV_OPT_TYPE_INT = 1
-AV_OPT_TYPE_FLAGS = 0
-AVCOL_SPC_BT470BG = 5
-AV_SIDE_DATA_PARAM_CHANGE_SAMPLE_RATE = 4
-AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_LAYOUT = 2
-_ISalpha = 1024
-AV_RESAMPLE_DITHER_TRIANGULAR_HP = 3
-AV_RESAMPLE_DITHER_TRIANGULAR = 2
-BUFSIZ = _IO_BUFSIZ # alias
-# def _IO_ferror_unlocked(__fp): return (((__fp)->_flags & _IO_ERR_SEEN) != 0) # macro
-def le64toh(x): return (x) # macro
-AV_LOCK_RELEASE = 2
-AVCOL_SPC_RGB = 0
-# def FFERRTAG(a,b,c,d): return (-(int)MKTAG(a, b, c, d)) # macro
-def FFMAX3(a,b,c): return FFMAX(FFMAX(a,b),c) # macro
-AV_RESAMPLE_DITHER_TRIANGULAR_NS = 4
-def WSTOPSIG(status): return __WSTOPSIG (__WAIT_INT (status)) # macro
-def _tolower(c): return ((int) (*__ctype_tolower_loc ())[(int) (c)]) # macro
-AV_LOCK_OBTAIN = 1
-_POSIX_ = 2
-def WIFSIGNALED(status): return __WIFSIGNALED (__WAIT_INT (status)) # macro
-def __MATHCALLX(function,suffix,args,attrib): return __MATHDECLX (_Mdouble_,function,suffix, args, attrib) # macro
-AV_RESAMPLE_DITHER_NB = 5
-def WIFCONTINUED(status): return __WIFCONTINUED (__WAIT_INT (status)) # macro
-# def __warndecl(name,msg): return extern void name (void) __attribute__((__warning__ (msg))) # macro
-AV_LOCK_CREATE = 0
-def UINTMAX_C(c): return c ## UL # macro
-def __LONG_LONG_PAIR(HI,LO): return LO, HI # macro
-FP_ZERO = 2
-def FF_ARRAY_ELEMS(a): return (sizeof(a) / sizeof((a)[0])) # macro
-_POSIX2_BC_STRING_MAX = 1000 # Variable c_int '1000'
-BC_STRING_MAX = _POSIX2_BC_STRING_MAX # alias
-def UINT16_C(c): return c # macro
-# __SLONG32_TYPE = int # alias
-# def __LDBL_REDIR_NTH(name,proto): return name proto __THROW # macro
-def FFUMOD(a,b): return ((a)-(b)*FFUDIV(a,b)) # macro
-AV_RESAMPLE_DITHER_RECTANGULAR = 1
-def __va_copy(d,s): return __builtin_va_copy(d,s) # macro
-def getc(_fp): return _IO_getc (_fp) # macro
-# __BLKSIZE_T_TYPE = __SYSCALL_SLONG_TYPE # alias
-# def __LDBL_REDIR1_NTH(name,proto,alias): return name proto __THROW # macro
-__BIG_ENDIAN = 4321 # Variable c_int '4321'
-BIG_ENDIAN = __BIG_ENDIAN # alias
-def __isascii(c): return (((c) & ~0x7f) == 0) # macro
-def INT8_C(c): return c # macro
-# __FSBLKCNT_T_TYPE = __SYSCALL_ULONG_TYPE # alias
-# __MATH_INLINE = __extern_always_inline # alias
-AV_OPT_FLAG_IMPLICIT_KEY = 1
-# PIX_FMT_RGB444 = AV_PIX_FMT_RGB444 # alias
-# __INO_T_TYPE = __SYSCALL_ULONG_TYPE # alias
-# def FFSWAP(type,a,b): return do{type SWAP_tmp= b; b= a; a= SWAP_tmp;}while(0) # macro
-# __FSBLKCNT64_T_TYPE = __UQUAD_TYPE # alias
-# def FFUDIV(a,b): return (((a)>0 ?(a):(a)-(b)+1) / (b)) # macro
-# __FSFILCNT_T_TYPE = __SYSCALL_ULONG_TYPE # alias
-# def FFSIGN(a): return ((a) > 0 ? 1 : -1) # macro
-AVDISCARD_NONREF = 8
-FF_OPT_TYPE_FLOAT = 4
-def isdigit_l(c,l): return __isdigit_l ((c), (l)) # macro
-AVDISCARD_DEFAULT = 0
-__FLOAT_WORD_ORDER = __BYTE_ORDER # alias
-AV_MATRIX_ENCODING_DPLII = 2
-# def __u_intN_t(N,MODE): return typedef unsigned int u_int ##N ##_t __attribute__ ((__mode__ (MODE))) # macro
-# PIX_FMT_BGRA64 = AV_PIX_FMT_BGRA64 # alias
-def FFALIGN(x,a): return (((x)+(a)-1)&~((a)-1)) # macro
-_XOPEN_ = 1
-def INT32_C(c): return c # macro
-__codecvt_partial = 1
-__codecvt_ok = 0
-AV_MATRIX_ENCODING_NONE = 0
+# __SSIZE_T_TYPE = __SWORD_TYPE # alias
+def __ispunct_l(c,l): return __isctype_l((c), _ISpunct, (l)) # macro
+# def _IO_getc_unlocked(_fp): return (_IO_BE ((_fp)->_IO_read_ptr >= (_fp)->_IO_read_end, 0) ? __uflow (_fp) : *(unsigned char *) (_fp)->_IO_read_ptr++) # macro
+AV_PIX_FMT_GBRP14BE = 315
+# def __ASMNAME2(prefix,cname): return __STRING (prefix) cname # macro
+def __STRING(x): return #x # macro
+AV_ROUND_UP = 3
+# def FFABS(a): return ((a) >= 0 ? (a) : (-(a))) # macro
+# PIX_FMT_0RGB32 = AV_PIX_FMT_0RGB32 # alias
+AV_SAMPLE_FMT_S16P = 6
+def __WIFEXITED(status): return (__WTERMSIG(status) == 0) # macro
+def av_printf_format(fmtpos,attrpos): return __attribute__((__format__(__printf__, fmtpos, attrpos))) # macro
+AV_SAMPLE_FMT_U8P = 5
+def __isprint_l(c,l): return __isctype_l((c), _ISprint, (l)) # macro
 AVCOL_SPC_YCOCG = 8
 AVCOL_SPC_YCGCO = AVCOL_SPC_YCOCG # alias
-def __glibc_unlikely(cond): return __builtin_expect((cond), 0) # macro
-AV_PKT_DATA_JP_DUALMONO = 71
-AV_PKT_DATA_SKIP_SAMPLES = 70
-AV_PKT_DATA_H263_MB_INFO = 3
-AV_PKT_DATA_PARAM_CHANGE = 2
-AV_PKT_DATA_NEW_EXTRADATA = 1
-AVMEDIA_TYPE_AUDIO = 1
-# PIX_FMT_GBRP14 = AV_PIX_FMT_GBRP14 # alias
-def toascii_l(c,l): return __toascii_l ((c), (l)) # macro
-AVDISCARD_ALL = 48
-__uid_t = c_uint
-_IO_uid_t = __uid_t # alias
-__ssize_t = c_long
-_IO_ssize_t = __ssize_t # alias
-def le32toh(x): return (x) # macro
-def le16toh(x): return (x) # macro
-def ispunct_l(c,l): return __ispunct_l ((c), (l)) # macro
-__pid_t = c_int
-_IO_pid_t = __pid_t # alias
-def isnormal(x): return (fpclassify (x) == FP_NORMAL) # macro
-# def __bswap_16(x): return (__extension__ ({ register unsigned short int __v, __x = (unsigned short int) (x); if (__builtin_constant_p (__x)) __v = __bswap_constant_16 (__x); else __asm__ ("rorw $8, %w0" : "=r" (__v) : "0" (__x) : "cc"); __v; })) # macro
-def isprint_l(c,l): return __isprint_l ((c), (l)) # macro
-_IO_off_t = __off_t # alias
-def __toascii(c): return ((c) & 0x7f) # macro
-def islessgreater(x,y): return __builtin_islessgreater(x, y) # macro
-FF_OPT_TYPE_DOUBLE = 3
-def isless(x,y): return __builtin_isless(x, y) # macro
-# def isinf(x): return (sizeof (x) == sizeof (float) ? __isinff (x) : sizeof (x) == sizeof (double) ? __isinf (x) : __isinfl (x)) # macro
-__off64_t = c_long
-_IO_off64_t = __off64_t # alias
-def isgraph_l(c,l): return __isgraph_l ((c), (l)) # macro
-def __bos(ptr): return __builtin_object_size (ptr, __USE_FORTIFY_LEVEL > 1) # macro
-def iscntrl_l(c,l): return __iscntrl_l ((c), (l)) # macro
-# PIX_FMT_YUV422P10 = AV_PIX_FMT_YUV422P10 # alias
-def toascii(c): return __toascii (c) # macro
-# PIX_FMT_GBRP10 = AV_PIX_FMT_GBRP10 # alias
-AVFMT_DURATION_FROM_STREAM = 1
-# def __nonnull(params): return __attribute__ ((__nonnull__ params)) # macro
-# def __WIFSIGNALED(status): return (((signed char) (((status) & 0x7f) + 1) >> 1) > 0) # macro
-def be64toh(x): return __bswap_64 (x) # macro
+AV_PIX_FMT_GBRP12LE = 314
+AV_SAMPLE_FMT_DBL = 4
+def __ASMNAME(cname): return __ASMNAME2 (__USER_LABEL_PREFIX__, cname) # macro
+AV_SAMPLE_FMT_S32 = 2
+PIX_FMT_YUV420P10BE = 71
+# PIX_FMT_0BGR32 = AV_PIX_FMT_0BGR32 # alias
+def UINT8_C(c): return c # macro
+EAGAIN = 11 # Variable c_int '11'
+EWOULDBLOCK = EAGAIN # alias
+FF_OPT_TYPE_CONST = 128
+def islessequal(x,y): return __builtin_islessequal(x, y) # macro
+# av_extern_inline = inline # alias
+AV_ROUND_NEAR_INF = 5
+# __S32_TYPE = int # alias
+# __PID_T_TYPE = __S32_TYPE # alias
+# __OFF64_T_TYPE = __SQUAD_TYPE # alias
+# __SYSCALL_ULONG_TYPE = __ULONGWORD_TYPE # alias
+# __NLINK_T_TYPE = __SYSCALL_ULONG_TYPE # alias
+AV_ROUND_INF = 1
+# __KEY_T_TYPE = __S32_TYPE # alias
+def FD_ZERO(fdsetp): return __FD_ZERO (fdsetp) # macro
+PIX_FMT_YUV420P9LE = 70
+# __ID_T_TYPE = __U32_TYPE # alias
+# __GID_T_TYPE = __U32_TYPE # alias
+# __FSFILCNT_T_TYPE = __SYSCALL_ULONG_TYPE # alias
+# __FSFILCNT64_T_TYPE = __UQUAD_TYPE # alias
+AV_PIX_FMT_RGB444BE = 63
+# __DEV_T_TYPE = __UQUAD_TYPE # alias
+AV_PIX_FMT_YUYV422 = 1
+# __DADDR_T_TYPE = __S32_TYPE # alias
+# __CLOCK_T_TYPE = __SYSCALL_SLONG_TYPE # alias
+AV_PIX_FMT_YUV444P14LE = 312
+AVCHROMA_LOC_BOTTOMLEFT = 5
+# __BLKCNT_T_TYPE = __SYSCALL_SLONG_TYPE # alias
+# __BLKCNT64_T_TYPE = __SQUAD_TYPE # alias
+_POSIX_UIO_MAXIOV = 16 # Variable c_int '16'
+_XOPEN_IOV_MAX = _POSIX_UIO_MAXIOV # alias
+AVCOL_TRC_BT709 = 1
+_POSIX_PIPE_BUF = 512 # Variable c_int '512'
+_POSIX_HIWAT = _POSIX_PIPE_BUF # alias
+_POSIX_OPEN_MAX = 20 # Variable c_int '20'
+_POSIX_FD_SETSIZE = _POSIX_OPEN_MAX # alias
+AV_PIX_FMT_YUV444P9LE = 76
+# _IO_wint_t = wint_t # alias
+def FD_SET(fd,fdsetp): return __FD_SET (fd, fdsetp) # macro
+_ISblank = 1
 class __va_list_tag(Structure):
     pass
 __va_list_tag._fields_ = [
 ]
 __gnuc_va_list = __va_list_tag * 1
-_G_va_list = __gnuc_va_list # alias
-# SSIZE_MAX = LONG_MAX # alias
-AVLINK_INIT = 2
-AVLINK_STARTINIT = 1
-AVLINK_UNINIT = 0
-def __isxdigit_l(c,l): return __isctype_l((c), _ISxdigit, (l)) # macro
-def WIFEXITED(status): return __WIFEXITED (__WAIT_INT (status)) # macro
-AVCOL_PRI_SMPTE240M = 7
-# def _IO_putc_unlocked(_ch,_fp): return (_IO_BE ((_fp)->_IO_write_ptr >= (_fp)->_IO_write_end, 0) ? __overflow (_fp, (unsigned char) (_ch)) : (unsigned char) (*(_fp)->_IO_write_ptr++ = (_ch))) # macro
-AVCOL_PRI_BT470M = 4
-# def _IO_PENDING_OUTPUT_COUNT(_fp): return ((_fp)->_IO_write_ptr - (_fp)->_IO_write_base) # macro
-def __WIFEXITED(status): return (__WTERMSIG(status) == 0) # macro
-# def isnan(x): return (sizeof (x) == sizeof (float) ? __isnanf (x) : sizeof (x) == sizeof (double) ? __isnan (x) : __isnanl (x)) # macro
-def _IO_BE(expr,res): return __builtin_expect ((expr), res) # macro
-def WTERMSIG(status): return __WTERMSIG (__WAIT_INT (status)) # macro
-_ISOC_ = 3
-def WIFSTOPPED(status): return __WIFSTOPPED (__WAIT_INT (status)) # macro
-_SVID_ = 0
-_IEEE_ = -1
-def WEXITSTATUS(status): return __WEXITSTATUS (__WAIT_INT (status)) # macro
-FP_SUBNORMAL = 3
-def UINT32_C(c): return c ## U # macro
-def __CONCAT(x,y): return x ## y # macro
-# def ROUNDED_DIV(a,b): return (((a)>0 ? (a) + ((b)>>1) : (a) - ((b)>>1))/(b)) # macro
-def __STRING(x): return #x # macro
-def PIX_FMT_NE(be,le): return AV_PIX_FMT_NE(be, le) # macro
-AVFMT_DURATION_FROM_BITRATE = 2
-AVFMT_DURATION_FROM_PTS = 0
-def INTMAX_C(c): return c ## L # macro
-AVMEDIA_TYPE_DATA = 2
-def FD_CLR(fd,fdsetp): return __FD_CLR (fd, fdsetp) # macro
-def __isspace_l(c,l): return __isctype_l((c), _ISspace, (l)) # macro
-AVDISCARD_NONKEY = 32
-AVDISCARD_BIDIR = 16
-def FFMIN3(a,b,c): return FFMIN(FFMIN(a,b),c) # macro
-# def FFMIN(a,b): return ((a) > (b) ? (b) : (a)) # macro
-AV_PICTURE_TYPE_SP = 6
-FP_INFINITE = 1
-# def FFMAX(a,b): return ((a) > (b) ? (a) : (b)) # macro
-AV_PICTURE_TYPE_SI = 5
-def FD_ZERO(fdsetp): return __FD_ZERO (fdsetp) # macro
-AV_PICTURE_TYPE_S = 4
-# def __exctype_l(name): return extern int name (int, __locale_t) __THROW # macro
-# def __errordecl(name,msg): return extern void name (void) __attribute__((__error__ (msg))) # macro
-# PIX_FMT_BGR555 = AV_PIX_FMT_BGR555 # alias
-def __ispunct_l(c,l): return __isctype_l((c), _ISpunct, (l)) # macro
-def __bos0(ptr): return __builtin_object_size (ptr, 0) # macro
-def __REDIRECT_NTH_LDBL(name,proto,alias): return __REDIRECT_NTH (name, proto, alias) # macro
-AV_SIDE_DATA_PARAM_CHANGE_DIMENSIONS = 8
-def __attribute_format_strfmon__(a,b): return __attribute__ ((__format__ (__strfmon__, a, b))) # macro
-def __W_STOPCODE(sig): return ((sig) << 8 | 0x7f) # macro
-def __WSTOPSIG(status): return __WEXITSTATUS(status) # macro
-AVCOL_PRI_UNSPECIFIED = 2
-# def FFABS(a): return ((a) >= 0 ? (a) : (-(a))) # macro
-AVCOL_PRI_BT709 = 1
-def __WIFCONTINUED(status): return ((status) == __W_CONTINUED) # macro
-# def __WAIT_INT(status): return (*(int *) &(status)) # macro
-# def __REDIRECT_NTHNL(name,proto,alias): return name proto __THROWNL __asm__ (__ASMNAME (#alias)) # macro
-# def __REDIRECT_NTH(name,proto,alias): return name proto __THROW __asm__ (__ASMNAME (#alias)) # macro
-def __isprint_l(c,l): return __isctype_l((c), _ISprint, (l)) # macro
-def __REDIRECT_LDBL(name,proto,alias): return __REDIRECT (name, proto, alias) # macro
-# def __REDIRECT(name,proto,alias): return name proto __asm__ (__ASMNAME (#alias)) # macro
-def __PMT(args): return args # macro
-def __P(args): return args # macro
-# def __NTH(fct): return __LEAF_ATTR fct throw () # macro
-# def __MATHDECLX(type,function,suffix,args,attrib): return __MATHDECL_1(type, function,suffix, args) __attribute__ (attrib); __MATHDECL_1(type, __CONCAT(__,function),suffix, args) __attribute__ (attrib) # macro
-# def __LDBL_REDIR(name,proto): return name proto # macro
-def __GNUC_PREREQ(maj,min): return ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min)) # macro
-def __GLIBC_PREREQ(maj,min): return ((__GLIBC__ << 16) + __GLIBC_MINOR__ >= ((maj) << 16) + (min)) # macro
-# def __FD_ZERO(fdsp): return do { int __d0, __d1; __asm__ __volatile__ ("cld; rep; " __FD_ZERO_STOS : "=c" (__d0), "=D" (__d1) : "a" (0), "0" (sizeof (fd_set) / sizeof (__fd_mask)), "1" (&__FDS_BITS (fdsp)[0]) : "memory"); } while (0) # macro
-# def __FD_CLR(d,set): return ((void) (__FDS_BITS (set)[__FD_ELT (d)] &= ~__FD_MASK (d))) # macro
-# def __ASMNAME2(prefix,cname): return __STRING (prefix) cname # macro
-# def _ISbit(bit): return ((bit) < 8 ? ((1 << (bit)) << 8) : ((1 << (bit)) >> 8)) # macro
-def AV_NE(be,le): return (le) # macro
-def AV_JOIN(a,b): return AV_GLUE(a, b) # macro
-# def AV_GCC_VERSION_AT_LEAST(x,y): return (__GNUC__ > x || __GNUC__ == x && __GNUC_MINOR__ >= y) # macro
-def AVUNERROR(e): return (-(e)) # macro
-AV_MIX_COEFF_TYPE_FLT = 2
-AV_MIX_COEFF_TYPE_Q15 = 1
-AVCHROMA_LOC_TOPLEFT = 3
-AV_MIX_COEFF_TYPE_Q8 = 0
-AVCHROMA_LOC_LEFT = 1
-# def DECLARE_ASM_CONST(n,t,v): return static const t av_used __attribute__ ((aligned (n))) v # macro
-# def DECLARE_ALIGNED(n,t,v): return t __attribute__ ((aligned (n))) v # macro
-def AV_VERSION_DOT(a,b,c): return a ##. ## b ##. ## c # macro
-def AV_VERSION(a,b,c): return AV_VERSION_DOT(a, b, c) # macro
-AV_ROUND_PASS_MINMAX = 8192
-AV_CLASS_CATEGORY_NB = 11
-AV_CLASS_CATEGORY_FILTER = 7
-AV_CLASS_CATEGORY_DEMUXER = 4
-AV_CLASS_CATEGORY_MUXER = 3
-AVMEDIA_TYPE_VIDEO = 0
-AV_CLASS_CATEGORY_OUTPUT = 2
-AV_CLASS_CATEGORY_NA = 0
-AV_ROUND_NEAR_INF = 5
-AVMEDIA_TYPE_UNKNOWN = -1
-# def __FD_SET(d,set): return ((void) (__FDS_BITS (set)[__FD_ELT (d)] |= __FD_MASK (d))) # macro
-# PIX_FMT_BGR32 = AV_PIX_FMT_BGR32 # alias
-def __isdigit_l(c,l): return __isctype_l((c), _ISdigit, (l)) # macro
-def __FD_ISSET(d,set): return ((__FDS_BITS (set)[__FD_ELT (d)] & __FD_MASK (d)) != 0) # macro
-# def AV_PRAGMA(s): return _Pragma(#s) # macro
-# def __FDS_BITS(set): return ((set)->fds_bits) # macro
-# PIX_FMT_0RGB32 = AV_PIX_FMT_0RGB32 # alias
-def __bswap_constant_32(x): return ((((x) & 0xff000000) >> 24) | (((x) & 0x00ff0000) >> 8) | (((x) & 0x0000ff00) << 8) | (((x) & 0x000000ff) << 24)) # macro
-# _Mfloat_ = float # alias
-def AV_PIX_FMT_NE(be,le): return AV_PIX_FMT_ ##le # macro
-# def GET_UTF16(val,GET_16BIT,ERROR): return val = GET_16BIT; { unsigned int hi = val - 0xD800; if (hi < 0x800) { val = GET_16BIT - 0xDC00; if (val > 0x3FFU || hi > 0x3FFU) ERROR val += (hi<<10) + 0x10000; } } # macro
-def FD_ISSET(fd,fdsetp): return __FD_ISSET (fd, fdsetp) # macro
-def __ASMNAME(cname): return __ASMNAME2 (__USER_LABEL_PREFIX__, cname) # macro
-AV_ROUND_DOWN = 2
-# def strdupa(s): return (__extension__ ({ const char *__old = (s); size_t __len = strlen (__old) + 1; char *__new = (char *) __builtin_alloca (__len); (char *) memcpy (__new, __old, __len); })) # macro
-AV_RESAMPLE_FILTER_TYPE_KAISER = 2
-# PIX_FMT_0BGR32 = AV_PIX_FMT_0BGR32 # alias
-AV_RESAMPLE_FILTER_TYPE_CUBIC = 0
-def __WIFSTOPPED(status): return (((status) & 0xff) == 0x7f) # macro
-def be16toh(x): return __bswap_16 (x) # macro
-def isxdigit_l(c,l): return __isxdigit_l ((c), (l)) # macro
-AV_FIELD_BT = 5
-AV_ROUND_INF = 1
-AV_FIELD_TB = 4
-AV_FIELD_BB = 3
-AV_FIELD_TT = 2
-AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_COUNT = 1
-def isgreaterequal(x,y): return __builtin_isgreaterequal(x, y) # macro
 _IO_va_list = __gnuc_va_list # alias
-# def AV_NOWARN_DEPRECATED(code): return _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"") code _Pragma("GCC diagnostic pop") # macro
+PIX_FMT_YUV420P9BE = 69
+size_t = c_ulong
+_IO_size_t = size_t # alias
+__pid_t = c_int
+_IO_pid_t = __pid_t # alias
+# NULL = __null # alias
+class _G_fpos_t(Structure):
+    pass
+__off_t = c_long
+class __mbstate_t(Structure):
+    pass
+class N11__mbstate_t3DOT_7E(Union):
+    pass
+N11__mbstate_t3DOT_7E._fields_ = [
+    ('__wch', c_uint),
+    ('__wchb', c_char * 4),
+]
+__mbstate_t._fields_ = [
+    ('__count', c_int),
+    ('__value', N11__mbstate_t3DOT_7E),
+]
+_G_fpos_t._fields_ = [
+    ('__pos', __off_t),
+    ('__state', __mbstate_t),
+]
+_IO_fpos_t = _G_fpos_t # alias
+AV_PIX_FMT_YUVJ444P = 14
+# SHRT_MAX = __SHRT_MAX__ # alias
+AVCOL_RANGE_JPEG = 2
+AVCHROMA_LOC_UNSPECIFIED = 0
+# def strndupa(s,n): return (__extension__ ({ const char *__old = (s); size_t __len = strnlen (__old, (n)); char *__new = (char *) __builtin_alloca (__len + 1); __new[__len] = '\0'; (char *) memcpy (__new, __old, __len); })) # macro
+# def AV_PRAGMA(s): return _Pragma(#s) # macro
+def __GLIBC_PREREQ(maj,min): return ((__GLIBC__ << 16) + __GLIBC_MINOR__ >= ((maj) << 16) + (min)) # macro
+_ISalnum = 8
+# INT_MAX = __INT_MAX__ # alias
+# NL_TEXTMAX = INT_MAX # alias
+_ISpunct = 4
+SUBTITLE_NONE = 0
+# av_popcount64 = av_popcount64_c # alias
+def _toupper(c): return ((int) (*__ctype_toupper_loc ())[(int) (c)]) # macro
+# def __isctype_l(c,type,locale): return ((locale)->__ctype_b[(int) (c)] & (unsigned short int) type) # macro
+__ssize_t = c_long
+_IO_ssize_t = __ssize_t # alias
+AV_PIX_FMT_YUV444P12LE = 310
+def AV_PIX_FMT_NE(be,le): return AV_PIX_FMT_ ##le # macro
+_ISgraph = 32768
+FF_OPT_TYPE_STRING = 5
+# def av_err2str(errnum): return av_make_error_string((char[AV_ERROR_MAX_STRING_SIZE]){0}, AV_ERROR_MAX_STRING_SIZE, errnum) # macro
+AV_PIX_FMT_VDPAU_MPEG4 = 60
+# def __isctype_f(type): return __extern_inline int is ##type (int __c) __THROW { return (*__ctype_b_loc ())[(int) (__c)] & (unsigned short int) _IS ##type; } # macro
+AV_PIX_FMT_YUV444P12BE = 309
+def isblank_l(c,l): return __isblank_l ((c), (l)) # macro
+# PIX_FMT_YUV444P14 = AV_PIX_FMT_YUV444P14 # alias
+# av_clip_int8 = av_clip_int8_c # alias
+# av_clip_uintp2 = av_clip_uintp2_c # alias
+# NL_NMAX = INT_MAX # alias
+def htobe64(x): return __bswap_64 (x) # macro
+def UINT64_C(c): return c ## UL # macro
+# def fpclassify(x): return (sizeof (x) == sizeof (float) ? __fpclassifyf (x) : sizeof (x) == sizeof (double) ? __fpclassify (x) : __fpclassifyl (x)) # macro
+def be32toh(x): return __bswap_32 (x) # macro
+AV_PIX_FMT_YUV444P16BE = 59
+# PIX_FMT_YUV420P16 = AV_PIX_FMT_YUV420P16 # alias
+# PIX_FMT_YUV420P14 = AV_PIX_FMT_YUV420P14 # alias
+# av_clip = av_clip_c # alias
+# PIX_FMT_YUV420P10 = AV_PIX_FMT_YUV420P10 # alias
+# PIX_FMT_RGBA64 = AV_PIX_FMT_RGBA64 # alias
+# PIX_FMT_RGB565 = AV_PIX_FMT_RGB565 # alias
+# PIX_FMT_RGB555 = AV_PIX_FMT_RGB555 # alias
+# PIX_FMT_RGB48 = AV_PIX_FMT_RGB48 # alias
 def __va_arg_pack_len(): return __builtin_va_arg_pack_len () # macro
-AV_MIX_COEFF_TYPE_NB = 3
-AVCOL_SPC_NB = 9
-AVCOL_SPC_SMPTE240M = 7
-AVCOL_SPC_SMPTE170M = 6
-AVCOL_SPC_FCC = 4
-AVCOL_SPC_UNSPECIFIED = 2
-AVCOL_SPC_BT709 = 1
-# PIX_FMT_BGR444 = AV_PIX_FMT_BGR444 # alias
-def AV_TOSTRING(s): return #s # macro
-def islessequal(x,y): return __builtin_islessequal(x, y) # macro
-AVCHROMA_LOC_NB = 7
+# PIX_FMT_RGB32_1 = AV_PIX_FMT_RGB32_1 # alias
+# PIX_FMT_RGB32 = AV_PIX_FMT_RGB32 # alias
+# def __tobody(c,f,a,args): return (__extension__ ({ int __res; if (sizeof (c) > 1) { if (__builtin_constant_p (c)) { int __c = (c); __res = __c < -128 || __c > 255 ? __c : (a)[__c]; } else __res = f args; } else __res = (a)[(int) (c)]; __res; })) # macro
+# PIX_FMT_GBRP12 = AV_PIX_FMT_GBRP12 # alias
+# NL_MSGMAX = INT_MAX # alias
+def __isupper_l(c,l): return __isctype_l((c), _ISupper, (l)) # macro
+# PIX_FMT_BGR565 = AV_PIX_FMT_BGR565 # alias
+FF_OPT_TYPE_DOUBLE = 3
+# PIX_FMT_BGR48 = AV_PIX_FMT_BGR48 # alias
 def __islower_l(c,l): return __isctype_l((c), _ISlower, (l)) # macro
+AV_PIX_FMT_YUV422P14BE = 307
+# NL_SETMAX = INT_MAX # alias
+AV_AUDIO_SERVICE_TYPE_DIALOGUE = 4
+AV_AUDIO_SERVICE_TYPE_HEARING_IMPAIRED = 3
+# __CLOCKID_T_TYPE = __S32_TYPE # alias
+AV_AUDIO_SERVICE_TYPE_VISUALLY_IMPAIRED = 2
+AV_AUDIO_SERVICE_TYPE_EFFECTS = 1
+def AV_NE(be,le): return (le) # macro
+# def __intN_t(N,MODE): return typedef int int ##N ##_t __attribute__ ((__mode__ (MODE))) # macro
+PIX_FMT_XVMC_MPEG2_MC = 15
+# LLONG_MAX = __LONG_LONG_MAX__ # alias
+__LITTLE_ENDIAN = 1234 # Variable c_int '1234'
+__BYTE_ORDER = __LITTLE_ENDIAN # alias
+BYTE_ORDER = __BYTE_ORDER # alias
+PIX_FMT_BGR444LE = 64
+def INT32_C(c): return c # macro
+_POSIX2_LINE_MAX = 2048 # Variable c_int '2048'
+NL_LANGMAX = _POSIX2_LINE_MAX # alias
+PIX_FMT_YUVJ420P = 12
+AV_MIX_COEFF_TYPE_FLT = 2
+__FD_SETSIZE = 1024 # Variable c_int '1024'
+FD_SETSIZE = __FD_SETSIZE # alias
+def AV_JOIN(a,b): return AV_GLUE(a, b) # macro
+PIX_FMT_MONOBLACK = 10
+PIX_FMT_RGB444BE = 63
+def WEXITSTATUS(status): return __WEXITSTATUS (__WAIT_INT (status)) # macro
+_POSIX_ARG_MAX = 4096 # Variable c_int '4096'
+NL_ARGMAX = _POSIX_ARG_MAX # alias
+AV_PIX_FMT_GRAY8A = 66
+AV_PIX_FMT_Y400A = AV_PIX_FMT_GRAY8A # alias
+# __SUSECONDS_T_TYPE = __SYSCALL_SLONG_TYPE # alias
+AVDISCARD_NONKEY = 32
+AVCHROMA_LOC_NB = 7
+AVCHROMA_LOC_BOTTOM = 6
+AVCHROMA_LOC_TOPLEFT = 3
+AVCHROMA_LOC_CENTER = 2
+AV_PIX_FMT_YUV422P12BE = 305
+AV_PIX_FMT_DXVA2_VLD = 61
+# PIX_FMT_YUV422P10 = AV_PIX_FMT_YUV422P10 # alias
 def AV_GLUE(a,b): return a ## b # macro
 # def __exctype(name): return extern int name (int) __THROW # macro
-AVCHROMA_LOC_BOTTOM = 6
-# NL_NMAX = INT_MAX # alias
-# PIX_FMT_YUV444P9 = AV_PIX_FMT_YUV444P9 # alias
-# def av_uninit(x): return x=x # macro
-SUBTITLE_ASS = 3
-_POSIX2_BC_DIM_MAX = 2048 # Variable c_int '2048'
-BC_DIM_MAX = _POSIX2_BC_DIM_MAX # alias
-# NL_MSGMAX = INT_MAX # alias
-AVMEDIA_TYPE_NB = 5
-AVMEDIA_TYPE_ATTACHMENT = 4
-AVMEDIA_TYPE_SUBTITLE = 3
-AV_PICTURE_TYPE_BI = 7
-AV_PICTURE_TYPE_B = 3
-AV_PICTURE_TYPE_P = 2
-AV_PICTURE_TYPE_I = 1
+PIX_FMT_RGB4 = 23
+PIX_FMT_RGB8 = 22
+__NFDBITS = 64 # Variable c_int '64'
+NFDBITS = __NFDBITS # alias
+PIX_FMT_BGR8 = 19
+PIX_FMT_UYYVYY411 = 18
+PIX_FMT_UYVY422 = 17
+FF_OPT_TYPE_FLAGS = 0
+PIX_FMT_XVMC_MPEG2_IDCT = 16
+def __isascii(c): return (((c) & ~0x7f) == 0) # macro
+PIX_FMT_RGB24 = 2
+PIX_FMT_PAL8 = 11
+AV_MIX_COEFF_TYPE_Q8 = 0
+PIX_FMT_YUV410P = 6
+PIX_FMT_YUV444P = 5
+AVSTREAM_PARSE_HEADERS = 2
+PIX_FMT_YUV420P = 0
+PIX_FMT_NONE = -1
+AVSTREAM_PARSE_FULL = 1
+AV_PIX_FMT_GBRP12BE = 313
+AV_PIX_FMT_YUV444P14BE = 311
+# LONG_MAX = __LONG_MAX__ # alias
+AV_PIX_FMT_YUV422P14LE = 308
+AV_PIX_FMT_YUV422P12LE = 306
+# def isfinite(x): return (sizeof (x) == sizeof (float) ? __finitef (x) : sizeof (x) == sizeof (double) ? __finite (x) : __finitel (x)) # macro
+AV_PIX_FMT_YUV420P14BE = 303
+AV_PIX_FMT_YUV420P12LE = 302
+AV_PIX_FMT_BGR565BE = 47
+def AV_TOSTRING(s): return #s # macro
+def INTMAX_C(c): return c ## L # macro
+AV_PIX_FMT_YUVA422P16BE = 105
+AV_PIX_FMT_YUVA420P16LE = 104
 # def __bswap_constant_64(x): return (__extension__ ((((x) & 0xff00000000000000ull) >> 56) | (((x) & 0x00ff000000000000ull) >> 40) | (((x) & 0x0000ff0000000000ull) >> 24) | (((x) & 0x000000ff00000000ull) >> 8) | (((x) & 0x00000000ff000000ull) << 8) | (((x) & 0x0000000000ff0000ull) << 24) | (((x) & 0x000000000000ff00ull) << 40) | (((x) & 0x00000000000000ffull) << 56))) # macro
-NL_LANGMAX = _POSIX2_LINE_MAX # alias
-def __va_arg_pack(): return __builtin_va_arg_pack () # macro
+AV_PIX_FMT_GBRP = 82
+AV_PIX_FMT_GBR24P = AV_PIX_FMT_GBRP # alias
+# def _IO_putc_unlocked(_ch,_fp): return (_IO_BE ((_fp)->_IO_write_ptr >= (_fp)->_IO_write_end, 0) ? __overflow (_fp, (unsigned char) (_ch)) : (unsigned char) (*(_fp)->_IO_write_ptr++ = (_ch))) # macro
+AV_PIX_FMT_YUVA420P10LE = 98
+AV_PIX_FMT_YUVA420P10BE = 97
+AV_PIX_FMT_YUVA444P9LE = 96
+def isdigit_l(c,l): return __isdigit_l ((c), (l)) # macro
+AV_PIX_FMT_YUVA420P9LE = 92
 def __isalpha_l(c,l): return __isctype_l((c), _ISalpha, (l)) # macro
+AV_PIX_FMT_YUVA444P_LIBAV = 90
+AV_PIX_FMT_YUVA422P_LIBAV = 89
+AV_PIX_FMT_GBRP16LE = 88
+AV_LOCK_DESTROY = 3
+AV_PIX_FMT_GBRP10LE = 86
+AV_PIX_FMT_GBRP10BE = 85
+def __bswap_constant_32(x): return ((((x) & 0xff000000) >> 24) | (((x) & 0x00ff0000) >> 8) | (((x) & 0x0000ff00) << 8) | (((x) & 0x000000ff) << 24)) # macro
+_G_BUFSIZ = 8192 # Variable c_int '8192'
+_IO_BUFSIZ = _G_BUFSIZ # alias
+BUFSIZ = _IO_BUFSIZ # alias
+AV_PIX_FMT_YUV422P10LE = 74
+AV_PIX_FMT_YUV420P10LE = 72
+def __W_EXITCODE(ret,sig): return ((ret) << 8 | (sig)) # macro
+# LONG_LONG_MAX = __LONG_LONG_MAX__ # alias
+AV_PIX_FMT_BGR48BE = 67
+AV_PIX_FMT_RGB444LE = 62
+def __isalnum_l(c,l): return __isctype_l((c), _ISalnum, (l)) # macro
+AV_PIX_FMT_YUV422P16BE = 57
+# _IO_HAVE_ST_BLKSIZE = _G_HAVE_ST_BLKSIZE # alias
+AV_PIX_FMT_YUV420P12BE = 301
+AV_PIX_FMT_YUV420P16BE = 55
+AV_PIX_FMT_YUV420P16LE = 54
+AV_PIX_FMT_VAAPI_VLD = 53
+AV_PIX_FMT_VAAPI_IDCT = 52
+def AVERROR(e): return (-(e)) # macro
+AV_PIX_FMT_BGR555LE = 50
+AV_PIX_FMT_BGR555BE = 49
+AV_PIX_FMT_YUV420P14LE = 304
+AV_PIX_FMT_RGB555BE = 45
+# def __bswap_constant_16(x): return ((unsigned short int) ((((x) >> 8) & 0xff) | (((x) & 0xff) << 8))) # macro
+_XOPEN_ = 1
+AV_PIX_FMT_YUVA422P = 300
+AVDISCARD_DEFAULT = 0
+AV_CLASS_CATEGORY_NB = 11
+def FFMIN3(a,b,c): return FFMIN(FFMIN(a,b),c) # macro
+LITTLE_ENDIAN = __LITTLE_ENDIAN # alias
+AV_OPT_TYPE_BINARY = 7
+AV_PIX_FMT_RGB0 = 296
+AV_PIX_FMT_YUVA444P = 299
+AV_PIX_FMT_0RGB = 295
+PIX_FMT_GBRP12BE = 313
+# def FFMAX(a,b): return ((a) > (b) ? (a) : (b)) # macro
+def __bos0(ptr): return __builtin_object_size (ptr, 0) # macro
+LINE_MAX = _POSIX2_LINE_MAX # alias
+AV_OPT_TYPE_RATIONAL = 6
+AVCOL_RANGE_MPEG = 1
+AV_PIX_FMT_RGB555LE = 46
+AV_PIX_FMT_BGR0 = 298
+def FFALIGN(x,a): return (((x)+(a)-1)&~((a)-1)) # macro
+AV_PIX_FMT_YUVA422P16LE = 106
+# PIX_FMT_YUV422P12 = AV_PIX_FMT_YUV422P12 # alias
+
+# values for enumeration 'AVPixelFormat'
+AV_PIX_FMT_NONE = -1
+AV_PIX_FMT_YUV420P = 0
+AV_PIX_FMT_RGB24 = 2
+AV_PIX_FMT_BGR24 = 3
+AV_PIX_FMT_YUV422P = 4
+AV_PIX_FMT_YUV444P = 5
+AV_PIX_FMT_YUV411P = 7
+AV_PIX_FMT_GRAY8 = 8
+AV_PIX_FMT_MONOWHITE = 9
+AV_PIX_FMT_MONOBLACK = 10
+AV_PIX_FMT_PAL8 = 11
+AV_PIX_FMT_YUVJ420P = 12
+AV_PIX_FMT_YUVJ422P = 13
+AV_PIX_FMT_XVMC_MPEG2_IDCT = 16
+AV_PIX_FMT_UYVY422 = 17
+AV_PIX_FMT_UYYVYY411 = 18
+AV_PIX_FMT_BGR8 = 19
+AV_PIX_FMT_BGR4 = 20
+AV_PIX_FMT_BGR4_BYTE = 21
+AV_PIX_FMT_RGB8 = 22
+AV_PIX_FMT_RGB4 = 23
+AV_PIX_FMT_RGB4_BYTE = 24
+AV_PIX_FMT_NV12 = 25
+AV_PIX_FMT_NV21 = 26
+AV_PIX_FMT_ARGB = 27
+AV_PIX_FMT_RGBA = 28
+AV_PIX_FMT_ABGR = 29
+AV_PIX_FMT_BGRA = 30
+AV_PIX_FMT_GRAY16BE = 31
+AV_PIX_FMT_GRAY16LE = 32
+AV_PIX_FMT_YUV440P = 33
+AV_PIX_FMT_YUVJ440P = 34
+AV_PIX_FMT_YUVA420P = 35
+AV_PIX_FMT_VDPAU_H264 = 36
+AV_PIX_FMT_VDPAU_MPEG1 = 37
+AV_PIX_FMT_VDPAU_MPEG2 = 38
+AV_PIX_FMT_VDPAU_WMV3 = 39
+AV_PIX_FMT_VDPAU_VC1 = 40
+AV_PIX_FMT_RGB48BE = 41
+AV_PIX_FMT_RGB48LE = 42
+AV_PIX_FMT_RGB565BE = 43
+AV_PIX_FMT_RGB565LE = 44
+AV_PIX_FMT_BGR565LE = 48
+AV_PIX_FMT_VAAPI_MOCO = 51
+AV_PIX_FMT_YUV422P16LE = 56
+AV_PIX_FMT_YUV444P16LE = 58
+AV_PIX_FMT_BGR444LE = 64
+AV_PIX_FMT_BGR444BE = 65
+AV_PIX_FMT_BGR48LE = 68
+AV_PIX_FMT_YUV420P9BE = 69
+AV_PIX_FMT_YUV420P9LE = 70
+AV_PIX_FMT_YUV420P10BE = 71
+AV_PIX_FMT_YUV422P10BE = 73
+AV_PIX_FMT_YUV444P9BE = 75
+AV_PIX_FMT_YUV444P10LE = 78
+AV_PIX_FMT_YUV422P9BE = 79
+AV_PIX_FMT_YUV422P9LE = 80
+AV_PIX_FMT_VDA_VLD = 81
+AV_PIX_FMT_GBRP9BE = 83
+AV_PIX_FMT_GBRP9LE = 84
+AV_PIX_FMT_GBRP16BE = 87
+AV_PIX_FMT_YUVA420P9BE = 91
+AV_PIX_FMT_YUVA422P9BE = 93
+AV_PIX_FMT_YUVA422P9LE = 94
+AV_PIX_FMT_YUVA444P9BE = 95
+AV_PIX_FMT_YUVA422P10BE = 99
+AV_PIX_FMT_YUVA422P10LE = 100
+AV_PIX_FMT_YUVA444P10BE = 101
+AV_PIX_FMT_YUVA444P10LE = 102
+AV_PIX_FMT_YUVA420P16BE = 103
+AV_PIX_FMT_YUVA444P16BE = 107
+AV_PIX_FMT_YUVA444P16LE = 108
+AV_PIX_FMT_RGBA64BE = 291
+AV_PIX_FMT_RGBA64LE = 292
+AV_PIX_FMT_BGRA64BE = 293
+AV_PIX_FMT_BGRA64LE = 294
+AV_PIX_FMT_0BGR = 297
+PIX_FMT_YUYV422 = 1
+PIX_FMT_BGR24 = 3
+PIX_FMT_YUV422P = 4
+PIX_FMT_GRAY8 = 8
+PIX_FMT_MONOWHITE = 9
+PIX_FMT_YUVJ422P = 13
+PIX_FMT_YUVJ444P = 14
+PIX_FMT_BGR4 = 20
+PIX_FMT_BGR4_BYTE = 21
+PIX_FMT_RGB4_BYTE = 24
+PIX_FMT_NV12 = 25
+PIX_FMT_NV21 = 26
+PIX_FMT_ARGB = 27
+PIX_FMT_RGBA = 28
+PIX_FMT_ABGR = 29
+PIX_FMT_BGRA = 30
+PIX_FMT_GRAY16BE = 31
+PIX_FMT_GRAY16LE = 32
+PIX_FMT_YUV440P = 33
+PIX_FMT_YUVJ440P = 34
+PIX_FMT_YUVA420P = 35
+PIX_FMT_VDPAU_H264 = 36
+PIX_FMT_VDPAU_MPEG1 = 37
+PIX_FMT_VDPAU_MPEG2 = 38
+PIX_FMT_VDPAU_WMV3 = 39
+PIX_FMT_VDPAU_VC1 = 40
+PIX_FMT_RGB48BE = 41
+PIX_FMT_RGB48LE = 42
+PIX_FMT_RGB565BE = 43
+PIX_FMT_RGB565LE = 44
+PIX_FMT_RGB555BE = 45
+PIX_FMT_BGR565BE = 47
+PIX_FMT_BGR565LE = 48
+PIX_FMT_BGR555BE = 49
+PIX_FMT_BGR555LE = 50
+PIX_FMT_VAAPI_MOCO = 51
+PIX_FMT_VAAPI_IDCT = 52
+PIX_FMT_VAAPI_VLD = 53
+PIX_FMT_YUV420P16LE = 54
+PIX_FMT_YUV420P16BE = 55
+PIX_FMT_YUV422P16LE = 56
+PIX_FMT_YUV422P16BE = 57
+PIX_FMT_YUV444P16LE = 58
+PIX_FMT_YUV444P16BE = 59
+PIX_FMT_VDPAU_MPEG4 = 60
+PIX_FMT_DXVA2_VLD = 61
+PIX_FMT_RGB444LE = 62
+PIX_FMT_BGR444BE = 65
+PIX_FMT_GRAY8A = 66
+PIX_FMT_BGR48BE = 67
+PIX_FMT_BGR48LE = 68
+PIX_FMT_YUV420P10LE = 72
+PIX_FMT_YUV422P10BE = 73
+PIX_FMT_YUV422P10LE = 74
+PIX_FMT_YUV444P10BE = 77
+PIX_FMT_YUV444P10LE = 78
+PIX_FMT_YUV422P9BE = 79
+PIX_FMT_YUV422P9LE = 80
+PIX_FMT_VDA_VLD = 81
+PIX_FMT_GBRP = 82
+PIX_FMT_GBRP9BE = 83
+PIX_FMT_GBRP9LE = 84
+PIX_FMT_GBRP10BE = 85
+PIX_FMT_GBRP10LE = 86
+PIX_FMT_GBRP16BE = 87
+PIX_FMT_GBRP16LE = 88
+PIX_FMT_RGBA64BE = 291
+PIX_FMT_RGBA64LE = 292
+PIX_FMT_BGRA64BE = 293
+PIX_FMT_BGRA64LE = 294
+PIX_FMT_0RGB = 295
+PIX_FMT_RGB0 = 296
+PIX_FMT_0BGR = 297
+PIX_FMT_BGR0 = 298
+PIX_FMT_YUVA444P = 299
+PIX_FMT_YUVA422P = 300
+PIX_FMT_YUV420P12BE = 301
+PIX_FMT_YUV420P12LE = 302
+PIX_FMT_YUV420P14BE = 303
+PIX_FMT_YUV420P14LE = 304
+PIX_FMT_YUV422P12BE = 305
+PIX_FMT_YUV422P12LE = 306
+PIX_FMT_YUV422P14BE = 307
+PIX_FMT_YUV422P14LE = 308
+PIX_FMT_YUV444P12BE = 309
+PIX_FMT_YUV444P12LE = 310
+PIX_FMT_YUV444P14BE = 311
+PIX_FMT_YUV444P14LE = 312
+PIX_FMT_GBRP12LE = 314
+PIX_FMT_GBRP14BE = 315
+PIX_FMT_GBRP14LE = 316
+PIX_FMT_NB = 317
+AVPixelFormat = c_int # enum
+PixelFormat = AVPixelFormat # alias
+AVCOL_TRC_NB = 8
+AVCOL_TRC_SMPTE240M = 7
+AVCOL_TRC_GAMMA28 = 5
+AVCOL_TRC_GAMMA22 = 4
+AVCOL_TRC_UNSPECIFIED = 2
+# __BLKSIZE_T_TYPE = __SYSCALL_SLONG_TYPE # alias
+def __attribute_format_strfmon__(a,b): return __attribute__ ((__format__ (__strfmon__, a, b))) # macro
+def FD_ISSET(fd,fdsetp): return __FD_ISSET (fd, fdsetp) # macro
+# def _IO_feof_unlocked(__fp): return (((__fp)->_flags & _IO_EOF_SEEN) != 0) # macro
+_POSIX_THREAD_DESTRUCTOR_ITERATIONS = 4 # Variable c_int '4'
+PTHREAD_DESTRUCTOR_ITERATIONS = _POSIX_THREAD_DESTRUCTOR_ITERATIONS # alias
+ME_ITER = 9
+# SCHAR_MAX = __SCHAR_MAX__ # alias
+def isgreaterequal(x,y): return __builtin_isgreaterequal(x, y) # macro
+AVCOL_SPC_SMPTE240M = 7
+AV_PICTURE_TYPE_SI = 5
+# def __exctype_l(name): return extern int name (int, __locale_t) __THROW # macro
+ME_TESA = 10
+ME_UMH = 8
+def __iscntrl_l(c,l): return __isctype_l((c), _IScntrl, (l)) # macro
+ME_X1 = 6
+ME_EPZS = 5
+ME_LOG = 3
+LIBPOSTPROC_VERSION_INT = 3408484 # Variable c_int '3408484'
+LIBPOSTPROC_BUILD = LIBPOSTPROC_VERSION_INT # alias
+AV_OPT_TYPE_DOUBLE = 3
+# PIX_FMT_YUV444P9 = AV_PIX_FMT_YUV444P9 # alias
+AV_CLASS_CATEGORY_NA = 0
+FP_NAN = 0
+def FFMAX3(a,b,c): return FFMAX(FFMAX(a,b),c) # macro
+def __attribute_format_arg__(x): return __attribute__ ((__format_arg__ (x))) # macro
+AVCOL_SPC_RGB = 0
+AV_CLASS_CATEGORY_SWRESAMPLER = 10
+AVMEDIA_TYPE_DATA = 2
+AV_SAMPLE_FMT_NB = 10
+AV_SAMPLE_FMT_DBLP = 9
+# PIX_FMT_YUV444P16 = AV_PIX_FMT_YUV444P16 # alias
+AV_SAMPLE_FMT_S32P = 7
+def __bos(ptr): return __builtin_object_size (ptr, __USE_FORTIFY_LEVEL > 1) # macro
+AV_SAMPLE_FMT_U8 = 0
+AV_SAMPLE_FMT_NONE = -1
+AV_RESAMPLE_FILTER_TYPE_KAISER = 2
+def __W_STOPCODE(sig): return ((sig) << 8 | 0x7f) # macro
+_IScntrl = 2
+LIBAVUTIL_VERSION_INT = 3411300 # Variable c_int '3411300'
+LIBAVUTIL_BUILD = LIBAVUTIL_VERSION_INT # alias
+_ISprint = 16384
+AV_LOCK_RELEASE = 2
+_ISspace = 8192
+_ISxdigit = 4096
+_ISdigit = 2048
+_ISalpha = 1024
+_ISlower = 512
+_ISupper = 256
+AV_LOCK_CREATE = 0
+# def DECLARE_ALIGNED(n,t,v): return t __attribute__ ((aligned (n))) v # macro
+AVSTREAM_PARSE_FULL_RAW = 1463898624
+AVSTREAM_PARSE_FULL_ONCE = 4
+AVSTREAM_PARSE_TIMESTAMPS = 3
+AVSTREAM_PARSE_NONE = 0
+FP_INFINITE = 1
+AV_SAMPLE_FMT_FLTP = 8
+# __SLONG32_TYPE = int # alias
+_POSIX2_BC_STRING_MAX = 1000 # Variable c_int '1000'
+BC_STRING_MAX = _POSIX2_BC_STRING_MAX # alias
+LIBAVRESAMPLE_VERSION_INT = 65537 # Variable c_int '65537'
+LIBAVRESAMPLE_BUILD = LIBAVRESAMPLE_VERSION_INT # alias
+def isgreater(x,y): return __builtin_isgreater(x, y) # macro
+def AV_VERSION_DOT(a,b,c): return a ##. ## b ##. ## c # macro
+AV_PICTURE_TYPE_BI = 7
+AV_PICTURE_TYPE_SP = 6
+# __OFF_T_TYPE = __SYSCALL_SLONG_TYPE # alias
+AV_SIDE_DATA_PARAM_CHANGE_DIMENSIONS = 8
+# PIX_FMT_YUV444P12 = AV_PIX_FMT_YUV444P12 # alias
+AV_PICTURE_TYPE_S = 4
+AVFMT_DURATION_FROM_PTS = 0
+def isascii_l(c,l): return __isascii_l ((c), (l)) # macro
+# __MODE_T_TYPE = __U32_TYPE # alias
+LIBAVFORMAT_VERSION_INT = 3554154 # Variable c_int '3554154'
+LIBAVFORMAT_BUILD = LIBAVFORMAT_VERSION_INT # alias
+def __REDIRECT_NTH_LDBL(name,proto,alias): return __REDIRECT_NTH (name, proto, alias) # macro
+def AV_STRINGIFY(s): return AV_TOSTRING(s) # macro
+AVDISCARD_BIDIR = 16
+_POSIX_ = 2
+# __INO_T_TYPE = __SYSCALL_ULONG_TYPE # alias
+def WIFEXITED(status): return __WIFEXITED (__WAIT_INT (status)) # macro
+# def ROUNDED_DIV(a,b): return (((a)>0 ? (a) + ((b)>>1) : (a) - ((b)>>1))/(b)) # macro
+AVDISCARD_NONREF = 8
+# PIX_FMT_YUV444P10 = AV_PIX_FMT_YUV444P10 # alias
+def WIFCONTINUED(status): return __WIFCONTINUED (__WAIT_INT (status)) # macro
+def isalpha_l(c,l): return __isalpha_l ((c), (l)) # macro
+# __RLIM_T_TYPE = __SYSCALL_ULONG_TYPE # alias
+# __FSBLKCNT_T_TYPE = __SYSCALL_ULONG_TYPE # alias
 class _G_fpos64_t(Structure):
     pass
+__off64_t = c_long
 _G_fpos64_t._fields_ = [
     ('__pos', __off64_t),
     ('__state', __mbstate_t),
 ]
 _IO_fpos64_t = _G_fpos64_t # alias
+# __FSBLKCNT64_T_TYPE = __UQUAD_TYPE # alias
+__FLOAT_WORD_ORDER = __BYTE_ORDER # alias
+def __FD_ELT(d): return ((d) / __NFDBITS) # macro
+# def __WIFSIGNALED(status): return (((signed char) (((status) & 0x7f) + 1) >> 1) > 0) # macro
+def __isascii_l(c,l): return ((l), __isascii (c)) # macro
+FF_OPT_TYPE_BINARY = 7
+LIBAVDEVICE_VERSION_INT = 3539814 # Variable c_int '3539814'
+LIBAVDEVICE_BUILD = LIBAVDEVICE_VERSION_INT # alias
 FF_OPT_TYPE_INT64 = 2
+# PIX_FMT_YUV422P16 = AV_PIX_FMT_YUV422P16 # alias
+AV_PKT_DATA_NEW_EXTRADATA = 1
+AV_OPT_TYPE_IMAGE_SIZE = 1397316165
+def isalnum_l(c,l): return __isalnum_l ((c), (l)) # macro
+AV_OPT_TYPE_FLOAT = 4
+AV_OPT_TYPE_INT64 = 2
+# __RLIM64_T_TYPE = __UQUAD_TYPE # alias
+AV_SIDE_DATA_PARAM_CHANGE_SAMPLE_RATE = 4
+AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_LAYOUT = 2
+AVDISCARD_NONE = -16
+AV_RESAMPLE_DITHER_NB = 5
+AV_RESAMPLE_DITHER_TRIANGULAR_HP = 3
+ME_ZERO = 1
+def va_start(v,l): return __builtin_va_start(v,l) # macro
+# PIX_FMT_YUV422P14 = AV_PIX_FMT_YUV422P14 # alias
+# _Mfloat_ = float # alias
+def htole64(x): return (x) # macro
+# def AV_NOWARN_DEPRECATED(code): return _Pragma("GCC diagnostic push") _Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"") code _Pragma("GCC diagnostic pop") # macro
+__BIG_ENDIAN = 4321 # Variable c_int '4321'
+BIG_ENDIAN = __BIG_ENDIAN # alias
+__uid_t = c_uint
+_IO_uid_t = __uid_t # alias
+# def GET_UTF8(val,GET_BYTE,ERROR): return val= GET_BYTE; { uint32_t top = (val & 128) >> 1; if ((val & 0xc0) == 0x80) ERROR while (val & top) { int tmp= GET_BYTE - 128; if(tmp>>6) ERROR val= (val<<6) + tmp; top <<= 5; } val &= (top << 1) - 1; } # macro
+def htole32(x): return (x) # macro
+# def AV_GCC_VERSION_AT_LEAST(x,y): return (__GNUC__ > x || __GNUC__ == x && __GNUC_MINOR__ >= y) # macro
+def __WIFCONTINUED(status): return ((status) == __W_CONTINUED) # macro
+_IO_off64_t = __off64_t # alias
+AV_OPT_TYPE_FLAGS = 0
+# _IO_iconv_t = _G_iconv_t # alias
+AV_MIX_COEFF_TYPE_Q15 = 1
+AVLINK_STARTINIT = 1
+AVCHROMA_LOC_TOP = 4
+# _IO_file_flags = _flags # alias
+AV_RESAMPLE_FILTER_TYPE_BLACKMAN_NUTTALL = 1
+_G_va_list = __gnuc_va_list # alias
+AVCOL_PRI_NB = 9
+# SSIZE_MAX = LONG_MAX # alias
+def __WEXITSTATUS(status): return (((status) & 0xff00) >> 8) # macro
+AVCOL_RANGE_NB = 3
+def AV_VERSION_INT(a,b,c): return (a<<16 | b<<8 | c) # macro
+int8_t = c_int8
+QP_STORE_T = int8_t # alias
+AVCOL_PRI_SMPTE170M = 6
+def htobe32(x): return __bswap_32 (x) # macro
+def __MATHCALLX(function,suffix,args,attrib): return __MATHDECLX (_Mdouble_,function,suffix, args, attrib) # macro
+def __WCOREDUMP(status): return ((status) & __WCOREFLAG) # macro
+AVCOL_PRI_BT709 = 1
+_POSIX2_EXPR_NEST_MAX = 32 # Variable c_int '32'
+EXPR_NEST_MAX = _POSIX2_EXPR_NEST_MAX # alias
+# def PUT_UTF8(val,tmp,PUT_BYTE): return { int bytes, shift; uint32_t in = val; if (in < 0x80) { tmp = in; PUT_BYTE } else { bytes = (av_log2(in) + 4) / 5; shift = (bytes - 1) * 6; tmp = (256 - (256 >> bytes)) | (in >> shift); PUT_BYTE while (shift >= 6) { shift -= 6; tmp = 0x80 | ((in >> shift) & 0x3f); PUT_BYTE } } } # macro
+AVCOL_PRI_BT470BG = 5
+def htobe16(x): return __bswap_16 (x) # macro
+__codecvt_noconv = 3
+# def PUT_UTF16(val,tmp,PUT_16BIT): return { uint32_t in = val; if (in < 0x10000) { tmp = in; PUT_16BIT } else { tmp = 0xD800 | ((in - 0x10000) >> 10); PUT_16BIT tmp = 0xDC00 | ((in - 0x10000) & 0x3FF); PUT_16BIT } } # macro
+AVCOL_PRI_BT470M = 4
+FP_NORMAL = 4
+AVCOL_PRI_FILM = 8
+# def __WAIT_INT(status): return (*(int *) &(status)) # macro
+# def GET_UTF16(val,GET_16BIT,ERROR): return val = GET_16BIT; { unsigned int hi = val - 0xD800; if (hi < 0x800) { val = GET_16BIT - 0xDC00; if (val > 0x3FFU || hi > 0x3FFU) ERROR val += (hi<<10) + 0x10000; } } # macro
+def PIX_FMT_NE(be,le): return AV_PIX_FMT_NE(be, le) # macro
+def __WTERMSIG(status): return ((status) & 0x7f) # macro
+def getc(_fp): return _IO_getc (_fp) # macro
+FP_SUBNORMAL = 3
+# __MATH_INLINE = __extern_always_inline # alias
+FP_ZERO = 2
+AV_PKT_DATA_SUBTITLE_POSITION = 73
+AV_PKT_DATA_JP_DUALMONO = 71
+AV_PKT_DATA_SKIP_SAMPLES = 70
+AV_PKT_DATA_H263_MB_INFO = 3
+EDEADLK = 35 # Variable c_int '35'
+EDEADLOCK = EDEADLK # alias
+AV_PKT_DATA_PARAM_CHANGE = 2
+AV_CLASS_CATEGORY_DECODER = 6
+AV_AUDIO_SERVICE_TYPE_EMERGENCY = 6
+def toascii_l(c,l): return __toascii_l ((c), (l)) # macro
+def toascii(c): return __toascii (c) # macro
+__codecvt_error = 2
+AV_AUDIO_SERVICE_TYPE_NB = 9
+def le32toh(x): return (x) # macro
+def isupper_l(c,l): return __isupper_l ((c), (l)) # macro
+def MKBETAG(a,b,c,d): return ((d) | ((c) << 8) | ((b) << 16) | ((unsigned)(a) << 24)) # macro
+def ispunct_l(c,l): return __ispunct_l ((c), (l)) # macro
+def isnormal(x): return (fpclassify (x) == FP_NORMAL) # macro
+# def isnan(x): return (sizeof (x) == sizeof (float) ? __isnanf (x) : sizeof (x) == sizeof (double) ? __isnan (x) : __isnanl (x)) # macro
+def islessgreater(x,y): return __builtin_islessgreater(x, y) # macro
+def isless(x,y): return __builtin_isless(x, y) # macro
+# def isinf(x): return (sizeof (x) == sizeof (float) ? __isinff (x) : sizeof (x) == sizeof (double) ? __isinf (x) : __isinfl (x)) # macro
+AV_OPT_FLAG_IMPLICIT_KEY = 1
+def iscntrl_l(c,l): return __iscntrl_l ((c), (l)) # macro
+AVCOL_PRI_SMPTE240M = 7
+SCHAR_MIN = -128 # Variable c_int '-0x00000000000000080'
+CHAR_MIN = SCHAR_MIN # alias
+# PIX_FMT_YUV420P12 = AV_PIX_FMT_YUV420P12 # alias
+# __INO64_T_TYPE = __UQUAD_TYPE # alias
+_POSIX2_BC_DIM_MAX = 2048 # Variable c_int '2048'
+BC_DIM_MAX = _POSIX2_BC_DIM_MAX # alias
+# CHAR_MAX = SCHAR_MAX # alias
+AVLINK_INIT = 2
+AVLINK_UNINIT = 0
+AV_MATRIX_ENCODING_DPLII = 2
+AV_MATRIX_ENCODING_DOLBY = 1
+ME_PHODS = 4
+def __REDIRECT_LDBL(name,proto,alias): return __REDIRECT (name, proto, alias) # macro
 # def _IO_peekc_unlocked(_fp): return (_IO_BE ((_fp)->_IO_read_ptr >= (_fp)->_IO_read_end, 0) && __underflow (_fp) == EOF ? EOF : *(unsigned char *) (_fp)->_IO_read_ptr) # macro
-_POSIX_ARG_MAX = 4096 # Variable c_int '4096'
-NL_ARGMAX = _POSIX_ARG_MAX # alias
-AV_PKT_DATA_PALETTE = 0
-def __isalnum_l(c,l): return __isctype_l((c), _ISalnum, (l)) # macro
-SUBTITLE_TEXT = 2
+def _IO_peekc(_fp): return _IO_peekc_unlocked (_fp) # macro
+# def _IO_ferror_unlocked(__fp): return (((__fp)->_flags & _IO_ERR_SEEN) != 0) # macro
+# def _IO_PENDING_OUTPUT_COUNT(_fp): return ((_fp)->_IO_write_ptr - (_fp)->_IO_write_base) # macro
+def _IO_BE(expr,res): return __builtin_expect ((expr), res) # macro
+def WTERMSIG(status): return __WTERMSIG (__WAIT_INT (status)) # macro
+def WSTOPSIG(status): return __WSTOPSIG (__WAIT_INT (status)) # macro
+def WIFSTOPPED(status): return __WIFSTOPPED (__WAIT_INT (status)) # macro
+def WIFSIGNALED(status): return __WIFSIGNALED (__WAIT_INT (status)) # macro
+def offsetof(TYPE,MEMBER): return __builtin_offsetof (TYPE, MEMBER) # macro
+def UINT32_C(c): return c ## U # macro
+def UINT16_C(c): return c # macro
+# def RSHIFT(a,b): return ((a) > 0 ? ((a) + ((1<<(b))>>1))>>(b) : ((a) + ((1<<(b))>>1)-1)>>(b)) # macro
+# def __REDIRECT(name,proto,alias): return name proto __asm__ (__ASMNAME (#alias)) # macro
+def MKTAG(a,b,c,d): return ((a) | ((b) << 8) | ((c) << 16) | ((unsigned)(d) << 24)) # macro
+AV_OPT_TYPE_CONST = 128
+def INT8_C(c): return c # macro
+def INT64_C(c): return c ## L # macro
+def INT16_C(c): return c # macro
+def FD_CLR(fd,fdsetp): return __FD_CLR (fd, fdsetp) # macro
+AVCOL_SPC_UNSPECIFIED = 2
+def minor(dev): return gnu_dev_minor (dev) # macro
+# def av_dlog(pctx,...): return do { if (0) av_log(pctx, AV_LOG_DEBUG, __VA_ARGS__); } while (0) # macro
+# PIX_FMT_BGR32_1 = AV_PIX_FMT_BGR32_1 # alias
+def FFUMOD(a,b): return ((a)-(b)*FFUDIV(a,b)) # macro
+def __glibc_unlikely(cond): return __builtin_expect((cond), 0) # macro
+# def __errordecl(name,msg): return extern void name (void) __attribute__((__error__ (msg))) # macro
+AV_LOCK_OBTAIN = 1
+# def __bswap_16(x): return (__extension__ ({ register unsigned short int __v, __x = (unsigned short int) (x); if (__builtin_constant_p (__x)) __v = __bswap_constant_16 (__x); else __asm__ ("rorw $8, %w0" : "=r" (__v) : "0" (__x) : "cc"); __v; })) # macro
+__codecvt_partial = 1
+def __WSTOPSIG(status): return __WEXITSTATUS(status) # macro
+AV_FIELD_TT = 2
+# def __REDIRECT_NTHNL(name,proto,alias): return name proto __THROWNL __asm__ (__ASMNAME (#alias)) # macro
+# def __REDIRECT_NTH(name,proto,alias): return name proto __THROW __asm__ (__ASMNAME (#alias)) # macro
+def __PMT(args): return args # macro
+def __P(args): return args # macro
+# def FFSWAP(type,a,b): return do{type SWAP_tmp= b; b= a; a= SWAP_tmp;}while(0) # macro
+# def __NTH(fct): return __LEAF_ATTR fct throw () # macro
+def alloca(size): return __builtin_alloca (size) # macro
+# def __MATHDECLX(type,function,suffix,args,attrib): return __MATHDECL_1(type, function,suffix, args) __attribute__ (attrib); __MATHDECL_1(type, __CONCAT(__,function),suffix, args) __attribute__ (attrib) # macro
+# def __LDBL_REDIR1_NTH(name,proto,alias): return name proto __THROW # macro
+# def __LDBL_REDIR(name,proto): return name proto # macro
+def __GNUC_PREREQ(maj,min): return ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min)) # macro
+# def __FD_ZERO(fdsp): return do { int __d0, __d1; __asm__ __volatile__ ("cld; rep; " __FD_ZERO_STOS : "=c" (__d0), "=D" (__d1) : "a" (0), "0" (sizeof (fd_set) / sizeof (__fd_mask)), "1" (&__FDS_BITS (fdsp)[0]) : "memory"); } while (0) # macro
+# def __FD_SET(d,set): return ((void) (__FDS_BITS (set)[__FD_ELT (d)] |= __FD_MASK (d))) # macro
+# def __FD_MASK(d): return ((__fd_mask) 1 << ((d) % __NFDBITS)) # macro
+def __FD_ISSET(d,set): return ((__FDS_BITS (set)[__FD_ELT (d)] & __FD_MASK (d)) != 0) # macro
+# def __FD_CLR(d,set): return ((void) (__FDS_BITS (set)[__FD_ELT (d)] &= ~__FD_MASK (d))) # macro
+# def __FDS_BITS(set): return ((set)->fds_bits) # macro
+AV_PICTURE_TYPE_NONE = 0
+# def _ISbit(bit): return ((bit) < 8 ? ((1 << (bit)) << 8) : ((1 << (bit)) >> 8)) # macro
+# def FFERRTAG(a,b,c,d): return (-(int)MKTAG(a, b, c, d)) # macro
+def be64toh(x): return __bswap_64 (x) # macro
+AV_MIX_COEFF_TYPE_NB = 3
+def AVUNERROR(e): return (-(e)) # macro
+AVCHROMA_LOC_LEFT = 1
+# def DECLARE_ASM_CONST(n,t,v): return static const t av_used __attribute__ ((aligned (n))) v # macro
+def AV_VERSION(a,b,c): return AV_VERSION_DOT(a, b, c) # macro
+AVCOL_PRI_UNSPECIFIED = 2
+AV_RESAMPLE_DITHER_RECTANGULAR = 1
+def isascii(c): return __isascii (c) # macro
+AV_CLASS_CATEGORY_SWSCALER = 9
+def le64toh(x): return (x) # macro
 SUBTITLE_BITMAP = 1
-def AVERROR(e): return (-(e)) # macro
+AV_CLASS_CATEGORY_BITSTREAM_FILTER = 8
+AV_CLASS_CATEGORY_FILTER = 7
+AV_CLASS_CATEGORY_ENCODER = 5
+AV_PKT_DATA_STRINGS_METADATA = 72
+AV_CLASS_CATEGORY_DEMUXER = 4
+AV_CLASS_CATEGORY_MUXER = 3
+AV_CLASS_CATEGORY_OUTPUT = 2
+AV_CLASS_CATEGORY_INPUT = 1
+_POSIX2_BC_SCALE_MAX = 99 # Variable c_int '99'
+BC_SCALE_MAX = _POSIX2_BC_SCALE_MAX # alias
+AV_RESAMPLE_DITHER_NONE = 0
+AV_AUDIO_SERVICE_TYPE_VOICE_OVER = 7
+def _tolower(c): return ((int) (*__ctype_tolower_loc ())[(int) (c)]) # macro
+# PIX_FMT_YUV422P9 = AV_PIX_FMT_YUV422P9 # alias
+# PIX_FMT_BGR32 = AV_PIX_FMT_BGR32 # alias
+def htole16(x): return (x) # macro
+AV_FIELD_BB = 3
+AV_FIELD_PROGRESSIVE = 1
+def va_copy(d,s): return __builtin_va_copy(d,s) # macro
+# PIX_FMT_RGB444 = AV_PIX_FMT_RGB444 # alias
+def va_arg(v,l): return __builtin_va_arg(v,l) # macro
+# def __warndecl(name,msg): return extern void name (void) __attribute__((__warning__ (msg))) # macro
+AV_OPT_TYPE_STRING = 5
+def __LONG_LONG_PAIR(HI,LO): return LO, HI # macro
+AV_FIELD_UNKNOWN = 0
+def FF_ARRAY_ELEMS(a): return (sizeof(a) / sizeof((a)[0])) # macro
+AV_SAMPLE_FMT_FLT = 3
 FF_OPT_TYPE_RATIONAL = 6
-# def __bswap_constant_16(x): return ((unsigned short int) ((((x) >> 8) & 0xff) | (((x) & 0xff) << 8))) # macro
+AV_ROUND_PASS_MINMAX = 8192
+# PIX_FMT_YUV420P9 = AV_PIX_FMT_YUV420P9 # alias
+def isxdigit_l(c,l): return __isxdigit_l ((c), (l)) # macro
+def va_end(v): return __builtin_va_end(v) # macro
+def __warnattr(msg): return __attribute__((__warning__ (msg))) # macro
+# def signbit(x): return (sizeof (x) == sizeof (float) ? __signbitf (x) : sizeof (x) == sizeof (double) ? __signbit (x) : __signbitl (x)) # macro
+FF_OPT_TYPE_FLOAT = 4
+# def __LDBL_REDIR_NTH(name,proto): return name proto __THROW # macro
+def putc(_ch,_fp): return _IO_putc (_ch, _fp) # macro
+_POSIX2_BC_BASE_MAX = 99 # Variable c_int '99'
+BC_BASE_MAX = _POSIX2_BC_BASE_MAX # alias
+AV_ROUND_ZERO = 0
+# def av_alloc_size(...): return __attribute__((alloc_size(__VA_ARGS__))) # macro
+ME_FULL = 2
+FF_OPT_TYPE_INT = 1
+def __va_copy(d,s): return __builtin_va_copy(d,s) # macro
+def makedev(maj,min): return gnu_dev_makedev (maj, min) # macro
+# PIX_FMT_GRAY16 = AV_PIX_FMT_GRAY16 # alias
+AV_OPT_TYPE_SAMPLE_FMT = 1397116244
+def major(dev): return gnu_dev_major (dev) # macro
+# av_sat_add32 = av_sat_add32_c # alias
+AV_OPT_TYPE_PIXEL_FMT = 1346784596
+PIX_FMT_Y400A = AV_PIX_FMT_Y400A # alias
+SUBTITLE_ASS = 3
+AV_RESAMPLE_FILTER_TYPE_CUBIC = 0
+def le16toh(x): return (x) # macro
+# def __LDBL_REDIR1(name,proto,alias): return name proto # macro
+# def FFUDIV(a,b): return (((a)>0 ?(a):(a)-(b)+1) / (b)) # macro
+AV_SAMPLE_FMT_S16 = 1
+SUBTITLE_TEXT = 2
+def isunordered(u,v): return __builtin_isunordered(u, v) # macro
+# def __u_intN_t(N,MODE): return typedef unsigned int u_int ##N ##_t __attribute__ ((__mode__ (MODE))) # macro
+AV_OPT_TYPE_INT = 1
+_SVID_ = 0
+AV_PKT_DATA_PALETTE = 0
+AVDISCARD_ALL = 48
+def __va_arg_pack(): return __builtin_va_arg_pack () # macro
+_IEEE_ = -1
+PIX_FMT_GBR24P = AV_PIX_FMT_GBR24P # alias
+AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_COUNT = 1
+# def FFSIGN(a): return ((a) > 0 ? 1 : -1) # macro
+AV_MATRIX_ENCODING_NB = 3
+# PIX_FMT_GBRP14 = AV_PIX_FMT_GBRP14 # alias
+AV_RESAMPLE_DITHER_TRIANGULAR_NS = 4
+AVCOL_SPC_NB = 9
+AVCOL_SPC_SMPTE170M = 6
+AVCOL_SPC_BT470BG = 5
+AVCOL_SPC_FCC = 4
+AVCOL_SPC_BT709 = 1
+AV_RESAMPLE_DITHER_TRIANGULAR = 2
+__codecvt_ok = 0
+# def strdupa(s): return (__extension__ ({ const char *__old = (s); size_t __len = strlen (__old) + 1; char *__new = (char *) __builtin_alloca (__len); (char *) memcpy (__new, __old, __len); })) # macro
+AVFMT_DURATION_FROM_BITRATE = 2
+def __WIFSTOPPED(status): return (((status) & 0xff) == 0x7f) # macro
+def __isdigit_l(c,l): return __isctype_l((c), _ISdigit, (l)) # macro
+def isspace_l(c,l): return __isspace_l ((c), (l)) # macro
+def be16toh(x): return __bswap_16 (x) # macro
+AV_PICTURE_TYPE_B = 3
+AV_PICTURE_TYPE_P = 2
+AV_PICTURE_TYPE_I = 1
+# PIX_FMT_GBRP9 = AV_PIX_FMT_GBRP9 # alias
+AV_AUDIO_SERVICE_TYPE_KARAOKE = 8
+# def FFMIN(a,b): return ((a) > (b) ? (b) : (a)) # macro
+def __isblank_l(c,l): return __isctype_l((c), _ISblank, (l)) # macro
+# PIX_FMT_GBRP10 = AV_PIX_FMT_GBRP10 # alias
+AVFMT_DURATION_FROM_STREAM = 1
+ME_HEX = 7
+AV_AUDIO_SERVICE_TYPE_COMMENTARY = 5
+def isgraph_l(c,l): return __isgraph_l ((c), (l)) # macro
+AV_MATRIX_ENCODING_NONE = 0
+AVMEDIA_TYPE_NB = 5
+AVMEDIA_TYPE_ATTACHMENT = 4
+AVMEDIA_TYPE_SUBTITLE = 3
+def __toascii_l(c,l): return ((l), __toascii (c)) # macro
+AVMEDIA_TYPE_AUDIO = 1
+AV_AUDIO_SERVICE_TYPE_MAIN = 0
+AVMEDIA_TYPE_VIDEO = 0
+AVMEDIA_TYPE_UNKNOWN = -1
+# PIX_FMT_BGRA64 = AV_PIX_FMT_BGRA64 # alias
+_ISOC_ = 3
+LIBSWSCALE_VERSION_INT = 131431 # Variable c_int '131431'
+LIBSWSCALE_BUILD = LIBSWSCALE_VERSION_INT # alias
+def isprint_l(c,l): return __isprint_l ((c), (l)) # macro
+def __toascii(c): return ((c) & 0x7f) # macro
+AV_ROUND_DOWN = 2
+# PIX_FMT_BGR555 = AV_PIX_FMT_BGR555 # alias
+# def av_uninit(x): return x=x # macro
+# def __nonnull(params): return __attribute__ ((__nonnull__ params)) # macro
+# PIX_FMT_GBRP16 = AV_PIX_FMT_GBRP16 # alias
+LIBAVFILTER_VERSION_INT = 204900 # Variable c_int '204900'
+LIBAVFILTER_BUILD = LIBAVFILTER_VERSION_INT # alias
+def UINTMAX_C(c): return c ## UL # macro
+def __isxdigit_l(c,l): return __isctype_l((c), _ISxdigit, (l)) # macro
+_IO_off_t = __off_t # alias
+# __FSWORD_T_TYPE = __SYSCALL_SLONG_TYPE # alias
+AV_FIELD_BT = 5
+LIBAVCODEC_VERSION_INT = 3561060 # Variable c_int '3561060'
+LIBAVCODEC_BUILD = LIBAVCODEC_VERSION_INT # alias
+# PIX_FMT_BGR444 = AV_PIX_FMT_BGR444 # alias
 LIBAVCODEC_VERSION_MAJOR = 54 # Variable c_int '54'
 AVFMT_NOBINSEARCH = 8192 # Variable c_int '8192'
 FF_THREAD_SLICE = 2 # Variable c_int '2'
@@ -1661,7 +1661,7 @@ ENOTSOCK = 88 # Variable c_int '88'
 AV_OPT_FLAG_VIDEO_PARAM = 16 # Variable c_int '16'
 AV_CH_WIDE_RIGHT = 4294967296 # Variable c_ulonglong '4294967296ull'
 AV_CH_LAYOUT_SURROUND = 7 # Variable c_int '7'
-MB_TYPE_8x16 = 32 # Variable c_int '32'
+CODEC_FLAG2_DROP_FRAME_TIMECODE = 8192 # Variable c_int '8192'
 AVERROR_EXPERIMENTAL = -733130664 # Variable c_int '-0x0000000002bb2afa8'
 FF_PROFILE_H264_CAVLC_444 = 44 # Variable c_int '44'
 AV_DISPOSITION_HEARING_IMPAIRED = 128 # Variable c_int '128'
@@ -1679,7 +1679,7 @@ FF_PROFILE_MPEG4_SIMPLE = 0 # Variable c_int '0'
 M_LOG10E = 0.4342944819032518 # Variable c_double '4.3429448190325181666793241674895398318767547607421875e-1'
 MB_TYPE_16x8 = 16 # Variable c_int '16'
 AV_LOG_QUIET = -8 # Variable c_int '-0x00000000000000008'
-ENOLINK = 67 # Variable c_int '67'
+EMSGSIZE = 90 # Variable c_int '90'
 __PTHREAD_MUTEX_HAVE_PREV = 1 # Variable c_int '1'
 AV_PERM_READ = 1 # Variable c_int '1'
 AV_EF_CAREFUL = 65536 # Variable c_int '65536'
@@ -1690,13 +1690,12 @@ AVFMT_FLAG_NONBLOCK = 4 # Variable c_int '4'
 AV_OPT_SEARCH_CHILDREN = 1 # Variable c_int '1'
 CODEC_CAP_VARIABLE_FRAME_SIZE = 65536 # Variable c_int '65536'
 SWS_CS_DEFAULT = 5 # Variable c_int '5'
-_BITS_TYPESIZES_H = 1 # Variable c_int '1'
+AV_DISPOSITION_VISUAL_IMPAIRED = 256 # Variable c_int '256'
 LIBSWSCALE_VERSION_MICRO = 103 # Variable c_int '103'
 ETXTBSY = 26 # Variable c_int '26'
 M_PI_2 = 1.5707963267948966 # Variable c_double '1.5707963267948965579989817342720925807952880859375e+0'
 AV_CODEC_PROP_INTRA_ONLY = 1 # Variable c_int '1'
 FF_PROFILE_DTS_HD_MA = 60 # Variable c_int '60'
-_IO_DEC = 16 # Variable c_int '16'
 ENOSPC = 28 # Variable c_int '28'
 _ALLOCA_H = 1 # Variable c_int '1'
 M_PHI = 1.618033988749895 # Variable c_double '1.6180339887498949025257388711906969547271728515625e+0'
@@ -1720,7 +1719,7 @@ FF_IDCT_SIMPLEARM = 10 # Variable c_int '10'
 FF_BUG_QPEL_CHROMA = 64 # Variable c_int '64'
 M_E = 2.718281828459045 # Variable c_double '2.718281828459045090795598298427648842334747314453125e+0'
 CODEC_FLAG2_SKIP_RD = 16384 # Variable c_int '16384'
-_IO_SHOWBASE = 128 # Variable c_int '128'
+ENOLINK = 67 # Variable c_int '67'
 FF_PROFILE_H264_CONSTRAINED = 512 # Variable c_int '512'
 AV_CH_TOP_FRONT_CENTER = 8192 # Variable c_int '8192'
 NGROUPS_MAX = 65536 # Variable c_int '65536'
@@ -1731,6 +1730,7 @@ WORD_BIT = 32 # Variable c_int '32'
 AV_CH_WIDE_LEFT = 2147483648 # Variable c_ulonglong '2147483648ull'
 FF_DECODE_ERROR_INVALID_BITSTREAM = 1 # Variable c_int '1'
 AVPALETTE_SIZE = 1024 # Variable c_int '1024'
+AVPALETTE_COUNT = 256 # Variable c_int '256'
 MB_LEN_MAX = 16 # Variable c_int '16'
 __lldiv_t_defined = 1 # Variable c_int '1'
 AV_CH_LAYOUT_5POINT0_BACK = 55 # Variable c_int '55'
@@ -1777,7 +1777,7 @@ _IO_DONT_CLOSE = 32768 # Variable c_int '32768'
 FF_PROFILE_H264_INTRA = 2048 # Variable c_int '2048'
 EADDRINUSE = 98 # Variable c_int '98'
 AVFMT_NOFILE = 1 # Variable c_int '1'
-AVPALETTE_COUNT = 256 # Variable c_int '256'
+ENOPROTOOPT = 92 # Variable c_int '92'
 FF_IDCT_SIMPLENEON = 22 # Variable c_int '22'
 AV_PARSER_PTS_NB = 4 # Variable c_int '4'
 RTSIG_MAX = 32 # Variable c_int '32'
@@ -1792,7 +1792,7 @@ AV_DISPOSITION_KARAOKE = 32 # Variable c_int '32'
 FF_BUG_EDGE = 1024 # Variable c_int '1024'
 FF_DTG_AFD_4_3_SP_14_9 = 13 # Variable c_int '13'
 _ENDIAN_H = 1 # Variable c_int '1'
-CODEC_FLAG2_DROP_FRAME_TIMECODE = 8192 # Variable c_int '8192'
+M_1_PI = 0.3183098861837907 # Variable c_double '3.18309886183790691216444201927515678107738494873046875e-1'
 ELIBACC = 79 # Variable c_int '79'
 LIBAVDEVICE_VERSION_MAJOR = 54 # Variable c_int '54'
 __USE_FORTIFY_LEVEL = 0 # Variable c_int '0'
@@ -1806,7 +1806,7 @@ ENOENT = 2 # Variable c_int '2'
 __SIZEOF_PTHREAD_CONDATTR_T = 4 # Variable c_int '4'
 FF_QSCALE_TYPE_H264 = 2 # Variable c_int '2'
 LIBAVFORMAT_VERSION_MAJOR = 54 # Variable c_int '54'
-AVSEEK_SIZE = 65536 # Variable c_int '65536'
+MB_TYPE_8x16 = 32 # Variable c_int '32'
 __INO_T_MATCHES_INO64_T = 1 # Variable c_int '1'
 __USE_XOPEN_EXTENDED = 1 # Variable c_int '1'
 SEEK_END = 2 # Variable c_int '2'
@@ -1829,10 +1829,9 @@ __WALL = 1073741824 # Variable c_int '1073741824'
 _IO_UNITBUF = 8192 # Variable c_int '8192'
 __USE_BSD = 1 # Variable c_int '1'
 ENOTDIR = 20 # Variable c_int '20'
-M_1_PI = 0.3183098861837907 # Variable c_double '3.18309886183790691216444201927515678107738494873046875e-1'
+XATTR_LIST_MAX = 65536 # Variable c_int '65536'
 SWS_SINC = 256 # Variable c_int '256'
 UNDERFLOW = 4 # Variable c_int '4'
-FF_IDCT_MMI = 5 # Variable c_int '5'
 PIPE_BUF = 4096 # Variable c_int '4096'
 AV_CH_LOW_FREQUENCY_2 = 34359738368 # Variable c_ulonglong '34359738368ull'
 FF_CMP_W53 = 11 # Variable c_int '11'
@@ -1873,7 +1872,7 @@ AV_PROGRAM_RUNNING = 1 # Variable c_int '1'
 EMEDIUMTYPE = 124 # Variable c_int '124'
 CODEC_FLAG_MV0 = 64 # Variable c_int '64'
 AV_OPT_SEARCH_FAKE_OBJ = 2 # Variable c_int '2'
-FF_IDCT_LIBMPEG2MMX = 4 # Variable c_int '4'
+_IO_IN_BACKUP = 256 # Variable c_int '256'
 SLICE_FLAG_ALLOW_PLANE = 4 # Variable c_int '4'
 FF_LOSS_RESOLUTION = 1 # Variable c_int '1'
 FF_BUG_AC_VLC = 0 # Variable c_int '0'
@@ -1945,7 +1944,7 @@ _IO_NO_WRITES = 8 # Variable c_int '8'
 SLICE_FLAG_CODED_ORDER = 1 # Variable c_int '1'
 TMP_MAX = 238328 # Variable c_int '238328'
 FF_PROFILE_AAC_ELD = 38 # Variable c_int '38'
-__SIZEOF_PTHREAD_MUTEX_T = 40 # Variable c_int '40'
+AV_DISPOSITION_ATTACHED_PIC = 1024 # Variable c_int '1024'
 EPERM = 1 # Variable c_int '1'
 AV_CH_LAYOUT_2POINT1 = 11 # Variable c_int '11'
 PTHREAD_STACK_MIN = 16384 # Variable c_int '16384'
@@ -1960,11 +1959,11 @@ SWS_CPU_CAPS_MMX2 = 536870912 # Variable c_int '536870912'
 _IO_NO_READS = 4 # Variable c_int '4'
 CODEC_FLAG_QP_RD = 134217728 # Variable c_int '134217728'
 ENOMEDIUM = 123 # Variable c_int '123'
+FF_PROFILE_AAC_LTP = 3 # Variable c_int '3'
 _BITS_WCHAR_H = 1 # Variable c_int '1'
 __GLIBC_MINOR__ = 17 # Variable c_int '17'
-FF_PROFILE_DTS_96_24 = 40 # Variable c_int '40'
+_IO_CURRENTLY_PUTTING = 2048 # Variable c_int '2048'
 AV_TIME_BASE = 1000000 # Variable c_int '1000000'
-FF_PROFILE_MPEG4_CORE_SCALABLE = 10 # Variable c_int '10'
 MAX_PROBE_PACKETS = 2500 # Variable c_int '2500'
 PP_CPU_CAPS_MMX = 2147483648 # Variable c_uint '2147483648u'
 CODEC_FLAG_QSCALE = 2 # Variable c_int '2'
@@ -1995,6 +1994,7 @@ FF_IDCT_FAAN = 20 # Variable c_int '20'
 __USE_GNU = 1 # Variable c_int '1'
 AV_CH_LAYOUT_STEREO = 3 # Variable c_int '3'
 LIBAVFILTER_VERSION_MICRO = 100 # Variable c_int '100'
+SWS_CS_ITU601 = 5 # Variable c_int '5'
 SLICE_FLAG_ALLOW_FIELD = 2 # Variable c_int '2'
 AVERROR_PROTOCOL_NOT_FOUND = -1330794744 # Variable c_int '-0x0000000004f5250f8'
 AV_CPU_FLAG_VFPV3 = 16 # Variable c_int '16'
@@ -2039,12 +2039,11 @@ MB_TYPE_DIRECT2 = 256 # Variable c_int '256'
 FF_IDCT_XVIDMMX = 14 # Variable c_int '14'
 __STDC_ISO_10646__ = 201103 # Variable c_long '201103l'
 AVSEEK_FORCE = 131072 # Variable c_int '131072'
-_IOS_NOCREATE = 32 # Variable c_int '32'
+FF_MB_DECISION_SIMPLE = 0 # Variable c_int '0'
 AV_ERROR_MAX_STRING_SIZE = 64 # Variable c_int '64'
 SWS_PRINT_INFO = 4096 # Variable c_int '4096'
 _IO_TIED_PUT_GET = 1024 # Variable c_int '1024'
 FF_DCT_INT = 2 # Variable c_int '2'
-EBADF = 9 # Variable c_int '9'
 MB_TYPE_ACPRED = 512 # Variable c_int '512'
 SWS_CPU_CAPS_MMXEXT = 536870912 # Variable c_int '536870912'
 FF_PROFILE_MPEG2_HIGH = 1 # Variable c_int '1'
@@ -2141,10 +2140,10 @@ AV_CH_FRONT_LEFT_OF_CENTER = 64 # Variable c_int '64'
 FF_CMP_VSAD = 8 # Variable c_int '8'
 AV_DISPOSITION_CLEAN_EFFECTS = 512 # Variable c_int '512'
 __GNU_LIBRARY__ = 6 # Variable c_int '6'
-AV_DISPOSITION_VISUAL_IMPAIRED = 256 # Variable c_int '256'
+_BITS_TYPESIZES_H = 1 # Variable c_int '1'
 EUCLEAN = 117 # Variable c_int '117'
 CODEC_CAP_SMALL_LAST_FRAME = 64 # Variable c_int '64'
-FF_MB_DECISION_SIMPLE = 0 # Variable c_int '0'
+_IOS_NOCREATE = 32 # Variable c_int '32'
 _IO_USER_BUF = 1 # Variable c_int '1'
 __USE_LARGEFILE64 = 1 # Variable c_int '1'
 _POSIX_LINK_MAX = 8 # Variable c_int '8'
@@ -2153,7 +2152,7 @@ AV_CH_FRONT_RIGHT_OF_CENTER = 128 # Variable c_int '128'
 LIBAVUTIL_VERSION_MICRO = 100 # Variable c_int '100'
 _POSIX_SSIZE_MAX = 32767 # Variable c_int '32767'
 LIBAVFORMAT_VERSION_MINOR = 59 # Variable c_int '59'
-ENOPROTOOPT = 92 # Variable c_int '92'
+_IO_SHOWBASE = 128 # Variable c_int '128'
 ESTRPIPE = 86 # Variable c_int '86'
 __STDC_IEC_559_COMPLEX__ = 1 # Variable c_int '1'
 _IO_LINE_BUF = 512 # Variable c_int '512'
@@ -2195,7 +2194,7 @@ SWS_CPU_CAPS_BFIN = 16777216 # Variable c_int '16777216'
 EKEYEXPIRED = 127 # Variable c_int '127'
 CODEC_CAP_FRAME_THREADS = 4096 # Variable c_int '4096'
 AV_SUBTITLE_FLAG_FORCED = 1 # Variable c_int '1'
-ESRMNT = 69 # Variable c_int '69'
+FF_PROFILE_MPEG4_CORE_SCALABLE = 10 # Variable c_int '10'
 _STDLIB_H = 1 # Variable c_int '1'
 AVFMT_ALLOW_FLUSH = 65536 # Variable c_int '65536'
 __STDC_NO_THREADS__ = 1 # Variable c_int '1'
@@ -2212,7 +2211,6 @@ _POSIX_MQ_OPEN_MAX = 8 # Variable c_int '8'
 MB_TYPE_L0 = 12288 # Variable c_int '12288'
 AV_CH_LAYOUT_5POINT0 = 1543 # Variable c_int '1543'
 AV_CH_LAYOUT_5POINT1 = 1551 # Variable c_int '1551'
-XATTR_LIST_MAX = 65536 # Variable c_int '65536'
 __USE_XOPEN2K = 1 # Variable c_int '1'
 ECHILD = 10 # Variable c_int '10'
 M_LOG2_10 = 3.321928094887362 # Variable c_double '3.321928094887362181708567732130177319049835205078125e+0'
@@ -2250,7 +2248,6 @@ EMLINK = 31 # Variable c_int '31'
 AV_CH_LAYOUT_7POINT0 = 1591 # Variable c_int '1591'
 AV_CH_LAYOUT_7POINT1 = 1599 # Variable c_int '1599'
 __PTHREAD_RWLOCK_INT_FLAGS_SHARED = 1 # Variable c_int '1'
-_IOS_BIN = 128 # Variable c_int '128'
 AV_CH_LAYOUT_6POINT1 = 1807 # Variable c_int '1807'
 AV_CPU_FLAG_SSE3SLOW = 536870912 # Variable c_int '536870912'
 ENFILE = 23 # Variable c_int '23'
@@ -2279,7 +2276,7 @@ FF_COMPLIANCE_NORMAL = 0 # Variable c_int '0'
 P_tmpdir = '/tmp' # Variable STRING '(const char*)"/tmp"'
 __OFF_T_MATCHES_OFF64_T = 1 # Variable c_int '1'
 EBADSLT = 57 # Variable c_int '57'
-FF_PROFILE_H264_HIGH_10_INTRA = 2158 # Variable c_int '2158'
+AVFMT_SEEK_TO_PTS = 67108864 # Variable c_int '67108864'
 WNOHANG = 1 # Variable c_int '1'
 _IO_SKIPWS = 1 # Variable c_int '1'
 FF_DCT_ALTIVEC = 5 # Variable c_int '5'
@@ -2311,7 +2308,7 @@ FP_ZERO = 2 # Variable c_int '2'
 EACCES = 13 # Variable c_int '13'
 __WCHAR_MAX = 2147483647 # Variable c_int '2147483647'
 _POSIX_SYMLOOP_MAX = 8 # Variable c_int '8'
-_IO_CURRENTLY_PUTTING = 2048 # Variable c_int '2048'
+FF_IDCT_MMI = 5 # Variable c_int '5'
 AV_CH_LAYOUT_2_1 = 259 # Variable c_int '259'
 AVFMT_FLAG_CUSTOM_IO = 128 # Variable c_int '128'
 EIO = 5 # Variable c_int '5'
@@ -2344,6 +2341,7 @@ AV_DISPOSITION_DUB = 2 # Variable c_int '2'
 SWS_GAUSS = 128 # Variable c_int '128'
 CODEC_FLAG_BITEXACT = 8388608 # Variable c_int '8388608'
 _POSIX_SIGQUEUE_MAX = 32 # Variable c_int '32'
+NAN = 0.0 # Variable c_float '0.0f'
 LIBAVRESAMPLE_VERSION_MINOR = 0 # Variable c_int '0'
 _BITS_PTHREADTYPES_H = 1 # Variable c_int '1'
 AVPROBE_SCORE_RETRY = 25 # Variable c_int '25'
@@ -2371,7 +2369,7 @@ E2BIG = 7 # Variable c_int '7'
 WSTOPPED = 2 # Variable c_int '2'
 _XOPEN_SOURCE_EXTENDED = 1 # Variable c_int '1'
 __USE_XOPEN2KXSI = 1 # Variable c_int '1'
-NAN = 0.0 # Variable c_float '0.0f'
+AVSEEK_SIZE = 65536 # Variable c_int '65536'
 _IO_LEFT = 2 # Variable c_int '2'
 ESOCKTNOSUPPORT = 94 # Variable c_int '94'
 AVFMT_FLAG_NOFILLIN = 16 # Variable c_int '16'
@@ -2421,6 +2419,7 @@ MATH_ERRNO = 1 # Variable c_int '1'
 EPROTO = 71 # Variable c_int '71'
 _SYS_SELECT_H = 1 # Variable c_int '1'
 LIBPOSTPROC_VERSION_MICRO = 100 # Variable c_int '100'
+_IO_DEC = 16 # Variable c_int '16'
 AVFMTCTX_NOHEADER = 1 # Variable c_int '1'
 FF_PROFILE_MPEG4_ADVANCED_REAL_TIME = 9 # Variable c_int '9'
 _ISOC95_SOURCE = 1 # Variable c_int '1'
@@ -2435,7 +2434,7 @@ AV_CH_STEREO_RIGHT = 1073741824 # Variable c_int '1073741824'
 FF_PROFILE_MPEG4_SIMPLE_STUDIO = 14 # Variable c_int '14'
 AV_OPT_FLAG_METADATA = 4 # Variable c_int '4'
 AV_CPU_FLAG_AVX = 16384 # Variable c_int '16384'
-FF_ASPECT_EXTENDED = 15 # Variable c_int '15'
+ESRMNT = 69 # Variable c_int '69'
 CODEC_CAP_DR1 = 2 # Variable c_int '2'
 AV_DISPOSITION_COMMENT = 8 # Variable c_int '8'
 AV_CH_LAYOUT_6POINT0 = 1799 # Variable c_int '1799'
@@ -2499,7 +2498,7 @@ FF_PRED_PLANE = 1 # Variable c_int '1'
 FF_PROFILE_H264_HIGH_444_INTRA = 2292 # Variable c_int '2292'
 AV_OPT_FLAG_DECODING_PARAM = 2 # Variable c_int '2'
 EUSERS = 87 # Variable c_int '87'
-_IO_IN_BACKUP = 256 # Variable c_int '256'
+FF_IDCT_LIBMPEG2MMX = 4 # Variable c_int '4'
 _IOS_NOREPLACE = 64 # Variable c_int '64'
 ENODEV = 19 # Variable c_int '19'
 _SIGSET_H_types = 1 # Variable c_int '1'
@@ -2511,11 +2510,13 @@ FF_DTG_AFD_16_9 = 10 # Variable c_int '10'
 SEEK_CUR = 1 # Variable c_int '1'
 _POSIX_CHILD_MAX = 25 # Variable c_int '25'
 AV_CPU_FLAG_CMOV = 16781312 # Variable c_int '16781312'
+FF_ASPECT_EXTENDED = 15 # Variable c_int '15'
 _ERRNO_H = 1 # Variable c_int '1'
-AV_DISPOSITION_ATTACHED_PIC = 1024 # Variable c_int '1024'
+__SIZEOF_PTHREAD_MUTEX_T = 40 # Variable c_int '40'
 __USE_UNIX98 = 1 # Variable c_int '1'
 SWS_CS_ITU624 = 5 # Variable c_int '5'
 OVERFLOW = 3 # Variable c_int '3'
+_IOS_BIN = 128 # Variable c_int '128'
 FF_PROFILE_H264_HIGH_444 = 144 # Variable c_int '144'
 FF_CMP_W97 = 12 # Variable c_int '12'
 __STDC_IEC_559__ = 1 # Variable c_int '1'
@@ -2558,7 +2559,6 @@ _IO_UNIFIED_JUMPTABLES = 1 # Variable c_int '1'
 EL2HLT = 51 # Variable c_int '51'
 SEM_VALUE_MAX = 2147483647 # Variable c_int '2147483647'
 LIBAVDEVICE_VERSION_MICRO = 102 # Variable c_int '102'
-EMSGSIZE = 90 # Variable c_int '90'
 AVERROR_OPTION_NOT_FOUND = -1414549496 # Variable c_int '-0x00000000054504ff8'
 FF_PROFILE_H264_HIGH_422_INTRA = 2170 # Variable c_int '2170'
 SWS_AREA = 32 # Variable c_int '32'
@@ -2579,7 +2579,7 @@ MB_TYPE_SKIP = 2048 # Variable c_int '2048'
 AVERROR_DEMUXER_NOT_FOUND = -1296385272 # Variable c_int '-0x0000000004d4544f8'
 FF_IDCT_ALTIVEC = 8 # Variable c_int '8'
 _POSIX_QLIMIT = 1 # Variable c_int '1'
-FF_PROFILE_AAC_LTP = 3 # Variable c_int '3'
+EBADF = 9 # Variable c_int '9'
 EBADE = 52 # Variable c_int '52'
 UCHAR_MAX = 255 # Variable c_int '255'
 CODEC_FLAG_CBP_RD = 67108864 # Variable c_int '67108864'
@@ -2612,11 +2612,11 @@ FF_IDCT_AUTO = 0 # Variable c_int '0'
 FF_BUG_QPEL_CHROMA2 = 256 # Variable c_int '256'
 MB_TYPE_INTRA_PCM = 4 # Variable c_int '4'
 CODEC_FLAG_TRUNCATED = 65536 # Variable c_int '65536'
-AVFMT_SEEK_TO_PTS = 67108864 # Variable c_int '67108864'
+FF_PROFILE_H264_HIGH_10_INTRA = 2158 # Variable c_int '2158'
 ENOTBLK = 15 # Variable c_int '15'
 MB_TYPE_INTRA16x16 = 2 # Variable c_int '2'
 EIDRM = 43 # Variable c_int '43'
-SWS_CS_ITU601 = 5 # Variable c_int '5'
+FF_PROFILE_DTS_96_24 = 40 # Variable c_int '40'
 INT_MIN = -2147483648 # Variable c_int '-0x00000000080000000'
 EOVERFLOW = 75 # Variable c_int '75'
 EXIT_FAILURE = 1 # Variable c_int '1'
@@ -2630,24 +2630,24 @@ FF_CODER_TYPE_RAW = 2 # Variable c_int '2'
 __errno_location = _libraries['/usr/lib/libavcodec.so'].__errno_location
 __errno_location.restype = POINTER(c_int)
 __errno_location.argtypes = []
+acosl = _libraries['/usr/lib/libavcodec.so'].acosl
+acosl.restype = c_longdouble
+acosl.argtypes = [c_longdouble]
 acos = _libraries['/usr/lib/libavcodec.so'].acos
 acos.restype = c_double
 acos.argtypes = [c_double]
 acosf = _libraries['/usr/lib/libavcodec.so'].acosf
 acosf.restype = c_float
 acosf.argtypes = [c_float]
-acosl = _libraries['/usr/lib/libavcodec.so'].acosl
-acosl.restype = c_longdouble
-acosl.argtypes = [c_longdouble]
+asin = _libraries['/usr/lib/libavcodec.so'].asin
+asin.restype = c_double
+asin.argtypes = [c_double]
 asinf = _libraries['/usr/lib/libavcodec.so'].asinf
 asinf.restype = c_float
 asinf.argtypes = [c_float]
 asinl = _libraries['/usr/lib/libavcodec.so'].asinl
 asinl.restype = c_longdouble
 asinl.argtypes = [c_longdouble]
-asin = _libraries['/usr/lib/libavcodec.so'].asin
-asin.restype = c_double
-asin.argtypes = [c_double]
 atan = _libraries['/usr/lib/libavcodec.so'].atan
 atan.restype = c_double
 atan.argtypes = [c_double]
@@ -2675,51 +2675,51 @@ cosf.argtypes = [c_float]
 cosl = _libraries['/usr/lib/libavcodec.so'].cosl
 cosl.restype = c_longdouble
 cosl.argtypes = [c_longdouble]
-sinf = _libraries['/usr/lib/libavcodec.so'].sinf
-sinf.restype = c_float
-sinf.argtypes = [c_float]
-sinl = _libraries['/usr/lib/libavcodec.so'].sinl
-sinl.restype = c_longdouble
-sinl.argtypes = [c_longdouble]
 sin = _libraries['/usr/lib/libavcodec.so'].sin
 sin.restype = c_double
 sin.argtypes = [c_double]
-tanf = _libraries['/usr/lib/libavcodec.so'].tanf
-tanf.restype = c_float
-tanf.argtypes = [c_float]
+sinl = _libraries['/usr/lib/libavcodec.so'].sinl
+sinl.restype = c_longdouble
+sinl.argtypes = [c_longdouble]
+sinf = _libraries['/usr/lib/libavcodec.so'].sinf
+sinf.restype = c_float
+sinf.argtypes = [c_float]
 tanl = _libraries['/usr/lib/libavcodec.so'].tanl
 tanl.restype = c_longdouble
 tanl.argtypes = [c_longdouble]
+tanf = _libraries['/usr/lib/libavcodec.so'].tanf
+tanf.restype = c_float
+tanf.argtypes = [c_float]
 tan = _libraries['/usr/lib/libavcodec.so'].tan
 tan.restype = c_double
 tan.argtypes = [c_double]
-coshl = _libraries['/usr/lib/libavcodec.so'].coshl
-coshl.restype = c_longdouble
-coshl.argtypes = [c_longdouble]
-coshf = _libraries['/usr/lib/libavcodec.so'].coshf
-coshf.restype = c_float
-coshf.argtypes = [c_float]
 cosh = _libraries['/usr/lib/libavcodec.so'].cosh
 cosh.restype = c_double
 cosh.argtypes = [c_double]
+coshf = _libraries['/usr/lib/libavcodec.so'].coshf
+coshf.restype = c_float
+coshf.argtypes = [c_float]
+coshl = _libraries['/usr/lib/libavcodec.so'].coshl
+coshl.restype = c_longdouble
+coshl.argtypes = [c_longdouble]
 sinhf = _libraries['/usr/lib/libavcodec.so'].sinhf
 sinhf.restype = c_float
 sinhf.argtypes = [c_float]
-sinh = _libraries['/usr/lib/libavcodec.so'].sinh
-sinh.restype = c_double
-sinh.argtypes = [c_double]
 sinhl = _libraries['/usr/lib/libavcodec.so'].sinhl
 sinhl.restype = c_longdouble
 sinhl.argtypes = [c_longdouble]
-tanh = _libraries['/usr/lib/libavcodec.so'].tanh
-tanh.restype = c_double
-tanh.argtypes = [c_double]
+sinh = _libraries['/usr/lib/libavcodec.so'].sinh
+sinh.restype = c_double
+sinh.argtypes = [c_double]
 tanhf = _libraries['/usr/lib/libavcodec.so'].tanhf
 tanhf.restype = c_float
 tanhf.argtypes = [c_float]
 tanhl = _libraries['/usr/lib/libavcodec.so'].tanhl
 tanhl.restype = c_longdouble
 tanhl.argtypes = [c_longdouble]
+tanh = _libraries['/usr/lib/libavcodec.so'].tanh
+tanh.restype = c_double
+tanh.argtypes = [c_double]
 sincosf = _libraries['/usr/lib/libavcodec.so'].sincosf
 sincosf.restype = None
 sincosf.argtypes = [c_float, POINTER(c_float), POINTER(c_float)]
@@ -2729,15 +2729,15 @@ sincosl.argtypes = [c_longdouble, POINTER(c_longdouble), POINTER(c_longdouble)]
 sincos = _libraries['/usr/lib/libavcodec.so'].sincos
 sincos.restype = None
 sincos.argtypes = [c_double, POINTER(c_double), POINTER(c_double)]
-acosh = _libraries['/usr/lib/libavcodec.so'].acosh
-acosh.restype = c_double
-acosh.argtypes = [c_double]
 acoshf = _libraries['/usr/lib/libavcodec.so'].acoshf
 acoshf.restype = c_float
 acoshf.argtypes = [c_float]
 acoshl = _libraries['/usr/lib/libavcodec.so'].acoshl
 acoshl.restype = c_longdouble
 acoshl.argtypes = [c_longdouble]
+acosh = _libraries['/usr/lib/libavcodec.so'].acosh
+acosh.restype = c_double
+acosh.argtypes = [c_double]
 asinhl = _libraries['/usr/lib/libavcodec.so'].asinhl
 asinhl.restype = c_longdouble
 asinhl.argtypes = [c_longdouble]
@@ -2747,51 +2747,51 @@ asinh.argtypes = [c_double]
 asinhf = _libraries['/usr/lib/libavcodec.so'].asinhf
 asinhf.restype = c_float
 asinhf.argtypes = [c_float]
-atanhl = _libraries['/usr/lib/libavcodec.so'].atanhl
-atanhl.restype = c_longdouble
-atanhl.argtypes = [c_longdouble]
-atanhf = _libraries['/usr/lib/libavcodec.so'].atanhf
-atanhf.restype = c_float
-atanhf.argtypes = [c_float]
 atanh = _libraries['/usr/lib/libavcodec.so'].atanh
 atanh.restype = c_double
 atanh.argtypes = [c_double]
-expf = _libraries['/usr/lib/libavcodec.so'].expf
-expf.restype = c_float
-expf.argtypes = [c_float]
+atanhf = _libraries['/usr/lib/libavcodec.so'].atanhf
+atanhf.restype = c_float
+atanhf.argtypes = [c_float]
+atanhl = _libraries['/usr/lib/libavcodec.so'].atanhl
+atanhl.restype = c_longdouble
+atanhl.argtypes = [c_longdouble]
 expl = _libraries['/usr/lib/libavcodec.so'].expl
 expl.restype = c_longdouble
 expl.argtypes = [c_longdouble]
 exp = _libraries['/usr/lib/libavcodec.so'].exp
 exp.restype = c_double
 exp.argtypes = [c_double]
-frexp = _libraries['/usr/lib/libavcodec.so'].frexp
-frexp.restype = c_double
-frexp.argtypes = [c_double, POINTER(c_int)]
+expf = _libraries['/usr/lib/libavcodec.so'].expf
+expf.restype = c_float
+expf.argtypes = [c_float]
 frexpf = _libraries['/usr/lib/libavcodec.so'].frexpf
 frexpf.restype = c_float
 frexpf.argtypes = [c_float, POINTER(c_int)]
+frexp = _libraries['/usr/lib/libavcodec.so'].frexp
+frexp.restype = c_double
+frexp.argtypes = [c_double, POINTER(c_int)]
 frexpl = _libraries['/usr/lib/libavcodec.so'].frexpl
 frexpl.restype = c_longdouble
 frexpl.argtypes = [c_longdouble, POINTER(c_int)]
 ldexpf = _libraries['/usr/lib/libavcodec.so'].ldexpf
 ldexpf.restype = c_float
 ldexpf.argtypes = [c_float, c_int]
-ldexp = _libraries['/usr/lib/libavcodec.so'].ldexp
-ldexp.restype = c_double
-ldexp.argtypes = [c_double, c_int]
 ldexpl = _libraries['/usr/lib/libavcodec.so'].ldexpl
 ldexpl.restype = c_longdouble
 ldexpl.argtypes = [c_longdouble, c_int]
+ldexp = _libraries['/usr/lib/libavcodec.so'].ldexp
+ldexp.restype = c_double
+ldexp.argtypes = [c_double, c_int]
 log = _libraries['/usr/lib/libavcodec.so'].log
 log.restype = c_double
 log.argtypes = [c_double]
-logl = _libraries['/usr/lib/libavcodec.so'].logl
-logl.restype = c_longdouble
-logl.argtypes = [c_longdouble]
 logf = _libraries['/usr/lib/libavcodec.so'].logf
 logf.restype = c_float
 logf.argtypes = [c_float]
+logl = _libraries['/usr/lib/libavcodec.so'].logl
+logl.restype = c_longdouble
+logl.argtypes = [c_longdouble]
 log10f = _libraries['/usr/lib/libavcodec.so'].log10f
 log10f.restype = c_float
 log10f.argtypes = [c_float]
@@ -2801,24 +2801,24 @@ log10l.argtypes = [c_longdouble]
 log10 = _libraries['/usr/lib/libavcodec.so'].log10
 log10.restype = c_double
 log10.argtypes = [c_double]
-modfl = _libraries['/usr/lib/libavcodec.so'].modfl
-modfl.restype = c_longdouble
-modfl.argtypes = [c_longdouble, POINTER(c_longdouble)]
-modff = _libraries['/usr/lib/libavcodec.so'].modff
-modff.restype = c_float
-modff.argtypes = [c_float, POINTER(c_float)]
 modf = _libraries['/usr/lib/libavcodec.so'].modf
 modf.restype = c_double
 modf.argtypes = [c_double, POINTER(c_double)]
-exp10 = _libraries['/usr/lib/libavcodec.so'].exp10
-exp10.restype = c_double
-exp10.argtypes = [c_double]
+modff = _libraries['/usr/lib/libavcodec.so'].modff
+modff.restype = c_float
+modff.argtypes = [c_float, POINTER(c_float)]
+modfl = _libraries['/usr/lib/libavcodec.so'].modfl
+modfl.restype = c_longdouble
+modfl.argtypes = [c_longdouble, POINTER(c_longdouble)]
 exp10l = _libraries['/usr/lib/libavcodec.so'].exp10l
 exp10l.restype = c_longdouble
 exp10l.argtypes = [c_longdouble]
 exp10f = _libraries['/usr/lib/libavcodec.so'].exp10f
 exp10f.restype = c_float
 exp10f.argtypes = [c_float]
+exp10 = _libraries['/usr/lib/libavcodec.so'].exp10
+exp10.restype = c_double
+exp10.argtypes = [c_double]
 pow10f = _libraries['/usr/lib/libavcodec.so'].pow10f
 pow10f.restype = c_float
 pow10f.argtypes = [c_float]
@@ -2837,123 +2837,123 @@ expm1f.argtypes = [c_float]
 expm1l = _libraries['/usr/lib/libavcodec.so'].expm1l
 expm1l.restype = c_longdouble
 expm1l.argtypes = [c_longdouble]
+log1pf = _libraries['/usr/lib/libavcodec.so'].log1pf
+log1pf.restype = c_float
+log1pf.argtypes = [c_float]
 log1pl = _libraries['/usr/lib/libavcodec.so'].log1pl
 log1pl.restype = c_longdouble
 log1pl.argtypes = [c_longdouble]
 log1p = _libraries['/usr/lib/libavcodec.so'].log1p
 log1p.restype = c_double
 log1p.argtypes = [c_double]
-log1pf = _libraries['/usr/lib/libavcodec.so'].log1pf
-log1pf.restype = c_float
-log1pf.argtypes = [c_float]
+logbl = _libraries['/usr/lib/libavcodec.so'].logbl
+logbl.restype = c_longdouble
+logbl.argtypes = [c_longdouble]
 logb = _libraries['/usr/lib/libavcodec.so'].logb
 logb.restype = c_double
 logb.argtypes = [c_double]
 logbf = _libraries['/usr/lib/libavcodec.so'].logbf
 logbf.restype = c_float
 logbf.argtypes = [c_float]
-logbl = _libraries['/usr/lib/libavcodec.so'].logbl
-logbl.restype = c_longdouble
-logbl.argtypes = [c_longdouble]
-exp2l = _libraries['/usr/lib/libavcodec.so'].exp2l
-exp2l.restype = c_longdouble
-exp2l.argtypes = [c_longdouble]
 exp2f = _libraries['/usr/lib/libavcodec.so'].exp2f
 exp2f.restype = c_float
 exp2f.argtypes = [c_float]
 exp2 = _libraries['/usr/lib/libavcodec.so'].exp2
 exp2.restype = c_double
 exp2.argtypes = [c_double]
-log2 = _libraries['/usr/lib/libavcodec.so'].log2
-log2.restype = c_double
-log2.argtypes = [c_double]
+exp2l = _libraries['/usr/lib/libavcodec.so'].exp2l
+exp2l.restype = c_longdouble
+exp2l.argtypes = [c_longdouble]
 log2l = _libraries['/usr/lib/libavcodec.so'].log2l
 log2l.restype = c_longdouble
 log2l.argtypes = [c_longdouble]
+log2 = _libraries['/usr/lib/libavcodec.so'].log2
+log2.restype = c_double
+log2.argtypes = [c_double]
 log2f = _libraries['/usr/lib/libavcodec.so'].log2f
 log2f.restype = c_float
 log2f.argtypes = [c_float]
 powf = _libraries['/usr/lib/libavcodec.so'].powf
 powf.restype = c_float
 powf.argtypes = [c_float, c_float]
-pow = _libraries['/usr/lib/libavcodec.so'].pow
-pow.restype = c_double
-pow.argtypes = [c_double, c_double]
 powl = _libraries['/usr/lib/libavcodec.so'].powl
 powl.restype = c_longdouble
 powl.argtypes = [c_longdouble, c_longdouble]
+pow = _libraries['/usr/lib/libavcodec.so'].pow
+pow.restype = c_double
+pow.argtypes = [c_double, c_double]
 sqrtf = _libraries['/usr/lib/libavcodec.so'].sqrtf
 sqrtf.restype = c_float
 sqrtf.argtypes = [c_float]
-sqrt = _libraries['/usr/lib/libavcodec.so'].sqrt
-sqrt.restype = c_double
-sqrt.argtypes = [c_double]
 sqrtl = _libraries['/usr/lib/libavcodec.so'].sqrtl
 sqrtl.restype = c_longdouble
 sqrtl.argtypes = [c_longdouble]
-hypotf = _libraries['/usr/lib/libavcodec.so'].hypotf
-hypotf.restype = c_float
-hypotf.argtypes = [c_float, c_float]
+sqrt = _libraries['/usr/lib/libavcodec.so'].sqrt
+sqrt.restype = c_double
+sqrt.argtypes = [c_double]
 hypotl = _libraries['/usr/lib/libavcodec.so'].hypotl
 hypotl.restype = c_longdouble
 hypotl.argtypes = [c_longdouble, c_longdouble]
 hypot = _libraries['/usr/lib/libavcodec.so'].hypot
 hypot.restype = c_double
 hypot.argtypes = [c_double, c_double]
+hypotf = _libraries['/usr/lib/libavcodec.so'].hypotf
+hypotf.restype = c_float
+hypotf.argtypes = [c_float, c_float]
+cbrtl = _libraries['/usr/lib/libavcodec.so'].cbrtl
+cbrtl.restype = c_longdouble
+cbrtl.argtypes = [c_longdouble]
 cbrt = _libraries['/usr/lib/libavcodec.so'].cbrt
 cbrt.restype = c_double
 cbrt.argtypes = [c_double]
 cbrtf = _libraries['/usr/lib/libavcodec.so'].cbrtf
 cbrtf.restype = c_float
 cbrtf.argtypes = [c_float]
-cbrtl = _libraries['/usr/lib/libavcodec.so'].cbrtl
-cbrtl.restype = c_longdouble
-cbrtl.argtypes = [c_longdouble]
-ceilf = _libraries['/usr/lib/libavcodec.so'].ceilf
-ceilf.restype = c_float
-ceilf.argtypes = [c_float]
 ceill = _libraries['/usr/lib/libavcodec.so'].ceill
 ceill.restype = c_longdouble
 ceill.argtypes = [c_longdouble]
+ceilf = _libraries['/usr/lib/libavcodec.so'].ceilf
+ceilf.restype = c_float
+ceilf.argtypes = [c_float]
 ceil = _libraries['/usr/lib/libavcodec.so'].ceil
 ceil.restype = c_double
 ceil.argtypes = [c_double]
-fabs = _libraries['/usr/lib/libavcodec.so'].fabs
-fabs.restype = c_double
-fabs.argtypes = [c_double]
 fabsf = _libraries['/usr/lib/libavcodec.so'].fabsf
 fabsf.restype = c_float
 fabsf.argtypes = [c_float]
 fabsl = _libraries['/usr/lib/libavcodec.so'].fabsl
 fabsl.restype = c_longdouble
 fabsl.argtypes = [c_longdouble]
+fabs = _libraries['/usr/lib/libavcodec.so'].fabs
+fabs.restype = c_double
+fabs.argtypes = [c_double]
 floorf = _libraries['/usr/lib/libavcodec.so'].floorf
 floorf.restype = c_float
 floorf.argtypes = [c_float]
-floor = _libraries['/usr/lib/libavcodec.so'].floor
-floor.restype = c_double
-floor.argtypes = [c_double]
 floorl = _libraries['/usr/lib/libavcodec.so'].floorl
 floorl.restype = c_longdouble
 floorl.argtypes = [c_longdouble]
-fmodf = _libraries['/usr/lib/libavcodec.so'].fmodf
-fmodf.restype = c_float
-fmodf.argtypes = [c_float, c_float]
-fmodl = _libraries['/usr/lib/libavcodec.so'].fmodl
-fmodl.restype = c_longdouble
-fmodl.argtypes = [c_longdouble, c_longdouble]
+floor = _libraries['/usr/lib/libavcodec.so'].floor
+floor.restype = c_double
+floor.argtypes = [c_double]
 fmod = _libraries['/usr/lib/libavcodec.so'].fmod
 fmod.restype = c_double
 fmod.argtypes = [c_double, c_double]
-__isinf = _libraries['/usr/lib/libavcodec.so'].__isinf
-__isinf.restype = c_int
-__isinf.argtypes = [c_double]
-__isinfl = _libraries['/usr/lib/libavcodec.so'].__isinfl
-__isinfl.restype = c_int
-__isinfl.argtypes = [c_longdouble]
+fmodl = _libraries['/usr/lib/libavcodec.so'].fmodl
+fmodl.restype = c_longdouble
+fmodl.argtypes = [c_longdouble, c_longdouble]
+fmodf = _libraries['/usr/lib/libavcodec.so'].fmodf
+fmodf.restype = c_float
+fmodf.argtypes = [c_float, c_float]
 __isinff = _libraries['/usr/lib/libavcodec.so'].__isinff
 __isinff.restype = c_int
 __isinff.argtypes = [c_float]
+__isinfl = _libraries['/usr/lib/libavcodec.so'].__isinfl
+__isinfl.restype = c_int
+__isinfl.argtypes = [c_longdouble]
+__isinf = _libraries['/usr/lib/libavcodec.so'].__isinf
+__isinf.restype = c_int
+__isinf.argtypes = [c_double]
 __finitef = _libraries['/usr/lib/libavcodec.so'].__finitef
 __finitef.restype = c_int
 __finitef.argtypes = [c_float]
@@ -2963,33 +2963,33 @@ __finite.argtypes = [c_double]
 __finitel = _libraries['/usr/lib/libavcodec.so'].__finitel
 __finitel.restype = c_int
 __finitel.argtypes = [c_longdouble]
-isinf = _libraries['/usr/lib/libavcodec.so'].isinf
-isinf.restype = c_int
-isinf.argtypes = [c_double]
 isinff = _libraries['/usr/lib/libavcodec.so'].isinff
 isinff.restype = c_int
 isinff.argtypes = [c_float]
+isinf = _libraries['/usr/lib/libavcodec.so'].isinf
+isinf.restype = c_int
+isinf.argtypes = [c_double]
 isinfl = _libraries['/usr/lib/libavcodec.so'].isinfl
 isinfl.restype = c_int
 isinfl.argtypes = [c_longdouble]
+finitef = _libraries['/usr/lib/libavcodec.so'].finitef
+finitef.restype = c_int
+finitef.argtypes = [c_float]
 finitel = _libraries['/usr/lib/libavcodec.so'].finitel
 finitel.restype = c_int
 finitel.argtypes = [c_longdouble]
 finite = _libraries['/usr/lib/libavcodec.so'].finite
 finite.restype = c_int
 finite.argtypes = [c_double]
-finitef = _libraries['/usr/lib/libavcodec.so'].finitef
-finitef.restype = c_int
-finitef.argtypes = [c_float]
-dreml = _libraries['/usr/lib/libavcodec.so'].dreml
-dreml.restype = c_longdouble
-dreml.argtypes = [c_longdouble, c_longdouble]
 drem = _libraries['/usr/lib/libavcodec.so'].drem
 drem.restype = c_double
 drem.argtypes = [c_double, c_double]
 dremf = _libraries['/usr/lib/libavcodec.so'].dremf
 dremf.restype = c_float
 dremf.argtypes = [c_float, c_float]
+dreml = _libraries['/usr/lib/libavcodec.so'].dreml
+dreml.restype = c_longdouble
+dreml.argtypes = [c_longdouble, c_longdouble]
 significandf = _libraries['/usr/lib/libavcodec.so'].significandf
 significandf.restype = c_float
 significandf.argtypes = [c_float]
@@ -3002,39 +3002,39 @@ significand.argtypes = [c_double]
 copysignf = _libraries['/usr/lib/libavcodec.so'].copysignf
 copysignf.restype = c_float
 copysignf.argtypes = [c_float, c_float]
-copysignl = _libraries['/usr/lib/libavcodec.so'].copysignl
-copysignl.restype = c_longdouble
-copysignl.argtypes = [c_longdouble, c_longdouble]
 copysign = _libraries['/usr/lib/libavcodec.so'].copysign
 copysign.restype = c_double
 copysign.argtypes = [c_double, c_double]
+copysignl = _libraries['/usr/lib/libavcodec.so'].copysignl
+copysignl.restype = c_longdouble
+copysignl.argtypes = [c_longdouble, c_longdouble]
 nanf = _libraries['/usr/lib/libavcodec.so'].nanf
 nanf.restype = c_float
 nanf.argtypes = [STRING]
-nan = _libraries['/usr/lib/libavcodec.so'].nan
-nan.restype = c_double
-nan.argtypes = [STRING]
 nanl = _libraries['/usr/lib/libavcodec.so'].nanl
 nanl.restype = c_longdouble
 nanl.argtypes = [STRING]
+nan = _libraries['/usr/lib/libavcodec.so'].nan
+nan.restype = c_double
+nan.argtypes = [STRING]
+__isnan = _libraries['/usr/lib/libavcodec.so'].__isnan
+__isnan.restype = c_int
+__isnan.argtypes = [c_double]
 __isnanf = _libraries['/usr/lib/libavcodec.so'].__isnanf
 __isnanf.restype = c_int
 __isnanf.argtypes = [c_float]
 __isnanl = _libraries['/usr/lib/libavcodec.so'].__isnanl
 __isnanl.restype = c_int
 __isnanl.argtypes = [c_longdouble]
-__isnan = _libraries['/usr/lib/libavcodec.so'].__isnan
-__isnan.restype = c_int
-__isnan.argtypes = [c_double]
 isnanf = _libraries['/usr/lib/libavcodec.so'].isnanf
 isnanf.restype = c_int
 isnanf.argtypes = [c_float]
-isnanl = _libraries['/usr/lib/libavcodec.so'].isnanl
-isnanl.restype = c_int
-isnanl.argtypes = [c_longdouble]
 isnan = _libraries['/usr/lib/libavcodec.so'].isnan
 isnan.restype = c_int
 isnan.argtypes = [c_double]
+isnanl = _libraries['/usr/lib/libavcodec.so'].isnanl
+isnanl.restype = c_int
+isnanl.argtypes = [c_longdouble]
 j0 = _libraries['/usr/lib/libavcodec.so'].j0
 j0.restype = c_double
 j0.argtypes = [c_double]
@@ -3047,45 +3047,45 @@ j0f.argtypes = [c_float]
 j1 = _libraries['/usr/lib/libavcodec.so'].j1
 j1.restype = c_double
 j1.argtypes = [c_double]
-j1l = _libraries['/usr/lib/libavcodec.so'].j1l
-j1l.restype = c_longdouble
-j1l.argtypes = [c_longdouble]
 j1f = _libraries['/usr/lib/libavcodec.so'].j1f
 j1f.restype = c_float
 j1f.argtypes = [c_float]
-jnl = _libraries['/usr/lib/libavcodec.so'].jnl
-jnl.restype = c_longdouble
-jnl.argtypes = [c_int, c_longdouble]
+j1l = _libraries['/usr/lib/libavcodec.so'].j1l
+j1l.restype = c_longdouble
+j1l.argtypes = [c_longdouble]
 jn = _libraries['/usr/lib/libavcodec.so'].jn
 jn.restype = c_double
 jn.argtypes = [c_int, c_double]
 jnf = _libraries['/usr/lib/libavcodec.so'].jnf
 jnf.restype = c_float
 jnf.argtypes = [c_int, c_float]
-y0 = _libraries['/usr/lib/libavcodec.so'].y0
-y0.restype = c_double
-y0.argtypes = [c_double]
+jnl = _libraries['/usr/lib/libavcodec.so'].jnl
+jnl.restype = c_longdouble
+jnl.argtypes = [c_int, c_longdouble]
 y0f = _libraries['/usr/lib/libavcodec.so'].y0f
 y0f.restype = c_float
 y0f.argtypes = [c_float]
 y0l = _libraries['/usr/lib/libavcodec.so'].y0l
 y0l.restype = c_longdouble
 y0l.argtypes = [c_longdouble]
+y0 = _libraries['/usr/lib/libavcodec.so'].y0
+y0.restype = c_double
+y0.argtypes = [c_double]
 y1f = _libraries['/usr/lib/libavcodec.so'].y1f
 y1f.restype = c_float
 y1f.argtypes = [c_float]
-y1l = _libraries['/usr/lib/libavcodec.so'].y1l
-y1l.restype = c_longdouble
-y1l.argtypes = [c_longdouble]
 y1 = _libraries['/usr/lib/libavcodec.so'].y1
 y1.restype = c_double
 y1.argtypes = [c_double]
-ynl = _libraries['/usr/lib/libavcodec.so'].ynl
-ynl.restype = c_longdouble
-ynl.argtypes = [c_int, c_longdouble]
+y1l = _libraries['/usr/lib/libavcodec.so'].y1l
+y1l.restype = c_longdouble
+y1l.argtypes = [c_longdouble]
 yn = _libraries['/usr/lib/libavcodec.so'].yn
 yn.restype = c_double
 yn.argtypes = [c_int, c_double]
+ynl = _libraries['/usr/lib/libavcodec.so'].ynl
+ynl.restype = c_longdouble
+ynl.argtypes = [c_int, c_longdouble]
 ynf = _libraries['/usr/lib/libavcodec.so'].ynf
 ynf.restype = c_float
 ynf.argtypes = [c_int, c_float]
@@ -3101,48 +3101,48 @@ erff.argtypes = [c_float]
 erfcf = _libraries['/usr/lib/libavcodec.so'].erfcf
 erfcf.restype = c_float
 erfcf.argtypes = [c_float]
-erfc = _libraries['/usr/lib/libavcodec.so'].erfc
-erfc.restype = c_double
-erfc.argtypes = [c_double]
 erfcl = _libraries['/usr/lib/libavcodec.so'].erfcl
 erfcl.restype = c_longdouble
 erfcl.argtypes = [c_longdouble]
+erfc = _libraries['/usr/lib/libavcodec.so'].erfc
+erfc.restype = c_double
+erfc.argtypes = [c_double]
 lgammaf = _libraries['/usr/lib/libavcodec.so'].lgammaf
 lgammaf.restype = c_float
 lgammaf.argtypes = [c_float]
-lgammal = _libraries['/usr/lib/libavcodec.so'].lgammal
-lgammal.restype = c_longdouble
-lgammal.argtypes = [c_longdouble]
 lgamma = _libraries['/usr/lib/libavcodec.so'].lgamma
 lgamma.restype = c_double
 lgamma.argtypes = [c_double]
-tgammal = _libraries['/usr/lib/libavcodec.so'].tgammal
-tgammal.restype = c_longdouble
-tgammal.argtypes = [c_longdouble]
+lgammal = _libraries['/usr/lib/libavcodec.so'].lgammal
+lgammal.restype = c_longdouble
+lgammal.argtypes = [c_longdouble]
 tgammaf = _libraries['/usr/lib/libavcodec.so'].tgammaf
 tgammaf.restype = c_float
 tgammaf.argtypes = [c_float]
+tgammal = _libraries['/usr/lib/libavcodec.so'].tgammal
+tgammal.restype = c_longdouble
+tgammal.argtypes = [c_longdouble]
 tgamma = _libraries['/usr/lib/libavcodec.so'].tgamma
 tgamma.restype = c_double
 tgamma.argtypes = [c_double]
-gamma = _libraries['/usr/lib/libavcodec.so'].gamma
-gamma.restype = c_double
-gamma.argtypes = [c_double]
 gammaf = _libraries['/usr/lib/libavcodec.so'].gammaf
 gammaf.restype = c_float
 gammaf.argtypes = [c_float]
 gammal = _libraries['/usr/lib/libavcodec.so'].gammal
 gammal.restype = c_longdouble
 gammal.argtypes = [c_longdouble]
-lgammaf_r = _libraries['/usr/lib/libavcodec.so'].lgammaf_r
-lgammaf_r.restype = c_float
-lgammaf_r.argtypes = [c_float, POINTER(c_int)]
+gamma = _libraries['/usr/lib/libavcodec.so'].gamma
+gamma.restype = c_double
+gamma.argtypes = [c_double]
 lgamma_r = _libraries['/usr/lib/libavcodec.so'].lgamma_r
 lgamma_r.restype = c_double
 lgamma_r.argtypes = [c_double, POINTER(c_int)]
 lgammal_r = _libraries['/usr/lib/libavcodec.so'].lgammal_r
 lgammal_r.restype = c_longdouble
 lgammal_r.argtypes = [c_longdouble, POINTER(c_int)]
+lgammaf_r = _libraries['/usr/lib/libavcodec.so'].lgammaf_r
+lgammaf_r.restype = c_float
+lgammaf_r.argtypes = [c_float, POINTER(c_int)]
 rint = _libraries['/usr/lib/libavcodec.so'].rint
 rint.restype = c_double
 rint.argtypes = [c_double]
@@ -3164,39 +3164,39 @@ nextafterl.argtypes = [c_longdouble, c_longdouble]
 nexttoward = _libraries['/usr/lib/libavcodec.so'].nexttoward
 nexttoward.restype = c_double
 nexttoward.argtypes = [c_double, c_longdouble]
-nexttowardf = _libraries['/usr/lib/libavcodec.so'].nexttowardf
-nexttowardf.restype = c_float
-nexttowardf.argtypes = [c_float, c_longdouble]
 nexttowardl = _libraries['/usr/lib/libavcodec.so'].nexttowardl
 nexttowardl.restype = c_longdouble
 nexttowardl.argtypes = [c_longdouble, c_longdouble]
+nexttowardf = _libraries['/usr/lib/libavcodec.so'].nexttowardf
+nexttowardf.restype = c_float
+nexttowardf.argtypes = [c_float, c_longdouble]
 remainder = _libraries['/usr/lib/libavcodec.so'].remainder
 remainder.restype = c_double
 remainder.argtypes = [c_double, c_double]
-remainderl = _libraries['/usr/lib/libavcodec.so'].remainderl
-remainderl.restype = c_longdouble
-remainderl.argtypes = [c_longdouble, c_longdouble]
 remainderf = _libraries['/usr/lib/libavcodec.so'].remainderf
 remainderf.restype = c_float
 remainderf.argtypes = [c_float, c_float]
-scalbn = _libraries['/usr/lib/libavcodec.so'].scalbn
-scalbn.restype = c_double
-scalbn.argtypes = [c_double, c_int]
+remainderl = _libraries['/usr/lib/libavcodec.so'].remainderl
+remainderl.restype = c_longdouble
+remainderl.argtypes = [c_longdouble, c_longdouble]
 scalbnf = _libraries['/usr/lib/libavcodec.so'].scalbnf
 scalbnf.restype = c_float
 scalbnf.argtypes = [c_float, c_int]
 scalbnl = _libraries['/usr/lib/libavcodec.so'].scalbnl
 scalbnl.restype = c_longdouble
 scalbnl.argtypes = [c_longdouble, c_int]
+scalbn = _libraries['/usr/lib/libavcodec.so'].scalbn
+scalbn.restype = c_double
+scalbn.argtypes = [c_double, c_int]
 ilogb = _libraries['/usr/lib/libavcodec.so'].ilogb
 ilogb.restype = c_int
 ilogb.argtypes = [c_double]
-ilogbf = _libraries['/usr/lib/libavcodec.so'].ilogbf
-ilogbf.restype = c_int
-ilogbf.argtypes = [c_float]
 ilogbl = _libraries['/usr/lib/libavcodec.so'].ilogbl
 ilogbl.restype = c_int
 ilogbl.argtypes = [c_longdouble]
+ilogbf = _libraries['/usr/lib/libavcodec.so'].ilogbf
+ilogbf.restype = c_int
+ilogbf.argtypes = [c_float]
 scalblnl = _libraries['/usr/lib/libavcodec.so'].scalblnl
 scalblnl.restype = c_longdouble
 scalblnl.argtypes = [c_longdouble, c_long]
@@ -3206,24 +3206,24 @@ scalbln.argtypes = [c_double, c_long]
 scalblnf = _libraries['/usr/lib/libavcodec.so'].scalblnf
 scalblnf.restype = c_float
 scalblnf.argtypes = [c_float, c_long]
-nearbyint = _libraries['/usr/lib/libavcodec.so'].nearbyint
-nearbyint.restype = c_double
-nearbyint.argtypes = [c_double]
 nearbyintf = _libraries['/usr/lib/libavcodec.so'].nearbyintf
 nearbyintf.restype = c_float
 nearbyintf.argtypes = [c_float]
 nearbyintl = _libraries['/usr/lib/libavcodec.so'].nearbyintl
 nearbyintl.restype = c_longdouble
 nearbyintl.argtypes = [c_longdouble]
+nearbyint = _libraries['/usr/lib/libavcodec.so'].nearbyint
+nearbyint.restype = c_double
+nearbyint.argtypes = [c_double]
+round = _libraries['/usr/lib/libavcodec.so'].round
+round.restype = c_double
+round.argtypes = [c_double]
 roundf = _libraries['/usr/lib/libavcodec.so'].roundf
 roundf.restype = c_float
 roundf.argtypes = [c_float]
 roundl = _libraries['/usr/lib/libavcodec.so'].roundl
 roundl.restype = c_longdouble
 roundl.argtypes = [c_longdouble]
-round = _libraries['/usr/lib/libavcodec.so'].round
-round.restype = c_double
-round.argtypes = [c_double]
 truncf = _libraries['/usr/lib/libavcodec.so'].truncf
 truncf.restype = c_float
 truncf.argtypes = [c_float]
@@ -3233,105 +3233,105 @@ truncl.argtypes = [c_longdouble]
 trunc = _libraries['/usr/lib/libavcodec.so'].trunc
 trunc.restype = c_double
 trunc.argtypes = [c_double]
-remquol = _libraries['/usr/lib/libavcodec.so'].remquol
-remquol.restype = c_longdouble
-remquol.argtypes = [c_longdouble, c_longdouble, POINTER(c_int)]
 remquof = _libraries['/usr/lib/libavcodec.so'].remquof
 remquof.restype = c_float
 remquof.argtypes = [c_float, c_float, POINTER(c_int)]
 remquo = _libraries['/usr/lib/libavcodec.so'].remquo
 remquo.restype = c_double
 remquo.argtypes = [c_double, c_double, POINTER(c_int)]
-lrint = _libraries['/usr/lib/libavcodec.so'].lrint
-lrint.restype = c_long
-lrint.argtypes = [c_double]
+remquol = _libraries['/usr/lib/libavcodec.so'].remquol
+remquol.restype = c_longdouble
+remquol.argtypes = [c_longdouble, c_longdouble, POINTER(c_int)]
 lrintf = _libraries['/usr/lib/libavcodec.so'].lrintf
 lrintf.restype = c_long
 lrintf.argtypes = [c_float]
 lrintl = _libraries['/usr/lib/libavcodec.so'].lrintl
 lrintl.restype = c_long
 lrintl.argtypes = [c_longdouble]
+lrint = _libraries['/usr/lib/libavcodec.so'].lrint
+lrint.restype = c_long
+lrint.argtypes = [c_double]
+llrintf = _libraries['/usr/lib/libavcodec.so'].llrintf
+llrintf.restype = c_longlong
+llrintf.argtypes = [c_float]
 llrintl = _libraries['/usr/lib/libavcodec.so'].llrintl
 llrintl.restype = c_longlong
 llrintl.argtypes = [c_longdouble]
 llrint = _libraries['/usr/lib/libavcodec.so'].llrint
 llrint.restype = c_longlong
 llrint.argtypes = [c_double]
-llrintf = _libraries['/usr/lib/libavcodec.so'].llrintf
-llrintf.restype = c_longlong
-llrintf.argtypes = [c_float]
 lroundl = _libraries['/usr/lib/libavcodec.so'].lroundl
 lroundl.restype = c_long
 lroundl.argtypes = [c_longdouble]
-lroundf = _libraries['/usr/lib/libavcodec.so'].lroundf
-lroundf.restype = c_long
-lroundf.argtypes = [c_float]
 lround = _libraries['/usr/lib/libavcodec.so'].lround
 lround.restype = c_long
 lround.argtypes = [c_double]
+lroundf = _libraries['/usr/lib/libavcodec.so'].lroundf
+lroundf.restype = c_long
+lroundf.argtypes = [c_float]
 llroundl = _libraries['/usr/lib/libavcodec.so'].llroundl
 llroundl.restype = c_longlong
 llroundl.argtypes = [c_longdouble]
-llround = _libraries['/usr/lib/libavcodec.so'].llround
-llround.restype = c_longlong
-llround.argtypes = [c_double]
 llroundf = _libraries['/usr/lib/libavcodec.so'].llroundf
 llroundf.restype = c_longlong
 llroundf.argtypes = [c_float]
+llround = _libraries['/usr/lib/libavcodec.so'].llround
+llround.restype = c_longlong
+llround.argtypes = [c_double]
+fdiml = _libraries['/usr/lib/libavcodec.so'].fdiml
+fdiml.restype = c_longdouble
+fdiml.argtypes = [c_longdouble, c_longdouble]
 fdim = _libraries['/usr/lib/libavcodec.so'].fdim
 fdim.restype = c_double
 fdim.argtypes = [c_double, c_double]
 fdimf = _libraries['/usr/lib/libavcodec.so'].fdimf
 fdimf.restype = c_float
 fdimf.argtypes = [c_float, c_float]
-fdiml = _libraries['/usr/lib/libavcodec.so'].fdiml
-fdiml.restype = c_longdouble
-fdiml.argtypes = [c_longdouble, c_longdouble]
-fmax = _libraries['/usr/lib/libavcodec.so'].fmax
-fmax.restype = c_double
-fmax.argtypes = [c_double, c_double]
 fmaxf = _libraries['/usr/lib/libavcodec.so'].fmaxf
 fmaxf.restype = c_float
 fmaxf.argtypes = [c_float, c_float]
 fmaxl = _libraries['/usr/lib/libavcodec.so'].fmaxl
 fmaxl.restype = c_longdouble
 fmaxl.argtypes = [c_longdouble, c_longdouble]
+fmax = _libraries['/usr/lib/libavcodec.so'].fmax
+fmax.restype = c_double
+fmax.argtypes = [c_double, c_double]
 fminf = _libraries['/usr/lib/libavcodec.so'].fminf
 fminf.restype = c_float
 fminf.argtypes = [c_float, c_float]
-fminl = _libraries['/usr/lib/libavcodec.so'].fminl
-fminl.restype = c_longdouble
-fminl.argtypes = [c_longdouble, c_longdouble]
 fmin = _libraries['/usr/lib/libavcodec.so'].fmin
 fmin.restype = c_double
 fmin.argtypes = [c_double, c_double]
-__fpclassifyl = _libraries['/usr/lib/libavcodec.so'].__fpclassifyl
-__fpclassifyl.restype = c_int
-__fpclassifyl.argtypes = [c_longdouble]
+fminl = _libraries['/usr/lib/libavcodec.so'].fminl
+fminl.restype = c_longdouble
+fminl.argtypes = [c_longdouble, c_longdouble]
 __fpclassifyf = _libraries['/usr/lib/libavcodec.so'].__fpclassifyf
 __fpclassifyf.restype = c_int
 __fpclassifyf.argtypes = [c_float]
 __fpclassify = _libraries['/usr/lib/libavcodec.so'].__fpclassify
 __fpclassify.restype = c_int
 __fpclassify.argtypes = [c_double]
-fmal = _libraries['/usr/lib/libavcodec.so'].fmal
-fmal.restype = c_longdouble
-fmal.argtypes = [c_longdouble, c_longdouble, c_longdouble]
-fmaf = _libraries['/usr/lib/libavcodec.so'].fmaf
-fmaf.restype = c_float
-fmaf.argtypes = [c_float, c_float, c_float]
+__fpclassifyl = _libraries['/usr/lib/libavcodec.so'].__fpclassifyl
+__fpclassifyl.restype = c_int
+__fpclassifyl.argtypes = [c_longdouble]
 fma = _libraries['/usr/lib/libavcodec.so'].fma
 fma.restype = c_double
 fma.argtypes = [c_double, c_double, c_double]
+fmaf = _libraries['/usr/lib/libavcodec.so'].fmaf
+fmaf.restype = c_float
+fmaf.argtypes = [c_float, c_float, c_float]
+fmal = _libraries['/usr/lib/libavcodec.so'].fmal
+fmal.restype = c_longdouble
+fmal.argtypes = [c_longdouble, c_longdouble, c_longdouble]
+scalbl = _libraries['/usr/lib/libavcodec.so'].scalbl
+scalbl.restype = c_longdouble
+scalbl.argtypes = [c_longdouble, c_longdouble]
 scalb = _libraries['/usr/lib/libavcodec.so'].scalb
 scalb.restype = c_double
 scalb.argtypes = [c_double, c_double]
 scalbf = _libraries['/usr/lib/libavcodec.so'].scalbf
 scalbf.restype = c_float
 scalbf.argtypes = [c_float, c_float]
-scalbl = _libraries['/usr/lib/libavcodec.so'].scalbl
-scalbl.restype = c_longdouble
-scalbl.argtypes = [c_longdouble, c_longdouble]
 float_t = c_float
 double_t = c_double
 __signbitf = _libraries['/usr/lib/libavcodec.so'].__signbitf
@@ -3697,8 +3697,8 @@ __toupper_l.argtypes = [c_int, __locale_t]
 toupper_l = _libraries['/usr/lib/libavcodec.so'].toupper_l
 toupper_l.restype = c_int
 toupper_l.argtypes = [c_int, __locale_t]
-program_invocation_short_name = (STRING).in_dll(_libraries['/usr/lib/libavcodec.so'], 'program_invocation_short_name')
 program_invocation_name = (STRING).in_dll(_libraries['/usr/lib/libavcodec.so'], 'program_invocation_name')
+program_invocation_short_name = (STRING).in_dll(_libraries['/usr/lib/libavcodec.so'], 'program_invocation_short_name')
 error_t = c_int
 class imaxdiv_t(Structure):
     pass
@@ -7403,25 +7403,24 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CLASS_CATEGORY_SWSCALER', 'CODEC_ID_AAC_LATM',
            'AV_CLASS_CATEGORY_DEMUXER',
            'av_get_channel_layout_nb_channels', '__NFDBITS',
-           'CODEC_ID_BMV_AUDIO', 'SWS_PRINT_INFO',
-           'AVBitStreamFilter', 'AV_CODEC_ID_PGM', 'AV_CODEC_ID_VBLE',
-           'SWS_CS_DEFAULT', 'av_get_picture_type_char',
-           'gnu_dev_makedev', 'AVPROBE_SCORE_MAX', 'FFALIGN',
-           'AV_PIX_FMT_YUV420P14BE', '__va_list_tag', 'u_long',
-           'AV_LOCK_CREATE', 'AV_CH_TOP_CENTER', 'SWS_CS_SMPTE240M',
-           'SWS_CS_FCC', 'pp_free_context',
-           'av_get_audio_frame_duration', '_POSIX_',
-           '____gwchar_t_defined', 'AVPixelFormat', 'AVCOL_PRI_FILM',
-           '__compar_d_fn_t', 'asin', 'FF_CMP_CHROMA',
-           'CODEC_ID_SMACKAUDIO', 'AV_CODEC_ID_TAK_DEPRECATED',
-           'AVCOL_TRC_UNSPECIFIED', '_IO_SHOWBASE', 'CODEC_ID_V210',
-           'AV_CODEC_ID_G729', 'asprintf', '__codecvt_partial',
-           'WORD_BIT', 'AV_CODEC_ID_WMV3IMAGE', 'FF_OPT_TYPE_BINARY',
-           'sscanf', 'copysign', 'drem', 'AV_CODEC_ID_OTF',
-           'setstate_r', 'LIBAVDEVICE_IDENT', '__locale_data',
-           'CODEC_ID_PBM', 'CODEC_ID_FFMETADATA', '__isgraph_l',
-           'AV_CH_LAYOUT_MONO', 'FF_RC_STRATEGY_XVID', 'av_rescale',
-           'CODEC_FLAG_QPEL', 'CODEC_CAP_AUTO_THREADS',
+           'CODEC_ID_TIFF', 'SWS_PRINT_INFO', 'AVBitStreamFilter',
+           'AV_CODEC_ID_PGM', 'AV_CODEC_ID_VBLE', 'SWS_CS_DEFAULT',
+           'av_get_picture_type_char', 'gnu_dev_makedev',
+           'AVPROBE_SCORE_MAX', 'FFALIGN', 'AV_PIX_FMT_YUV420P14BE',
+           '__va_list_tag', 'u_long', 'AV_LOCK_CREATE',
+           'AV_CH_TOP_CENTER', 'SWS_CS_SMPTE240M', 'SWS_CS_FCC',
+           'pp_free_context', 'av_get_audio_frame_duration',
+           '_POSIX_', '____gwchar_t_defined', 'AVPixelFormat',
+           'AVCOL_PRI_FILM', '__compar_d_fn_t', 'asin',
+           'FF_CMP_CHROMA', 'CODEC_ID_SMACKAUDIO',
+           'AV_CODEC_ID_TAK_DEPRECATED', 'AVCOL_TRC_UNSPECIFIED',
+           '_IO_SHOWBASE', 'AV_CODEC_ID_G729', 'asprintf',
+           '__codecvt_partial', 'WORD_BIT', 'PIX_FMT_RGB444BE',
+           'FF_OPT_TYPE_BINARY', 'sscanf', 'copysign', 'drem',
+           'AV_CODEC_ID_OTF', 'setstate_r', 'LIBAVDEVICE_IDENT',
+           '__locale_data', 'CODEC_ID_PBM', 'CODEC_ID_FFMETADATA',
+           '__isgraph_l', 'AV_CH_LAYOUT_MONO', 'FF_RC_STRATEGY_XVID',
+           'av_rescale', 'CODEC_FLAG_QPEL', 'CODEC_CAP_AUTO_THREADS',
            'AVDISCARD_NONE', 'PIX_FMT_DXVA2_VLD', 'pthread_t',
            'AV_CODEC_ID_MMVIDEO', 'CODEC_ID_AASC', 'sws_getConstVec',
            'floor', 'FF_PROFILE_AAC_HE', 'E2BIG',
@@ -7436,8 +7435,8 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'FF_DTG_AFD_4_3_SP_14_9', 'AVMEDIA_TYPE_DATA', 'qecvt_r',
            'ftello64', 'AVFILTER_CMD_FLAG_FAST',
            'FF_MB_DECISION_BITS', 'expm1', 'EDQUOT', '__iscntrl_l',
-           'avio_get_str16le', 'MAX_REORDER_DELAY',
-           'av_opt_set_defaults2', '__WTERMSIG', 'PIX_FMT_VDPAU_WMV3',
+           'avio_get_str16le', 'ino_t', 'MAX_REORDER_DELAY',
+           'av_opt_set_defaults2', '_IO_uid_t', 'PIX_FMT_VDPAU_WMV3',
            'M_PHI', 'drand48', 'AV_PIX_FMT_PAL8', 'erf',
            'CODEC_ID_WMV2', 'CODEC_ID_WMV3', 'CODEC_ID_WMV1',
            'avcodec_decode_audio4', 'AVFMT_VARIABLE_FPS',
@@ -7454,16 +7453,16 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'rewind', 'AVMediaType', 'av_codec_get_pkt_timebase',
            'av_frame_set_channel_layout', 'AV_LOG_DEBUG',
            'CODEC_ID_PCM_S24LE', 'UINT32_C', 'LINE_MAX',
-           '_XOPEN_SOURCE', 'PIX_FMT_RGB444BE', 'AV_PIX_FMT_GBR24P',
-           'AV_PIX_FMT_YUVA420P16LE', 'PIX_FMT_BGR4_BYTE',
-           'PIX_FMT_UYVY422', 'avio_rl24', 'CODEC_ID_JPEGLS',
-           '__GLIBC__', 'pthread_rwlockattr_t', 'avfilter_link_free',
-           'CODEC_FLAG2_SKIP_RD', 'AV_CH_LAYOUT_STEREO_DOWNMIX',
-           'funlockfile', 'AV_CODEC_ID_SNOW', 'strerror_r',
-           'avfilter_config_links', 'AV_PIX_FMT_GBRP16LE',
-           'AV_PIX_FMT_GRAY16BE', 'AV_OPT_SEARCH_FAKE_OBJ',
-           'SLICE_FLAG_ALLOW_PLANE', 'avfilter_link',
-           'FF_QSCALE_TYPE_VP56', '_POSIX_NAME_MAX',
+           '_XOPEN_SOURCE', 'AV_PIX_FMT_GBR24P', 'CODEC_ID_VMDVIDEO',
+           'PIX_FMT_BGR4_BYTE', 'PIX_FMT_UYVY422', 'avio_rl24',
+           'CODEC_ID_JPEGLS', '__GLIBC__', 'pthread_rwlockattr_t',
+           'avfilter_link_free', 'CODEC_FLAG2_SKIP_RD',
+           'AV_CH_LAYOUT_STEREO_DOWNMIX', 'funlockfile',
+           'AV_CODEC_ID_SNOW', 'strerror_r',
+           'AV_CODEC_ID_DVB_TELETEXT', 'avfilter_config_links',
+           'AV_PIX_FMT_GBRP16LE', 'CODEC_ID_CLLC',
+           'AV_OPT_SEARCH_FAKE_OBJ', 'SLICE_FLAG_ALLOW_PLANE',
+           'avfilter_link', 'FF_QSCALE_TYPE_VP56', '_POSIX_NAME_MAX',
            'AV_CODEC_ID_FFMETADATA', 'ELIBMAX',
            'AV_OPT_TYPE_IMAGE_SIZE', 'CODEC_ID_PCM_F64BE',
            'av_read_packet', 'AV_CODEC_ID_GSM', 'AV_CODEC_ID_SVQ1',
@@ -7471,18 +7470,17 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CODEC_ID_PCM_S24BE', 'strtouq', 'avio_read',
            'LIBAVFILTER_IDENT', 'ENOTTY', 'CODEC_CAP_FRAME_THREADS',
            '_IONBF', 'finitef', 'AV_CODEC_ID_PAF_VIDEO',
-           'PTHREAD_DESTRUCTOR_ITERATIONS',
-           'AV_CODEC_ID_PCM_S16BE_PLANAR', 'AV_PIX_FMT_RGBA',
-           'finitel', 'AV_PICTURE_TYPE_BI', 'CODEC_ID_ESCAPE124',
-           'AV_PIX_FMT_YUV444P14BE', 'ENOLINK',
+           'AV_CODEC_ID_MSMPEG4V1', 'AV_CODEC_ID_PCM_S16BE_PLANAR',
+           'AV_PIX_FMT_RGBA', 'finitel', 'AV_PICTURE_TYPE_BI',
+           'CODEC_ID_ESCAPE124', 'EWOULDBLOCK', 'ENOLINK',
            'CODEC_ID_TRUEMOTION1', 'AV_CODEC_ID_RV40',
            'av_write_trailer', 'CODEC_ID_TRUEMOTION2', 'AV_FIELD_BB',
-           'fwrite', 'PIX_FMT_YUV420P10BE', 'EMLINK',
+           'fwrite', 'AV_CODEC_ID_MSMPEG4V2', 'EMLINK',
            'MB_TYPE_INTRA4x4', 'uint_least16_t', 'AVFMT_NOGENSEARCH',
            'a64l', 'iscntrl', 'FF_IDCT_SIMPLEARMV6', 'AV_FIELD_BT',
-           'AVCodecTag', 'AV_PIX_FMT_GBRP16BE', 'CODEC_ID_TIFF',
+           'AVCodecTag', 'AV_PIX_FMT_GBRP16BE', 'CODEC_ID_BMV_AUDIO',
            'AIO_PRIO_DELTA_MAX', 'ECANCELED', 'CODEC_ID_INDEO5',
-           'PIX_FMT_GBRP12LE', 'CODEC_ID_INDEO3', 'CODEC_ID_INDEO2',
+           'PIX_FMT_GBRP12LE', 'CODEC_ID_MP3ADU', 'CODEC_ID_INDEO2',
            'av_get_double', 'AV_PKT_DATA_SUBTITLE_POSITION',
            'CODEC_FLAG_PSNR', 'uid_t', 'pow10f', 'AV_SAMPLE_FMT_S16P',
            'u_int16_t', 'SWS_LANCZOS', 'pow10l', 'fputc',
@@ -7493,7 +7491,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'PIX_FMT_UYYVYY411', 'av_next_option',
            'PARSER_FLAG_USE_CODEC_TS', 'AV_CODEC_ID_PPM',
            'CODEC_ID_IDF', 'av_opt_find', 'AVDISCARD_NONKEY',
-           'CODEC_ID_XBIN', '__fsword_t', 'PTHREAD_STACK_MIN',
+           'AV_CODEC_ID_MSZH', '__fsword_t', 'PTHREAD_STACK_MIN',
            'FF_PRED_LEFT', '_POSIX_SOURCE', 'CODEC_ID_IFF_ILBM',
            'AV_PIX_FMT_XVMC_MPEG2_MC', 'logb', 'sinhf',
            'fileno_unlocked', 'av_opt_query_ranges', 'logl',
@@ -7504,51 +7502,52 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'av_free_packet', 'AVFMT_NOSTREAMS',
            'av_frame_set_best_effort_timestamp', '_IO_IS_APPENDING',
            'LIBSWSCALE_VERSION_MICRO', 'AV_CODEC_ID_CMV', 'log2',
-           'stderr', 'AV_OPT_TYPE_PIXEL_FMT', 'AV_PIX_FMT_YUV422P9LE',
-           'AV_CODEC_ID_OPUS', 'AV_CPU_FLAG_SSSE3',
-           'PIX_FMT_GBRP10BE', 'AV_CODEC_ID_MJPEGB', 'lldiv_t',
-           'PIX_FMT_YUV422P12BE', 'MB_TYPE_INTERLACED',
+           'AV_PIX_FMT_YUV444P12BE', 'AV_OPT_TYPE_PIXEL_FMT',
+           'AV_PIX_FMT_YUV422P9LE', 'AV_CODEC_ID_OPUS',
+           'AV_CPU_FLAG_SSSE3', 'PIX_FMT_GBRP10BE',
+           'AV_CODEC_ID_MJPEGB', 'lldiv_t', 'MB_TYPE_INTERLACED',
            'av_frame_get_channel_layout', 'AV_CODEC_ID_8SVX_RAW',
            '__strtol_internal', '_IOS_OUTPUT', 'CODEC_ID_ZEROCODEC',
            'CODEC_ID_MSZH', '_POSIX_MQ_PRIO_MAX', '_ISlower',
            '__pthread_list_t', 'erff', 'jrand48', 'isinff', 'erfc',
            'AVERROR_PROTOCOL_NOT_FOUND', 'pow10', 'CODEC_ID_4XM',
            'erfl', 'CODEC_ID_SGI', 'scanf', 'AV_CODEC_ID_FLAC',
-           'AVPanScan', 'av_resample_compensate', 'SUBTITLE_ASS',
+           'AVPanScan', 'av_resample_compensate', 'AV_PIX_FMT_RGB8',
            'floorf', 'AV_DISPOSITION_FORCED', 'avresample_version',
            'floorl', 'avfilter_register_all', 'FF_MB_DECISION_RD',
            'ldexp', '_IO_lock_t', '_POSIX2_COLL_WEIGHTS_MAX',
            '__SIZEOF_PTHREAD_MUTEXATTR_T', 'CODEC_ID_ROQ',
            '__USE_ANSI', 'strncpy', 'CODEC_ID_ATRAC3P', 'FP_ILOGB0',
            'avcodec_set_dimensions', 'isalnum', '_sys_nerr', 'exp2',
-           'AV_CODEC_ID_MSVIDEO1', 'qsort', 'PIX_FMT_ARGB',
-           'avio_printf', 'isalpha', 'ino64_t', 'AV_CODEC_ID_GSM_MS',
-           'memcmp', 'EISNAM', 'dprintf', 'ecvt_r',
-           'FF_IDCT_SIMPLEVIS', '_POSIX_PATH_MAX', 'setbuffer',
-           'av_append_packet', 'AVPROBE_SCORE_RETRY',
+           'AV_AUDIO_SERVICE_TYPE_VOICE_OVER', 'qsort',
+           'PIX_FMT_ARGB', 'avio_printf', 'isalpha', 'ino64_t',
+           'AV_CODEC_ID_GSM_MS', 'memcmp', 'EISNAM', 'dprintf',
+           'ecvt_r', 'FF_IDCT_SIMPLEVIS', '_POSIX_PATH_MAX',
+           'setbuffer', 'av_append_packet', 'AVPROBE_SCORE_RETRY',
            'AV_CODEC_ID_DIRAC', 'avio_flush', '__blkcnt64_t',
            'mkostemp', 'isascii', 'AV_CODEC_ID_TARGA_Y216',
            'AV_CODEC_ID_SONIC_LS', 'BC_DIM_MAX',
            'AV_CODEC_ID_EIA_608', 'CODEC_ID_SUNRAST',
-           'avcodec_version', 'AV_CODEC_ID_TTF', 'CODEC_ID_CDXL',
+           'avcodec_version', 'CODEC_ID_ADPCM_EA_R2', 'CODEC_ID_CDXL',
            'av_get_channel_layout_string', '_IO_BE',
            'AV_AUDIO_SERVICE_TYPE_DIALOGUE', 'ULONG_MAX',
-           'AV_PIX_FMT_RGBA64BE', 'expl', 'fma', 'expf', '_IOS_INPUT',
-           'MB_TYPE_16x16', 'CODEC_ID_AC3', 'CODEC_ID_ATRAC1',
-           'AVCHROMA_LOC_LEFT', 'avpicture_layout', 'EILSEQ',
-           'FF_PROFILE_UNKNOWN', 'PDP_ENDIAN', 'SWS_BILINEAR',
-           'AV_CODEC_ID_TARGA', 'AVFMT_NO_BYTE_SEEK', '__rlim_t',
-           '__FLOAT_WORD_ORDER', 'AV_CODEC_ID_PCM_S16BE',
-           'CODEC_ID_8SVX_EXP', 'setstate', 'ENONET', 'ECHRNG',
-           'FF_BUFFER_HINTS_READABLE', 'AV_PIX_FMT_BGR4_BYTE',
-           'AV_EF_COMPLIANT', 'AVCOL_TRC_GAMMA22',
-           'AVCOL_TRC_GAMMA28', 'FF_CODER_TYPE_DEFLATE', 'ESRCH',
-           'PIX_FMT_BGR48LE', 'CODEC_ID_MJPEG', 'av_destruct_packet',
-           'SWS_CPU_CAPS_MMX', '__clockid_t', 'SWS_FAST_BILINEAR',
-           '_IOS_ATEND', 'FF_BUG_HPEL_CHROMA', 'PIX_FMT_YUV422P9BE',
-           'FF_CMP_DCT', 'AV_CODEC_ID_BINKAUDIO_RDFT',
-           'LIBPOSTPROC_BUILD', 'FF_DEBUG_VIS_MV_B_BACK',
-           'CODEC_ID_TSCC2', '_POSIX_AIO_MAX', 'MB_TYPE_DIRECT2',
+           'CODEC_ID_ADPCM_IMA_EA_EACS', 'expl', 'fma', 'expf',
+           '_IOS_INPUT', 'MB_TYPE_16x16', 'CODEC_ID_AC3',
+           'CODEC_ID_ATRAC1', 'AVCHROMA_LOC_LEFT', 'avpicture_layout',
+           'EILSEQ', 'FF_PROFILE_UNKNOWN', 'PDP_ENDIAN',
+           'SWS_BILINEAR', 'AV_CODEC_ID_TARGA', 'AVFMT_NO_BYTE_SEEK',
+           '__rlim_t', '__FLOAT_WORD_ORDER',
+           'AV_PIX_FMT_YUVA444P10LE', 'CODEC_ID_8SVX_EXP', 'setstate',
+           'ENONET', 'ECHRNG', 'FF_BUFFER_HINTS_READABLE',
+           'AV_PIX_FMT_BGR4_BYTE', 'AV_EF_COMPLIANT',
+           'AVCOL_TRC_GAMMA22', 'AVCOL_TRC_GAMMA28',
+           'FF_CODER_TYPE_DEFLATE', 'ESRCH', 'PIX_FMT_BGR48LE',
+           'CODEC_ID_MJPEG', 'av_destruct_packet', 'SWS_CPU_CAPS_MMX',
+           '__clockid_t', 'SWS_FAST_BILINEAR', '_IOS_ATEND',
+           'FF_BUG_HPEL_CHROMA', 'PIX_FMT_YUV422P9BE', 'FF_CMP_DCT',
+           'AV_CODEC_ID_BINKAUDIO_RDFT', 'AV_CODEC_ID_QCELP',
+           'FF_DEBUG_VIS_MV_B_BACK', 'CODEC_ID_TSCC2',
+           '_POSIX_AIO_MAX', 'MB_TYPE_DIRECT2',
            'AV_NUM_DATA_POINTERS', 'CODEC_ID_RA_144',
            'AVCOL_SPC_SMPTE170M', 'ff_get_cpu_flags_x86',
            'AV_LOG_MAX_OFFSET', 'LIBAVFILTER_VERSION_INT',
@@ -7560,7 +7559,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CODEC_ID_VIMA', '__GNU_LIBRARY__', '_BITS_TYPESIZES_H',
            'nanf', 'AV_PIX_FMT_BGRA64LE', 'AV_CODEC_ID_VPLAYER',
            '__USE_XOPEN2KXSI', 'AV_CH_FRONT_RIGHT_OF_CENTER',
-           'av_bitstream_filter_close', '__underflow', 'CODEC_ID_VC1',
+           'av_bitstream_filter_close', '__underflow', 'INTMAX_C',
            'AV_SAMPLE_FMT_S32', '_IO_2_1_stdin_', '__fpclassify',
            'fgetpos64', 'AV_DISPOSITION_LYRICS', 'AV_CODEC_ID_EXR',
            'AV_FIELD_TB', 'AV_MATRIX_ENCODING_DPLII',
@@ -7576,54 +7575,55 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'pthread_condattr_t', 'AV_CODEC_ID_CELT', '_tolower',
            'avcodec_register_all', 'PIX_FMT_GBR24P',
            'avcodec_decode_audio3', 'SWS_CPU_CAPS_BFIN',
-           'PIX_FMT_YUV444P16BE', 'avresample_get_matrix', 'quad_t',
-           '__fsid_t', 'strncmp', 'av_get_exact_bits_per_sample',
-           'mkdtemp', 'AVLINK_UNINIT', 'CODEC_ID_FLASHSV',
-           'AV_CODEC_ID_ANM', 'avresample_available', 'avio_r8',
-           'sws_getIdentityVec', 'AV_PIX_FMT_ARGB',
-           'avcodec_default_execute', 'AVProbeData', 'ENOTNAM',
-           'AVFieldOrder', 'AVLockOp', '_LIB_VERSION',
-           'sws_freeFilter', 'avformat_match_stream_specifier',
-           '_IO_seekpos', 'avfilter_ref_get_channels', 'SwsVector',
-           'erfcf', 'posix_memalign', 'avfilter_free', 'be64toh',
-           'AV_CODEC_ID_FLV1', 'CODEC_ID_GIF',
-           'AV_CODEC_ID_SMPTE_KLV', 'FP_INFINITE',
-           'av_filename_number_test', 'AV_PIX_FMT_YUVA422P9BE',
-           '_POSIX_ARG_MAX', 'M_LOG2_10', 'AV_CODEC_ID_BMV_AUDIO',
-           '__uint32_t', '__FD_SETSIZE', 'FF_CMP_SATD',
-           'avresample_alloc_context', '__USE_XOPEN2K8',
-           'av_get_sample_fmt', 'AV_OPT_FLAG_FILTERING_PARAM',
-           'X_TLOSS', 'nearbyint', 'seed48_r', 'AV_PIX_FMT_RGB444BE',
-           'AV_LOG_PANIC', 'matherr', 'AV_CODEC_PROP_LOSSLESS',
-           '_IO_FILE_plus', '_ISxdigit', 'AVDictionaryEntry',
-           'AV_CODEC_ID_A64_MULTI', 'FF_DEBUG_VIS_QP',
-           'AV_RESAMPLE_DITHER_TRIANGULAR', 'PIX_FMT_YUVJ422P',
-           'AV_SIDE_DATA_PARAM_CHANGE_SAMPLE_RATE', 'AV_CODEC_ID_PAM',
-           'AV_CODEC_ID_JV', 'isctype', 'CODEC_ID_A64_MULTI5',
-           'AVOptionRanges', 'wcstoumax', 'AVCOL_PRI_SMPTE240M',
-           'Motion_Est_ID', '__tolower_l', 'CODEC_ID_REALTEXT',
-           'EMFILE', 'fmaxf', 'AV_PIX_FMT_YUV420P14LE',
-           'CODEC_ID_SRT', 'off64_t', 'fmaxl', 'fabsl',
-           'AV_CH_LAYOUT_6POINT1', 'AV_CPU_FLAG_SSE3SLOW',
-           'AV_PKT_DATA_NEW_EXTRADATA', 'strdup', 'av_log_set_flags',
-           'AV_PIX_FMT_MONOWHITE', 'AV_CODEC_ID_DTS', 'av_nearer_q',
-           'EISDIR', 'hypotl', 'stpncpy', '__finite', 'CODEC_ID_PNG',
-           'gnu_dev_major', 'fminf', 'putc', 'AV_CPU_FLAG_FMA4',
-           'trunc', 'rand', 'AV_CPU_FLAG_SSE42', '_IO_HEX', 'fminl',
-           'FF_QP2LAMBDA', 'strsignal', 'j0l', 'AV_PIX_FMT_DXVA2_VLD',
-           'tmpnam', 'AV_PIX_FMT_YUVJ444P',
-           'FF_PROFILE_H264_HIGH_10_INTRA', 'MKTAG',
-           'av_get_channel_layout_channel_index', 'avcodec_license',
-           'MB_TYPE_GMC', 'AV_CODEC_ID_ADPCM_YAMAHA',
-           'AV_CODEC_ID_LJPEG', 'av_frame_set_pkt_pos',
-           'AV_CODEC_ID_MPEG1VIDEO', 'PIX_FMT_0RGB', 'EXIT_SUCCESS',
-           '__suseconds_t', 'CODEC_ID_DXA', 'tanh', 'tanf',
+           'PIX_FMT_YUV444P16BE', 'avresample_get_matrix',
+           'PIX_FMT_VDPAU_MPEG4', '__fsid_t', 'strncmp',
+           'av_get_exact_bits_per_sample', 'mkdtemp', 'AVLINK_UNINIT',
+           'CODEC_ID_FLASHSV', 'AV_CODEC_ID_ANM',
+           'avresample_available', 'avio_r8', 'sws_getIdentityVec',
+           'AV_PIX_FMT_ARGB', 'avcodec_default_execute',
+           'AVProbeData', 'ENOTNAM', 'AVFieldOrder', 'AVLockOp',
+           '_LIB_VERSION', 'sws_freeFilter',
+           'avformat_match_stream_specifier', '_IO_seekpos',
+           'avfilter_ref_get_channels', 'SwsVector', 'erfcf',
+           'posix_memalign', 'avfilter_free', 'be64toh',
+           'AV_CODEC_ID_FLV1', 'CODEC_ID_GIF', 'CODEC_ID_PCM_S32BE',
+           'FP_INFINITE', 'av_filename_number_test',
+           'AV_PIX_FMT_YUVA422P9BE', '_POSIX_ARG_MAX', 'M_LOG2_10',
+           'AV_CODEC_ID_BMV_AUDIO', '__uint32_t', '__FD_SETSIZE',
+           'FF_CMP_SATD', 'avresample_alloc_context',
+           '__USE_XOPEN2K8', 'av_get_sample_fmt',
+           'AV_OPT_FLAG_FILTERING_PARAM', 'X_TLOSS', 'nearbyint',
+           'seed48_r', 'AV_PIX_FMT_RGB444BE', 'AV_LOG_PANIC',
+           'matherr', 'AV_CODEC_PROP_LOSSLESS', '_IO_FILE_plus',
+           '_ISxdigit', 'AVDictionaryEntry', 'AV_CODEC_ID_A64_MULTI',
+           'FF_DEBUG_VIS_QP', 'AV_RESAMPLE_DITHER_TRIANGULAR',
+           'PIX_FMT_YUVJ422P',
+           'AV_SIDE_DATA_PARAM_CHANGE_SAMPLE_RATE',
+           'AV_PIX_FMT_BGRA64BE', 'AV_CODEC_ID_JV', 'isctype',
+           'CODEC_ID_A64_MULTI5', 'AVOptionRanges', 'wcstoumax',
+           'AVCOL_PRI_SMPTE240M', 'Motion_Est_ID', '__tolower_l',
+           'CODEC_ID_REALTEXT', 'EMFILE', 'fmaxf',
+           'AV_PIX_FMT_YUV420P14LE', 'CODEC_ID_SRT', 'off64_t',
+           'fmaxl', 'fabsl', 'AV_CH_LAYOUT_6POINT1',
+           'AV_CPU_FLAG_SSE3SLOW', 'AV_PKT_DATA_NEW_EXTRADATA',
+           'strdup', 'av_log_set_flags', 'AV_PIX_FMT_MONOWHITE',
+           'AV_CODEC_ID_DTS', 'av_nearer_q', 'EISDIR', 'hypotl',
+           'stpncpy', '__finite', 'CODEC_ID_PNG', 'gnu_dev_major',
+           'fminf', 'putc', 'AV_CPU_FLAG_FMA4', 'trunc', 'rand',
+           'AV_CPU_FLAG_SSE42', '_IO_HEX', 'fminl', 'FF_QP2LAMBDA',
+           'strsignal', 'j0l', 'AV_PIX_FMT_DXVA2_VLD', 'tmpnam',
+           'AV_PIX_FMT_YUVJ444P', 'FF_PROFILE_H264_HIGH_10_INTRA',
+           'MKTAG', 'av_get_channel_layout_channel_index',
+           'avcodec_license', 'MB_TYPE_GMC',
+           'AV_CODEC_ID_ADPCM_YAMAHA', 'AV_CODEC_ID_LJPEG',
+           'av_frame_set_pkt_pos', 'AV_CODEC_ID_MPEG1VIDEO',
+           'PIX_FMT_0RGB', 'EXIT_SUCCESS', '__suseconds_t',
+           'CODEC_ID_DXA', 'tanh', 'tanf',
            'avcodec_descriptor_get_by_name',
            'FF_PROFILE_MPEG4_SIMPLE_FACE_ANIMATION', 'av_dump_format',
-           'AV_CODEC_ID_INTERPLAY_DPCM', 'FF_BUG_UMP4',
-           'AVStreamParseType', 'CODEC_ID_VP6A', 'SWS_POINT',
-           'clearenv', 'PIX_FMT_BGR0', 'CODEC_ID_VP6F',
-           'avfilter_unref_bufferp',
+           'CODEC_ID_V210', 'FF_BUG_UMP4', 'AVStreamParseType',
+           'CODEC_ID_VP6A', 'SWS_POINT', 'clearenv', 'suseconds_t',
+           'CODEC_ID_VP6F', 'avfilter_unref_bufferp',
            'FF_DECODE_ERROR_MISSING_REFERENCE', 'avformat_open_input',
            'AV_CH_TOP_BACK_CENTER', 'AV_CODEC_ID_BFI', 'ENOSTR',
            'AV_PIX_FMT_XVMC_MPEG2_IDCT', 'av_parser_close',
@@ -7642,7 +7642,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'CODEC_ID_DVD_SUBTITLE', '__ctype_tolower_loc', 'strerror',
            'av_new_packet', 'isinfl', '_IO_2_1_stdout_',
            '_POSIX_SIGQUEUE_MAX', 'av_get_q', 'LLONG_MIN',
-           'AV_CODEC_ID_VMNC', 'AV_PIX_FMT_BGR565BE', 'nrand48',
+           'AV_CODEC_ID_VMNC', 'wcstombs', 'nrand48',
            'pthread_mutex_t', 'AV_CODEC_ID_FIRST_UNKNOWN',
            'CODEC_FLAG2_NO_OUTPUT', 'LIBSWSCALE_VERSION_INT',
            'FF_IDCT_CAVS', 'CODEC_ID_JACOSUB',
@@ -7655,32 +7655,32 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'pthread_once_t', 'AV_PIX_FMT_YUVJ420P',
            'AVFMT_ALLOW_FLUSH', 'AV_CODEC_ID_PROBE', 'av_set_q',
            'uint_least32_t', 'sys_errlist', 'CODEC_FLAG_GRAY',
-           'CODEC_ID_PCM_S32BE', 'isnormal', 'PIX_FMT_VAAPI_IDCT',
-           'AV_LOG_VERBOSE', 'CODEC_ID_CLLC', 'AV_CODEC_ID_XAN_DPCM',
-           'avio_seek', '_XOPEN_', 'RAND_MAX',
-           'AV_RESAMPLE_FILTER_TYPE_CUBIC', 'FF_LAMBDA_SHIFT',
-           'CODEC_ID_ADPCM_YAMAHA', 'PIX_FMT_NV12', 'avio_skip',
-           'AV_CODEC_ID_AURA', '__mode_t', 'frexpl', 'loff_t',
-           'blksize_t', 'AV_CODEC_ID_ADPCM_EA', 'PIX_FMT_YUV440P',
-           'int_least32_t', 'AVUNERROR', '__STDC_IEC_559__',
-           'CODEC_ID_VBLE', 'av_log_set_callback', 'PIX_FMT_RGB565LE',
-           'dev_t', 'FP_NORMAL', 'AVSEEK_FLAG_ANY',
-           'AVERROR_PATCHWELCOME', 'AV_CH_FRONT_RIGHT',
-           'CODEC_ID_PCM_S24DAUD', 'CODEC_ID_FIRST_SUBTITLE',
-           'AV_PIX_FMT_BGR444BE', 'LIBPOSTPROC_VERSION_MICRO',
-           'PIX_FMT_RGB555LE', 'CODEC_ID_QTRLE', 'float_t',
-           'avcodec_default_get_buffer', 'AVCOL_SPC_SMPTE240M',
-           'PIX_FMT_GRAY16BE', '_ISOC99_SOURCE',
-           'avcodec_encode_subtitle', 'freopen', 'PIX_FMT_YUV444P9BE',
-           'frexpf', 'fread_unlocked', 'AV_CODEC_ID_R10K',
-           'sws_freeContext', 'DOMAIN', 'ESRMNT', 'av_new_program',
-           'rpmatch', 'PIX_FMT_YUV420P12LE', 'CODEC_ID_MMVIDEO',
-           'FF_PROFILE_H264_HIGH', 'CODEC_ID_DVAUDIO',
-           'AV_PIX_FMT_YUVA422P', 'AV_CODEC_ID_IAC', 'AV_PIX_FMT_NE',
-           'QP_STORE_T', 'avdevice_license', 'ctermid', '__id_t',
-           'AV_PIX_FMT_NB', 'AV_HAVE_BIGENDIAN', '_IO_feof',
-           'PIX_FMT_YUV444P10BE', 'AVCodecID', 'AV_OPT_TYPE_BINARY',
-           'ESTALE', 'AV_CH_TOP_FRONT_LEFT', 'AV_CODEC_ID_PCM_U16BE',
+           'PIX_FMT_YUV422P12BE', 'isnormal', 'PIX_FMT_VAAPI_IDCT',
+           'AV_LOG_VERBOSE', 'AV_CODEC_ID_XAN_DPCM', 'avio_seek',
+           '_XOPEN_', 'RAND_MAX', 'AV_RESAMPLE_FILTER_TYPE_CUBIC',
+           'FF_LAMBDA_SHIFT', 'CODEC_ID_ADPCM_YAMAHA', 'PIX_FMT_NV12',
+           'avio_skip', 'AV_CODEC_ID_AURA', '__mode_t', 'frexpl',
+           'loff_t', 'blksize_t', 'AV_CODEC_ID_ADPCM_EA',
+           'PIX_FMT_YUV440P', 'int_least32_t', 'AVUNERROR',
+           '__STDC_IEC_559__', 'CODEC_ID_VBLE', 'av_log_set_callback',
+           'PIX_FMT_RGB565LE', 'dev_t', 'FP_NORMAL',
+           'AVSEEK_FLAG_ANY', 'AVERROR_PATCHWELCOME',
+           'AV_CH_FRONT_RIGHT', 'CODEC_ID_PCM_S24DAUD',
+           'CODEC_ID_FIRST_SUBTITLE', 'AV_PIX_FMT_BGR444BE',
+           'LIBPOSTPROC_VERSION_MICRO', 'PIX_FMT_RGB555LE',
+           'CODEC_ID_QTRLE', 'float_t', 'avcodec_default_get_buffer',
+           'AVCOL_SPC_SMPTE240M', 'PIX_FMT_GRAY16BE',
+           '_ISOC99_SOURCE', 'avcodec_encode_subtitle', 'freopen',
+           'PIX_FMT_YUV444P9BE', 'frexpf', 'fread_unlocked',
+           'AV_CODEC_ID_R10K', 'sws_freeContext', 'DOMAIN', 'ESRMNT',
+           'av_new_program', 'rpmatch', 'PIX_FMT_YUV420P12LE',
+           'CODEC_ID_MMVIDEO', 'FF_PROFILE_H264_HIGH',
+           'CODEC_ID_DVAUDIO', 'AV_PIX_FMT_YUVA422P',
+           'AV_CODEC_ID_IAC', 'AV_PIX_FMT_NE', 'QP_STORE_T',
+           'avdevice_license', 'ctermid', '__id_t', 'AV_PIX_FMT_NB',
+           'AV_HAVE_BIGENDIAN', '_IO_feof', 'CODEC_ID_MOTIONPIXELS',
+           'AVCodecID', 'AV_OPT_TYPE_BINARY', 'ESTALE',
+           'AV_CH_TOP_FRONT_LEFT', 'AV_CODEC_ID_PCM_U16BE',
            'AV_CH_LAYOUT_6POINT1_FRONT',
            'AV_CODEC_ID_HDMV_PGS_SUBTITLE', '_IO_FIXED',
            'AV_CODEC_ID_PCM_S24DAUD', 'LIBAVFILTER_VERSION_MAJOR',
@@ -7736,13 +7736,13 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'avio_wb24', 'AV_AUDIO_SERVICE_TYPE_COMMENTARY',
            'CODEC_ID_TEXT', 'MATH_ERREXCEPT', 'offsetof',
            'BC_BASE_MAX', 'CODEC_ID_MP2', 'AV_MIX_COEFF_TYPE_Q8',
-           'ecvt', 'CODEC_ID_MP1', 'AV_PIX_FMT_0RGB',
+           'ecvt', 'NFDBITS', 'AV_PIX_FMT_0RGB',
            'LIBAVCODEC_VERSION_MAJOR', '_POSIX_HIWAT',
            'FF_THREAD_SLICE', 'ENOPKG', 'CODEC_ID_WAVPACK',
            'AV_OPT_FLAG_AUDIO_PARAM', 'iscntrl_l', 'CODEC_ID_AAC',
            'AV_CPU_FLAG_SSE', 'mkostemp64', 'AV_CODEC_ID_MSRLE',
            'obstack_vprintf', 'fread', 'fsetpos', 'AV_CODEC_ID_G2M',
-           'uint_fast16_t', 'AV_PIX_FMT_VAAPI_IDCT',
+           'uint_fast16_t', 'AV_CODEC_ID_MPEG2VIDEO_XVMC',
            'AV_CH_WIDE_LEFT', 'LIBAVFORMAT_VERSION_MAJOR',
            'AVOutputFormat', '_POSIX_UIO_MAXIOV',
            'AV_SAMPLE_FMT_S32P', '__signbitf', 'AVLINK_STARTINIT',
@@ -7755,7 +7755,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'av_log_ask_for_sample', '_IO_fpos64_t',
            'FF_PROFILE_MPEG4_SIMPLE', 'av_guess_codec',
            'avcodec_get_class', '__time_t', 'av_opt_eval_double',
-           '__GLIBC_PREREQ', 'AV_AUDIO_SERVICE_TYPE_EMERGENCY',
+           '__GLIBC_PREREQ', 'AV_PIX_FMT_YUVA444P10BE',
            'AV_EF_CAREFUL', 'avdevice_configuration', 'AVHWAccel',
            'AV_CODEC_ID_WESTWOOD_SND1', 'ceilf',
            'av_register_codec_parser', 'AV_PIX_FMT_NONE',
@@ -7774,7 +7774,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            '_IO_FILE', 'FF_BUFFER_HINTS_REUSABLE', '_G_HAVE_MMAP',
            'va_list', '__attribute_format_strfmon__',
            'av_opt_eval_flags', 'CODEC_ID_FLAC', 'CODEC_ID_PCM_U24LE',
-           'significandl', 'fmax', 'UINT16_C', 'PIX_FMT_VDPAU_VC1',
+           'significandl', 'fmax', 'UINT16_C', 'CODEC_ID_PCM_DVD',
            'significandf', 'FF_CODER_TYPE_RLE', 'AV_CODEC_ID_H263P',
            'open_memstream', 'AV_CODEC_ID_H263I', 'fsetpos64',
            'av_frame_set_sample_rate', 'av_realloc', 'srandom_r',
@@ -7814,8 +7814,8 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'PP_CPU_CAPS_MMX2', 'MB_TYPE_P0L0', 'feof', 'strncat',
            'CODEC_ID_VOXWARE', 'clearerr', 'AVResampleFilterType',
            'av_add_q', 'AV_CODEC_ID_OPUS_DEPRECATED',
-           'PIX_FMT_RGB444LE', 'AV_MATRIX_ENCODING_DOLBY',
-           'ENETRESET', 'CODEC_ID_ADPCM_IMA_WS', '__isprint_l',
+           'PIX_FMT_RGB444LE', '__CONCAT', 'ENETRESET',
+           'CODEC_ID_ADPCM_IMA_WS', '__isprint_l',
            'avcodec_free_frame', 'av_sdp_create', '_IEEE_',
            'strtoull', 'CODEC_ID_DVB_SUBTITLE', 'bsearch',
            'flockfile', 'atan', 'AV_RESAMPLE_FILTER_TYPE_KAISER',
@@ -7837,15 +7837,15 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'size_t', 'seed48', 'MAX_INPUT', 'AV_CODEC_ID_012V',
            'CODEC_FLAG_4MV', 'AV_CODEC_ID_TQI',
            'AVMEDIA_TYPE_ATTACHMENT', 'CODEC_ID_RL2', 'roundf',
-           'FF_IDCT_VP3', 'PIX_FMT_BGR8', 'PIX_FMT_VDPAU_MPEG1',
-           'PIX_FMT_BGR4', 'FF_CMP_DCT264', 'PIX_FMT_VDPAU_MPEG2',
-           'PIX_FMT_VDPAU_MPEG4', 'sws_init_context',
+           'FF_IDCT_VP3', 'AV_CODEC_ID_WAVPACK',
+           'PIX_FMT_VDPAU_MPEG1', 'PIX_FMT_BGR4', 'FF_CMP_DCT264',
+           'PIX_FMT_VDPAU_MPEG2', 'PIX_FMT_BGR0', 'sws_init_context',
            'CODEC_ID_MP3ON4', 'CODEC_ID_FLV1', 'fileno',
            '__isblank_l', 'AV_CODEC_ID_NONE', 'PIX_FMT_BGRA',
            'CODEC_ID_PCM_S16LE_PLANAR', 'PARSER_FLAG_ONCE',
            'FF_DTG_AFD_16_9', 'AVFMT_FLAG_IGNIDX',
            'av_register_input_format', '_LIBC_LIMITS_H_',
-           'cookie_write_function_t', 'AVDISCARD_ALL',
+           'cookie_write_function_t', 'isxdigit_l',
            'AV_CODEC_ID_A64_MULTI5', 'lgamma_r',
            'CODEC_ID_ADPCM_EA_XAS', 'avresample_set_matrix',
            'AV_CODEC_ID_VCR1', 'AV_CLASS_CATEGORY_OUTPUT',
@@ -7862,7 +7862,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CODEC_ID_MVC2', 'SWS_CPU_CAPS_MMX2', 'FFUMOD',
            'AV_CODEC_ID_BINKVIDEO', 'CodecID', '__useconds_t',
            'CODEC_ID_EAC3', '_BITS_WCHAR_H', 'SWS_CS_ITU601',
-           '__FD_ELT', 'av_register_all', 'CODEC_ID_PCM_S24BE',
+           'AV_LOCK_DESTROY', 'av_register_all', 'CODEC_ID_PCM_S24BE',
            'sqrtf', '_POSIX_CLOCKRES_MIN', 'LIBAVUTIL_VERSION_MINOR',
            'AVCHROMA_LOC_BOTTOM', 'AV_MIX_COEFF_TYPE_FLT',
            'AV_PTS_WRAP_SUB_OFFSET', 'FF_DTG_AFD_SP_4_3',
@@ -7879,8 +7879,8 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            '__attribute_format_arg__', 'islower', 'XATTR_LIST_MAX',
            'isupper', 'lround', 'AVChapter', 'avio_rb16',
            'av_frame_get_best_effort_timestamp',
-           'AV_CODEC_ID_MSMPEG4V1', 'AV_CODEC_ID_MSS1',
-           'AV_CODEC_ID_MSS2', 'AV_CODEC_ID_MSMPEG4V2', 'rint',
+           'PTHREAD_DESTRUCTOR_ITERATIONS', 'AV_CODEC_ID_MSS1',
+           'AV_CODEC_ID_MSS2', 'PIX_FMT_YUV420P10BE', 'rint',
            'AV_CH_LAYOUT_2POINT1', 'valloc', 'CODEC_ID_A64_MULTI',
            'FF_LAMBDA_SCALE', '__W_STOPCODE', 'PIX_FMT_NONE',
            'AV_CODEC_ID_MSMPEG4V3', 'av_copy_packet',
@@ -7891,7 +7891,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'av_log_set_level', 'strfry', 'le16toh', 'nextafterf',
            'AVRounding', 'AVFMT_FLAG_PRIV_OPT', 'CODEC_ID_MPEG2VIDEO',
            'AV_CODEC_ID_PBM', '__mbstate_t', 'CODEC_ID_ADPCM_SWF',
-           'PIX_FMT_0BGR', '__toupper_l', 'AV_FIELD_TT',
+           'PIX_FMT_0BGR', '__FD_ELT', '__toupper_l', 'AV_FIELD_TT',
            '_IO_INTERNAL', 'AVFMT_GENERIC_INDEX', 'av_int2flt',
            'av_bitstream_filter_filter', 'EKEYREJECTED',
            'FF_IDCT_XVIDMMX', 'AVCOL_RANGE_NB',
@@ -7910,14 +7910,14 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'CODEC_ID_SHORTEN', 'AV_PIX_FMT_YUV422P9BE',
            'AVSTREAM_PARSE_TIMESTAMPS', 'AV_JOIN', 'CODEC_ID_V210X',
            'AVRational', 'EUNATCH', 'avcodec_default_free_buffers',
-           'WNOWAIT', 'N4wait4DOT_12E', 'AV_SAMPLE_FMT_U8',
-           'AV_TOSTRING', 'AV_PIX_FMT_YUV444P14LE',
-           'avcodec_get_frame_class', 'AV_PIX_FMT_GBRP12BE',
-           'LIBAVRESAMPLE_IDENT', 'cbrtf', 'AVSTREAM_PARSE_HEADERS',
-           'realpath', 'avio_get_str16be', 'ulong',
-           'AV_CODEC_ID_TRUEHD', 'CODEC_ID_CLJR', 'EHWPOISON',
-           'AV_CODEC_ID_AMV', 'av_d2q', '_XLOCALE_H', 'logbf',
-           'AV_CPU_FLAG_ARMV6T2', 'logbl', 'CODEC_ID_DXTORY',
+           'FF_BUG_DIRECT_BLOCKSIZE', 'WNOWAIT', 'N4wait4DOT_12E',
+           'AV_SAMPLE_FMT_U8', 'AV_TOSTRING',
+           'AV_PIX_FMT_YUV444P14LE', 'avcodec_get_frame_class',
+           'AV_PIX_FMT_GBRP12BE', 'LIBAVRESAMPLE_IDENT', 'cbrtf',
+           'AVSTREAM_PARSE_HEADERS', 'realpath', 'avio_get_str16be',
+           'ulong', 'AV_CODEC_ID_TRUEHD', 'CODEC_ID_CLJR',
+           'EHWPOISON', 'AV_CODEC_ID_AMV', 'av_d2q', '_XLOCALE_H',
+           'logbf', 'AV_CPU_FLAG_ARMV6T2', 'logbl', 'CODEC_ID_DXTORY',
            'AV_PIX_FMT_RGB48LE', 'bcopy', '__finitel',
            'AV_CODEC_ID_RAWVIDEO', 'AV_LOG_INFO', 'CODEC_ID_C93',
            'fsblkcnt_t', 'PATH_MAX', 'avcodec_find_best_pix_fmt_of_2',
@@ -7927,8 +7927,9 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            '__FD_ZERO_STOS', '_IO_funlockfile', 'WTERMSIG',
            'avformat_get_riff_audio_tags', 'isprint_l',
            'AV_CODEC_ID_ADPCM_ADX', 'FF_CMP_VSAD',
-           'AV_CODEC_ID_BINKAUDIO_DCT', 'AV_PIX_FMT_YUVA444P10BE',
-           'AV_CODEC_ID_MACE6', 'AV_DISPOSITION_VISUAL_IMPAIRED',
+           'AV_CODEC_ID_BINKAUDIO_DCT',
+           'AV_AUDIO_SERVICE_TYPE_EMERGENCY', 'AV_CODEC_ID_MACE6',
+           'AV_DISPOSITION_VISUAL_IMPAIRED',
            'AV_CODEC_ID_ADPCM_IMA_DK4', 'CODEC_CAP_SMALL_LAST_FRAME',
            'AV_CODEC_ID_MACE3', 'avcodec_default_release_buffer',
            'AV_CODEC_ID_ZMBV', '_POSIX_LINK_MAX', '__finitef',
@@ -7960,11 +7961,11 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'lgammal_r', 'ldiv_t', 'vdprintf', 'CODEC_ID_FRWU',
            'setenv', '_POSIX_PIPE_BUF', 'AVFilterBufferRef',
            'CODEC_ID_MLP', 'ECHILD', 'AVFilterGraph',
-           'AV_PKT_DATA_H263_MB_INFO', '__USE_XOPEN2K',
-           'cookie_read_function_t', 'avcodec_open2',
-           'AV_PIX_FMT_YUYV422', 'jn', 'CODEC_FLAG_LOOP_FILTER',
-           'AVProfile', 'ME_HEX', 'fgetpos', 'pp_mode',
-           'av_dict_free', 'AV_CH_STEREO_RIGHT',
+           'AV_PKT_DATA_H263_MB_INFO', 'AV_CODEC_ID_WMV3IMAGE',
+           '__USE_XOPEN2K', 'cookie_read_function_t', 'quad_t',
+           'avcodec_open2', 'AV_PIX_FMT_YUYV422', 'jn',
+           'CODEC_FLAG_LOOP_FILTER', 'AVProfile', 'ME_HEX', 'fgetpos',
+           'pp_mode', 'av_dict_free', 'AV_CH_STEREO_RIGHT',
            'AV_CODEC_ID_MUSEPACK8', '__qaddr_t', '_IO_LINKED',
            'WCONTINUED', 'AV_PIX_FMT_GBRP9BE', 'cbrtl',
            '__USE_POSIX2', 'AV_CODEC_ID_MUSEPACK7', '__blkcnt_t',
@@ -7981,7 +7982,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AVCodecDefault', 'av_gcd', 'AV_CODEC_ID_VP6F',
            'AV_CODEC_ID_VP6A', '_STDINT_H', 'FF_COMPLIANCE_NORMAL',
            '__OFF_T_MATCHES_OFF64_T', 'sws_scaleVec', 'av_usleep',
-           'AVCHROMA_LOC_UNSPECIFIED', 'FF_DCT_ALTIVEC',
+           'AV_CODEC_ID_RA_144', 'FF_DCT_ALTIVEC',
            'CODEC_ID_ADPCM_IMA_SMJPEG', '_POSIX_DELAYTIMER_MAX',
            'AV_CPU_FLAG_3DNOWEXT', 'AV_CODEC_ID_SSA',
            'FF_QUALITY_SCALE', 'LIBAVCODEC_VERSION_MICRO',
@@ -7989,18 +7990,19 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CODEC_ID_SANM', 'AV_CODEC_ID_CLLC',
            'AV_PIX_FMT_RGB565LE', 'AV_CODEC_ID_DSICINVIDEO',
            'vsscanf', 'N4wait4DOT_11E', 'qfcvt', 'CODEC_ID_THEORA',
-           'CODEC_ID_ADPCM_IMA_DK4', 'CODEC_ID_ADPCM_IMA_DK3',
-           'CODEC_ID_XWD', 'av_url_split', 'avresample_open',
-           'avio_get_str', 'stdout', 'AV_CLASS_CATEGORY_ENCODER',
-           '_STRING_H', '_IO_putc', 'FF_BUG_MS', 'SEEK_HOLE',
-           'AV_CODEC_ID_COOK', 'av_memcpy_backptr', 'AVCOL_SPC_YCOCG',
+           'CODEC_ID_ADPCM_IMA_DK4', 'remquo',
+           'CODEC_ID_ADPCM_IMA_DK3', 'CODEC_ID_XWD', 'av_url_split',
+           'avresample_open', 'avio_get_str', 'stdout',
+           'AV_CLASS_CATEGORY_ENCODER', '_STRING_H', '_IO_putc',
+           'FF_BUG_MS', 'SEEK_HOLE', 'AV_CODEC_ID_COOK',
+           'av_memcpy_backptr', 'AVCOL_SPC_YCOCG',
            'av_parse_cpu_flags', 'AV_CH_TOP_BACK_LEFT', 'yn',
            'av_malloc', 'qfcvt_r', 'fsblkcnt64_t',
            'AVERROR_DEMUXER_NOT_FOUND', 'AVDurationEstimationMethod',
            'EBADR', 'AV_CODEC_ID_ILBC', 'avio_rb24',
            '_OLD_STDIO_MAGIC', 'CODEC_ID_INDEO4',
            '_POSIX_AIO_LISTIO_MAX', 'avformat_get_riff_video_tags',
-           'CODEC_ID_MP3ADU', 'toascii_l', 'LONG_BIT',
+           'AV_CODEC_ID_SUBRIP', 'toascii_l', 'LONG_BIT',
            'AV_DISPOSITION_DUB', 'isnanf', 'av_read_pause', 'calloc',
            'posix_openpt', 'avdevice_register_all',
            'AV_PIX_FMT_GRAY8', 'AV_CODEC_ID_SGI', '__toascii_l',
@@ -8010,17 +8012,18 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'u_char', '__int64_t', 'AV_PIX_FMT_YUVA422P16BE',
            'fopen64', 'avio_size', 'FF_PROFILE_MPEG4_HYBRID',
            'av_interleaved_write_frame', 'AV_CH_LAYOUT_5POINT0_BACK',
-           'CODEC_ID_ADPCM_IMA_APC', 'nan', '__LITTLE_ENDIAN', 'NAN',
+           'PIX_FMT_YUV420P16BE', 'nan', '__LITTLE_ENDIAN', 'NAN',
            '__have_pthread_attr_t', 'AV_CODEC_ID_PCM_F32LE',
            'avfilter_ref_buffer',
            'AV_SIDE_DATA_PARAM_CHANGE_DIMENSIONS', 'CODEC_ID_PRORES',
            'CODEC_ID_V410', 'AVERROR_DECODER_NOT_FOUND',
            'av_set_cpu_flags_mask', 'FF_DEBUG_STARTCODE', 'av_sub_q',
            '_POSIX_RE_DUP_MAX', 'av_opt_set_bin',
-           'AVFMT_TS_NONSTRICT', 'AVCOL_TRC_NB', '_STRUCT_TIMEVAL',
-           'AV_CODEC_ID_INDEO3', 'AV_PIX_FMT_VDPAU_VC1', 'lrintf',
-           'ptsname', 'avio_put_str16le', 'CODEC_ID_WMALOSSLESS',
-           'P_tmpdir', 'AVIO_FLAG_NONBLOCK', 'CODEC_ID_ADPCM_IMA_QT',
+           'AVFMT_TS_NONSTRICT', 'AV_PIX_FMT_GRAY16BE',
+           '_STRUCT_TIMEVAL', 'AV_CODEC_ID_INDEO3',
+           'AV_PIX_FMT_VDPAU_VC1', 'lrintf', 'ptsname',
+           'avio_put_str16le', 'CODEC_ID_WMALOSSLESS', 'P_tmpdir',
+           'AVIO_FLAG_NONBLOCK', 'CODEC_ID_ADPCM_IMA_QT',
            'LIBAVRESAMPLE_VERSION_INT', 'AV_SAMPLE_FMT_FLTP',
            'scalbf', 'AV_AUDIO_SERVICE_TYPE_MAIN', 'SHRT_MIN',
            'AV_CODEC_ID_WMAPRO', '_POSIX_FD_SETSIZE',
@@ -8039,9 +8042,9 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'gcvt', 'tanhf', 'av_rescale_q', 'AVCodecParserContext',
            'CODEC_ID_PTX', 'CODEC_ID_ADPCM_SBPRO_2',
            'CODEC_ID_ADPCM_SBPRO_3', 'CODEC_ID_ADPCM_SBPRO_4',
-           'AVColorRange', 'fgets', 'AV_CODEC_ID_R210', 'NL_LANGMAX',
-           'cookie_io_functions_t', 'SWS_X', 'ELIBBAD',
-           'avcodec_fill_audio_frame', 'ERANGE', 'exp2l',
+           'AVColorRange', 'fgets', 'AV_CODEC_ID_R210',
+           'CODEC_ID_AVRP', 'cookie_io_functions_t', 'SWS_X',
+           'ELIBBAD', 'avcodec_fill_audio_frame', 'ERANGE', 'exp2l',
            'FF_PROFILE_VC1_MAIN', 'LIBAVFORMAT_VERSION_INT', 'ftell',
            'AV_CODEC_ID_WMAV1', 'FF_IDCT_IPP', 'AV_CODEC_ID_WMAV2',
            'avfilter_pad_get_name', 'int_least16_t',
@@ -8052,7 +8055,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'tgammaf', '_CTYPE_H', 'AV_CODEC_ID_TAK', 'SWS_BICUBIC',
            'CODEC_ID_VMNC', 'avfilter_get_by_name', 'HOST_NAME_MAX',
            'AVFMT_FLAG_GENPTS', 'AVERROR', 'N11__mbstate_t3DOT_7E',
-           'avdevice_version', 'AV_CH_FRONT_LEFT', 'CODEC_ID_RV10',
+           'avdevice_version', 'AV_CH_FRONT_LEFT', 'CODEC_ID_AVS',
            'CODEC_ID_QCELP', 'avformat_get_class', '__islower_l',
            'FF_PRED_PLANE', 'AV_PIX_FMT_BGR565LE', 'signgam',
            'FF_PROFILE_H264_HIGH_444_INTRA', 'EUSERS',
@@ -8061,7 +8064,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AVCOL_SPC_BT470BG', '__bos0', 'AV_CODEC_ID_AVRP',
            'isgreater', '_ERRNO_H', '__SIZEOF_PTHREAD_MUTEX_T',
            'av_flt2int', '_IO_STDIO', 'av_resample_close', 'OVERFLOW',
-           'AV_CODEC_ID_PCM_DVD', 'FF_PROFILE_H264_BASELINE',
+           'PIX_FMT_RGB48BE', 'FF_PROFILE_H264_BASELINE',
            'avcodec_align_dimensions', 'CODEC_ID_VP8', 'putenv',
            'CODEC_ID_VP5', 'CODEC_ID_VP6', 'RAW_PACKET_BUFFER_SIZE',
            'FP_ILOGBNAN', 'CODEC_ID_VP3', 'AV_CODEC_ID_SAMI',
@@ -8077,13 +8080,13 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'ESHUTDOWN', 'logf', 'AV_CODEC_ID_VIXL',
            'AV_CODEC_ID_PCM_S16LE_PLANAR', 'LIBAVFORMAT_IDENT',
            'CODEC_ID_COOK', 'tolower_l', 'AVERROR_OPTION_NOT_FOUND',
-           'fcvt_r', '_IO_vfscanf', 'CODEC_ID_PCM_U16LE',
+           'fcvt_r', '_IO_vfscanf', 'PIX_FMT_YUV444P',
            'AV_MIX_COEFF_TYPE_Q15', 'CODEC_CAP_HWACCEL_VDPAU',
            'FF_PROFILE_MPEG4_ADVANCED_SCALABLE_TEXTURE', 'FD_SET',
            'AV_CODEC_ID_MP4ALS', '__isnanl', '__STRING',
            'AV_PIX_FMT_VDPAU_MPEG4', 'AV_CODEC_ID_4XM',
            'AV_CODEC_ID_GIF', '__WCHAR_MIN', 'AV_PIX_FMT_VDPAU_MPEG1',
-           'AV_PIX_FMT_VDPAU_MPEG2', '__GNUC_PREREQ', 'EBADF',
+           'AV_PIX_FMT_YUV422P16BE', '__GNUC_PREREQ', 'EBADF',
            'EBADE', 'CODEC_FLAG_CBP_RD', 'sws_alloc_context',
            'AV_CODEC_ID_FLASHSV2', '__PTHREAD_MUTEX_HAVE_PREV',
            'CODEC_CAP_TRUNCATED', '__PDP_ENDIAN', 'CODEC_FLAG_QP_RD',
@@ -8097,12 +8100,12 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'FF_DEFAULT_QUANT_BIAS', 'AV_CODEC_ID_ESCAPE130',
            'av_opt_set_int', 'AV_RESAMPLE_DITHER_TRIANGULAR_HP',
            'FF_IDCT_SH4', 'AV_CODEC_ID_DSICINAUDIO',
-           'av_opt_set_pixel_fmt', 'AV_CODEC_ID_RA_144', 'NFDBITS',
-           'avio_rb32', 'FF_CODER_TYPE_RAW', 'FF_IDCT_BINK',
-           'CODEC_ID_SMC', 'ETOOMANYREFS', '_IO_USER_LOCK',
-           'AV_CODEC_ID_PNG', 'int_fast32_t', 'acosl',
-           'AV_PIX_FMT_YUV422P12LE', 'PIX_FMT_RGBA64BE', 'acosh',
-           'acosf', 'L_tmpnam', 'AV_CH_LAYOUT_OCTAGONAL',
+           'av_opt_set_pixel_fmt', 'AVCHROMA_LOC_UNSPECIFIED',
+           'CODEC_ID_MP1', 'avio_rb32', 'FF_CODER_TYPE_RAW',
+           'FF_IDCT_BINK', 'CODEC_ID_SMC', 'ETOOMANYREFS',
+           '_IO_USER_LOCK', 'AV_CODEC_ID_PNG', 'int_fast32_t',
+           'acosl', 'AV_PIX_FMT_YUV422P12LE', 'PIX_FMT_RGBA64BE',
+           'acosh', 'acosf', 'L_tmpnam', 'AV_CH_LAYOUT_OCTAGONAL',
            'AVERROR_EOF', 'EOF', 'CODEC_ID_ADPCM_IMA_ISS',
            'avio_rl32', '__WCOREFLAG', 'uint8_t', 'AV_CODEC_ID_AC3',
            '_G_HAVE_MREMAP', 'CODEC_FLAG_AC_PRED',
@@ -8118,23 +8121,22 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            '__WSTOPSIG', 'AVERROR_BUG', 'EL3RST', 'AV_CODEC_ID_MPL2',
            'AV_CODEC_ID_SRT', 'htole32', 'AV_OPT_TYPE_FLAGS',
            'AVFMT_FLAG_NONBLOCK', 'AV_PIX_FMT_YUV422P16LE',
-           '_IO_jump_t', '_ISdigit', 'AV_PIX_FMT_YUV444P12BE',
-           'AV_CODEC_ID_XSUB', 'ENAMETOOLONG', 'fputc_unlocked',
-           'expm1f', 'M_PI_2', 'av_opt_get', '__uint64_t',
-           'FF_PROFILE_DTS_HD_MA', 'M_PI_4',
-           'AV_AUDIO_SERVICE_TYPE_VOICE_OVER',
+           '_IO_jump_t', '_ISdigit', 'stderr', 'AV_CODEC_ID_XSUB',
+           'ENAMETOOLONG', 'fputc_unlocked', 'expm1f', 'M_PI_2',
+           'av_opt_get', '__uint64_t', 'FF_PROFILE_DTS_HD_MA',
+           'M_PI_4', 'AV_CODEC_ID_MSVIDEO1',
            'AVFMT_DURATION_FROM_PTS', 'ELOOP', 'FF_DTG_AFD_SAME',
            'AV_CODEC_ID_ADPCM_IMA_ISS', 'av_opt_eval_q',
-           'AV_PIX_FMT_YUVA444P10LE', 'AVFMT_SHOW_IDS', '_IO_off_t',
+           'AV_CODEC_ID_PCM_S16BE', 'AVFMT_SHOW_IDS', '_IO_off_t',
            'y1l', 'AV_CODEC_ID_PCM_S32LE_PLANAR',
            'PIX_FMT_VDPAU_H264', 'nanl', 'AV_PERM_READ', 'USHRT_MAX',
            'av_int2dbl', 'y1f', 'FF_BUG_QPEL_CHROMA',
            'AVDISCARD_BIDIR', 'AV_CODEC_ID_PCM_S24LE_PLANAR', 'abs',
            'llroundl', 'AV_CH_TOP_FRONT_CENTER', '__WEXITSTATUS',
            'LIBAVCODEC_BUILD', 'llroundf', 'av_frame_set_metadata',
-           'AV_SAMPLE_FMT_U8P', 'AVERROR_INVALIDDATA', 'MB_LEN_MAX',
-           'CODEC_ID_MPEG2TS', 'AV_CODEC_ID_ADPCM_IMA_EA_EACS',
-           'AV_PIX_FMT_GBRP10LE', 'avcodec_is_open', 'SWS_BITEXACT',
+           'AVERROR_INVALIDDATA', 'MB_LEN_MAX', 'CODEC_ID_MPEG2TS',
+           'AV_CODEC_ID_ADPCM_IMA_EA_EACS', 'AV_PIX_FMT_GBRP10LE',
+           'avcodec_is_open', 'SWS_BITEXACT',
            'AV_CODEC_ID_DVB_SUBTITLE', 'lgammaf_r',
            'avfilter_init_filter', 'nrand48_r',
            '_POSIX_THREAD_KEYS_MAX', 'CODEC_ID_BMP', '_IO_SKIPWS',
@@ -8142,9 +8144,9 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AVBitStreamFilterContext', '_IO_SCIENTIFIC',
            'AV_CODEC_ID_DVAUDIO', 'FF_DTG_AFD_4_3', 'av_match_ext',
            'CODEC_ID_BETHSOFTVID', '_IO_ferror', 'isspace_l', 'log2l',
-           'wcstombs', 'AV_CODEC_ID_MAD', 'AV_CODEC_ID_V308',
-           'PIX_FMT_MONOBLACK', 'avcodec_alloc_context', 'ERFKILL',
-           'AV_CH_LAYOUT_QUAD', 'FF_DCT_FAAN', 'FF_LEVEL_UNKNOWN',
+           'AV_CODEC_ID_MAD', 'AV_CODEC_ID_V308', 'PIX_FMT_MONOBLACK',
+           'avcodec_alloc_context', 'ERFKILL', 'AV_CH_LAYOUT_QUAD',
+           'FF_DCT_FAAN', 'FF_LEVEL_UNKNOWN',
            'FF_BUFFER_TYPE_INTERNAL', 'CODEC_ID_TGV',
            'AV_CPU_FLAG_MMX2', 'select', 'CODEC_ID_TGQ',
            'AVFMT_NOFILE', '_BITS_POSIX2_LIM_H',
@@ -8190,18 +8192,18 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CODEC_ID_RV30', '__WCOREDUMP', 'AV_PIX_FMT_NV12',
            'strcasecmp_l', 'FF_PRED_MEDIAN', 'ferror_unlocked', 'y1',
            'EAGAIN', '__error_t_defined', 'XATTR_SIZE_MAX',
-           'AV_CODEC_ID_ESCAPE124', 'FF_BUG_DIRECT_BLOCKSIZE',
-           'ELIBEXEC', 'sws_scale', 'FF_LAMBDA_MAX',
-           'AVFMT_NOTIMESTAMPS', 'AV_OPT_FLAG_SUBTITLE_PARAM',
-           'LIBAVCODEC_VERSION_INT', '_POSIX2_LINE_MAX', 'EIO',
-           'feof_unlocked', 'AV_CODEC_ID_DVB_TELETEXT', 'remquo',
+           'AV_CODEC_ID_ESCAPE124', 'EMSGSIZE', 'ELIBEXEC',
+           'sws_scale', 'FF_LAMBDA_MAX', 'AVFMT_NOTIMESTAMPS',
+           'AV_OPT_FLAG_SUBTITLE_PARAM', 'LIBAVCODEC_VERSION_INT',
+           '_POSIX2_LINE_MAX', 'EIO', 'feof_unlocked',
+           'AV_PIX_FMT_BGR565BE', 'AV_CODEC_ID_ASV2',
            '_POSIX_MAX_CANON', 'memchr', 'PIX_FMT_YUV411P',
            '_IO_RIGHT', '_IOS_APPEND', 'SWS_GAUSS',
            'FF_OPT_TYPE_DOUBLE', '_POSIX_THREAD_THREADS_MAX',
            'strcoll', 'CODEC_ID_PCM_MULAW', '_G_BUFSIZ', 'ynl',
            'AV_DISPOSITION_HEARING_IMPAIRED', 'finite',
            'LIBAVUTIL_VERSION_MAJOR', 'ynf', '__blksize_t',
-           'CODEC_ID_AVRP', 'AVFilterLink', 'fmod', 'EDESTADDRREQ',
+           'NL_LANGMAX', 'AVFilterLink', 'fmod', 'EDESTADDRREQ',
            'LIBAVFILTER_BUILD', 'getw', 'pthread_spinlock_t',
            'AV_CODEC_ID_TWINVQ', 'FF_CMP_W97', 'sws_get_class',
            '_XOPEN_LIM_H', 'SWS_SRC_V_CHR_DROP_SHIFT',
@@ -8216,8 +8218,8 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'MB_TYPE_INTRA16x16', 'labs', 'avformat_write_header',
            'av_reduce', 'FF_IDCT_SIMPLE', 'CODEC_ID_NUV', 'qsort_r',
            'AV_PIX_FMT_YUVA420P9BE', 'CODEC_ID_PCM_S8',
-           'PIX_FMT_ABGR', 'AV_CH_LAYOUT_7POINT1_WIDE', 'putchar',
-           'FF_OPT_TYPE_INT', 'SLICE_FLAG_ALLOW_FIELD',
+           'AV_CODEC_ID_VMDAUDIO', 'AV_CH_LAYOUT_7POINT1_WIDE',
+           'putchar', 'FF_OPT_TYPE_INT', 'SLICE_FLAG_ALLOW_FIELD',
            'CODEC_ID_S302M', 'av_hex_dump',
            'AV_PKT_DATA_STRINGS_METADATA', 'AV_CODEC_ID_AAC_LATM',
            'major', 'FF_IDCT_INT', 'AV_PIX_FMT_BGR555BE',
@@ -8231,18 +8233,18 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'CODEC_ID_WESTWOOD_SND1', 'memset', 'EFAULT',
            'CODEC_ID_DPX', 'nearbyintf', 'AVIO_FLAG_WRITE',
            'avio_check', 'AV_CODEC_ID_LOCO', 'llrint',
-           'AVCHROMA_LOC_NB', '_IOS_NOCREATE', '_Exit',
+           'AVCHROMA_LOC_NB', 'FF_MB_DECISION_SIMPLE', '_Exit',
            'AV_ERROR_MAX_STRING_SIZE', 'CODEC_ID_IDCIN', 'FF_DCT_INT',
            'audio_resample_close', 'CODEC_ID_VCR1', 'MB_TYPE_ACPRED',
            'SWS_CPU_CAPS_MMXEXT', 'av_get_media_type_string',
            '__isupper_l', 'AVFilterCommand', '__USE_LARGEFILE',
            'SWS_MAX_REDUCE_CUTOFF', '_FEATURES_H',
-           'av_get_profile_name', 'CODEC_CAP_EXPERIMENTAL',
-           'CODEC_ID_SP5X', 'vsnprintf', 'AVERROR_STREAM_NOT_FOUND',
-           '_POSIX_SEM_NSEMS_MAX', 'CODEC_ID_ILBC',
-           'AVFilterBufferRefVideoProps', 'av_opt_set_q',
-           'nearbyintl', 'CODEC_FLAG2_CHUNKS', 'pselect',
-           'CODEC_ID_TXD', 'av_get_default_channel_layout',
+           'av_get_profile_name', 'AV_CODEC_ID_INTERPLAY_DPCM',
+           'CODEC_CAP_EXPERIMENTAL', 'CODEC_ID_SP5X', 'vsnprintf',
+           'AVERROR_STREAM_NOT_FOUND', '_POSIX_SEM_NSEMS_MAX',
+           'CODEC_ID_ILBC', 'AVFilterBufferRefVideoProps',
+           'av_opt_set_q', 'nearbyintl', 'CODEC_FLAG2_CHUNKS',
+           'pselect', 'CODEC_ID_TXD', 'av_get_default_channel_layout',
            'avformat_seek_file', 'AVFMT_FLAG_SORT_DTS', 'SING',
            'AV_MIX_COEFF_TYPE_NB', 'EPFNOSUPPORT', 'sys_nerr',
            'AV_PERM_ALIGN', 'strtoul_l', 'av_get_bits_per_sample_fmt',
@@ -8260,8 +8262,8 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CODEC_ID_MSA1', 'LIBAVDEVICE_VERSION_MINOR',
            'strncasecmp', 'SWS_BICUBLIN', 'PIX_FMT_YUV410P',
            '__STDC_ISO_10646__', 'CODEC_ID_GSM_MS', 'AVProgram',
-           'av_parser_init', 'UINT8_C', 'CODEC_ID_XBM', 'mode_t',
-           'FF_MB_DECISION_SIMPLE', 'av_register_output_format',
+           'av_parser_init', 'UINT8_C', 'AVSTREAM_PARSE_FULL',
+           'mode_t', '_IOS_NOCREATE', 'av_register_output_format',
            'FF_PROFILE_MPEG2_SS', 'isascii_l', 'CODEC_ID_Y41P',
            '_POSIX_SSIZE_MAX', 'grantpt', 'AV_CODEC_ID_ADPCM_G726',
            '__isinff', 'AV_CODEC_ID_ADPCM_G722', 'ESTRPIPE', 'fputs',
@@ -8269,18 +8271,19 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'avcodec_find_encoder_by_name', 'avio_alloc_context',
            'SUBTITLE_BITMAP', '_IO_TIED_PUT_GET', 'av_rescale_q_rnd',
            'AVCodecInternal', 'CODEC_FLAG_NORMALIZE_AQP', 'EDEADLK',
-           'FD_CLR', 'id_t', 'PIX_FMT_GRAY8A', 'tgamma', 'ME_TESA',
-           'AV_CODEC_ID_SMACKAUDIO', 'av_opt_set_image_size',
-           'PIX_FMT_BGR565LE', 'AV_CODEC_ID_RV20', 'avresample_read',
-           'rintl', 'FF_BUFFER_TYPE_SHARED', 'AV_CODEC_ID_ULTI',
-           'AV_PERM_PRESERVE', 'AV_CODEC_ID_AMR_NB', 'FP_NAN',
+           'FD_CLR', 'id_t', 'CODEC_ID_ADPCM_4XM', 'tgamma',
+           'ME_TESA', 'AV_CODEC_ID_SMACKAUDIO',
+           'av_opt_set_image_size', 'PIX_FMT_BGR565LE',
+           'AV_CODEC_ID_RV20', 'avresample_read', 'rintl',
+           'FF_BUFFER_TYPE_SHARED', 'AV_CODEC_ID_ULTI',
+           'AV_PERM_PRESERVE', 'AV_CODEC_ID_AMR_NB', 'islessequal',
            'av_ext2dbl', 'FOPEN_MAX', 'PIX_FMT_BGR555LE',
            'AV_PTS_WRAP_IGNORE', 'remove', 'CODEC_ID_ULTI',
            'avutil_license', 'fd_mask', 'AV_CODEC_ID_FFWAVESYNTH',
            'AV_ROUND_DOWN', 'AV_SUBTITLE_FLAG_FORCED', '__int16_t',
            'CODEC_ID_TWINVQ', 'FF_PROFILE_MPEG4_CORE_SCALABLE',
            'AV_CODEC_ID_ADPCM_IMA_DK3', 'sinf', 'AV_CH_SIDE_RIGHT',
-           'isalpha_l', 'FF_IDCT_H264', 'AV_CODEC_ID_ZLIB',
+           'isalpha_l', 'FF_IDCT_H264', 'CODEC_ID_ESCAPE130',
            'AV_CODEC_ID_ADPCM_IMA_OKI', 'quick_exit', 'fflush',
            'AV_CODEC_ID_FLIC', 'AV_MATRIX_ENCODING_NB', 'avio_rl16',
            'CODEC_ID_TRUESPEECH', 'strchr', '_POSIX_TZNAME_MAX',
@@ -8289,8 +8292,8 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'FF_BUFFER_TYPE_USER', 'AV_CODEC_ID_SIPR',
            'PP_PICT_TYPE_QP2', 'y0f', 'MAX_CANON',
            'FF_PROFILE_MPEG4_N_BIT', 'av_opt_set_dict',
-           'av_opt_find2', 'av_get_int', 'CODEC_ID_ADPCM_IMA_EA_EACS',
-           'lrintl', 'CODEC_ID_PCM_DVD', 'AV_DICT_IGNORE_SUFFIX',
+           'av_opt_find2', 'av_get_int', 'AV_PIX_FMT_RGBA64BE',
+           'lrintl', 'PIX_FMT_VDPAU_VC1', 'AV_DICT_IGNORE_SUFFIX',
            'AV_PKT_FLAG_CORRUPT', 'AV_CODEC_ID_RL2', 'sws_allocVec',
            'av_audio_resample_init', 'CODEC_ID_SANM', 'htole16',
            'FF_PROFILE_VC1_ADVANCED', 'PIX_FMT_GBRP12BE',
@@ -8319,20 +8322,21 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'CODEC_CAP_NEG_LINESIZES', 'AV_CODEC_ID_ATRAC1',
            '__timer_t', 'malloc', 'scalblnf',
            'AV_CLASS_CATEGORY_FILTER', 'AV_CODEC_ID_CAVS',
-           '_IO_uid_t', 'av_frame_get_pkt_size', 'FF_IDCT_MMI',
+           '__WTERMSIG', 'av_frame_get_pkt_size', 'FF_IDCT_MMI',
            'AV_CH_SURROUND_DIRECT_RIGHT', 'INT32_C',
            'AV_SIDE_DATA_PARAM_CHANGE_CHANNEL_COUNT',
-           'CODEC_FLAG_PASS2', 'CODEC_ID_VMDVIDEO', 'drand48_data',
-           'AV_CODEC_ID_AURA2', 'error_t', 'AVIndexEntry',
-           'AV_PIX_FMT_YUV440P', 'EWOULDBLOCK', 'AV_CODEC_ID_MP3ADU',
+           'CODEC_FLAG_PASS2', 'AV_PIX_FMT_YUVA420P16LE',
+           'drand48_data', 'AV_CODEC_ID_AURA2', 'error_t',
+           'AVIndexEntry', 'AV_PIX_FMT_YUV440P',
+           'AV_PIX_FMT_YUV444P14BE', 'AV_CODEC_ID_MP3ADU',
            '__USE_XOPEN2K8XSI', 'scalbl', 'CODEC_ID_CYUV',
-           'LIBAVRESAMPLE_VERSION_MICRO', 'AV_CODEC_ID_PCM_F32BE',
-           'va_copy', 'scalbn', 'AV_CODEC_ID_ADPCM_XA', 'PP_FORMAT',
+           'LIBAVRESAMPLE_VERSION_MICRO', 'va_copy', 'scalbn',
+           'AV_CODEC_ID_ADPCM_XA', 'PP_FORMAT',
            'AV_PIX_FMT_YUVA420P16BE', 'SEEK_SET', '__io_write_fn',
-           'FF_CMP_ZERO', 'AV_PIX_FMT_RGB8', 'sws_getContext',
+           'FF_CMP_ZERO', 'SUBTITLE_ASS', 'sws_getContext',
            'AV_PIX_FMT_YUV422P10BE', 'AV_PIX_FMT_RGB4',
            'AV_PIX_FMT_RGB0', 'sws_printVec2', 'AV_CODEC_ID_TTA',
-           'M_PI', 'CODEC_ID_ADPCM_EA_R1', 'CODEC_ID_ADPCM_EA_R2',
+           'M_PI', 'CODEC_ID_ADPCM_EA_R1', 'AV_CODEC_ID_TTF',
            'CODEC_ID_ADPCM_EA_R3', 'CODEC_ID_MACE3',
            'program_invocation_short_name', 'av_iformat_next',
            'CODEC_ID_MACE6', 'NAME_MAX', 'av_packet_split_side_data',
@@ -8354,10 +8358,10 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CODEC_ID_ADPCM_IMA_QT', 'av_opt_eval_int',
            'CODEC_FLAG_INTERLACED_DCT', 'toascii', 'uint32_t',
            '_POSIX2_RE_DUP_MAX', 'AV_CODEC_ID_PCM_F64BE',
-           'AV_PIX_FMT_YUV420P16BE', 'register_t', 'postproc_license',
+           '__isxdigit_l', 'register_t', 'postproc_license',
            'CODEC_ID_G723_1', 'strstr', 'renameat',
            '_POSIX_TIMER_MAX', 'mblen', 'pp_free_mode',
-           'CODEC_ID_MOTIONPIXELS', 'AVCHROMA_LOC_BOTTOMLEFT',
+           'PIX_FMT_YUV444P10BE', 'AVCHROMA_LOC_BOTTOMLEFT',
            '_IO_vfprintf', 'avcodec_get_name', 'remquol',
            'PIX_FMT_VDA_VLD', 'tmpfile', 'CODEC_ID_H263P', 'fd_set',
            'PIX_FMT_GBRP', 'CODEC_CAP_DR1',
@@ -8381,18 +8385,19 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_PIX_FMT_RGB565BE', 'HUGE_VALF', 'avio_wl32',
            'AV_PIX_FMT_GBRP', 'putw', '_IO_peekc', 'FF_IDCT_ARM',
            'avresample_get_delay', '__USE_BSD', 'FF_EC_DEBLOCK',
-           '__CONCAT', 'AV_CODEC_ID_QCELP', 'FFMIN3', 'fmin',
-           'AV_PIX_FMT_GRAY8A', 'av_opt_set', '_IOS_NOREPLACE',
-           'tanhl', 'AV_CODEC_ID_SMACKVIDEO', 'avio_pause',
-           '__ispunct_l', 'AV_CODEC_ID_UTVIDEO', 'AV_CPU_FLAG_AVX',
-           'MB_TYPE_P1L1', 'SEEK_CUR', '_POSIX_CHILD_MAX',
-           'EOPNOTSUPP', '__locale_struct', 'sqrtl', 'lldiv',
-           'avresample_free', 'FF_PROFILE_H264_HIGH_444',
-           'CODEC_ID_GSM', 'CODEC_ID_RPZA', 'memccpy',
-           'AV_CH_LAYOUT_SURROUND', 'errno', 'AV_PIX_FMT_Y400A',
-           'CODEC_ID_ADPCM_ADX', 'AV_CH_LOW_FREQUENCY',
-           'PIX_FMT_BGR48BE', 'ReSampleContext', 'daddr_t',
-           '_IO_cookie_file', 'AV_DISPOSITION_COMMENT', 'ME_ZERO',
+           'AV_MATRIX_ENCODING_DOLBY', 'LIBPOSTPROC_BUILD', 'FFMIN3',
+           'fmin', 'AV_PIX_FMT_GRAY8A', 'av_opt_set',
+           '_IOS_NOREPLACE', 'tanhl', 'AV_CODEC_ID_SMACKVIDEO',
+           'avio_pause', '__ispunct_l', 'AV_CODEC_ID_UTVIDEO',
+           'AV_CPU_FLAG_AVX', 'MB_TYPE_P1L1', 'SEEK_CUR',
+           '_POSIX_CHILD_MAX', 'EOPNOTSUPP', '__locale_struct',
+           'sqrtl', 'lldiv', 'avresample_free',
+           'FF_PROFILE_H264_HIGH_444', 'CODEC_ID_GSM',
+           'CODEC_ID_RPZA', 'memccpy', 'AV_CH_LAYOUT_SURROUND',
+           'errno', 'AV_PIX_FMT_Y400A', 'CODEC_ID_ADPCM_ADX',
+           'AV_CH_LOW_FREQUENCY', 'PIX_FMT_BGR48BE',
+           'ReSampleContext', 'daddr_t', '_IO_cookie_file',
+           'AV_DISPOSITION_COMMENT', 'ME_ZERO',
            'FF_PROFILE_MPEG4_BASIC_ANIMATED_TEXTURE',
            'AVIO_FLAG_READ', 'vprintf', 'av_oformat_next',
            'CODEC_ID_MUSEPACK8', 'CODEC_ID_MUSEPACK7',
@@ -8406,9 +8411,9 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'avcodec_register', 'CODEC_ID_MPEG2VIDEO_XVMC',
            'PP_QUALITY_MAX', 'fdim', 'avcodec_align_dimensions2',
            'strtoumax', 'AVSTREAM_PARSE_FULL_RAW',
-           'CODEC_ID_SOL_DPCM', 'EMSGSIZE', 'imaxdiv',
-           'avformat_query_codec', 'avcodec_get_context_defaults3',
-           'ungetc', 'FF_ARRAY_ELEMS', 'EROFS', 'blkcnt64_t',
+           'CODEC_ID_SOL_DPCM', 'imaxdiv', 'avformat_query_codec',
+           'avcodec_get_context_defaults3', 'ungetc',
+           'FF_ARRAY_ELEMS', 'EROFS', 'blkcnt64_t',
            'PTHREAD_KEYS_MAX', 'ffsl', 'AVCOL_SPC_UNSPECIFIED',
            '_STDIO_H', 'cookie_close_function_t', 'postproc_version',
            'isdigit', 'COLL_WEIGHTS_MAX', 'ENOSPC', 'sws_subVec',
@@ -8438,8 +8443,8 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'av_get_packet', '_POSIX_OPEN_MAX', 'ldexpf', 'FF_IDCT_EA',
            'LIBAVDEVICE_BUILD', 'log2f', 'fpos_t',
            'AV_CPU_FLAG_ARMV6', 'ME_ITER', 'CODEC_ID_ANM',
-           'av_reverse', 'av_opt_get_sample_fmt', 'va_end', 'llrintf',
-           'avcodec_get_subtitle_rect_class',
+           'av_reverse', 'av_opt_get_sample_fmt', 'AV_SAMPLE_FMT_U8P',
+           'llrintf', 'avcodec_get_subtitle_rect_class',
            'AV_CH_FRONT_LEFT_OF_CENTER',
            '__SIZEOF_PTHREAD_CONDATTR_T', 'AV_RESAMPLE_DITHER_NB',
            'getline', 'FF_DCT_FASTINT', 'AV_PIX_FMT_YUVA444P9BE',
@@ -8452,7 +8457,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'ME_FULL', 'pp_help', 'AV_ROUND_NEAR_INF', 'mbstowcs',
            'EREMOTEIO', 'AV_CODEC_ID_ADPCM_MS',
            'AV_OPT_SEARCH_CHILDREN', 'CODEC_ID_H264', 'CODEC_ID_H261',
-           'CODEC_ID_H263', 'AVSTREAM_PARSE_FULL', 'AV_EF_AGGRESSIVE',
+           'CODEC_ID_H263', 'CODEC_ID_XBM', 'AV_EF_AGGRESSIVE',
            'isblank', 'AV_CODEC_ID_JPEGLS', 'ferror', 'snprintf',
            '_ALLOCA_H', '__errno_location', 'AV_CODEC_ID_SHORTEN',
            'AV_CODEC_ID_NELLYMOSER', 'strcasestr',
@@ -8463,12 +8468,12 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'ENOANO', 'AV_CODEC_ID_MTS2', 'EUCLEAN', 'CODEC_ID_LOCO',
            'NGROUPS_MAX', 'CODEC_FLAG2_LOCAL_HEADER', '_G_fpos_t',
            'avfilter_unref_buffer', 'AV_CODEC_ID_ADPCM_CT',
-           '__STDC_NO_THREADS__', 'CODEC_ID_ESCAPE130', 'sws_convVec',
+           '__STDC_NO_THREADS__', 'AV_CODEC_ID_ZLIB', 'sws_convVec',
            'fabsf', 'AV_OPT_TYPE_RATIONAL', '__lldiv_t_defined',
            'strtok_r', '__SIZEOF_PTHREAD_BARRIER_T', 'avio_wl24',
            'sinl', 'AV_CODEC_ID_V210X', 'sinh', 'av_codec_is_decoder',
            '_IO_DONT_CLOSE', '_ISblank', 'acoshl', '_ISupper',
-           'INTMAX_C', 'av_intfloat32', 'AVColorSpace', 'ME_EPZS',
+           'CODEC_ID_VC1', 'av_intfloat32', 'AVColorSpace', 'ME_EPZS',
            'PIX_FMT_BGR555BE', 'CODEC_ID_CAVS', 'AV_EF_EXPLODE',
            'AV_PIX_FMT_YUVA444P_LIBAV', '__PMT', 'uint_fast8_t',
            'PIX_FMT_GBRP14BE', 'BC_STRING_MAX', 'EPIPE', 'hypotf',
@@ -8494,14 +8499,14 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CODEC_ID_PCM_S32LE', 'sws_getGaussianVec',
            'PIX_FMT_YUVA444P', 'CODEC_ID_FFWAVESYNTH',
            'av_probe_input_format', '__WCLONE', '__loff_t',
-           'ENOTEMPTY', 'CODEC_ID_AVS', '_POSIX_SEM_VALUE_MAX',
+           'ENOTEMPTY', 'CODEC_ID_RV10', '_POSIX_SEM_VALUE_MAX',
            'UNDERFLOW', 'AV_CH_LOW_FREQUENCY_2', 'fprintf',
            'CODEC_ID_PAM', 'CODEC_ID_PCM_S16LE',
            'AV_CLASS_CATEGORY_NA', 'AV_CLASS_CATEGORY_NB',
            'av_mallocz', '_POSIX_SYMLINK_MAX', 'HUGE',
            'FF_THREAD_FRAME', '__WIFCONTINUED', 'lcong48', 'EBADRQC',
            'av_printf_format', 'AV_PIX_FMT_GBRP10BE',
-           'CODEC_ID_ADPCM_4XM', 'avio_wl64', 'AV_CPU_FLAG_SSE4',
+           'PIX_FMT_GRAY8A', 'avio_wl64', 'AV_CPU_FLAG_SSE4',
            'AV_CPU_FLAG_SSE3', 'CODEC_ID_VMDAUDIO', 'vfprintf',
            'on_exit', 'sin', 'CODEC_CAP_PARAM_CHANGE', 'WEXITED',
            'AV_CODEC_ID_VP8', '_IO_free_backup_area',
@@ -8511,7 +8516,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'CODEC_ID_AMR_NB', '__USE_ISOC99', 'CODEC_ID_VORBIS',
            'EMEDIUMTYPE', '_IO_fpos_t', 'AV_CODEC_ID_PTX',
            'FF_COMPLIANCE_VERY_STRICT', 'rawmemchr', 'srand48_r',
-           'CODEC_CAP_DRAW_HORIZ_BAND', '__u_short', 'suseconds_t',
+           'CODEC_CAP_DRAW_HORIZ_BAND', '__u_short',
            'avformat_network_init', 'AV_PIX_FMT_YUV422P12BE',
            'FF_MAX_B_FRAMES', 'av_realloc_f', 'AV_PIX_FMT_VDPAU_WMV3',
            'EPROTONOSUPPORT', 'av_dup_packet', 'le32toh',
@@ -8525,7 +8530,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'CODEC_ID_MP4ALS', 'SWS_ACCURATE_RND', 'CODEC_ID_SONIC_LS',
            'AV_CPU_FLAG_SSE2', 'strtoll', 'AV_CODEC_ID_BMP',
            'uint_least64_t', 'CODEC_ID_FRAPS', 'AV_CODEC_ID_KMVC',
-           'islessequal', 'LITTLE_ENDIAN', 'AV_LOG_ERROR',
+           'FP_NAN', 'LITTLE_ENDIAN', 'AV_LOG_ERROR',
            'AV_PIX_FMT_YUV444P16BE', '__USE_ATFILE',
            'av_opt_flag_is_set', 'TMP_MAX', 'AV_PIX_FMT_YUV444P9BE',
            'PIX_FMT_YUV422P9LE', 'swscale_license', 'PP_FORMAT_420',
@@ -8537,7 +8542,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'CODEC_ID_SIPR', 'CODEC_ID_MPEG4', '__FILE_defined',
            'SWS_CS_ITU624', 'AVCOL_RANGE_MPEG', 'int_fast64_t',
            'EISCONN', 'isdigit_l', 'av_freep',
-           'AVCOL_PRI_UNSPECIFIED', 'FF_PROFILE_DTS_96_24',
+           'AVCOL_PRI_UNSPECIFIED', '_IO_CURRENTLY_PUTTING',
            'CODEC_ID_PCM_U24BE', 'AV_TIME_BASE', 'memrchr',
            'PP_CPU_CAPS_MMX', 'CODEC_FLAG_QSCALE',
            'FF_BUFFER_TYPE_COPY', 'unsetenv', 'AV_PICTURE_TYPE_NONE',
@@ -8557,8 +8562,8 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            '_IO_ssize_t', 'AV_HAVE_FAST_UNALIGNED',
            'AV_CODEC_ID_8BPS', 'mbtowc', '__caddr_t',
            '_POSIX2_CHARCLASS_NAME_MAX', '__USE_SVID',
-           'avfilter_get_class', 'av_get_pcm_codec',
-           'AV_CODEC_ID_MSZH', 'AV_CH_LAYOUT_7POINT0_FRONT',
+           'avfilter_get_class', 'av_get_pcm_codec', 'CODEC_ID_XBIN',
+           'AV_CH_LAYOUT_7POINT0_FRONT',
            'LIBAVRESAMPLE_VERSION_MINOR', 'AV_CH_LAYOUT_7POINT0',
            '_IO_OCT', 'AV_CODEC_ID_MOTIONPIXELS', 'av_opt_eval_int64',
            'getpt', 'CHARCLASS_NAME_MAX', 'AV_SAMPLE_FMT_NB',
@@ -8580,15 +8585,16 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            '__REDIRECT_NTH_LDBL', 'EDOM', 'AV_CPU_FLAG_ALTIVEC',
            'avcodec_descriptor_get', 'NL_ARGMAX', 'av_samples_copy',
            'uintptr_t', 'avio_close', 'av_dict_get', 'FP_ZERO',
-           'FF_PROFILE_H264_HIGH_422', 'PIX_FMT_YUV420P',
-           'CODEC_ID_MSMPEG4V2', 'CODEC_ID_MSMPEG4V3', 'av_dict_set',
+           'AV_CODEC_ID_SMPTE_KLV', 'FF_PROFILE_H264_HIGH_422',
+           'PIX_FMT_YUV420P', 'CODEC_ID_MSMPEG4V2',
+           'AV_CODEC_ID_PCM_F32BE', 'av_dict_set',
            'CODEC_ID_MSMPEG4V1', 'CODEC_ID_H263I',
            '_XOPEN_SOURCE_EXTENDED', 'ptrdiff_t',
            'AV_CODEC_ID_WMAVOICE', 'AV_CODEC_ID_H261',
            'AV_MATRIX_ENCODING_NONE', 'CODEC_ID_IAC',
            'FF_DEBUG_BUFFERS', 'AV_PIX_FMT_YUV444P',
-           'AV_CPU_FLAG_MMXEXT', 'tolower', 'AVFMT_FLAG_MP4A_LATM',
-           'AV_CODEC_ID_MIMIC', 'EKEYREVOKED',
+           'CODEC_ID_MSMPEG4V3', 'AV_CPU_FLAG_MMXEXT', 'tolower',
+           'AVFMT_FLAG_MP4A_LATM', 'AV_CODEC_ID_MIMIC', 'EKEYREVOKED',
            'av_default_get_category', 'AV_CODEC_ID_H264',
            'AV_ROUND_INF', 'AV_CODEC_ID_Y41P',
            'AV_RESAMPLE_FILTER_TYPE_BLACKMAN_NUTTALL',
@@ -8596,14 +8602,14 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_OPT_TYPE_DOUBLE', '__quad_t', 'av_samples_alloc',
            '_BSD_SOURCE', 'avio_closep', '__uid_t', 'MATH_ERRNO',
            'av_seek_frame', '_SVID_', 'AVFMTCTX_NOHEADER',
-           'LIBAVFILTER_VERSION_MINOR', 'AV_CODEC_ID_MPEG2VIDEO_XVMC',
+           'LIBAVFILTER_VERSION_MINOR', 'AV_PIX_FMT_VAAPI_IDCT',
            'avfilter_link_set_closed', 'FF_CMP_PSNR', 'AVInputFormat',
            'AV_DISPOSITION_CLEAN_EFFECTS', 'AVSubtitleRect',
            'avfilter_register', '_IO_USER_BUF', '__USE_LARGEFILE64',
            'realloc', 'AV_PIX_FMT_RGB24', 'strtol',
            'CODEC_ID_ADPCM_XA', 'av_compare_mod', 'AV_CODEC_ID_DPX',
            'htobe64', 'CODEC_ID_BFI', 'LIBAVFORMAT_VERSION_MINOR',
-           'strtod', 'AV_PIX_FMT_YUVA420P10LE', 'strtof', 'ME_UMH',
+           'strtod', 'PIX_FMT_YUV420P9BE', 'strtof', 'ME_UMH',
            'PIX_FMT_RGB8', 'AV_CPU_FLAG_SSE2SLOW',
            'FF_QSCALE_TYPE_H264', 'CODEC_ID_DFA', 'PIX_FMT_RGB4',
            'PIX_FMT_YUV422P16BE', 'PIX_FMT_RGB0', 'SwsFilter',
@@ -8638,22 +8644,23 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'LIBAVRESAMPLE_VERSION_MAJOR', 'ilogbf',
            'AV_CODEC_ID_PCM_ZORK', 'ETIMEDOUT', 'atanhl',
            'sws_normalizeVec', 'log1p', 'FF_LOSS_ALPHA', 'ushort',
-           'PIX_FMT_YUV444P', '_IO_size_t', 'caddr_t', 'AV_LOG_QUIET',
-           'uint16_t', 'av_probe_input_format2',
-           'pp_get_mode_by_name_and_quality', 'PIX_FMT_YUV420P16BE',
-           'ENXIO', 'ECONNREFUSED', 'AV_CODEC_ID_CDGRAPHICS',
-           'AV_CODEC_ID_PCM_U32BE', 'AV_CH_LAYOUT_7POINT1',
-           'AV_CODEC_ID_RA_288', 'CODEC_ID_DSICINVIDEO', 'tmpfile64',
+           'CODEC_ID_PCM_U16LE', '_IO_size_t', 'caddr_t',
+           'AV_LOG_QUIET', 'uint16_t', 'av_probe_input_format2',
+           'pp_get_mode_by_name_and_quality',
+           'CODEC_ID_ADPCM_IMA_APC', 'ENXIO', 'ECONNREFUSED',
+           'AV_CODEC_ID_CDGRAPHICS', 'AV_CODEC_ID_PCM_U32BE',
+           'AV_CH_LAYOUT_7POINT1', 'AV_CODEC_ID_RA_288',
+           'CODEC_ID_DSICINVIDEO', 'tmpfile64',
            'av_opt_set_from_string', 'CODEC_FLAG_GMC', '__USE_MISC',
            'av_samples_fill_arrays', '__isnanf', 'EXIT_FAILURE',
            'getsubopt', 'av_picture_pad',
            'avcodec_get_context_defaults', 'CODEC_ID_HUFFYUV',
            'AVFilterPool', 'obstack', 'WIFEXITED',
-           'AV_CH_BACK_CENTER', 'PIX_FMT_RGB48BE', 'va_arg', 'ENOSR',
-           'AV_PIX_FMT_YUV444P9LE', '_IO_2_1_stderr_',
+           'AV_CH_BACK_CENTER', 'AV_CODEC_ID_PCM_DVD', 'va_arg',
+           'ENOSR', 'AV_PIX_FMT_YUV444P9LE', '_IO_2_1_stderr_',
            'AV_SAMPLE_FMT_NONE', 'AV_CODEC_ID_NUV',
            'PIX_FMT_BGR565BE', 'ELIBSCN', 'LIBAVUTIL_BUILD',
-           'AV_CODEC_ID_WAVPACK', 'CODEC_ID_QDMC', 'av_gettime',
+           'PIX_FMT_BGR8', 'CODEC_ID_WMAV1', 'av_gettime',
            'CODEC_ID_ADPCM_EA_MAXIS_XA', 'AV_CODEC_ID_PGMYUV',
            '_BITS_BYTESWAP_H', 'cos', 'WSTOPSIG', 'av_rescale_delta',
            '__dev_t', 'AV_SAMPLE_FMT_DBLP', '_SYS_SYSMACROS_H',
@@ -8668,15 +8675,16 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'uintmax_t', 'avio_rl64', 'ENOEXEC', 'EACCES',
            '__WCHAR_MAX', 'av_opt_show2', 'AV_CH_LAYOUT_2_1',
            'AV_CH_LAYOUT_2_2', 'PLOSS', 'ispunct', 'getloadavg',
-           'ino_t', '_POSIX2_BC_STRING_MAX', 'getc',
+           'AVCOL_TRC_NB', '_POSIX2_BC_STRING_MAX', 'getc',
            'FF_CODER_TYPE_AC', 'sqrt', 'AV_ROUND_PASS_MINMAX',
-           'AV_CODEC_ID_ASV2', 'AV_CODEC_ID_ASV1', '__fsblkcnt64_t',
-           'AV_CODEC_ID_ADPCM_SBPRO_4', 'AV_CODEC_ID_ADPCM_SBPRO_3',
-           'AV_CODEC_ID_ADPCM_SBPRO_2', 'av_opt_get_q',
-           'PIX_FMT_BGRA64LE', 'FF_DEBUG_VIS_MV_B_FOR',
-           'avcodec_get_type', 'AV_PIX_FMT_BGRA64BE',
-           'AV_CODEC_ID_FLASHSV', 'N8AVOption4DOT_32E', 'AVIOContext',
-           'AV_CH_LAYOUT_7POINT1_WIDE_BACK', 'AV_CODEC_ID_VMDAUDIO',
+           'AV_PIX_FMT_VDPAU_MPEG2', 'AV_CODEC_ID_ASV1',
+           '__fsblkcnt64_t', 'AV_CODEC_ID_ADPCM_SBPRO_4',
+           'AV_CODEC_ID_ADPCM_SBPRO_3', 'AV_CODEC_ID_ADPCM_SBPRO_2',
+           'av_opt_get_q', 'PIX_FMT_BGRA64LE', 'va_end',
+           'FF_DEBUG_VIS_MV_B_FOR', 'avcodec_get_type',
+           'AV_CODEC_ID_PAM', 'AV_CODEC_ID_PCM_U24LE',
+           'N8AVOption4DOT_32E', 'AVIOContext',
+           'AV_CH_LAYOUT_7POINT1_WIDE_BACK', 'PIX_FMT_ABGR',
            'FF_PROFILE_H264_HIGH_444_PREDICTIVE', '__ino_t',
            'avformat_alloc_output_context2', 'MKBETAG',
            'CODEC_FLAG_BITEXACT', 'avcodec_decode_subtitle2',
@@ -8685,11 +8693,10 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CODEC_ID_8SVX_FIB', 'drand48_r', 'AVCOL_PRI_NB',
            'av_log_missing_feature', 'powl', 'AV_CODEC_ID_PCM_S32BE',
            'powf', '__MATHCALLX', 'be16toh', 'WSTOPPED', 'rintf',
-           'av_codec_get_id', 'AV_PIX_FMT_YUV422P16BE',
-           '__SIZEOF_PTHREAD_BARRIERATTR_T', 'avformat_close_input',
-           'AV_NE', 'AVSEEK_SIZE', '__isinfl', 'CODEC_ID_PCX',
-           'ESOCKTNOSUPPORT', 'isxdigit_l', 'AVMEDIA_TYPE_SUBTITLE',
-           'PIX_FMT_BGRA64BE', '_ISOC_',
+           'av_codec_get_id', '__SIZEOF_PTHREAD_BARRIERATTR_T',
+           'avformat_close_input', 'AV_NE', 'AVSEEK_SIZE', '__isinfl',
+           'CODEC_ID_PCX', 'ESOCKTNOSUPPORT', 'AVDISCARD_ALL',
+           'AVMEDIA_TYPE_SUBTITLE', 'PIX_FMT_BGRA64BE', '_ISOC_',
            'AV_CODEC_ID_TIERTEXSEQVIDEO', 'MB_TYPE_CBP',
            'AV_CODEC_ID_WS_VQA', 'av_fast_padded_malloc',
            'AVERROR_BUFFER_TOO_SMALL', 'AVPALETTE_SIZE',
@@ -8702,7 +8709,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'AV_CPU_FLAG_FORCE', 'FF_BUFFER_HINTS_VALID', 'WIFSTOPPED',
            'EEXIST', 'FF_BUFFER_HINTS_PRESERVE', 'avfilter_version',
            'AV_CPU_FLAG_ATOM', 'EPROTO', '_SYS_SELECT_H',
-           '__isxdigit_l', 'AVFilterPad', '_G_fpos64_t',
+           'AV_PIX_FMT_YUV420P16BE', 'AVFilterPad', '_G_fpos64_t',
            'avfilter_insert_filter', '_ISOC95_SOURCE',
            'AVFMT_FLAG_DISCARD_CORRUPT', 'FF_CMP_BIT',
            '__compar_fn_t', 'AV_CLASS_CATEGORY_BITSTREAM_FILTER',
@@ -8728,17 +8735,17 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'av_samples_set_silence', 'av_get_bytes_per_sample',
            'av_calloc', 'AV_OPT_FLAG_DECODING_PARAM',
            'AVCOL_SPC_BT709', 'avio_wb64', 'FF_IDCT_LIBMPEG2MMX',
-           'av_opt_ptr', 'fcvt', 'AV_PIX_FMT_VAAPI_VLD',
+           'av_opt_ptr', 'fcvt', 'CODEC_ID_INDEO3',
            'SLICE_FLAG_CODED_ORDER', '_ISOC11_SOURCE',
            'AV_CODEC_ID_AASC', 'CODEC_ID_MPEG1VIDEO',
            'AV_CODEC_ID_S302M', 'avcodec_encode_video2',
            'CODEC_ID_INTERPLAY_DPCM', 'isprint',
            'avcodec_find_best_pix_fmt', '__USE_UNIX98',
-           'fgets_unlocked', 'AV_CODEC_ID_SUBRIP', '__gid_t',
-           'PIX_FMT_XVMC_MPEG2_IDCT', 'CODEC_ID_ADPCM_CT',
-           'FF_LOSS_COLORSPACE', 'AV_PIX_FMT_RGB4_BYTE',
-           'AV_CH_LAYOUT_5POINT1_BACK', 'AV_PIX_FMT_BGRA',
-           '__daddr_t', 'AV_CH_LAYOUT_6POINT1_BACK',
+           'fgets_unlocked', '__gid_t', 'PIX_FMT_XVMC_MPEG2_IDCT',
+           'CODEC_ID_ADPCM_CT', 'FF_LOSS_COLORSPACE',
+           'AV_PIX_FMT_RGB4_BYTE', 'AV_CH_LAYOUT_5POINT1_BACK',
+           'AV_PIX_FMT_BGRA', '__daddr_t',
+           'AV_CH_LAYOUT_6POINT1_BACK',
            'avcodec_pix_fmt_to_codec_tag', 'url_feof',
            'PARSER_FLAG_FETCHED_OFFSET', 'CODEC_ID_R10K',
            'FF_OPT_TYPE_FLOAT', 'CODEC_ID_RAWVIDEO',
@@ -8748,7 +8755,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'getenv', '__isascii', '__u_char', 'AVCOL_PRI_SMPTE170M',
            'AV_PIX_FMT_BGR8', 'av_opt_eval_float',
            'AV_SAMPLE_FMT_S16', 'AV_PIX_FMT_BGR4',
-           'PIX_FMT_YUV420P9BE', 'SWS_SPLINE', 'AV_PIX_FMT_BGR0',
+           'AV_PIX_FMT_YUVA420P10LE', 'SWS_SPLINE', 'AV_PIX_FMT_BGR0',
            'CODEC_ID_PAF_AUDIO', 'ME_PHODS', '_IO_getc',
            'AV_HAVE_INCOMPATIBLE_FORK_ABI', '_ISprint',
            'AV_CODEC_ID_MPEG4SYSTEMS', 'getc_unlocked',
@@ -8756,26 +8763,26 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'FF_PROFILE_H264_HIGH_422_INTRA', 'AV_CODEC_ID_XBM',
            'AV_PIX_FMT_GBRP9LE', 'AV_CODEC_ID_TSCC', 'PIX_FMT_NV21',
            'AV_CH_LAYOUT_3POINT1', 'av_find_opt', 'ldiv', 'strndup',
-           'CODEC_ID_WMAV2', 'MB_TYPE_L0L1', 'CODEC_ID_WMAV1',
-           'asinh', 'av_opt_next', 'jrand48_r',
-           'AV_CODEC_ID_INTERPLAY_VIDEO', 'ENETDOWN', 'int64_t',
-           'FF_LOSS_DEPTH', 'CODEC_ID_DNXHD', 'av_parse_cpu_caps',
-           'AV_EF_BUFFER', 'le64toh', 'AV_CODEC_ID_PCM_U24LE',
-           'UCHAR_MAX', '__va_copy', 'EDOTDOT', 'EBADFD',
-           '_IO_MAGIC_MASK', 'CODEC_ID_KMVC', 'AV_CPU_FLAG_NEON',
-           'rename', 'TTY_NAME_MAX', 'AVPacketSideDataType',
-           'AV_PIX_FMT_YUV411P', 'CODEC_ID_PCM_ZORK',
-           'AV_PIX_FMT_VDA_VLD', 'AVERROR_EXTERNAL',
-           'av_find_program_from_stream', 'M_SQRT2',
-           'AV_OPT_FLAG_METADATA', 'ENOMEDIUM', 'FF_DEBUG_ER',
-           'CODEC_ID_TQI', 'FD_SETSIZE', 'initstate_r',
-           '__codecvt_error', '_IOLBF', 'CODEC_ID_MTS2', 'remainderf',
+           'CODEC_ID_WMAV2', 'MB_TYPE_L0L1', 'CODEC_ID_QDMC', 'asinh',
+           'av_opt_next', 'jrand48_r', 'AV_CODEC_ID_INTERPLAY_VIDEO',
+           'ENETDOWN', 'int64_t', 'FF_LOSS_DEPTH', 'CODEC_ID_DNXHD',
+           'av_parse_cpu_caps', 'AV_EF_BUFFER', 'le64toh',
+           'AV_CODEC_ID_FLASHSV', 'UCHAR_MAX', '__va_copy', 'EDOTDOT',
+           'EBADFD', '_IO_MAGIC_MASK', 'CODEC_ID_KMVC',
+           'AV_CPU_FLAG_NEON', 'rename', 'TTY_NAME_MAX',
+           'AVPacketSideDataType', 'AV_PIX_FMT_YUV411P',
+           'CODEC_ID_PCM_ZORK', 'AV_PIX_FMT_VDA_VLD',
+           'AVERROR_EXTERNAL', 'av_find_program_from_stream',
+           'M_SQRT2', 'AV_OPT_FLAG_METADATA', 'ENOMEDIUM',
+           'FF_DEBUG_ER', 'CODEC_ID_TQI', 'FD_SETSIZE', 'initstate_r',
+           '__codecvt_error', 'CODEC_ID_MTS2', 'remainderf',
            'FF_IDCT_AUTO', '_toupper', 'remainderl', 'j0f',
            'FF_BUG_QPEL_CHROMA2', 'av_picture_copy',
            'AVCOL_PRI_BT470M', 'PIX_FMT_YUV444P10LE',
            '_POSIX2_BC_SCALE_MAX', 'avpicture_get_size', 'locale_t',
-           '__isinf', 'WNOHANG', '_IO_CURRENTLY_PUTTING',
+           '__isinf', 'WNOHANG', 'FF_PROFILE_DTS_96_24',
            'swscale_configuration', 'MQ_PRIO_MAX',
            'av_opt_get_key_value', 'AVINDEX_KEYFRAME', 'AVERROR_BUG2',
-           'asinhf', 'sincosl', 'AV_LOCK_DESTROY', 'CODEC_ID_QDM2',
-           'PIX_FMT_YUV444P14LE', 'sincosf', 'asinhl']
+           'asinhf', 'sincosl', '_IOLBF', 'CODEC_ID_QDM2',
+           'PIX_FMT_YUV444P14LE', 'sincosf', 'AV_PIX_FMT_VAAPI_VLD',
+           'asinhl']
