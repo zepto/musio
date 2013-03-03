@@ -173,7 +173,7 @@ class FFmpegFile(AudioIO):
 
         # Get the bit depth.
         depth = _av.av_get_bytes_per_sample(codec_context.contents.sample_fmt)
-        self._depth = depth * 8 #if depth < 4 else 16
+        self._depth = depth * 8 if depth < 4 else 16
 
         # Use the sample format string to determine the depth and whether it is
         # signed.
