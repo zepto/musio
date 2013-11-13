@@ -33,9 +33,9 @@ __supported_dict = {
     'ext': ['.669', '.alm', '.amd', '.amf', '.arch', '.asylum', '.coco',
             '.dbm', '.digi', '.dmf', '.dt', '.dtt', '.emod', '.far',
             '.flt', '.fnk', '.ftm', '.gal4', '.gal5', '.gdm', '.gtk',
-            '.hsc', '.ice', '.imf', '.ims', '.it', '.liq', '.masi', '.mdl',
-            '.med2', '.med3', '.med4', '.mfp', '.mgt', '.mmd1', '.mmd3',
-            '.mod', '.mtm', '.no', '.okt', '.polly', '.psm', '.pt3',
+            '.hsc', '.ice', '.imf', '.ims', '.it', '.itz', '.liq', '.masi',
+            '.mdl', '.med2', '.med3', '.med4', '.mfp', '.mgt', '.mmd1',
+            '.mmd3', '.mod', '.mtm', '.no', '.okt', '.polly', '.psm', '.pt3',
             '.ptm', '.pw', '.rad', '.rtm', '.s3m', '.sfx', '.ssmt', '.stc',
             '.stim', '.st', '.stm', '.stx', '.sym', '.tcb', '.ult', '.umx',
             '.xm'],
@@ -68,21 +68,23 @@ class XMPFile(AudioIO):
         super(XMPFile, self).__init__(filename, 'r', depth, rate, channels)
 
         self._flags = 0
+        self._seek_pos = -1
 
         if depth == 8:
-            self._flags = _xmp.XMP_MIX_8BIT
+            self._flags = _xmp.XMP_FORMAT_8BIT
 
         if channels == 1:
-            self._flags |= _xmp.XMP_MIX_MONO
+            self._flags |= _xmp.XMP_FORMAT_MONO
 
         if unsigned:
-            self._flags |= _xmp.XMP_MIX_UNSIGNED
+            self._flags |= _xmp.XMP_FORMAT_UNSIGNED
 
         self.__module_info = None
+        self.__frame_info = None
 
         self.__xmp_context = self._open(filename)
 
-        self._length = self.__module_info.mod.contents.len
+        self._length = self.__frame_info.total_time
 
         self._data = b''
 
@@ -93,6 +95,11 @@ class XMPFile(AudioIO):
 
         """
 
+        if position > self.position:
+            position += self._length // self.__module_info.mod.contents.len
+        else:
+            position -= self._length // self.__module_info.mod.contents.len
+
         _xmp.xmp_seek_time(self.__xmp_context, position)
 
     def _get_position(self):
@@ -100,7 +107,7 @@ class XMPFile(AudioIO):
 
         """
 
-        return self.__module_info.order
+        return self.__frame_info.time
 
     def _open(self, filename):
         """ _open(filename) -> Load the specified file.
@@ -115,12 +122,15 @@ class XMPFile(AudioIO):
             raise IOError("Can't load module: %s" % filename)
 
         self.__module_info = _xmp.xmp_module_info()
-        _xmp.xmp_player_get_info(xmp_context, _xmp.byref(self.__module_info))
+        _xmp.xmp_get_module_info(xmp_context, _xmp.byref(self.__module_info))
+
+        self.__frame_info = _xmp.xmp_frame_info()
+        _xmp.xmp_get_frame_info(xmp_context, _xmp.byref(self.__frame_info))
 
         # The file is now open.
         self._closed = False
 
-        _xmp.xmp_player_start(xmp_context, self._rate, self._flags)
+        _xmp.xmp_start_player(xmp_context, self._rate, self._flags)
 
         return xmp_context
 
@@ -186,12 +196,12 @@ class XMPFile(AudioIO):
 
         while not data or len(data) < size:
             # Get the next data block.
-            _xmp.xmp_player_get_info(self.__xmp_context,
-                                     _xmp.byref(self.__module_info))
+            _xmp.xmp_get_frame_info(self.__xmp_context,
+                                    _xmp.byref(self.__frame_info))
 
-            if self.__module_info.loop_count > old_count or \
-                    _xmp.xmp_player_frame(self.__xmp_context) != 0:
-                old_count = self.__module_info.loop_count
+            if self.__frame_info.loop_count > old_count or \
+                    _xmp.xmp_play_frame(self.__xmp_context) != 0:
+                old_count = self.__frame_info.loop_count
                 if self._loops != -1 and self._loop_count >= self._loops:
                     # Fill the data buffer with nothing so it will be a
                     # frame size for output.
@@ -199,8 +209,8 @@ class XMPFile(AudioIO):
                         data += b'\x00' * (size - len(data))
                 else:
                     # self.seek(0)
-                    _xmp.xmp_player_end(self.__xmp_context)
-                    _xmp.xmp_player_start(self.__xmp_context, self._rate, 0)
+                    _xmp.xmp_end_player(self.__xmp_context)
+                    _xmp.xmp_start_player(self.__xmp_context, self._rate, 0)
 
                     # Fill the buffer so we return the requested size.
                     data += b'\x00' * (size - len(data))
@@ -211,8 +221,8 @@ class XMPFile(AudioIO):
                 break
 
             # Append the decoded data to the buffer.
-            data += _xmp.string_at(self.__module_info.buffer,
-                                   self.__module_info.buffer_size)
+            data += _xmp.string_at(self.__frame_info.buffer,
+                                   self.__frame_info.buffer_size)
 
         # Store extra data for next time.
         self._data = data[size:]
@@ -226,7 +236,7 @@ class XMPFile(AudioIO):
         """
 
         if not self.closed:
-            _xmp.xmp_player_end(self.__xmp_context)
+            _xmp.xmp_end_player(self.__xmp_context)
             _xmp.xmp_release_module(self.__xmp_context)
             _xmp.xmp_free_context(self.__xmp_context)
 
