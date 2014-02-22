@@ -65,7 +65,7 @@ def main(args: dict) -> None:
     # not.
     quit_val = True
 
-    quality = args['quality'] / 10 if args['quality'] in range(1, 10) else 5
+    quality = args['quality'] / 10 if args['quality'] in range(-1, 11) else 0.5
 
     with open_file(**args) as in_file:
         with open_file(output, 'w', depth=in_file.depth, rate=in_file.rate,
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     from argparse import ArgumentParser
     parser = ArgumentParser(description="Musio vorbis encoder")
     parser.add_argument('-e', '--quality', action='store', default=5, type=int,
-                        help='Encoding quality (1-9)', dest='quality')
+                        help='Encoding quality (1-10)', dest='quality')
     parser.add_argument('-t', '--track', action='store', default=0, type=int,
                         help='Track to play', dest='track')
     parser.add_argument('-p', '--path', action='store', default=[],
