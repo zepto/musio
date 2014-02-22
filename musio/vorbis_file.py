@@ -273,8 +273,9 @@ class VorbisFile(AudioIO):
         """
 
         ret = self._info.encode_init_vbr(self._channels, self._rate,
-                                         self._quality)
-        if ret:
+                                         _vorbisenc.c_float(self._quality))
+
+        if ret != 0:
             raise IOError("Error initializing vorbis info")
 
         self._comment["ENCODER"] = __name__
@@ -329,12 +330,15 @@ class VorbisFile(AudioIO):
         dsp_buffer = self._dsp_state.get_buffer(data_size)
 
         bytebuffer = array('h', data)
+
         for i in range(data_size):
-            dsp_buffer[0][i] = (bytebuffer[i * self._channels] |
-                                (bytebuffer[i] % 256)) / 32768.0
-            if self._channels != 1:
-                dsp_buffer[1][i] = (bytebuffer[i * 2 + 1] |
-                                    (bytebuffer[i + 1] % 256)) / 32768.0
+            for j in range(self._channels):
+                dsp_buffer[j][i] = bytebuffer[i * self._channels + j] / 32768.0
+            # dsp_buffer[0][i] = (bytebuffer[i * self._channels] |
+            #                     (bytebuffer[i] % 255)) / 32768.0
+            # if self._channels != 1:
+            #     dsp_buffer[1][i] = (bytebuffer[i * 2 + 1] |
+            #                         (bytebuffer[i + 1] % 255)) / 32768.0
 
         return data_size
 
@@ -479,6 +483,7 @@ class DspState(_vorbisenc.vorbis_dsp_state):
         super(DspState, self).__init__()
 
         self.analysis_init = partial(_vorbisenc.vorbis_analysis_init, self)
+        self.analysis_buffer = partial(_vorbisenc.vorbis_analysis_buffer, self)
         self.block_init = partial(_vorbisenc.vorbis_block_init, self)
         self.headerout = partial(_vorbisenc.vorbis_analysis_headerout, self)
         self.blockout = partial(_vorbisenc.vorbis_analysis_blockout, self)
@@ -504,6 +509,10 @@ class VorbisInfo(_vorbisenc.vorbis_info):
 
         self.encode_init_vbr = partial(_vorbisenc.vorbis_encode_init_vbr,
                                        _vorbisfile.byref(self))
+        self.encode_setup_vbr = partial(_vorbisenc.vorbis_encode_setup_vbr,
+                                        _vorbisfile.byref(self))
+        self.encode_setup_init = partial(_vorbisenc.vorbis_encode_setup_init,
+                                         _vorbisfile.byref(self))
         self.clear = partial(_vorbisenc.vorbis_info_clear,
                              _vorbisfile.byref(self))
 
