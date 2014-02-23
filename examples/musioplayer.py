@@ -46,7 +46,6 @@ def main(args: dict) -> int:
 
     # Start player with no filename, and set the loops.
     player = AudioPlayer(**args)
-    player.loops = args['loops']
 
     # Save the current terminal state.
     normal = tcgetattr(sys_stdin)
@@ -70,6 +69,7 @@ def main(args: dict) -> int:
             # Open next file.
             try:
                 player.open(filename)
+                player.loops = args['loops']
             except IOError as err:
                 print("Unsupported audio format: %s" % args['filename'])
                 return 1
