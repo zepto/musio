@@ -1068,7 +1068,7 @@ DUMB_RESAMPLER._fields_ = [
         ('end', c_long),
         ('dir', c_int),
         ('pickup', DUMB_RESAMPLE_PICKUP),
-        ('pickup', c_void_p),
+        ('pickup_data', c_void_p),
         ('min_quality', c_int),
         ('max_quality', c_int),
         #/* Everything below this point is internal: do not use. */
