@@ -94,10 +94,10 @@ class AudioPlayer(object):
         """
 
         self._filename = filename
+        self._show_position = show_position
 
         # Setup the msg_dict for sending messages to the child process.
         self._msg_dict = Manager().dict()
-        self._msg_dict['show_position'] = show_position
 
         # Create a pipe for sending and receiving messages.
         self._control_conn, self._player_conn = Pipe()
@@ -268,17 +268,28 @@ class AudioPlayer(object):
 
         """
 
+        # Stop the current file from playing.
+        self.stop()
+
+        # Set the new filename.
         self._filename = filename
+
+        # Reset the message dictionary so none of the old info is
+        # re-used.
+        self._msg_dict.clear()
+
+        # Fill the message dictionary with the new info.
+        self._msg_dict['show_position'] = self._show_position
         self._msg_dict['filename'] = filename
         self._msg_dict.update(kwargs)
 
-        # After opening a new file stop the current one from playing.
-        self.stop()
-
-        # Pause it.
+        # Pause it so when we call play later it will start the player
+        # but not the audio playback.  Call play again to start audio
+        # playback.
         self.pause()
 
-        # Start it playing so seeking works.
+        # Start the playback process in a paused state.  Requires a
+        # second call to play to un-pause.
         self.play()
 
     def play(self):
