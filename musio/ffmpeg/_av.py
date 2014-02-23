@@ -2715,9 +2715,9 @@ tanhf.argtypes = [c_float]
 sincosf = _libraries['/usr/lib/libavcodec.so'].sincosf
 sincosf.restype = None
 sincosf.argtypes = [c_float, POINTER(c_float), POINTER(c_float)]
-sincosl = _libraries['/usr/lib/libavcodec.so'].sincosl
-sincosl.restype = None
-sincosl.argtypes = [c_longdouble, POINTER(c_longdouble), POINTER(c_longdouble)]
+# sincosl = _libraries['/usr/lib/libavcodec.so'].sincosl
+# sincosl.restype = None
+# sincosl.argtypes = [c_longdouble, POINTER(c_longdouble), POINTER(c_longdouble)]
 sincos = _libraries['/usr/lib/libavcodec.so'].sincos
 sincos.restype = None
 sincos.argtypes = [c_double, POINTER(c_double), POINTER(c_double)]
@@ -2793,9 +2793,9 @@ log10f.argtypes = [c_float]
 log10 = _libraries['/usr/lib/libavcodec.so'].log10
 log10.restype = c_double
 log10.argtypes = [c_double]
-modfl = _libraries['/usr/lib/libavcodec.so'].modfl
-modfl.restype = c_longdouble
-modfl.argtypes = [c_longdouble, POINTER(c_longdouble)]
+# modfl = _libraries['/usr/lib/libavcodec.so'].modfl
+# modfl.restype = c_longdouble
+# modfl.argtypes = [c_longdouble, POINTER(c_longdouble)]
 modf = _libraries['/usr/lib/libavcodec.so'].modf
 modf.restype = c_double
 modf.argtypes = [c_double, POINTER(c_double)]
@@ -9010,7 +9010,7 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            'avfilter_insert_filter', '_ISOC95_SOURCE',
            'AVFMT_FLAG_DISCARD_CORRUPT', 'av_frame_clone',
            'FF_CMP_BIT', '__compar_fn_t',
-           'AV_CLASS_CATEGORY_BITSTREAM_FILTER', 'modfl',
+           'AV_CLASS_CATEGORY_BITSTREAM_FILTER',
            'FF_PROFILE_MPEG4_SIMPLE_STUDIO', 'ULONG_LONG_MAX',
            'av_get_standard_channel_layout', 'CODEC_ID_ADPCM_THP',
            '__io_close_fn', 'AVERROR_EXIT', 'pclose',
@@ -9081,5 +9081,5 @@ __all__ = ['AVFMT_NOBINSEARCH', 'CODEC_ID_ADPCM_IMA_AMV', 'ETXTBSY',
            '_IO_CURRENTLY_PUTTING', 'swscale_configuration',
            'EXIT_FAILURE', 'av_opt_get_key_value', 'AVINDEX_KEYFRAME',
            'FF_PROFILE_MPEG2_AAC_LOW', 'AVERROR_BUG2', 'asinhf',
-           'sincosl', '_IOLBF', 'CODEC_ID_QDM2',
+           '_IOLBF', 'CODEC_ID_QDM2',
            'PIX_FMT_YUV444P14LE', 'sincosf', 'asinhl']
