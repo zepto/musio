@@ -87,8 +87,8 @@ class AudioPlayer(object):
 
     """
 
-    def __init__(self, filename: str, show_position=False, **kwargs):
-        """ AudioPlayer(filename, show_position=False, **kwargs) -> Open
+    def __init__(self, filename: str='', show_position: bool=False, **kwargs):
+        """ AudioPlayer(filename='', show_position=False, **kwargs) -> Open
         filename and an appropriate audio io for it.
 
         """
@@ -233,8 +233,12 @@ class AudioPlayer(object):
                         # Read the next buffer full of data.
                         buf = fileobj.readline()
 
+                        # Filler for end of partial buffer to elminiate
+                        # end of audio noise.
+                        buf_filler = b'\x00' * (device.buffer_size - len(buf))
+
                         # Write buf.
-                        written = device.write(buf)
+                        written = device.write(buf + buf_filler)
                     else:
                         # Write a buffer of null bytes so the audio
                         # system can keep its buffer full.
