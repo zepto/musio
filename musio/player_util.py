@@ -26,6 +26,12 @@
 from multiprocessing import Process, Manager, Pipe
 from io import SEEK_SET, SEEK_CUR, SEEK_END
 from functools import wraps as functools_wraps
+from platform import python_implementation
+
+py_imp = python_implementation()
+
+if py_imp == 'PyPy':
+    from sys import stdout as sys_stdout
 
 from .io_util import open_file, open_device
 
@@ -225,8 +231,15 @@ class AudioPlayer(object):
 
                             # Print the string and after erasing the old
                             # one using ansi escapes.
-                            print('\033[%dD\033[K%s' % (format_len, pos_str),
-                                  end='', flush=True)
+                            if py_imp == 'PyPy':
+                                # Running in pypy which doesn't have the
+                                # flush parameter in the print function.
+                                print('\033[%dD\033[K%s' % (format_len,
+                                    pos_str), end='')
+                                sys_stdout.flush()
+                            else:
+                                print('\033[%dD\033[K%s' % (format_len,
+                                    pos_str), end='', flush=True)
 
                     # Keep playing if not paused.
                     if not msg_dict.get('paused', False):
