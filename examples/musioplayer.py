@@ -24,7 +24,7 @@
 """
 
 
-def main(args: dict) -> None:
+def main(args: dict) -> int:
     """ Play args['filename'] args['loops'] times.
 
     """
@@ -41,19 +41,12 @@ def main(args: dict) -> None:
         from musio import io_util
         io_util.DEBUG = True
 
-    try:
-        player = AudioPlayer(**args)
-    except IOError as err:
-        print("Unsupported audio format: %s" % args['filename'])
-        return 1
+    # Pop the filenames list out of the args dict.
+    filenames = args.pop('filename')
 
+    # Start player with no filename, and set the loops.
+    player = AudioPlayer(**args)
     player.loops = args['loops']
-
-    if args['show_position']:
-        print("Playing: %(filename)s" % args)
-        print(player)
-
-    player.play()
 
     # Save the current terminal state.
     normal = tcgetattr(sys_stdin)
@@ -67,46 +60,67 @@ def main(args: dict) -> None:
     # Set the new terminal state.
     tcsetattr(sys_stdin, TCSANOW, quiet)
 
-    # Value returned to tell the calling function whether to quit or
-    # not.
-    quit_val = True
+    # Value to break out of outer loop and quit all playback.
+    quit_command = False
 
     try:
-        while player.playing:
-            # Check for input.
-            r, _, _ = select([sys_stdin], [], [], 0)
+        # Loop over the filenames playing each one with the same
+        # AudioPlayer object.
+        for filename in filenames:
+            # Open next file.
+            try:
+                player.open(filename)
+            except IOError as err:
+                print("Unsupported audio format: %s" % args['filename'])
+                return 1
 
-            # Get input if there was any otherwise continue.
-            if r:
-                command = r[0].readline().lower()
-            else:
-                time_sleep(0.1)
-                continue
+            if args['show_position']:
+                print("\nPlaying: %s" % filename)
+                print(player)
 
-            # Handle input commands.
-            if command.startswith('p') or command.startswith(' '):
-                player.play() if player.paused else player.pause()
-            if command.startswith('l') or command.endswith('\033[c'):
-                player.position += player.length / 100
-            if command.startswith('h') or command.endswith('\033[d'):
-                player.position -= player.length / 100
-            elif command.startswith('q'):
-                quit_val = False
-                break
-            elif command == '\n':
-                break
+            # Start the playback.
+            player.play()
+
+            # Process user input until song finishes.
+            while player.playing:
+                # Check for input.
+                r, _, _ = select([sys_stdin], [], [], 0)
+
+                # Get input if there was any otherwise continue.
+                if r:
+                    command = r[0].readline().lower()
+                else:
+                    time_sleep(0.1)
+                    continue
+
+                # Handle input commands.
+                if command.startswith('p') or command.startswith(' '):
+                    player.play() if player.paused else player.pause()
+                if command.startswith('l') or command.endswith('\033[c'):
+                    player.position += player.length / 100
+                if command.startswith('h') or command.endswith('\033[d'):
+                    player.position -= player.length / 100
+                elif command == '\n':
+                    break
+                elif command.startswith('q'):
+                    quit_command = True
+                    break
+
+            if args['show_position']:
+                print("\nDone.")
+
+            if quit_command: break
+
     except Exception as err:
-        print("Error: %s" % err, flush=True)
+        print("Error: %s", flush=True)
     finally:
+        # Always stop the player.
+        player.stop()
+
         # Re-set the terminal state.
         tcsetattr(sys_stdin, TCSANOW, normal)
 
-    if args['show_position']:
-        print("\nDone.")
-
-    player.stop()
-
-    return quit_val
+    return 0
 
 
 if __name__ == '__main__':
@@ -137,15 +151,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.filename:
-        # Copy the args dict to use later
-        args_dict = args.__dict__
-
-        # Pop the filenames list out of the args dict.
-        filenames = args_dict.pop('filename')
-
-        # Loop over all the filenames playing each one.
-        for filename in filenames:
-            # Pass only one filename to the main function.
-            args_dict['filename'] = filename
-            if not main(args_dict):
-                break
+        main(args.__dict__)
