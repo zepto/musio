@@ -24,7 +24,11 @@
 """
 
 from array import array
-import audioop
+try:
+    import audioop
+except ImportError as err:
+    print("audioop functionality will be disabled because of error: %s" % (err))
+    audioop = None
 
 from .io_base import AudioIO, io_wrapper
 
@@ -85,6 +89,10 @@ class ConvertReader(AudioIO):
         depending on the channels value. The data is buffered so
 
         """
+
+        if not audioop:
+            print("audioop not found so returning empty byte")
+            return b'\x00'
 
         data = self._buffer
 
