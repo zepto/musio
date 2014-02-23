@@ -180,7 +180,11 @@ def get_codec(filename: str, mod_path: list = [], cached: bool = True,
                 continue
 
         # Load the module.
-        module = import_module('.%s' % os_splitext(name)[0], pkgname)
+        try:
+            module = import_module('.%s' % os_splitext(name)[0], pkgname)
+        except ImportError as err:
+            print("Skipping module: (%s) because of error: %s" % (name, err))
+            continue
 
         # Get the filetypes and handler from module.
         supported_dict = getattr(module, '__supported_dict', {})
