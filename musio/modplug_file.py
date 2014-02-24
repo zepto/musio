@@ -45,14 +45,6 @@ __supported_dict = {
     }
 }
 
-modplug_flags = [
-    _modplug.MODPLUG_ENABLE_OVERSAMPLING,
-    _modplug.MODPLUG_ENABLE_NOISE_REDUCTION,
-    _modplug.MODPLUG_ENABLE_REVERB,
-    _modplug.MODPLUG_ENABLE_MEGABASS,
-    _modplug.MODPLUG_ENABLE_SURROUND
-]
-
 
 class ModPlugFile(AudioIO):
     """ A file like interface to module music files (it, xm, s3m, mod) using
