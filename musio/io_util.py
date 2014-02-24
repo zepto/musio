@@ -354,6 +354,8 @@ def open_file(filename: str, mode: str = 'r', mod_path: list = [],
         try:
             open_codec = codec(filename, mode=mode, **kwargs)
         except IOError as err:
+            print('Blacklisting (%s) because of error: %s' % (codec, err))
+
             mod_name = '%s.py' % codec.__module__.split('.')[-1]
 
             # Add the module to the blacklist.
