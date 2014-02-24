@@ -68,7 +68,7 @@ def main(args: dict) -> int:
         for filename in filenames:
             # Open next file.
             try:
-                player.open(filename)
+                player.open(filename, **args)
                 player.loops = args['loops']
             except IOError as err:
                 print("Unsupported audio format: %s" % args['filename'])
