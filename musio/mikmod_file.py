@@ -82,10 +82,10 @@ class MikModFile(AudioIO):
                                   | _mikmod.DMODE_HQMIXER
 
         _mikmod.md_mixfreq.value = rate
-        #_mikmod.md_device.value = 5
+        # _mikmod.md_device.value = 5
 
         # Set the device to a raw file.
-        _mikmod.md_device.value = 2
+        _mikmod.md_device.value = 6
 
         self._out_filename = 'music.raw'
 
@@ -218,9 +218,11 @@ class MikModFile(AudioIO):
 
         _mikmod.MikMod_RegisterAllDrivers()
         _mikmod.MikMod_RegisterAllLoaders()
+        # print(_mikmod.MikMod_InfoDriver().decode())
 
-        if _mikmod.MikMod_Init(b""):
-            raise Exception('Error initializing mikmod.')
+        err_int = _mikmod.MikMod_Init(b"")
+        if err_int:
+            raise Exception(_mikmod.MikMod_strerror(err_int).decode())
 
         if _mikmod.MikMod_InitThreads() == 0:
             print("Not thread safe")
@@ -231,8 +233,8 @@ class MikModFile(AudioIO):
 
         self._closed = False
 
-        self._update_p = Thread(target=self._update)
-        self._update_p.start()
+        # self._update_p = Thread(target=self._update)
+        # self._update_p.start()
 
         return module
 
@@ -274,8 +276,10 @@ class MikModFile(AudioIO):
                 else:
                     return b''
 
+            _mikmod.MikMod_Update()
             return self._outfile.read(size)
         except Exception as err:
+            print("Error reading: (%s)" % err, flush=True)
             return b''
 
     def _load_info(self, module):
