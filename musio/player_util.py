@@ -109,7 +109,8 @@ class AudioPlayer(object):
         self._control_conn, self._player_conn = Pipe()
 
         # Open the file.
-        self.open(filename, **kwargs)
+        if filename:
+            self.open(filename, **kwargs)
 
     def __str__(self) -> str:
         """ The information about the open file.
