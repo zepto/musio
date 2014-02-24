@@ -25,6 +25,7 @@
 from ctypes import *
 from ctypes.util import find_library
 
+
 dumblib_name = find_library('dumb')
 if not dumblib_name:
     raise Exception("libdumb could not be found")

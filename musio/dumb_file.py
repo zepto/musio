@@ -23,6 +23,8 @@
 
 """
 
+from ctypes import Union, c_short, c_ubyte
+
 from .io_base import AudioIO, io_wrapper
 from .conversion_util import swap_endian
 
@@ -43,14 +45,14 @@ __supported_dict = {
 }
 
 
-class Buffer(_dumb.Union):
+class Buffer(Union):
     """ A union for taking the samples from duh_render.
 
     """
 
     _fields_ = [
-        ("s16", _dumb.c_short * 8192),
-        ("s8", _dumb.c_ubyte * 16384)
+        ("s16", c_short * 8192),
+        ("s8", c_ubyte * 16384)
     ]
 
 
