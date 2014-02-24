@@ -107,6 +107,7 @@ def main(args: dict) -> int:
                     break
 
             if args['show_position']:
+                player.stop()
                 print("\nDone.")
 
             if quit_command: break
@@ -115,7 +116,8 @@ def main(args: dict) -> int:
         print("Error: %s", flush=True)
     finally:
         # Always stop the player.
-        player.stop()
+        if player.playing:
+            player.stop()
 
         # Re-set the terminal state.
         tcsetattr(sys_stdin, TCSANOW, normal)
