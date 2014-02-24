@@ -22,4 +22,4 @@
 
 """
 
-__all__ = ['_mp4v2']
+__all__ = ['_mp4v2', '_mp4v2_wrapper']
