@@ -25,10 +25,6 @@
 
 from os.path import isfile as os_isfile
 from array import array
-from functools import partial
-from random import randint, seed
-from time import time
-from functools import partial
 
 from .io_base import AudioIO, io_wrapper
 from .io_util import slice_buffer
@@ -38,8 +34,8 @@ from .import_util import LazyImport
 
 _vorbisfile = LazyImport('ogg.vorbisfile', globals(), locals(),
                          ['_vorbisfile'], 1)
-_vorbisenc = LazyImport('ogg.vorbisenc', globals(), locals(),
-                        ['_vorbisenc'], 1)
+_vorbisenc = LazyImport('ogg.vorbisenc_wrapper', globals(), locals(),
+                        ['vorbisenc_wrapper'], 1)
 
 __supported_dict = {
     'ext': ['.ogg', '.ogv'],
@@ -94,17 +90,17 @@ class VorbisFile(AudioIO):
             self._comment_dict = comment_dict
             self._info_dict.update(self._comment_dict)
 
-            self._stream_state = OggStreamState()
-            self._page = OggPage()
-            self._packet = OggPacket()
+            self._stream_state = _vorbisenc.OggStreamState()
+            self._page = _vorbisenc.OggPage()
+            self._packet = _vorbisenc.OggPacket()
 
-            self._info = VorbisInfo()
-            self._comment = VorbisComment()
+            self._info = _vorbisenc.VorbisInfo()
+            self._comment = _vorbisenc.VorbisComment()
 
             self._comment.update(comment_dict)
 
-            self._dsp_state = DspState()
-            self._block = VorbisBlock()
+            self._dsp_state = _vorbisenc.DspState()
+            self._block = _vorbisenc.VorbisBlock()
 
             self._vorbis_file = self._write_open(filename)
 
@@ -273,7 +269,7 @@ class VorbisFile(AudioIO):
         """
 
         ret = self._info.encode_init_vbr(self._channels, self._rate,
-                                         _vorbisenc.c_float(self._quality))
+                                         _vorbisfile.c_float(self._quality))
 
         if ret != 0:
             raise IOError("Error initializing vorbis info")
@@ -284,9 +280,9 @@ class VorbisFile(AudioIO):
         self._dsp_state.analysis_init(self._info)
         self._dsp_state.block_init(self._block)
 
-        header = OggPacket()
-        header_comm = OggPacket()
-        header_code = OggPacket()
+        header = _vorbisenc.OggPacket()
+        header_comm = _vorbisenc.OggPacket()
+        header_code = _vorbisenc.OggPacket()
 
         self._dsp_state.headerout(self._comment, header, header_comm,
                                   header_code)
@@ -385,207 +381,3 @@ class VorbisFile(AudioIO):
 
             # The file is closed.
             self._closed = True
-
-
-class OggStreamState(_vorbisenc.ogg_stream_state):
-    """ An ogg stream state wrapper.
-
-    """
-
-    def __init__(self, serialno=None):
-        """ Initialize the stream state with the serial number serial no.
-        If serialno is not set than a random number is used.
-
-        """
-
-        super(OggStreamState, self).__init__()
-
-        if not serialno:
-            seed(time())
-            serialno = randint(0, 32767)
-        _vorbisenc.ogg_stream_init(self, serialno)
-
-        self.packetin = partial(_vorbisenc.ogg_stream_packetin, self)
-        self.pageout = partial(_vorbisenc.ogg_stream_pageout, self)
-        self.flush = partial(_vorbisenc.ogg_stream_flush, self)
-
-        self.clear = partial(_vorbisenc.ogg_stream_clear, self)
-
-
-class OggPacket(_vorbisenc.ogg_packet):
-    """ An ogg packet wrapper.
-
-    """
-
-    def __init__(self):
-        """ Create an ogg packet.
-
-        """
-
-        super(OggPacket, self).__init__()
-
-
-class OggPage(_vorbisenc.ogg_page):
-    """ Ogg page wrapper.
-
-    """
-
-    def __init__(self):
-        """ Create an ogg page.
-
-        """
-
-        super(OggPage, self).__init__()
-
-    def __str__(self):
-        """ The header and body.
-
-        """
-
-        return bytes(self.header_str + self.body_str)
-    __bytes__ = __str__
-
-    @property
-    def header_str(self):
-        """ The page header.
-
-        """
-
-        return _vorbisfile.string_at(self.header, self.header_len)
-
-    @property
-    def body_str(self):
-        """ The page body.
-
-        """
-
-        return _vorbisfile.string_at(self.body, self.body_len)
-
-    @property
-    def eos(self):
-        """ True if the end of stream was reached.
-
-        """
-
-        return _vorbisenc.ogg_page_eos(self)
-
-
-class DspState(_vorbisenc.vorbis_dsp_state):
-    """ DspState wrapper.
-
-    """
-
-    def __init__(self):
-        """ Create a dsp state.
-
-        """
-
-        super(DspState, self).__init__()
-
-        self.analysis_init = partial(_vorbisenc.vorbis_analysis_init, self)
-        self.analysis_buffer = partial(_vorbisenc.vorbis_analysis_buffer, self)
-        self.block_init = partial(_vorbisenc.vorbis_block_init, self)
-        self.headerout = partial(_vorbisenc.vorbis_analysis_headerout, self)
-        self.blockout = partial(_vorbisenc.vorbis_analysis_blockout, self)
-        self.get_buffer = partial(_vorbisenc.vorbis_analysis_buffer, self)
-        self.wrote = partial(_vorbisenc.vorbis_analysis_wrote, self)
-        self.bitrate_flushpacket = partial(_vorbisenc.vorbis_bitrate_flushpacket, self)
-
-        self.clear = partial(_vorbisenc.vorbis_dsp_clear, self)
-
-
-class VorbisInfo(_vorbisenc.vorbis_info):
-    """ Vorbis info wrapper.
-
-    """
-
-    def __init__(self):
-        """ Initialize the vorbis info.
-
-        """
-
-        super(VorbisInfo, self).__init__()
-        _vorbisenc.vorbis_info_init(_vorbisfile.byref(self))
-
-        self.encode_init_vbr = partial(_vorbisenc.vorbis_encode_init_vbr,
-                                       _vorbisfile.byref(self))
-        self.encode_setup_vbr = partial(_vorbisenc.vorbis_encode_setup_vbr,
-                                        _vorbisfile.byref(self))
-        self.encode_setup_init = partial(_vorbisenc.vorbis_encode_setup_init,
-                                         _vorbisfile.byref(self))
-        self.clear = partial(_vorbisenc.vorbis_info_clear,
-                             _vorbisfile.byref(self))
-
-
-class VorbisComment(_vorbisenc.vorbis_comment):
-    """ Vorbis comment wrapper.
-
-    """
-
-    def __init__(self):
-        """ Create and initialize a vorbis comment.
-
-        """
-
-        _vorbisenc.vorbis_comment_init(self)
-
-        self.clear = partial(_vorbisenc.vorbis_comment_clear, self)
-
-    def __str__(self):
-        """ A String representation of the comment dict.
-
-        """
-
-        return str(self.__dict__)
-
-    def __repr__(self):
-        """ Python expression to recreate this object.__init__
-
-        """
-
-        return '%s()' % self.__class__.__name__
-
-    def __setitem__(self, key, value):
-        """ Add a tag to the comment.
-
-        """
-
-        self.__dict__[key] = value
-
-        key = key.encode('utf8', 'replace')
-        value = value.encode('utf8', 'replace')
-
-        return _vorbisenc.vorbis_comment_add_tag(self, key, value)
-
-    def __getitem__(self, key):
-        """ Return the value key.
-
-        """
-
-        return self.__dict__.get(key, None)
-
-    def update(self, updates_dict):
-        """ update(self, updates_dict) -> Update the internal dict with values
-        from updates_dict.
-
-        """
-
-        for key, value in updates_dict.items():
-            self[key] = str(value)
-
-
-class VorbisBlock(_vorbisenc.vorbis_block):
-    """ Vorbis block wrapper.
-
-    """
-
-    def __init__(self):
-        """ Create a vorbis block.
-
-        """
-
-        super(VorbisBlock, self).__init__()
-
-        self.analysis = partial(_vorbisenc.vorbis_analysis, self)
-        self.bitrate_addblock = partial(_vorbisenc.vorbis_bitrate_addblock, self)
-        self.clear = partial(_vorbisenc.vorbis_block_clear, self)

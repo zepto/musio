@@ -22,4 +22,4 @@
 
 """
 
-__all__ = ['vorbisfile', 'codec', 'ogg', 'vorbisenc']
+__all__ = ['vorbisfile', 'codec', 'ogg', 'vorbisenc', 'vorbisenc_wrapper']
