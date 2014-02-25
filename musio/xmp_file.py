@@ -127,6 +127,11 @@ class XMPFile(AudioIO):
         self.__frame_info = _xmp.xmp_frame_info()
         _xmp.xmp_get_frame_info(xmp_context, _xmp.byref(self.__frame_info))
 
+        _xmp.xmp_set_player(xmp_context, _xmp.XMP_PLAYER_INTERP,
+                            _xmp.XMP_INTERP_SPLINE)
+        _xmp.xmp_set_player(xmp_context, _xmp.XMP_PLAYER_DSP, _xmp.XMP_DSP_ALL)
+        _xmp.xmp_set_player(xmp_context, _xmp.XMP_PLAYER_MIX, 1000)
+
         # The file is now open.
         self._closed = False
 
