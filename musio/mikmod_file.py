@@ -35,6 +35,8 @@ from .import_util import LazyImport
 
 _mikmod = LazyImport('mikmod._mikmod', globals(), locals(),
                      ['_mikmod'], 1)
+_mikmod_drv = LazyImport('mikmod.driver', globals(), locals(),
+                     ['driver'], 1)
 
 __supported_dict = {
     'ext': ['.669', '.amf', '.dsm', '.far', '.gdm', '.imf', '.it', '.med',
@@ -82,10 +84,11 @@ class MikModFile(AudioIO):
                                   | _mikmod.DMODE_HQMIXER
 
         _mikmod.md_mixfreq.value = rate
-        # _mikmod.md_device.value = 5
 
         # Set the device to a raw file.
-        _mikmod.md_device.value = 6
+        # _mikmod.md_device.value = 6
+        # Use custom driver.
+        _mikmod.md_device.value = 0
 
         self._out_filename = 'music.raw'
 
@@ -99,20 +102,19 @@ class MikModFile(AudioIO):
 
         _mikmod.Player_Start(self._module)
 
-        self._outfile = open(self._out_filename, 'rb', buffering=0)
-
     def _set_position(self, position):
         """ Change the position of playback.
 
         """
 
-        _mikmod.Player_SetPosition(position)
+        _mikmod.Player_SetPosition(position + 1)
 
     def _get_position(self):
         """ Updates the position variable.
 
         """
 
+        # print(self._module.contents.sngpos, self._module.contents.numpos)
         return self._module.contents.sngpos
 
     @property
@@ -216,7 +218,8 @@ class MikModFile(AudioIO):
 
         filename = filename.encode('utf8', 'replace')
 
-        _mikmod.MikMod_RegisterAllDrivers()
+        # _mikmod.MikMod_RegisterAllDrivers()
+        _mikmod.MikMod_RegisterDriver(_mikmod.byref(_mikmod_drv.drv_musio))
         _mikmod.MikMod_RegisterAllLoaders()
         # print(_mikmod.MikMod_InfoDriver().decode())
 
@@ -233,19 +236,7 @@ class MikModFile(AudioIO):
 
         self._closed = False
 
-        # self._update_p = Thread(target=self._update)
-        # self._update_p.start()
-
         return module
-
-    def _update(self):
-        """ Update the mikmod player until the mod is closed.
-
-        """
-
-        while not self._closed:
-            _mikmod.MikMod_Update()
-            time_sleep(0.1)
 
     def close(self):
         """ Stops playback and unloads the module.
@@ -256,11 +247,6 @@ class MikModFile(AudioIO):
             _mikmod.Player_Stop()
             _mikmod.Player_Free(self._module)
             _mikmod.MikMod_Exit()
-            try:
-                self._outfile.close()
-                os_remove(self._out_filename)
-            except:
-                pass
             self._closed = True
 
     @io_wrapper
@@ -270,14 +256,21 @@ class MikModFile(AudioIO):
         """
 
         try:
-            if self.position >= self.length:
-                if self._loops == -1 or self._loop_count >= self._loops:
-                    self.seek(0)
-                else:
+            if self.position >= self.length - 1:
+                if self._loops != -1 and self._loop_count >= self._loops:
                     return b''
+                else:
+                    self._loop_count += 1
+                    self.seek(0)
 
-            _mikmod.MikMod_Update()
-            return self._outfile.read(size)
+            byte_buffer = (_mikmod.c_byte * size)()
+
+            data = b''
+            while len(data) < size:
+                read_size = _mikmod.VC_WriteBytes(byte_buffer, size)
+                data += byte_buffer
+
+            return data
         except Exception as err:
             print("Error reading: (%s)" % err, flush=True)
             return b''

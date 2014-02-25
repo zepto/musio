@@ -22,4 +22,4 @@
 
 """
 
-__all__ = ['_mikmod']
+__all__ = ['_mikmod', 'driver']
