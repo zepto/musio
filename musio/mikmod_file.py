@@ -100,6 +100,8 @@ class MikModFile(AudioIO):
         self._module.contents.loop = True
         self._module.contents.wrap = True
 
+        self._near_end = 0
+
         _mikmod.Player_Start(self._module)
 
     def _set_position(self, position):
@@ -257,11 +259,13 @@ class MikModFile(AudioIO):
 
         try:
             if self.position >= self.length - 1:
+                self._near_end = self.position
+
+            if self.position < self._near_end:
                 if self._loops != -1 and self._loop_count >= self._loops:
                     return b''
-                else:
-                    self._loop_count += 1
-                    self.seek(0)
+                self._loop_count += 1
+                self._near_end = 0
 
             byte_buffer = (_mikmod.c_byte * size)()
 
