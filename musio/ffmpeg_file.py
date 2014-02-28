@@ -315,7 +315,8 @@ class FFmpegFile(AudioIO):
                 #     continue
 
                 # Calculate the size of the decoded data.
-                data_size = _av.av_samples_get_buffer_size(frame.contents.linesize,
+                data_size = _av.av_samples_get_buffer_size(
+                        frame.contents.linesize,
                         self.__codec_context.contents.channels,
                         frame.contents.nb_samples,
                         self.__codec_context.contents.sample_fmt, 1)

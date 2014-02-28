@@ -106,11 +106,21 @@ class ModPlugFile(AudioIO):
         else:
             self._proc_func = lambda data_list: data_list
 
+        self._pos = 0
+
+    def _get_position(self):
+        """ Return the current playback position in milliseconds.
+
+        """
+
+        return self._pos
+
     def _set_position(self, position):
         """ Change the position of playback.
 
         """
 
+        self._pos = position
         _modplug.ModPlug_Seek(self._modplug_file, position)
 
     def _open(self, filename):
@@ -190,16 +200,31 @@ class ModPlugFile(AudioIO):
 
     @io_wrapper
     def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.
+        """ read(size) -> Reads size amount of data and returns it.
 
         """
 
         str_buffer = _modplug.create_string_buffer(size)
+        data = b''
 
         if _modplug.ModPlug_Read(self._modplug_file, str_buffer, size) != 0:
-            return self._proc_func(str_buffer.raw)
+            samples_read = len(str_buffer.raw) / (self._channels * self._depth >> 3)
+            # Calculate the position in milliseconds.
+            self._pos += samples_read // (self._rate / 1000)
+            data = self._proc_func(str_buffer.raw)
         else:
-            return ''
+            # If no data was read then we have reached the end of the
+            # file so restart or exit.
+            if self._loops == -1 or self._loop_count < self._loops:
+                # Fill the buffer so we return the requested size.
+                data += b'\x00' * (size - len(data))
+
+                # Update the loop count and seek to the start.
+                self._loop_count += 1
+                self.seek(0)
+
+        # Return the data if data = b'' then the player will exit.
+        return data
 
     def close(self):
         """ close -> Closes and cleans up.
@@ -244,6 +269,7 @@ class ModPlugFile(AudioIO):
 
         """
 
+        self._loops = value
         self._modplug_settings.mLoopCount = int(value)
 
     @property

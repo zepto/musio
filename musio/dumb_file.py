@@ -307,7 +307,7 @@ class DumbFile(AudioIO):
         if c_size > self._max_read_size:
             c_size = self._max_read_size
 
-        # Render size will render c_size bytes.
+        # Convert the requested size to the number of samples to read.
         read_size = c_size // (self._channels * (self._depth >> 3))
 
         # Data buffer to fill.
