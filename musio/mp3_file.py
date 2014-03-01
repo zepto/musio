@@ -141,6 +141,13 @@ class MP3File(AudioIO):
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
+    def to_seconds(self, position):
+        """ Convert the provided position/length to seconds.
+
+        """
+
+        return position / self._rate
+
     def _set_position(self, position):
         """ Change the position of playback.
 

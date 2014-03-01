@@ -394,6 +394,13 @@ class AudioIO(RawIOBase):
 
         raise NotImplementedError("Open method not implemented.")
 
+    def to_seconds(self, position: int) -> int:
+        """ Convert the provided position/length to seconds.
+
+        """
+
+        return position
+
     def _set_position(self, position: int):
         """ Change the position of playback.
 

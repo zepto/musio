@@ -90,6 +90,13 @@ class XMPFile(AudioIO):
 
         self._load_info()
 
+    def to_seconds(self, position):
+        """ Convert the provided position/length to seconds.
+
+        """
+
+        return position / 1000
+
     def _set_position(self, position):
         """ Change the position of playback.
 

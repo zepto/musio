@@ -108,6 +108,13 @@ class ModPlugFile(AudioIO):
 
         self._pos = 0
 
+    def to_seconds(self, position):
+        """ Convert the provided position/length to seconds.
+
+        """
+
+        return position / 1000
+
     def _get_position(self):
         """ Return the current playback position in milliseconds.
 

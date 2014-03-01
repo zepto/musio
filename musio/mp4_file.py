@@ -74,6 +74,13 @@ class Mp4File(AudioIO):
 
         self._data = b''
 
+    def to_seconds(self, position):
+        """ Convert the provided position/length to seconds.
+
+        """
+
+        return (position * 1024) / self._rate
+
     def _set_position(self, position):
         """ Change the position of playback.
 

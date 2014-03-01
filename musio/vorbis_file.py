@@ -114,6 +114,13 @@ class VorbisFile(AudioIO):
         else:
             self._write_close()
 
+    def to_seconds(self, position):
+        """ Convert the provided position/length to seconds.
+
+        """
+
+        return position / self._rate
+
     def _set_position(self, position):
         """ Change the position of playback.
 

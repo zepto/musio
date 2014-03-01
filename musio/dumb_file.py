@@ -136,6 +136,13 @@ class DumbFile(AudioIO):
 
         return int(self._loops != -1 and self._loop_count > self._loops)
 
+    def to_seconds(self, position):
+        """ Convert the provided position/length to seconds.
+
+        """
+
+        return position / 65536
+
     def _set_position(self, position):
         """ Change the position of playback.
 
