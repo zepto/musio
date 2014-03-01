@@ -73,9 +73,14 @@ def main(args: dict) -> None:
     try:
         with open_file(**args) as in_file:
             in_file_title = in_file._info_dict.get('title',
-                                                   in_file._info_dict['name'])
+                                                in_file._info_dict['name'])
             comment_dict = {'title': in_file_title}
             comment_dict.update(in_file._info_dict)
+            for i in ['title', 'artist', 'album', 'year', 'comment',
+                      'track', 'genre']:
+                if args[i]:
+                    comment_dict[i] = args[i]
+
             with open_file(output, 'w', depth=in_file.depth, rate=in_file.rate,
                         channels=in_file.channels, quality=quality,
                         comment_dict=comment_dict) as out_file:
@@ -136,6 +141,20 @@ if __name__ == '__main__':
                         help='Encoding quality (1-10)', dest='quality')
     parser.add_argument('-t', '--track', action='store', default=0, type=int,
                         help='Track to play', dest='track')
+    parser.add_argument('-tt', '--title', action='store', default='',
+                        help='id3 Title tag', dest='title')
+    parser.add_argument('-ta', '--artist', action='store', default='',
+                        help='id3 Artist tag', dest='artist')
+    parser.add_argument('-tl', '--album', action='store', default='',
+                        help='id3 Album tag', dest='album')
+    parser.add_argument('-ty', '--year', action='store', default='',
+                        help='id3 Year tag', dest='year')
+    parser.add_argument('-tc', '--comment', action='store', default='',
+                        help='id3 Comment tag', dest='comment')
+    parser.add_argument('-tr', '--id3track', action='store', default='',
+                        help='id3 Track tag', dest='track')
+    parser.add_argument('-tg', '--genre', action='store', default=0,
+                        type=int, help='id3 Genre tag', dest='genre')
     parser.add_argument('-p', '--path', action='store', default=[],
                         type=lambda a: a.split(','), help='Codec path',
                         dest='mod_path')
