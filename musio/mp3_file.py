@@ -241,7 +241,8 @@ class MP3File(AudioIO):
 
         try:
             if id3v2.contents.extras > 0:
-                id3_dict['extra'] = id3v2.contents.extra.contents.text.p
+                tag_type = id3v2.contents.extra.contents.description.p.decode()
+                id3_dict[tag_type] = id3v2.contents.extra.contents.text.p
         except:
             pass
 
@@ -251,14 +252,16 @@ class MP3File(AudioIO):
         except:
             pass
 
-        temp_dict = {}
-        temp_dict.update(id3_dict)
-        for key, value in temp_dict.items():
+        for key, value in dict(id3_dict.items()).items():
             if type(value) is not int:
-                if not i.strip():
+                if not value.strip():
                     id3_dict.pop(key)
                 elif type(value) is bytes:
+                    id3_dict.pop(key)
                     id3_dict[key.lower()] = value.decode()
+            else:
+                id3_dict.pop(key)
+                id3_dict[key.lower()] = value
 
         album = id3_dict.get('album', '')
         artist = id3_dict.get('artist', '')
