@@ -65,12 +65,20 @@ def main(args: dict) -> None:
     # not.
     quit_val = True
 
-    quality = args['quality'] / 10 if args['quality'] in range(-1, 11) else 0.5
+    if args['filetype'].lower() == 'ogg':
+        quality = args['quality'] / 10 if args['quality'] in range(-1, 11) else 0.5
+    elif args['filetype'].lower() == 'mp3':
+        quality = args['quality'] if args['quality'] in range(0, 10) else 2
 
     try:
         with open_file(**args) as in_file:
+            in_file_title = in_file._info_dict.get('title',
+                                                   in_file._info_dict['name'])
+            comment_dict = {'title': in_file_title}
+            comment_dict.update(in_file._info_dict)
             with open_file(output, 'w', depth=in_file.depth, rate=in_file.rate,
-                        channels=in_file.channels, quality=quality) as out_file:
+                        channels=in_file.channels, quality=quality,
+                        comment_dict=comment_dict) as out_file:
                 in_file.loops = 0
 
                 if args['show_position']:
@@ -123,8 +131,8 @@ def main(args: dict) -> None:
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
-    parser = ArgumentParser(description="Musio vorbis encoder")
-    parser.add_argument('-e', '--quality', action='store', default=5, type=int,
+    parser = ArgumentParser(description="Musio encoder")
+    parser.add_argument('-e', '--quality', action='store', default=-10, type=int,
                         help='Encoding quality (1-10)', dest='quality')
     parser.add_argument('-t', '--track', action='store', default=0, type=int,
                         help='Track to play', dest='track')
