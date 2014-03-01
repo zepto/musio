@@ -229,10 +229,11 @@ class MP3File(AudioIO):
             try:
                 id3_dict[i] = getattr(id3v1.contents, i)
             except:
-                try:
-                    id3_dict[i] = getattr(id3v2.contents, i).contents.p
-                except:
-                    continue
+                pass
+            try:
+                id3_dict[i] = getattr(id3v2.contents, i).contents.p
+            except:
+                continue
         try:
             id3_dict['version'] = id3v2.contents.version
         except:
