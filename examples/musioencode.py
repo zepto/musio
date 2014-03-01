@@ -153,18 +153,29 @@ if __name__ == '__main__':
     parser.add_argument('-q', '--quiet', action='store_false', default=True,
                         help='Don\'t show playback percentage.',
                         dest='show_position')
+    parser.add_argument('-lg', '--list-genres', action='store_true',
+                        default=False, 
+                        help='Print a list of valid genres and exit.',
+                        dest='list_genres')
     parser.add_argument('-d', '--debug', action='store_true', default=False,
                         help='Enable debug error messages.',
                         dest='debug')
-    parser.add_argument(dest='filename', nargs='+')
+    parser.add_argument('-i', '--input', dest='input_filename', nargs='+')
     args = parser.parse_args()
 
-    if args.filename:
+    if args.list_genres:
+        # Print out valid genres.
+        from musio.mp3_file import get_genre_list
+        print("ID\tGenre")
+        for genre_id, genre in enumerate(get_genre_list()):
+            if genre:
+                print("%s\t%s" % (genre_id, genre))
+    elif args.input_filename:
         # Copy the args dict to use later
         args_dict = args.__dict__
 
         # Pop the filenames list out of the args dict.
-        filenames = args_dict.pop('filename')
+        filenames = args_dict.pop('input_filename')
 
         # Loop over all the filenames playing each one.
         for filename in filenames:

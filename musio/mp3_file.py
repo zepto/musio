@@ -50,6 +50,28 @@ SEEK_SET = 0 # Seek from beginning of file.
 SEEK_CUR = 1 # Seek from current position.
 SEEK_END = 2 # Seek from end of file.
 
+def get_genre_list():
+    """ Returns a list of valid id3 genres.
+
+    """
+
+    genre_list = [''] * 255
+
+    def _make_genre_list(genre_id, genre, cookie):
+        """ Make a list of id3 tags and their id's.
+
+        """
+
+        try:
+            genre_list[genre_id] = genre.decode()
+        except:
+            print(genre_id)
+
+    _callback = _lame.CFUNCTYPE(None, _lame.c_int, _lame.STRING, _lame.c_void_p)
+    _lame.id3tag_genre_list(_callback(_make_genre_list), None)
+
+    return genre_list
+
 def _check(err):
     """ Check if there was an error and print the result.
 
