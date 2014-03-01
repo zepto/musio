@@ -29,7 +29,7 @@ setup(
     name='musio',
     packages=['musio', 'musio.audiality', 'musio.alsa', 'musio.dumb',
               'musio.espeak', 'musio.faad', 'musio.ffmpeg',
-              'musio.fluidsynth', 'musio.gme', 'musio.mikmod',
+              'musio.fluidsynth', 'musio.gme', 'musio.lame', 'musio.mikmod',
               'musio.modplug', 'musio.mp4v2', 'musio.mpg123', 'musio.ogg',
               'musio.portaudio', 'musio.xmp'],
     version='0.5.0',
