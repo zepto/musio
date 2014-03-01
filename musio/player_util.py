@@ -169,7 +169,7 @@ class AudioPlayer(object):
 
         """
 
-        return self.length
+        return self.length if self.length >= 0 else 0
 
     def playing_wrapper(func):
         """ Wrap methods and only call them if the stream is playing
