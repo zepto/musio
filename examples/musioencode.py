@@ -78,7 +78,7 @@ def main(args: dict) -> None:
             comment_dict.update(in_file._info_dict)
             for i in ['title', 'artist', 'album', 'year', 'comment',
                       'track', 'genre']:
-                if args[i]:
+                if args.get(i, ''):
                     comment_dict[i] = args[i]
 
             with open_file(output, 'w', depth=in_file.depth, rate=in_file.rate,

@@ -214,6 +214,12 @@ class ModPlugFile(AudioIO):
         str_buffer = _modplug.create_string_buffer(size)
         data = b''
 
+        # Don't loop past .01% of length.
+        if self.position > (self.length + (.001 * self.length)):
+            self._loop_count = self.position / self.length
+            if self._loops != -1 and self._loop_count > self._loops:
+                return b''
+
         if _modplug.ModPlug_Read(self._modplug_file, str_buffer, size) != 0:
             samples_read = len(str_buffer.raw) / (self._channels * self._depth >> 3)
             # Calculate the position in milliseconds.

@@ -137,7 +137,7 @@ class MP3File(AudioIO):
 
             self._quality = quality
             self._comment_dict = comment_dict
-            if not self._comment_dict['comment']:
+            if not self._comment_dict.get('comment', ''):
                 self._comment_dict['comment'] = 'Encoded with musio.mp3_file'
 
             self._global_flags = _lame.lame_init()
