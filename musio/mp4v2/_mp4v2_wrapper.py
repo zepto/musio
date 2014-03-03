@@ -105,7 +105,7 @@ class Mp4Handle(_mp4v2.MP4FileHandle):
             track_type = track.type
 
             # Only use audio tracks.
-            if not track_type or not _mp4v2.MP4_IS_AUDIO_TRACK_TYPE(track_type):
+            if not track_type or _mp4v2.MP4_IS_AUDIO_TRACK_TYPE(track_type):
                 continue
 
             object_type = track.object_type
