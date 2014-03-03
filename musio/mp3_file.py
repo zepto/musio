@@ -332,7 +332,7 @@ class MP3File(AudioIO):
                     self.seek(0)
                     continue
 
-            data += byte_buffer
+            data += _mpg123.string_at(byte_buffer, bytes_read.value)
 
         # Make sure we return only the number of bytes requested.
         self._data = data[size:]

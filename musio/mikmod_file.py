@@ -272,7 +272,7 @@ class MikModFile(AudioIO):
             data = b''
             while len(data) < size:
                 read_size = _mikmod.VC_WriteBytes(byte_buffer, size)
-                data += byte_buffer
+                data += _mikmod.string_at(byte_buffer, read_size)
 
             return data
         except Exception as err:
