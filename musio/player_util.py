@@ -249,10 +249,13 @@ class AudioPlayer(object):
 
                         # Filler for end of partial buffer to elminiate
                         # end of audio noise.
-                        buf_filler = b'\x00' * (device.buffer_size - len(buf))
+                        if type(buf) == bytes:
+                            filler = b'\x00' * (device.buffer_size - len(buf))
+                        else:
+                            filler = ''
 
                         # Write buf.
-                        written = device.write(buf + buf_filler)
+                        written = device.write(buf + filler)
                     else:
                         # Write a buffer of null bytes so the audio
                         # system can keep its buffer full.
