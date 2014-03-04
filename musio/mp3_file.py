@@ -138,7 +138,7 @@ class MP3File(AudioIO):
             self._quality = quality
             self._comment_dict = comment_dict
             if not self._comment_dict.get('comment', ''):
-                self._comment_dict['comment'] = 'Encoded with musio.mp3_file'
+                self._comment_dict['comment'] = 'Encoded with %s' % __name__
 
             self._global_flags = _lame.lame_init()
 
@@ -153,7 +153,6 @@ class MP3File(AudioIO):
                 raise(Exception("Error initializing lame"))
 
             self._out_file = self._write_open(filename)
-            self._write_id3v2tags()
 
     def __repr__(self):
         """ __repr__ -> Returns a python expression to recreate this instance.
@@ -238,9 +237,69 @@ class MP3File(AudioIO):
 
         """
 
+        # Initialize the id3tags and add v2 tags.
+        _lame.id3tag_init(self._global_flags)
+        _lame.id3tag_add_v2(self._global_flags)
+
+
+        type_dict = {'title':b'TIT2', 'artist':b'TPE1', 'album':b'TALB',
+                     'year':b'TYER', 'track':b'TRCK', 'genre':b'TCON'}
+
+        # Add the tags in comment_dict.
+        for tag_type, tag in self._comment_dict.items():
+            # Cleanup the tag before encoding.
+            tag = str(tag).strip()
+
+            # Detect the tag encoding.
+            for tag_enc in ['ascii', 'latin-1', 'utf16']:
+                try:
+                    tag = tag.encode(tag_enc) if type(tag) is str else tag
+                    break
+                except UnicodeEncodeError:
+                    continue
+
+            # Add all id3 tags.
+            tag_func = getattr(_lame, 'id3tag_set_%s' % tag_type, None)
+            if tag_func:
+                if tag_func(self._global_flags, tag):
+                    err_str = '%s %s out of range' % (tag_type, tag)
+                    msg_out("Error in %s: %s" % (__file__, err_str))
+                _lame.id3tag_set_pad(self._global_flags, 128000)
+
+            # Add the utf16 tags.
+            if tag_enc == 'utf16':
+                tag_id = type_dict.get(tag_type, None)
+
+                # Convert the tag to a unsigned short array.
+                data_bytes = array('h', tag)
+                in_buffer = (_lame.c_ushort * len(data_bytes))(*data_bytes)
+
+                if tag_type == 'comment':
+                    ret = _lame.id3tag_set_comment_utf16(self._global_flags,
+                                                        _lame.c_char_p(0),
+                                                        _lame.c_ushort(0),
+                                                        in_buffer)
+                if tag_id:
+                    ret = _lame.id3tag_set_textinfo_utf16(self._global_flags,
+                                                        _lame.c_char_p(tag_id),
+                                                        in_buffer)
+
+        # Write the v2 tag.
+        id3v2_size = _lame.lame_get_id3v2_tag(self._global_flags,
+                                              _lame.c_ubyte(0), 0)
+        id3v2_tag = (_lame.c_ubyte * id3v2_size)()
+        id3v2_len = _lame.lame_get_id3v2_tag(self._global_flags, id3v2_tag,
+                                             id3v2_size)
+        out_data = _lame.string_at(id3v2_tag, id3v2_len)
+
+        out_file = open(filename, 'wb')
+
+        # Write out the id3v2 tags.
+        out_file.write(out_data)
+
         self._closed = False
 
-        return open(filename, 'wb')
+        return out_file
 
     def _update_info(self):
         """ Updates the id3 info for the opened mp3.
@@ -264,6 +323,7 @@ class MP3File(AudioIO):
                 id3_dict[i] = getattr(id3v2.contents, i).contents.p
             except:
                 continue
+
         try:
             id3_dict['version'] = id3v2.contents.version
         except:
@@ -350,7 +410,7 @@ class MP3File(AudioIO):
         samples_per_chan = num_samples // self._channels
 
         # Create a buffer to hold the encoded data.
-        encoded_data = (_lame.c_ubyte * len(data))()
+        encoded_data = (_lame.c_ubyte * _lame.LAME_MAXMP3BUFFER)()
 
         # Split the data into samples.
         if self._depth == 16:
@@ -374,43 +434,13 @@ class MP3File(AudioIO):
                                                     in_buffer,
                                                     samples_per_chan,
                                                     encoded_data,
-                                                    0)
+                                                    _lame.sizeof(encoded_data))
 
         # Retrieve the encoded audio data from buffer.
         out_data = _lame.string_at(encoded_data, bytes_encoded)
 
-        # Write it to the file.
+        # Write data to the file.
         return self._out_file.write(out_data)
-
-    def _write_id3v2tags(self):
-        """ Write id3tags to the mp3 file.
-
-        """
-
-        # Initialize the id3tags and add v2 tags.
-        _lame.id3tag_init(self._global_flags)
-        _lame.id3tag_add_v2(self._global_flags)
-
-        # Add the tags in comment_dict.
-        for tag_type, tag in self._comment_dict.items():
-            # Make sure tag is of type bytes.
-            tag = tag.encode() if type(tag) is str else tag
-            if type(tag) is not bytes:
-                tag = str(tag).encode()
-            tag_func = getattr(_lame, 'id3tag_set_%s' % tag_type, None)
-            if tag_func:
-                if tag_func(self._global_flags, tag) == -1:
-                    err_str = '%s %s out of range' % (tag_type, tag)
-                    msg_out("Error in %s: %s" % (__file__, err_str))
-
-        # Write the v2 tag.
-        id3v2_size = _lame.lame_get_id3v2_tag(self._global_flags,
-                                              _lame.c_ubyte(0), 0)
-        id3v2_tag = (_lame.c_ubyte * id3v2_size)()
-        id3v2_len = _lame.lame_get_id3v2_tag(self._global_flags, id3v2_tag,
-                                             id3v2_size)
-        out_data = _lame.string_at(id3v2_tag, id3v2_len)
-        self._out_file.write(out_data)
 
     def close(self) -> bool:
         """ close -> Closes and cleans up.
@@ -418,9 +448,9 @@ class MP3File(AudioIO):
         """
 
         if self._mode == 'r':
-            self._read_close()
+            return self._read_close()
         else:
-            self._write_close()
+            return self._write_close()
 
     def _read_close(self) -> bool:
         """ close -> Closes reading file.
@@ -439,17 +469,20 @@ class MP3File(AudioIO):
             except Exception as err:
                 msg_out("(%s.close) Error: %s" % (self.__class__.__name__, err))
 
+        return self._closed
+
     def _write_close(self) -> bool:
         """ close -> Closes writing file.
 
         """
 
-        if self._out_file:
+        if self._out_file and not self._closed:
             # Create a buffer to hold the encoded data.
-            encoded_data = (_lame.c_ubyte * 7200)()
+            encoded_data = (_lame.c_ubyte * _lame.LAME_MAXMP3BUFFER)()
 
             # Flush the buffer and get the last buffer to write.
-            ret = _lame.lame_encode_flush(self._global_flags, encoded_data, 0)
+            ret = _lame.lame_encode_flush(self._global_flags, encoded_data,
+                                          _lame.sizeof(encoded_data))
 
             # Retrieve the encoded audio data from buffer.
             out_data = _lame.string_at(encoded_data, ret)
@@ -464,4 +497,15 @@ class MP3File(AudioIO):
             out_data = _lame.string_at(id3v1_tag, id3v1_len)
             self._out_file.write(out_data)
 
+            # Write lametag.
+            lametag = (_lame.c_ubyte * _lame.LAME_MAXMP3BUFFER)()
+            lametag_len = _lame.lame_get_lametag_frame(self._global_flags,
+                                                       lametag,
+                                                       _lame.sizeof(lametag))
+            out_data = _lame.string_at(lametag, lametag_len)
+            self._out_file.write(out_data)
+
             self._out_file.close()
+            _lame.lame_close(self._global_flags)
+
+        return self._closed
