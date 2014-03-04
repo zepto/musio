@@ -8,6 +8,7 @@ __pycache__
 *.ogg
 *.aac
 *.mp4
+*.mp3
 *.wav
 *.txt
 !README.txt

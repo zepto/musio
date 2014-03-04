@@ -31,6 +31,7 @@ def main(args: dict) -> None:
 
     from os.path import basename as os_basename
     from os.path import isfile as os_isfile
+    from os.path import splitext as os_splitext
     from sys import stdin as sys_stdin
     from select import select
     from time import sleep as time_sleep
@@ -44,7 +45,7 @@ def main(args: dict) -> None:
         io_util.DEBUG = True
 
     filename = args['filename']
-    output = os_basename(filename).rsplit('.')[0] + '.' + args['filetype']
+    output = os_splitext(os_basename(filename))[0] + '.' + args['filetype']
     if os_isfile(output):
         if input("Overwrite %s (y/n): " % output).lower().startswith('n'):
             return
