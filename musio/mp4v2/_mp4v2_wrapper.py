@@ -102,7 +102,7 @@ class Mp4Handle(_mp4v2.MP4FileHandle):
 
         # Tracks start at 1.
         for track in self.tracks():
-            track_type = track.type
+            track_type = track.type.decode()
 
             # Only use audio tracks.
             if not track_type or _mp4v2.MP4_IS_AUDIO_TRACK_TYPE(track_type):
