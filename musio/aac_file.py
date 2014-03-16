@@ -47,10 +47,16 @@ class AACDecoder(object):
 
     """
 
-    def __init__(self, init_buf, init_size, depth=16, stereo=True):
+    def __init__(self, init_buf, init_size, depth=16, stereo=True, mp4=False):
         """ Initialize class variables.
 
         """
+
+        # Use different init for mp4 files and aac files.
+        if mp4:
+            self._init = _neaacdec.NeAACDecInit2
+        else:
+            self._init = _neaacdec.NeAACDecInit
 
         if depth in [16, 24, 32]:
             out_format = getattr(_neaacdec, 'FAAD_FMT_%sBIT' % depth)
@@ -143,7 +149,7 @@ class AACDecoder(object):
 
         # Initialize the decoder and get the sample rate and channel
         # count.
-        ret = _neaacdec.NeAACDecInit2(decoder, init_buf, init_size,
+        ret = self._init(decoder, init_buf, init_size,
                                      _neaacdec.byref(rate),
                                      _neaacdec.byref(channels))
 

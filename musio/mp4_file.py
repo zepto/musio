@@ -105,7 +105,8 @@ class Mp4File(AudioIO):
             mp4_handle = _mp4v2_wrapper.Mp4(filename.encode())
 
         # Get the aac decoder.
-        self._aac_decoder = AACDecoder(*mp4_handle.get_configuration())
+        self._aac_decoder = AACDecoder(*mp4_handle.get_configuration(),
+                                       mp4=True)
 
         self._rate = self._aac_decoder.rate
         self._channels = self._aac_decoder.channels
