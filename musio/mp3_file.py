@@ -63,7 +63,7 @@ def get_genre_list():
         """
 
         try:
-            genre_list[genre_id] = genre.decode()
+            genre_list[genre_id] = genre.decode('utf8', 'replace')
         except:
             print(genre_id)
 
@@ -331,7 +331,8 @@ class MP3File(AudioIO):
 
         try:
             if id3v2.contents.extras > 0:
-                tag_type = id3v2.contents.extra.contents.description.p.decode()
+                tag_type = id3v2.contents.extra.contents.description.p
+                tag_type = tag_type.decode('utf8', 'replace')
                 id3_dict[tag_type] = id3v2.contents.extra.contents.text.p
         except:
             pass
@@ -348,7 +349,7 @@ class MP3File(AudioIO):
                     id3_dict.pop(key)
                 elif type(value) is bytes:
                     id3_dict.pop(key)
-                    id3_dict[key.lower()] = value.decode()
+                    id3_dict[key.lower()] = value.decode('utf8', 'replace')
             else:
                 id3_dict.pop(key)
                 id3_dict[key.lower()] = value
