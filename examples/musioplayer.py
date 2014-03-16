@@ -66,12 +66,14 @@ def main(args: dict) -> int:
         # Loop over the filenames playing each one with the same
         # AudioPlayer object.
         for filename in filenames:
+            filename = filename.encode('utf-8', 'surrogateescape')
+            filename = filename.decode('utf-8', 'surrogateescape')
             # Open next file.
             try:
                 player.open(filename, **args)
                 player.loops = args['loops']
             except IOError as err:
-                print("Unsupported audio format: %s" % args['filename'])
+                print("Unsupported audio format: %s" % filename)
                 return 1
 
             if args['show_position']:

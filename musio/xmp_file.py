@@ -121,7 +121,7 @@ class XMPFile(AudioIO):
 
         """
 
-        filename = filename.encode()
+        filename = filename.encode('utf-8', 'surrogateescape')
 
         xmp_context = _xmp.xmp_create_context()  # (_xmp.c_char * 4096)()
 

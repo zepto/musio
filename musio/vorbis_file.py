@@ -160,7 +160,7 @@ class VorbisFile(AudioIO):
 
         vorbis_file = _vorbisfile.OggVorbis_File()
 
-        filename = filename.encode()
+        filename = filename.encode('utf-8', 'surrogateescape')
 
         if _vorbisfile.ov_fopen(filename, _vorbisfile.byref(vorbis_file)) < 0:
             raise IOError('Error opening file: %s' % filename)

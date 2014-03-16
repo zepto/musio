@@ -170,7 +170,7 @@ class GMEFile(AudioIO):
 
         music_emu = _gme.POINTER(_gme.Music_Emu)()
 
-        filename = filename.encode()
+        filename = filename.encode('utf-8', 'surrogateescape')
         _err(_gme.gme_open_file(filename, _gme.byref(music_emu), self._rate))
 
         self._track_count = _gme.gme_track_count(music_emu)
@@ -361,7 +361,7 @@ class MusicEmu(object):
 
         """
 
-        filename = filename.encode()
+        filename = filename.encode('utf-8', 'surrogateescape')
 
         music_emu = _gme.POINTER(_gme.Music_Emu)()
 

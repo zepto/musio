@@ -88,7 +88,7 @@ class AgwFile(AudioIO):
 
         """
 
-        filename = filename.encode()
+        filename = filename.encode('utf-8', 'surrogateescape')
 
         # Stop the audiality library from printing information.
         # redirect_cstd()

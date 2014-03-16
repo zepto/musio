@@ -356,7 +356,7 @@ class DumbFile(AudioIO):
                     _dumb.dumb_load_it, _dumb.dumb_load_mod)
 
         # Convert the filename to a bytes object.
-        bytes_filename = self._filename.encode('utf8', 'replace')
+        bytes_filename = self._filename.encode('utf-8', 'surrogateescape')
 
         for loader in func_tup:
             duh = loader(bytes_filename)

@@ -218,7 +218,7 @@ class MikModFile(AudioIO):
 
         """
 
-        filename = filename.encode('utf8', 'replace')
+        filename = filename.encode('utf-8', 'surrogateescape')
 
         # _mikmod.MikMod_RegisterAllDrivers()
         _mikmod.MikMod_RegisterDriver(_mikmod.byref(_mikmod_drv.drv_musio))

@@ -110,7 +110,7 @@ class FFmpegFile(AudioIO):
 
         """
 
-        filename = filename.encode()
+        filename = filename.encode('utf-8', 'surrogateescape')
 
         # Initialize ffmpeg.
         _av.avcodec_register_all()

@@ -648,7 +648,7 @@ class FluidsynthFile(AudioIO):
         """
 
         # Convert midi name to bytes object so the ctypes function can use it.
-        filename = filename.encode('utf8', 'replace')
+        filename = filename.encode('utf-8', 'surrogateescape')
 
         # Check if filename is a valid midi.
         if not self._player.is_midifile(filename):

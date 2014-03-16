@@ -196,7 +196,8 @@ class MP3File(AudioIO):
         mpg123_handle = _mpg123.mpg123_new(None, _mpg123.byref(err))
         _check(err)
 
-        if _check(_mpg123.mpg123_open(mpg123_handle, filename.encode())):
+        bytes_filename = filename.encode('utf-8', 'surrogateescape')
+        if _check(_mpg123.mpg123_open(mpg123_handle, bytes_filename)):
             raise IOError("There was an error opening %s" % filename)
 
         with silence(sys_stderr):

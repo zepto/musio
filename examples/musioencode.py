@@ -88,6 +88,8 @@ def main(args: dict) -> None:
                 in_file.loops = 0
 
                 if args['show_position']:
+                    filename = filename.encode('utf-8', 'surrogateescape')
+                    filename = filename.decode('utf-8', 'surrogateescape')
                     print("Encoding: %s to %s" % (filename, output))
                     print(in_file)
 

@@ -101,8 +101,9 @@ class Mp4File(AudioIO):
 
         """
 
+        filename = filename.encode('utf-8', 'surrogateescape')
         with silence(sys_stdout):
-            mp4_handle = _mp4v2_wrapper.Mp4(filename.encode())
+            mp4_handle = _mp4v2_wrapper.Mp4(filename)
 
         # Get the aac decoder.
         self._aac_decoder = AACDecoder(*mp4_handle.get_configuration(),
