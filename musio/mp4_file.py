@@ -38,7 +38,7 @@ _mp4v2_wrapper = LazyImport('mp4v2._mp4v2_wrapper', globals(), locals(),
                         ['mp4v2._mp4v2_wrapper'], 1)
 
 __supported_dict = {
-    'ext': ['.mp4', '.m4v'],
+    'ext': ['.mp4', '.m4v', '.m4a'],
     'handler': 'Mp4File',
     'dependencies': {
         'ctypes': ['mp4v2', 'faad'],
