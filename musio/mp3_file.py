@@ -28,7 +28,7 @@ from array import array
 
 from .io_util import silence, msg_out
 from .io_base import AudioIO, io_wrapper
-from .io_util import slice_buffer
+from .io_util import slice_buffer, Magic
 # from .mpg123 import _mpg123
 from .import_util import LazyImport
 
@@ -350,13 +350,15 @@ class MP3File(AudioIO):
         # encodings = aliases.aliases.values()
         encodings = ['utf8', 'euc-jp']
         t = '󩞐'
+        magic = Magic()
         for key, value in dict(id3_dict.items()).items():
             if type(value) is not int:
                 if not value.strip():
                     id3_dict.pop(key)
                 elif type(value) is bytes:
                     id3_dict.pop(key)
-                    enc = 'utf8'
+                    enc = magic.check(value).decode()
+                    # enc = 'utf8'
                     # dec_val = value.decode(enc, 'ignore')
                     # if t in dec_val:
                     #     dec_len = 0
@@ -369,7 +371,10 @@ class MP3File(AudioIO):
                     #         enc = i if len(dec_val) >= dec_len else enc
                     #         # print(enc, dec_val)
                     #         dec_len = len(dec_val)
-                    id3_dict[key.lower()] = value.decode(enc, 'ignore')
+                    try:
+                        id3_dict[key.lower()] = value.decode(enc, 'ignore')
+                    except LookupError:
+                        id3_dict[key.lower()] = value.decode('utf8', 'ignore')
 
             else:
                 id3_dict.pop(key)
