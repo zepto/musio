@@ -317,13 +317,15 @@ class MP3File(AudioIO):
         for i in ['tag', 'title', 'artist', 'album', 'year', 'comment',
                   'genre']:
             try:
-                id3_dict[i] = getattr(id3v1.contents, i)
+                id3_dict[i] = getattr(id3v2.contents, i).contents.p
             except:
                 pass
             try:
-                id3_dict[i] = getattr(id3v2.contents, i).contents.p
+                temp = getattr(id3v1.contents, i)
+                current_i = id3_dict.get(i, b'')
+                id3_dict[i] = temp if len(temp) > len(current_i) else current_i
             except:
-                continue
+                pass
 
         try:
             id3_dict['version'] = id3v2.contents.version
@@ -344,13 +346,27 @@ class MP3File(AudioIO):
         except:
             pass
 
+        # from encodings import aliases
+        # encodings = aliases.aliases.values()
+        encodings = ['utf8', 'euc-jisx0213', 'euc-jp']
+
         for key, value in dict(id3_dict.items()).items():
             if type(value) is not int:
                 if not value.strip():
                     id3_dict.pop(key)
                 elif type(value) is bytes:
                     id3_dict.pop(key)
-                    id3_dict[key.lower()] = value.decode('utf8', 'replace')
+                    enc = 'utf8'
+                    dec_len = 0
+                    for i in encodings:
+                        try:
+                            dec_val = value.decode(i, 'replace')
+                        except:
+                            continue
+                        enc = i if len(dec_val) >= dec_len else enc
+                        dec_len = len(dec_val)
+                    id3_dict[key.lower()] = value.decode(enc, 'ignore')
+
             else:
                 id3_dict.pop(key)
                 id3_dict[key.lower()] = value
