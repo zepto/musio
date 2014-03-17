@@ -23,6 +23,7 @@
 
 """
 
+from os import getenv as os_getenv
 from sys import stderr as sys_stderr
 from array import array
 
@@ -349,7 +350,6 @@ class MP3File(AudioIO):
         # from encodings import aliases
         # encodings = aliases.aliases.values()
         encodings = ['utf8', 'euc-jp']
-        t = '󩞐'
         magic = Magic()
         for key, value in dict(id3_dict.items()).items():
             if type(value) is not int:
@@ -358,19 +358,7 @@ class MP3File(AudioIO):
                 elif type(value) is bytes:
                     id3_dict.pop(key)
                     enc = magic.check(value).decode()
-                    # enc = 'utf8'
-                    # dec_val = value.decode(enc, 'ignore')
-                    # if t in dec_val:
-                    #     dec_len = 0
-                    #     for i in encodings:
-                    #         try:
-                    #             dec_val = value.decode(i, 'ignore')
-                    #             print(key, dec_val, enc, i)
-                    #         except:
-                    #             continue
-                    #         enc = i if len(dec_val) >= dec_len else enc
-                    #         # print(enc, dec_val)
-                    #         dec_len = len(dec_val)
+                    enc = os_getenv('MUSIO_LANG', enc)
                     try:
                         id3_dict[key.lower()] = value.decode(enc, 'ignore')
                     except LookupError:
