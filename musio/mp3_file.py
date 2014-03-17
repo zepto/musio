@@ -348,8 +348,8 @@ class MP3File(AudioIO):
 
         # from encodings import aliases
         # encodings = aliases.aliases.values()
-        encodings = ['utf8', 'euc-jisx0213', 'euc-jp']
-
+        encodings = ['utf8', 'euc-jp']
+        t = '󩞐'
         for key, value in dict(id3_dict.items()).items():
             if type(value) is not int:
                 if not value.strip():
@@ -357,14 +357,18 @@ class MP3File(AudioIO):
                 elif type(value) is bytes:
                     id3_dict.pop(key)
                     enc = 'utf8'
-                    dec_len = 0
-                    for i in encodings:
-                        try:
-                            dec_val = value.decode(i, 'replace')
-                        except:
-                            continue
-                        enc = i if len(dec_val) >= dec_len else enc
-                        dec_len = len(dec_val)
+                    # dec_val = value.decode(enc, 'ignore')
+                    # if t in dec_val:
+                    #     dec_len = 0
+                    #     for i in encodings:
+                    #         try:
+                    #             dec_val = value.decode(i, 'ignore')
+                    #             print(key, dec_val, enc, i)
+                    #         except:
+                    #             continue
+                    #         enc = i if len(dec_val) >= dec_len else enc
+                    #         # print(enc, dec_val)
+                    #         dec_len = len(dec_val)
                     id3_dict[key.lower()] = value.decode(enc, 'ignore')
 
             else:
