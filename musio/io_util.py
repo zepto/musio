@@ -35,6 +35,7 @@ from os.path import abspath as os_abspath
 from os.path import dirname as os_dirname
 from ctypes.util import find_library as ctypes_find_library
 
+from .magic import magic as _magic
 from .io_base import AudioIO, DevIO
 
 # Codec cache dictionary
@@ -461,3 +462,25 @@ def py_silence(new_stdout: "File descripter"=None,
         # Return the fd back to its original state.
         sys.stdout = old_stdout
         sys.stderr = old_stderr
+
+class Magic(object):
+    """ Magic object for testing string encoding.
+
+    """
+
+    def __init__(self, flags=1024):
+        """ Magic(flags=magic.MAGIC_MIME_ENCODING) -> Object for testing text
+        encoding.
+
+        """
+
+        self._magic = _magic.magic_open(flags)
+        if _magic.magic_load(self._magic, None) != 0:
+            print("Error: %s" % _magic.magic_error(self._magic).decode())
+
+    def check(self, data):
+        """ Return the encoding of data.
+
+        """
+
+        return _magic.magic_buffer(self._magic, data, len(data))
