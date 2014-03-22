@@ -431,6 +431,8 @@ class MP3File(AudioIO):
             id3_dict['comment'] = tag_val
             break
 
+        _id3tag.id3_file_close(id3_file)
+
         return id3_dict
 
     def _update_info(self):
