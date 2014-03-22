@@ -1,0 +1,26 @@
+from musio.alsa import mixer
+mxrt = mixer.POINTER(mixer.snd_mixer_t)()
+print(mixer.snd_mixer_open(mixer.byref(mxrt), 0))
+print(mixer.snd_mixer_attach(mxrt, b'default'))
+print(mixer.snd_mixer_selem_register(mxrt, None, None))
+print(mixer.snd_mixer_load(mxrt))
+mxrelem = mixer.POINTER(mixer.snd_mixer_selem_id_t)()
+print(mixer.snd_mixer_selem_id_malloc(mixer.byref(mxrelem)))
+print(mixer.snd_mixer_selem_id_set_index(mxrelem, 0))
+print(mixer.snd_mixer_selem_id_set_name(mxrelem, b'PCM'))
+
+elem = mixer.snd_mixer_find_selem(mxrt, mxrelem)
+vol = mixer.c_long()
+minv = mixer.c_long()
+maxv = mixer.c_long()
+print(mixer.snd_mixer_selem_get_playback_volume_range(elem, mixer.byref(minv), mixer.byref(maxv)))
+print(mixer.snd_mixer_selem_get_playback_volume(elem, 0, vol))
+print('volume left', vol.value * (100/maxv.value), minv, maxv)
+volume = 90
+volval = int((volume / 100) * maxv.value)
+print(volval)
+print(mixer.snd_mixer_selem_set_playback_volume_all(elem, mixer.c_long(volval)))
+print(mixer.snd_mixer_free(mxrt))
+print(mixer.snd_mixer_close(mxrt))
+print(mixer.snd_mixer_selem_id_free(mxrelem))
+
