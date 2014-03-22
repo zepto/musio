@@ -303,8 +303,8 @@ class MP3File(AudioIO):
 
         return out_file
 
-    def _update_info(self):
-        """ Updates the id3 info for the opened mp3.
+    def _get_mpg123_tags(self):
+        """ Use mpg123 to get the id3tags.
 
         """
 
@@ -317,6 +317,7 @@ class MP3File(AudioIO):
         id3_dict = self._info_dict
         for i in ['tag', 'title', 'artist', 'album', 'year', 'comment',
                   'genre']:
+            id3_dict[i] = ''
             try:
                 id3_dict[i] = getattr(id3v2.contents, i).contents.p
             except:
@@ -367,6 +368,77 @@ class MP3File(AudioIO):
             else:
                 id3_dict.pop(key)
                 id3_dict[key.lower()] = value
+
+        return id3_dict
+
+    def _get_id3tags(self):
+        """ Use libid3tag to read the id3tags.
+
+        """
+
+        try:
+            import id3tag.id3tag as _id3tag
+        except:
+            return self._get_mpg123_tags()
+
+        bytes_filename = self._filename.encode('utf-8', 'surrogateescape')
+        id3_file = _id3tag.id3_file_open(bytes_filename, 0)
+        id3_tag = _id3tag.id3_file_tag(id3_file)
+        fields_dict = {
+                'title': b'TIT2',
+                'artist': b'TPE1',
+                'album': b'TALB',
+                'track': b'TRCK',
+                'year': b'TDRC',
+                'genre': b'TCON',
+                'subtitle': b'TIT3',
+                'copyright': b'TCOP',
+                'produced': b'TPRO',
+                'orchestra': b'TPE2',
+                'conductor': b'TPE3',
+                'lyricist': b'TEXT',
+                'publisher': b'TPUB',
+                'station': b'TRSN',
+                'encoder': b'TENC',
+                }
+
+        id3_dict = self._info_dict
+
+        for tag_name, tag_id in fields_dict.items():
+            id3_frame = _id3tag.id3_tag_findframe(id3_tag, tag_id, 0)
+            try:
+                assert(id3_frame.contents)
+            except ValueError:
+                continue
+            field = id3_frame.contents.fields[1]
+            ucs4 = field.stringlist.strings.contents
+            field_val = _id3tag.id3_ucs4_utf8duplicate(ucs4)
+            tag_val = _id3tag.string_at(field_val).decode('utf8', 'replace')
+            id3_dict[tag_name] = tag_val
+
+        i = 0
+        while True:
+            frame = _id3tag.id3_tag_findframe(id3_tag, b'COMM', i)
+            try:
+                assert(frame.contents)
+            except ValueError:
+                break
+            i += 1
+            # ucs4 = _id3tag.id3_field_getstring(_id3tag.id3_frame_field(frame, 2))
+            ucs4 = _id3tag.id3_field_getfullstring(_id3tag.id3_frame_field(frame, 3))
+            field_val = _id3tag.id3_ucs4_utf8duplicate(ucs4)
+            tag_val = _id3tag.string_at(field_val).decode('utf8', 'replace')
+            id3_dict['comment'] = tag_val
+            break
+
+        return id3_dict
+
+    def _update_info(self):
+        """ Updates the id3 info for the opened mp3.
+
+        """
+
+        id3_dict = self._get_id3tags()
 
         album = id3_dict.get('album', '')
         artist = id3_dict.get('artist', '')

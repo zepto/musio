@@ -1,0 +1,985 @@
+<?xml version="1.0"?>
+<GCC_XML cvs_revision="1.135">
+  <Namespace id="_1" name="::" members="_3 _4 _5 _6 _7 _8 _9 _10 _11 _12 _13 _14 _15 _16 _17 _18 _19 _20 _21 _22 _23 _24 _25 _26 _27 _28 _29 _30 _31 _32 _33 _34 _35 _36 _37 _38 _39 _40 _41 _42 _43 _44 _45 _46 _47 _49 _50 _51 _52 _53 _54 _55 _56 _57 _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 _68 _69 _70 _71 _72 _74 _75 _76 _77 _78 _79 _80 _81 _82 _83 _84 _85 _86 _87 _88 _89 _90 _91 _92 _93 _94 _95 _96 _97 _98 _99 _100 _101 _102 _103 _104 _105 _106 _107 _108 _109 _110 _111 _112 _113 _114 _115 _116 _117 _118 _119 _121 _122 _124 _125 _126 _127 _128 _129 _130 _131 _132 _133 _134 _135 _136 _137 _138 _139 _140 _2 _141 _142 _143 _144 _145 _146 _147 _148 _149 _150 _151 _152 _153 _154 _155 _156 _157 _158 _159 _160 _161 _162 _163 _164 _165 _166 _167 _168 _169 _170 _171 _172 _173 _174 _175 _176 _177 _178 _179 _180 _181 _182 _183 _184 _185 _186 _187 _188 _189 _190 _191 _192 _193 _194 _195 _196 _197 _198 _199 _200 _201 _202 _203 _204 _205 _206 _207 _208 _209 _210 _211 _212 _213 _214 _215 _216 _217 _218 _219 _220 _221 _222 _223 _224 _225 _226 _227 _228 _229 _230 _231 _232 _233 _234 _235 _236 _237 _238 _239 _240 _241 " mangled="_Z2::" demangled="::"/>
+  <Namespace id="_2" name="std" context="_1" members="" mangled="_Z3std" demangled="std"/>
+  <Function id="_3" name="__builtin_nans" returns="_242" context="_1" location="f0:21" file="f0" line="21" extern="1" attributes="nothrow const nonnull">
+    <Argument name="str" type="_243" location="f0:21" file="f0" line="21"/>
+  </Function>
+  <Function id="_4" name="__builtin_acosf" returns="_244" context="_1" mangled="acosf" location="f0:25" file="f0" line="25" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:25" file="f0" line="25"/>
+  </Function>
+  <Function id="_5" name="__builtin_acosl" returns="_245" context="_1" mangled="acosl" location="f0:26" file="f0" line="26" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:26" file="f0" line="26"/>
+  </Function>
+  <Function id="_6" name="__builtin_va_arg_pack" returns="_246" context="_1" location="f0:147" file="f0" line="147" extern="1">
+    <Ellipsis/>
+  </Function>
+  <Function id="_7" name="__builtin_log10" returns="_242" context="_1" mangled="log10" location="f0:63" file="f0" line="63" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:63" file="f0" line="63"/>
+  </Function>
+  <Function id="_8" name="__builtin_popcountll" returns="_247" context="_1" location="f0:101" file="f0" line="101" extern="1" attributes="nothrow const">
+    <Argument type="_248" location="f0:101" file="f0" line="101"/>
+  </Function>
+  <Function id="_9" name="__builtin_clogf" returns="_249" context="_1" mangled="clogf" location="f0:111" file="f0" line="111" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:111" file="f0" line="111"/>
+  </Function>
+  <Function id="_10" name="__builtin_clogl" returns="_250" context="_1" mangled="clogl" location="f0:113" file="f0" line="113" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:113" file="f0" line="113"/>
+  </Function>
+  <Function id="_11" name="__builtin_cexpf" returns="_249" context="_1" mangled="cexpf" location="f0:108" file="f0" line="108" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:108" file="f0" line="108"/>
+  </Function>
+  <Function id="_12" name="__builtin_cexpl" returns="_250" context="_1" mangled="cexpl" location="f0:110" file="f0" line="110" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:110" file="f0" line="110"/>
+  </Function>
+  <Variable id="_13" name="cpp_sym_ID3_PUBLISHYEAR" type="_243" init="(const char*)&quot;2000-2004&quot;" context="_1" location="f1:5" file="f1" line="5"/>
+  <Function id="_14" name="id3_frame_field" returns="_251" context="_1" location="f2:283" file="f2" line="283" extern="1">
+    <Argument type="_252" location="f2:283" file="f2" line="283"/>
+    <Argument type="_253" location="f2:283" file="f2" line="283"/>
+  </Function>
+  <Function id="_15" name="id3_file_tag" returns="_254" context="_1" location="f2:251" file="f2" line="251" extern="1">
+    <Argument type="_255" location="f2:251" file="f2" line="251"/>
+  </Function>
+  <Function id="_16" name="__builtin_isless" returns="_246" context="_1" location="f0:141" file="f0" line="141" extern="1" attributes="nothrow const">
+    <Ellipsis/>
+  </Function>
+  <Variable id="_17" name="cpp_sym_ID3_FRAME_TRACK" type="_243" init="(const char*)&quot;TRCK&quot;" context="_1" location="f1:9" file="f1" line="9"/>
+  <Function id="_18" name="__builtin_isnormal" returns="_246" context="_1" location="f0:145" file="f0" line="145" extern="1">
+    <Ellipsis/>
+  </Function>
+  <Function id="_19" name="id3_field_getstring" returns="_256" context="_1" location="f2:306" file="f2" line="306" extern="1">
+    <Argument type="_257" location="f2:306" file="f2" line="306"/>
+  </Function>
+  <Function id="_20" name="__builtin_asinf" returns="_244" context="_1" mangled="asinf" location="f0:28" file="f0" line="28" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:28" file="f0" line="28"/>
+  </Function>
+  <Function id="_21" name="__builtin_asinl" returns="_245" context="_1" mangled="asinl" location="f0:29" file="f0" line="29" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:29" file="f0" line="29"/>
+  </Function>
+  <Function id="_22" name="__builtin_popcount" returns="_247" context="_1" location="f0:99" file="f0" line="99" extern="1" attributes="nothrow const">
+    <Argument type="_247" location="f0:99" file="f0" line="99"/>
+  </Function>
+  <Function id="_23" name="__builtin_nansf" returns="_244" context="_1" location="f0:22" file="f0" line="22" extern="1" attributes="nothrow const nonnull">
+    <Argument name="str" type="_243" location="f0:22" file="f0" line="22"/>
+  </Function>
+  <Function id="_24" name="__builtin_nansl" returns="_245" context="_1" location="f0:23" file="f0" line="23" extern="1" attributes="nothrow const nonnull">
+    <Argument name="str" type="_243" location="f0:23" file="f0" line="23"/>
+  </Function>
+  <Function id="_25" name="__builtin_floorf" returns="_244" context="_1" mangled="floorf" location="f0:52" file="f0" line="52" extern="1" attributes="nothrow const">
+    <Argument type="_244" location="f0:52" file="f0" line="52"/>
+  </Function>
+  <Function id="_26" name="__builtin_floorl" returns="_245" context="_1" mangled="floorl" location="f0:53" file="f0" line="53" extern="1" attributes="nothrow const">
+    <Argument type="_245" location="f0:53" file="f0" line="53"/>
+  </Function>
+  <Function id="_27" name="__builtin_ctanf" returns="_249" context="_1" mangled="ctanf" location="f0:123" file="f0" line="123" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:123" file="f0" line="123"/>
+  </Function>
+  <Function id="_28" name="__builtin_ctanh" returns="_258" context="_1" mangled="ctanh" location="f0:127" file="f0" line="127" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:127" file="f0" line="127"/>
+  </Function>
+  <Function id="_29" name="__builtin_ctanl" returns="_250" context="_1" mangled="ctanl" location="f0:125" file="f0" line="125" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:125" file="f0" line="125"/>
+  </Function>
+  <Function id="_30" name="__builtin_carg" returns="_242" context="_1" mangled="carg" location="f0:94" file="f0" line="94" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:94" file="f0" line="94"/>
+  </Function>
+  <Function id="_31" name="__builtin_clog" returns="_258" context="_1" mangled="clog" location="f0:112" file="f0" line="112" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:112" file="f0" line="112"/>
+  </Function>
+  <Function id="_32" name="__builtin_logf" returns="_244" context="_1" mangled="logf" location="f0:66" file="f0" line="66" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:66" file="f0" line="66"/>
+  </Function>
+  <Function id="_33" name="__builtin_logl" returns="_245" context="_1" mangled="logl" location="f0:67" file="f0" line="67" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:67" file="f0" line="67"/>
+  </Function>
+  <Function id="_34" name="__builtin_fabs" returns="_242" context="_1" mangled="fabs" location="f0:48" file="f0" line="48" extern="1" attributes="nothrow const">
+    <Argument type="_242" location="f0:48" file="f0" line="48"/>
+  </Function>
+  <Function id="_35" name="__builtin_expf" returns="_244" context="_1" mangled="expf" location="f0:46" file="f0" line="46" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:46" file="f0" line="46"/>
+  </Function>
+  <Function id="_36" name="__builtin_expl" returns="_245" context="_1" mangled="expl" location="f0:47" file="f0" line="47" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:47" file="f0" line="47"/>
+  </Function>
+  <Function id="_37" name="id3_tag_parse" returns="_254" context="_1" location="f2:275" file="f2" line="275" extern="1">
+    <Argument type="_259" location="f2:275" file="f2" line="275"/>
+    <Argument type="_74" location="f2:275" file="f2" line="275"/>
+  </Function>
+  <Function id="_38" name="__builtin_isunordered" returns="_246" context="_1" location="f0:146" file="f0" line="146" extern="1" attributes="nothrow const">
+    <Ellipsis/>
+  </Function>
+  <Function id="_39" name="__builtin_csqrt" returns="_258" context="_1" mangled="csqrt" location="f0:121" file="f0" line="121" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:121" file="f0" line="121"/>
+  </Function>
+  <Function id="_40" name="__builtin_sin" returns="_242" context="_1" mangled="sin" location="f0:75" file="f0" line="75" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_242" location="f0:75" file="f0" line="75"/>
+  </Function>
+  <Function id="_41" name="__builtin_ldexpf" returns="_244" context="_1" mangled="ldexpf" location="f0:60" file="f0" line="60" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:60" file="f0" line="60"/>
+    <Argument type="_247" location="f0:60" file="f0" line="60"/>
+  </Function>
+  <Function id="_42" name="__builtin_ldexpl" returns="_245" context="_1" mangled="ldexpl" location="f0:61" file="f0" line="61" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:61" file="f0" line="61"/>
+    <Argument type="_247" location="f0:61" file="f0" line="61"/>
+  </Function>
+  <Function id="_43" name="__builtin_isinf_sign" returns="_246" context="_1" location="f0:140" file="f0" line="140" extern="1">
+    <Ellipsis/>
+  </Function>
+  <Function id="_44" name="__builtin_islessequal" returns="_246" context="_1" location="f0:142" file="f0" line="142" extern="1" attributes="nothrow const">
+    <Ellipsis/>
+  </Function>
+  <Function id="_45" name="id3_field_getnstrings" returns="_253" context="_1" location="f2:308" file="f2" line="308" extern="1">
+    <Argument type="_257" location="f2:308" file="f2" line="308"/>
+  </Function>
+  <Function id="_46" name="id3_field_gettextencoding" returns="_170" context="_1" location="f2:303" file="f2" line="303" extern="1">
+    <Argument type="_257" location="f2:303" file="f2" line="303"/>
+  </Function>
+  <Function id="_47" name="__builtin_tanf" returns="_244" context="_1" mangled="tanf" location="f0:85" file="f0" line="85" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_244" location="f0:85" file="f0" line="85"/>
+  </Function>
+  <FundamentalType id="_48" name="short unsigned int" size="16" align="16"/>
+  <Typedef id="_49" name="id3_utf16_t" type="_48" context="_1" location="f2:42" file="f2" line="42"/>
+  <Function id="_50" name="__builtin_tanh" returns="_242" context="_1" mangled="tanh" location="f0:86" file="f0" line="86" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_242" location="f0:86" file="f0" line="86"/>
+  </Function>
+  <Function id="_51" name="__builtin_tanl" returns="_245" context="_1" mangled="tanl" location="f0:89" file="f0" line="89" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_245" location="f0:89" file="f0" line="89"/>
+  </Function>
+  <Function id="_52" name="__builtin_ceil" returns="_242" context="_1" mangled="ceil" location="f0:36" file="f0" line="36" extern="1" attributes="nothrow const">
+    <Argument type="_242" location="f0:36" file="f0" line="36"/>
+  </Function>
+  <Function id="_53" name="__builtin_fmodf" returns="_244" context="_1" mangled="fmodf" location="f0:54" file="f0" line="54" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:54" file="f0" line="54"/>
+    <Argument type="_244" location="f0:54" file="f0" line="54"/>
+  </Function>
+  <Function id="_54" name="__builtin_fmodl" returns="_245" context="_1" mangled="fmodl" location="f0:55" file="f0" line="55" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:55" file="f0" line="55"/>
+    <Argument type="_245" location="f0:55" file="f0" line="55"/>
+  </Function>
+  <Function id="_55" name="id3_field_setbinarydata" returns="_247" context="_1" location="f2:300" file="f2" line="300" extern="1">
+    <Argument type="_251" location="f2:300" file="f2" line="300"/>
+    <Argument type="_259" location="f2:300" file="f2" line="300"/>
+    <Argument type="_74" location="f2:300" file="f2" line="300"/>
+  </Function>
+  <Function id="_56" name="id3_field_getframeid" returns="_243" context="_1" location="f2:311" file="f2" line="311" extern="1">
+    <Argument type="_257" location="f2:311" file="f2" line="311"/>
+  </Function>
+  <Function id="_57" name="__builtin_return" returns="_260" context="_1" location="f0:13" file="f0" line="13" extern="1" attributes="nothrow noreturn">
+    <Argument name="RESULT" type="_261" location="f0:13" file="f0" line="13"/>
+  </Function>
+  <Enumeration id="_58" name="._2" context="_1" location="f2:96" file="f2" line="96" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_TAG_RESTRICTION_TAGSIZE_MASK" init="192"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_TAGSIZE_128_FRAMES_1_MB" init="0"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_TAGSIZE_64_FRAMES_128_KB" init="64"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_TAGSIZE_32_FRAMES_40_KB" init="128"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_TAGSIZE_32_FRAMES_4_KB" init="192"/>
+  </Enumeration>
+  <Enumeration id="_59" name="._3" context="_1" location="f2:104" file="f2" line="104" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_TAG_RESTRICTION_TEXTENCODING_MASK" init="32"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_TEXTENCODING_NONE" init="0"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_TEXTENCODING_LATIN1_UTF8" init="32"/>
+  </Enumeration>
+  <Function id="_60" name="__builtin_sqrt" returns="_242" context="_1" mangled="sqrt" location="f0:81" file="f0" line="81" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:81" file="f0" line="81"/>
+  </Function>
+  <Function id="_61" name="__builtin_cpow" returns="_258" context="_1" mangled="cpow" location="f0:130" file="f0" line="130" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:130" file="f0" line="130"/>
+    <Argument type="_258" location="f0:130" file="f0" line="130"/>
+  </Function>
+  <Function id="_62" name="id3_field_getstrings" returns="_256" context="_1" location="f2:310" file="f2" line="310" extern="1">
+    <Argument type="_257" location="f2:310" file="f2" line="310"/>
+    <Argument type="_253" location="f2:310" file="f2" line="310"/>
+  </Function>
+  <Function id="_63" name="__builtin_coshf" returns="_244" context="_1" mangled="coshf" location="f0:42" file="f0" line="42" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:42" file="f0" line="42"/>
+  </Function>
+  <Function id="_64" name="__builtin_coshl" returns="_245" context="_1" mangled="coshl" location="f0:43" file="f0" line="43" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:43" file="f0" line="43"/>
+  </Function>
+  <Function id="_65" name="__builtin_cexp" returns="_258" context="_1" mangled="cexp" location="f0:109" file="f0" line="109" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:109" file="f0" line="109"/>
+  </Function>
+  <Function id="_66" name="__builtin_atan2" returns="_242" context="_1" mangled="atan2" location="f0:31" file="f0" line="31" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:31" file="f0" line="31"/>
+    <Argument type="_242" location="f0:31" file="f0" line="31"/>
+  </Function>
+  <Function id="_67" name="__builtin_memchr" returns="_261" context="_1" location="f0:12" file="f0" line="12" extern="1">
+    <Argument type="_262" location="f0:12" file="f0" line="12"/>
+    <Argument type="_247" location="f0:12" file="f0" line="12"/>
+    <Argument type="_253" location="f0:12" file="f0" line="12"/>
+  </Function>
+  <Function id="_68" name="__builtin_atanf" returns="_244" context="_1" mangled="atanf" location="f0:34" file="f0" line="34" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_244" location="f0:34" file="f0" line="34"/>
+  </Function>
+  <Function id="_69" name="__builtin_atanl" returns="_245" context="_1" mangled="atanl" location="f0:35" file="f0" line="35" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_245" location="f0:35" file="f0" line="35"/>
+  </Function>
+  <Variable id="_70" name="cpp_sym_ID3_TAG_VERSION" type="_247c" init="1024" context="_1" location="f1:7" file="f1" line="7" static="1"/>
+  <Function id="_71" name="__builtin_ctan" returns="_258" context="_1" mangled="ctan" location="f0:124" file="f0" line="124" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:124" file="f0" line="124"/>
+  </Function>
+  <Function id="_72" name="__builtin_log" returns="_242" context="_1" mangled="log" location="f0:62" file="f0" line="62" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:62" file="f0" line="62"/>
+  </Function>
+  <FundamentalType id="_73" name="long unsigned int" size="64" align="64"/>
+  <Typedef id="_74" name="id3_length_t" type="_73" context="_1" location="f2:37" file="f2" line="37"/>
+  <Function id="_75" name="id3_field_getbinarydata" returns="_259" context="_1" location="f2:313" file="f2" line="313" extern="1">
+    <Argument type="_257" location="f2:313" file="f2" line="313"/>
+    <Argument type="_264" location="f2:313" file="f2" line="313"/>
+  </Function>
+  <Function id="_76" name="__builtin_isfinite" returns="_246" context="_1" location="f0:136" file="f0" line="136" extern="1">
+    <Ellipsis/>
+  </Function>
+  <Function id="_77" name="__builtin_asin" returns="_242" context="_1" mangled="asin" location="f0:27" file="f0" line="27" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:27" file="f0" line="27"/>
+  </Function>
+  <Function id="_78" name="__builtin_frexp" returns="_242" context="_1" mangled="frexp" location="f0:56" file="f0" line="56" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:56" file="f0" line="56"/>
+    <Argument type="_265" location="f0:56" file="f0" line="56"/>
+  </Function>
+  <Function id="_79" name="id3_field_setlanguage" returns="_247" context="_1" location="f2:293" file="f2" line="293" extern="1">
+    <Argument type="_251" location="f2:293" file="f2" line="293"/>
+    <Argument type="_243" location="f2:293" file="f2" line="293"/>
+  </Function>
+  <Function id="_80" name="__builtin_isgreaterequal" returns="_246" context="_1" location="f0:138" file="f0" line="138" extern="1" attributes="nothrow const">
+    <Ellipsis/>
+  </Function>
+  <Typedef id="_81" name="id3_ucs4_t" type="_73" context="_1" location="f2:39" file="f2" line="39"/>
+  <Function id="_82" name="id3_field_getfullstring" returns="_256" context="_1" location="f2:307" file="f2" line="307" extern="1">
+    <Argument type="_257" location="f2:307" file="f2" line="307"/>
+  </Function>
+  <Variable id="_83" name="cpp_sym_ID3_FRAME_TITLE" type="_243" init="(const char*)&quot;TIT2&quot;" context="_1" location="f1:3" file="f1" line="3"/>
+  <Function id="_84" name="id3_ucs4_utf8duplicate" returns="_266" context="_1" location="f2:325" file="f2" line="325" extern="1">
+    <Argument type="_256" location="f2:325" file="f2" line="325"/>
+  </Function>
+  <Function id="_85" name="__builtin_log10f" returns="_244" context="_1" mangled="log10f" location="f0:64" file="f0" line="64" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:64" file="f0" line="64"/>
+  </Function>
+  <Function id="_86" name="__builtin_log10l" returns="_245" context="_1" mangled="log10l" location="f0:65" file="f0" line="65" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:65" file="f0" line="65"/>
+  </Function>
+  <Variable id="_87" name="cpp_sym_ID3_FRAME_OBSOLETE" type="_243" init="(const char*)&quot;ZOBS&quot;" context="_1" location="f1:4" file="f1" line="4"/>
+  <Function id="_88" name="__builtin_ctzl" returns="_247" context="_1" location="f0:97" file="f0" line="97" extern="1" attributes="nothrow const">
+    <Argument type="_267" location="f0:97" file="f0" line="97"/>
+  </Function>
+  <Struct id="_89" name="id3_frame" context="_1" mangled="9id3_frame" demangled="id3_frame" location="f2:145" file="f2" line="145" artificial="1" size="576" align="64" members="_268 _269 _270 _271 _272 _273 _274 _275 _276 _277 _278 _279 _280 _281 _282 " bases=""/>
+  <Function id="_90" name="__builtin_powif" returns="_244" context="_1" location="f0:73" file="f0" line="73" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_244" location="f0:73" file="f0" line="73"/>
+    <Argument type="_247" location="f0:73" file="f0" line="73"/>
+  </Function>
+  <Function id="_91" name="__builtin_powil" returns="_245" context="_1" location="f0:74" file="f0" line="74" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_245" location="f0:74" file="f0" line="74"/>
+    <Argument type="_247" location="f0:74" file="f0" line="74"/>
+  </Function>
+  <Function id="_92" name="__builtin_modff" returns="_244" context="_1" mangled="modff" location="f0:68" file="f0" line="68" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:68" file="f0" line="68"/>
+    <Argument type="_283" location="f0:68" file="f0" line="68"/>
+  </Function>
+  <Function id="_93" name="__builtin_exp" returns="_242" context="_1" mangled="exp" location="f0:45" file="f0" line="45" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:45" file="f0" line="45"/>
+  </Function>
+  <Function id="_94" name="__builtin_modfl" returns="_245" context="_1" mangled="modfl" location="f0:69" file="f0" line="69" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:69" file="f0" line="69"/>
+    <Argument type="_284" location="f0:69" file="f0" line="69"/>
+  </Function>
+  <Function id="_95" name="__builtin_prefetch" returns="_260" context="_1" location="f0:17" file="f0" line="17" extern="1" attributes="no vops">
+    <Argument name="ADDR" type="_262" location="f0:17" file="f0" line="17"/>
+    <Ellipsis/>
+  </Function>
+  <Function id="_96" name="__builtin_tan" returns="_242" context="_1" mangled="tan" location="f0:84" file="f0" line="84" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_242" location="f0:84" file="f0" line="84"/>
+  </Function>
+  <Function id="_97" name="__builtin_fabsf" returns="_244" context="_1" mangled="fabsf" location="f0:49" file="f0" line="49" extern="1" attributes="nothrow const">
+    <Argument type="_244" location="f0:49" file="f0" line="49"/>
+  </Function>
+  <Function id="_98" name="__builtin_fabsl" returns="_245" context="_1" mangled="fabsl" location="f0:50" file="f0" line="50" extern="1" attributes="nothrow const">
+    <Argument type="_245" location="f0:50" file="f0" line="50"/>
+  </Function>
+  <Variable id="_99" name="cpp_sym_ID3_AUTHOR" type="_243" init="(const char*)&quot;Underbit Technologies, Inc.&quot;" context="_1" location="f1:8" file="f1" line="8"/>
+  <Function id="_100" name="__builtin_inf" returns="_242" context="_1" location="f0:18" file="f0" line="18" extern="1" attributes="nothrow const"/>
+  <Variable id="_101" name="cpp_sym_ID3_VERSION_PATCH" type="_247c" init="1" context="_1" location="f1:12" file="f1" line="12" static="1"/>
+  <Namespace id="_102" name="__cxxabiv1" context="_1" members="" mangled="_Z10__cxxabiv1" demangled="__cxxabiv1"/>
+  <Function id="_103" name="id3_tag_render" returns="_74" context="_1" location="f2:276" file="f2" line="276" extern="1">
+    <Argument type="_285" location="f2:276" file="f2" line="276"/>
+    <Argument type="_286" location="f2:276" file="f2" line="276"/>
+  </Function>
+  <Function id="_104" name="id3_field_setlatin1" returns="_247" context="_1" location="f2:294" file="f2" line="294" extern="1">
+    <Argument type="_251" location="f2:294" file="f2" line="294"/>
+    <Argument type="_287" location="f2:294" file="f2" line="294"/>
+  </Function>
+  <Function id="_105" name="id3_tag_attachframe" returns="_247" context="_1" location="f2:267" file="f2" line="267" extern="1">
+    <Argument type="_254" location="f2:267" file="f2" line="267"/>
+    <Argument type="_288" location="f2:267" file="f2" line="267"/>
+  </Function>
+  <Function id="_106" name="__builtin_frame_address" returns="_261" context="_1" location="f0:15" file="f0" line="15" extern="1">
+    <Argument name="LEVEL" type="_253" location="f0:15" file="f0" line="15"/>
+  </Function>
+  <Function id="_107" name="id3_field_getfulllatin1" returns="_287" context="_1" location="f2:305" file="f2" line="305" extern="1">
+    <Argument type="_257" location="f2:305" file="f2" line="305"/>
+  </Function>
+  <Function id="_108" name="id3_field_setfullstring" returns="_247" context="_1" location="f2:297" file="f2" line="297" extern="1">
+    <Argument type="_251" location="f2:297" file="f2" line="297"/>
+    <Argument type="_256" location="f2:297" file="f2" line="297"/>
+  </Function>
+  <Function id="_109" name="__builtin_cabs" returns="_242" context="_1" mangled="cabs" location="f0:91" file="f0" line="91" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:91" file="f0" line="91"/>
+  </Function>
+  <Function id="_110" name="__builtin_atan2f" returns="_244" context="_1" mangled="atan2f" location="f0:32" file="f0" line="32" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:32" file="f0" line="32"/>
+    <Argument type="_244" location="f0:32" file="f0" line="32"/>
+  </Function>
+  <Function id="_111" name="__builtin_atan2l" returns="_245" context="_1" mangled="atan2l" location="f0:33" file="f0" line="33" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:33" file="f0" line="33"/>
+    <Argument type="_245" location="f0:33" file="f0" line="33"/>
+  </Function>
+  <Function id="_112" name="__builtin_isinf" returns="_246" context="_1" mangled="isinf" location="f0:139" file="f0" line="139" extern="1" attributes="nothrow const">
+    <Ellipsis/>
+  </Function>
+  <Function id="_113" name="id3_field_getint" returns="_267" context="_1" location="f2:302" file="f2" line="302" extern="1">
+    <Argument type="_257" location="f2:302" file="f2" line="302"/>
+  </Function>
+  <Variable id="_114" name="id3_copyright" type="_289c" context="_1" location="f2:356" file="f2" line="356" extern="1"/>
+  <Function id="_115" name="__builtin_fpclassify" returns="_246" context="_1" location="f0:135" file="f0" line="135" extern="1">
+    <Ellipsis/>
+  </Function>
+  <Function id="_116" name="id3_field_getlatin1" returns="_287" context="_1" location="f2:304" file="f2" line="304" extern="1">
+    <Argument type="_257" location="f2:304" file="f2" line="304"/>
+  </Function>
+  <Variable id="_117" name="cpp_sym_ID3_VERSION_EXTRA" type="_243" init="(const char*)&quot; (beta)&quot;" context="_1" location="f1:18" file="f1" line="18"/>
+  <Function id="_118" name="__builtin_ccoshf" returns="_249" context="_1" mangled="ccoshf" location="f0:105" file="f0" line="105" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:105" file="f0" line="105"/>
+  </Function>
+  <Function id="_119" name="__builtin_ccoshl" returns="_250" context="_1" mangled="ccoshl" location="f0:107" file="f0" line="107" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:107" file="f0" line="107"/>
+  </Function>
+  <FundamentalType id="_120" name="unsigned char" size="8" align="8"/>
+  <Typedef id="_121" name="id3_latin1_t" type="_120" context="_1" location="f2:41" file="f2" line="41"/>
+  <Function id="_122" name="id3_field_setframeid" returns="_247" context="_1" location="f2:298" file="f2" line="298" extern="1">
+    <Argument type="_251" location="f2:298" file="f2" line="298"/>
+    <Argument type="_243" location="f2:298" file="f2" line="298"/>
+  </Function>
+  <FundamentalType id="_123" name="signed char" size="8" align="8"/>
+  <Typedef id="_124" name="id3_utf8_t" type="_123" context="_1" location="f2:43" file="f2" line="43"/>
+  <Function id="_125" name="__builtin_atan" returns="_242" context="_1" mangled="atan" location="f0:30" file="f0" line="30" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_242" location="f0:30" file="f0" line="30"/>
+  </Function>
+  <Function id="_126" name="__builtin_sinhf" returns="_244" context="_1" mangled="sinhf" location="f0:78" file="f0" line="78" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:78" file="f0" line="78"/>
+  </Function>
+  <Function id="_127" name="__builtin_sinhl" returns="_245" context="_1" mangled="sinhl" location="f0:79" file="f0" line="79" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:79" file="f0" line="79"/>
+  </Function>
+  <Function id="_128" name="__builtin_sqrtf" returns="_244" context="_1" mangled="sqrtf" location="f0:82" file="f0" line="82" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:82" file="f0" line="82"/>
+  </Function>
+  <Function id="_129" name="__builtin_sqrtl" returns="_245" context="_1" mangled="sqrtl" location="f0:83" file="f0" line="83" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:83" file="f0" line="83"/>
+  </Function>
+  <Function id="_130" name="__builtin_frexpf" returns="_244" context="_1" mangled="frexpf" location="f0:57" file="f0" line="57" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:57" file="f0" line="57"/>
+    <Argument type="_265" location="f0:57" file="f0" line="57"/>
+  </Function>
+  <Function id="_131" name="__builtin_frexpl" returns="_245" context="_1" mangled="frexpl" location="f0:58" file="f0" line="58" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:58" file="f0" line="58"/>
+    <Argument type="_265" location="f0:58" file="f0" line="58"/>
+  </Function>
+  <Function id="_132" name="__builtin_cpowf" returns="_249" context="_1" mangled="cpowf" location="f0:129" file="f0" line="129" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:129" file="f0" line="129"/>
+    <Argument type="_249" location="f0:129" file="f0" line="129"/>
+  </Function>
+  <Function id="_133" name="__builtin_cpowl" returns="_250" context="_1" mangled="cpowl" location="f0:131" file="f0" line="131" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:131" file="f0" line="131"/>
+    <Argument type="_250" location="f0:131" file="f0" line="131"/>
+  </Function>
+  <Variable id="_134" name="cpp_sym_ID3_FRAME_ARTIST" type="_243" init="(const char*)&quot;TPE1&quot;" context="_1" location="f1:20" file="f1" line="20"/>
+  <Function id="_135" name="id3_tag_new" returns="_254" context="_1" location="f2:257" file="f2" line="257" extern="1"/>
+  <Function id="_136" name="id3_tag_clearframes" returns="_260" context="_1" location="f2:265" file="f2" line="265" extern="1">
+    <Argument type="_254" location="f2:265" file="f2" line="265"/>
+  </Function>
+  <Function id="_137" name="id3_file_update" returns="_247" context="_1" location="f2:253" file="f2" line="253" extern="1">
+    <Argument type="_291" location="f2:253" file="f2" line="253"/>
+  </Function>
+  <Variable id="_138" name="cpp_sym_ID3_FRAME_COMMENT" type="_243" init="(const char*)&quot;COMM&quot;" context="_1" location="f1:6" file="f1" line="6"/>
+  <Function id="_139" name="id3_tag_findframe" returns="_288" context="_1" location="f2:271" file="f2" line="271" extern="1">
+    <Argument type="_285" location="f2:271" file="f2" line="271"/>
+    <Argument type="_243" location="f2:271" file="f2" line="271"/>
+    <Argument type="_253" location="f2:271" file="f2" line="271"/>
+  </Function>
+  <Function id="_140" name="__builtin_bswap64" returns="_73" context="_1" location="f0:158" file="f0" line="158" extern="1">
+    <Argument name="_data" type="_73" location="f0:158" file="f0" line="158"/>
+  </Function>
+  <Enumeration id="_141" name="._0" context="_1" location="f2:75" file="f2" line="75" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_TAG_FLAG_UNSYNCHRONISATION" init="128"/>
+    <EnumValue name="ID3_TAG_FLAG_EXTENDEDHEADER" init="64"/>
+    <EnumValue name="ID3_TAG_FLAG_EXPERIMENTALINDICATOR" init="32"/>
+    <EnumValue name="ID3_TAG_FLAG_FOOTERPRESENT" init="16"/>
+    <EnumValue name="ID3_TAG_FLAG_KNOWNFLAGS" init="240"/>
+  </Enumeration>
+  <Enumeration id="_142" name="._1" context="_1" location="f2:86" file="f2" line="86" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_TAG_EXTENDEDFLAG_TAGISANUPDATE" init="64"/>
+    <EnumValue name="ID3_TAG_EXTENDEDFLAG_CRCDATAPRESENT" init="32"/>
+    <EnumValue name="ID3_TAG_EXTENDEDFLAG_TAGRESTRICTIONS" init="16"/>
+    <EnumValue name="ID3_TAG_EXTENDEDFLAG_KNOWNFLAGS" init="112"/>
+  </Enumeration>
+  <Enumeration id="_143" name="._4" context="_1" location="f2:110" file="f2" line="110" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_TAG_RESTRICTION_TEXTSIZE_MASK" init="24"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_TEXTSIZE_NONE" init="0"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_TEXTSIZE_1024_CHARS" init="8"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_TEXTSIZE_128_CHARS" init="16"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_TEXTSIZE_30_CHARS" init="24"/>
+  </Enumeration>
+  <Enumeration id="_144" name="._5" context="_1" location="f2:118" file="f2" line="118" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_TAG_RESTRICTION_IMAGEENCODING_MASK" init="4"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_IMAGEENCODING_NONE" init="0"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_IMAGEENCODING_PNG_JPEG" init="4"/>
+  </Enumeration>
+  <Enumeration id="_145" name="._6" context="_1" location="f2:124" file="f2" line="124" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_TAG_RESTRICTION_IMAGESIZE_MASK" init="3"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_IMAGESIZE_NONE" init="0"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_IMAGESIZE_256_256" init="1"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_IMAGESIZE_64_64" init="2"/>
+    <EnumValue name="ID3_TAG_RESTRICTION_IMAGESIZE_64_64_EXACT" init="3"/>
+  </Enumeration>
+  <Enumeration id="_146" name="._7" context="_1" location="f2:134" file="f2" line="134" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_TAG_OPTION_UNSYNCHRONISATION" init="1"/>
+    <EnumValue name="ID3_TAG_OPTION_COMPRESSION" init="2"/>
+    <EnumValue name="ID3_TAG_OPTION_CRC" init="4"/>
+    <EnumValue name="ID3_TAG_OPTION_APPENDEDTAG" init="16"/>
+    <EnumValue name="ID3_TAG_OPTION_FILEALTERED" init="32"/>
+    <EnumValue name="ID3_TAG_OPTION_ID3V1" init="256"/>
+  </Enumeration>
+  <Enumeration id="_147" name="._8" context="_1" location="f2:159" file="f2" line="159" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_FRAME_FLAG_TAGALTERPRESERVATION" init="16384"/>
+    <EnumValue name="ID3_FRAME_FLAG_FILEALTERPRESERVATION" init="8192"/>
+    <EnumValue name="ID3_FRAME_FLAG_READONLY" init="4096"/>
+    <EnumValue name="ID3_FRAME_FLAG_STATUSFLAGS" init="65280"/>
+    <EnumValue name="ID3_FRAME_FLAG_GROUPINGIDENTITY" init="64"/>
+    <EnumValue name="ID3_FRAME_FLAG_COMPRESSION" init="8"/>
+    <EnumValue name="ID3_FRAME_FLAG_ENCRYPTION" init="4"/>
+    <EnumValue name="ID3_FRAME_FLAG_UNSYNCHRONISATION" init="2"/>
+    <EnumValue name="ID3_FRAME_FLAG_DATALENGTHINDICATOR" init="1"/>
+    <EnumValue name="ID3_FRAME_FLAG_FORMATFLAGS" init="255"/>
+    <EnumValue name="ID3_FRAME_FLAG_KNOWNFLAGS" init="28751"/>
+  </Enumeration>
+  <Variable id="_148" name="cpp_sym_ID3_TAG_QUERYSIZE" type="_247c" init="10" context="_1" location="f1:17" file="f1" line="17" static="1"/>
+  <Function id="_149" name="id3_utf16_ucs4duplicate" returns="_292" context="_1" location="f2:333" file="f2" line="333" extern="1">
+    <Argument type="_293" location="f2:333" file="f2" line="333"/>
+  </Function>
+  <Function id="_150" name="id3_ucs4_putnumber" returns="_260" context="_1" location="f2:327" file="f2" line="327" extern="1">
+    <Argument type="_292" location="f2:327" file="f2" line="327"/>
+    <Argument type="_73" location="f2:327" file="f2" line="327"/>
+  </Function>
+  <Function id="_151" name="id3_genre_index" returns="_256" context="_1" location="f2:317" file="f2" line="317" extern="1">
+    <Argument type="_253" location="f2:317" file="f2" line="317"/>
+  </Function>
+  <Function id="_152" name="id3_latin1_ucs4duplicate" returns="_292" context="_1" location="f2:332" file="f2" line="332" extern="1">
+    <Argument type="_287" location="f2:332" file="f2" line="332"/>
+  </Function>
+  <Variable id="_153" name="cpp_sym_ID3_EMAIL" type="_243" init="(const char*)&quot;info@underbit.com&quot;" context="_1" location="f1:15" file="f1" line="15"/>
+  <Function id="_154" name="__builtin_tanhf" returns="_244" context="_1" mangled="tanhf" location="f0:87" file="f0" line="87" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_244" location="f0:87" file="f0" line="87"/>
+  </Function>
+  <Function id="_155" name="__builtin_tanhl" returns="_245" context="_1" mangled="tanhl" location="f0:88" file="f0" line="88" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_245" location="f0:88" file="f0" line="88"/>
+  </Function>
+  <Function id="_156" name="__builtin_cabsf" returns="_244" context="_1" mangled="cabsf" location="f0:90" file="f0" line="90" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:90" file="f0" line="90"/>
+  </Function>
+  <Function id="_157" name="__builtin_cabsl" returns="_245" context="_1" mangled="cabsl" location="f0:92" file="f0" line="92" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:92" file="f0" line="92"/>
+  </Function>
+  <Function id="_158" name="__builtin_powf" returns="_244" context="_1" mangled="powf" location="f0:70" file="f0" line="70" extern="1" attributes="nothrow">
+    <Argument type="_244" location="f0:70" file="f0" line="70"/>
+    <Argument type="_244" location="f0:70" file="f0" line="70"/>
+  </Function>
+  <Function id="_159" name="__builtin_powi" returns="_242" context="_1" location="f0:72" file="f0" line="72" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_242" location="f0:72" file="f0" line="72"/>
+    <Argument type="_247" location="f0:72" file="f0" line="72"/>
+  </Function>
+  <Function id="_160" name="__builtin_powl" returns="_245" context="_1" mangled="powl" location="f0:71" file="f0" line="71" extern="1" attributes="nothrow">
+    <Argument type="_245" location="f0:71" file="f0" line="71"/>
+    <Argument type="_245" location="f0:71" file="f0" line="71"/>
+  </Function>
+  <Function id="_161" name="id3_genre_name" returns="_256" context="_1" location="f2:318" file="f2" line="318" extern="1">
+    <Argument type="_256" location="f2:318" file="f2" line="318"/>
+  </Function>
+  <Function id="_162" name="id3_ucs4_utf16duplicate" returns="_294" context="_1" location="f2:324" file="f2" line="324" extern="1">
+    <Argument type="_256" location="f2:324" file="f2" line="324"/>
+  </Function>
+  <Function id="_163" name="id3_tag_query" returns="_267" context="_1" location="f2:273" file="f2" line="273" extern="1">
+    <Argument type="_259" location="f2:273" file="f2" line="273"/>
+    <Argument type="_74" location="f2:273" file="f2" line="273"/>
+  </Function>
+  <Function id="_164" name="__builtin_ccos" returns="_258" context="_1" mangled="ccos" location="f0:103" file="f0" line="103" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:103" file="f0" line="103"/>
+  </Function>
+  <Variable id="_165" name="id3_build" type="_289c" context="_1" location="f2:358" file="f2" line="358" extern="1"/>
+  <Typedef id="_166" name="id3_byte_t" type="_120" context="_1" location="f2:36" file="f2" line="36"/>
+  <Function id="_167" name="id3_field_setint" returns="_247" context="_1" location="f2:289" file="f2" line="289" extern="1">
+    <Argument type="_251" location="f2:289" file="f2" line="289"/>
+    <Argument type="_267" location="f2:289" file="f2" line="289"/>
+  </Function>
+  <Variable id="_168" name="cpp_sym_ID3_FRAME_ALBUM" type="_243" init="(const char*)&quot;TALB&quot;" context="_1" location="f1:16" file="f1" line="16"/>
+  <Function id="_169" name="__builtin_expect" returns="_267" context="_1" location="f0:16" file="f0" line="16" extern="1" attributes="nothrow const">
+    <Argument name="EXP" type="_267" location="f0:16" file="f0" line="16"/>
+    <Argument name="C" type="_267" location="f0:16" file="f0" line="16"/>
+  </Function>
+  <Enumeration id="_170" name="id3_field_textencoding" context="_1" location="f2:198" file="f2" line="198" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_FIELD_TEXTENCODING_ISO_8859_1" init="0"/>
+    <EnumValue name="ID3_FIELD_TEXTENCODING_UTF_16" init="1"/>
+    <EnumValue name="ID3_FIELD_TEXTENCODING_UTF_16BE" init="2"/>
+    <EnumValue name="ID3_FIELD_TEXTENCODING_UTF_8" init="3"/>
+  </Enumeration>
+  <Function id="_171" name="id3_tag_delete" returns="_260" context="_1" location="f2:258" file="f2" line="258" extern="1">
+    <Argument type="_254" location="f2:258" file="f2" line="258"/>
+  </Function>
+  <Function id="_172" name="__builtin_popcountl" returns="_247" context="_1" location="f0:100" file="f0" line="100" extern="1" attributes="nothrow const">
+    <Argument type="_267" location="f0:100" file="f0" line="100"/>
+  </Function>
+  <Variable id="_173" name="cpp_sym___STDC_CONSTANT_MACROS" type="_247c" init="1" context="_1" location="f1:19" file="f1" line="19" static="1"/>
+  <Struct id="_174" name="id3_tag" context="_1" mangled="7id3_tag" demangled="id3_tag" location="f2:45" file="f2" line="45" artificial="1" size="384" align="64" members="_295 _296 _297 _298 _299 _300 _301 _302 _303 _304 _305 _306 _307 " bases=""/>
+  <Variable id="_175" name="cpp_sym_ID3_VERSION" type="_243" init="(const char*)&quot;0.15.1 (beta)&quot;" context="_1" location="f1:2" file="f1" line="2"/>
+  <Function id="_176" name="id3_field_setstring" returns="_247" context="_1" location="f2:296" file="f2" line="296" extern="1">
+    <Argument type="_251" location="f2:296" file="f2" line="296"/>
+    <Argument type="_256" location="f2:296" file="f2" line="296"/>
+  </Function>
+  <Variable id="_177" name="id3_author" type="_289c" context="_1" location="f2:357" file="f2" line="357" extern="1"/>
+  <Function id="_178" name="id3_utf8_ucs4duplicate" returns="_292" context="_1" location="f2:334" file="f2" line="334" extern="1">
+    <Argument type="_308" location="f2:334" file="f2" line="334"/>
+  </Function>
+  <Function id="_179" name="__builtin_inff" returns="_244" context="_1" location="f0:19" file="f0" line="19" extern="1" attributes="nothrow const"/>
+  <Function id="_180" name="__builtin_infl" returns="_245" context="_1" location="f0:20" file="f0" line="20" extern="1" attributes="nothrow const"/>
+  <Function id="_181" name="id3_field_settextencoding" returns="_247" context="_1" location="f2:290" file="f2" line="290" extern="1">
+    <Argument type="_251" location="f2:290" file="f2" line="290"/>
+    <Argument type="_170" location="f2:290" file="f2" line="290"/>
+  </Function>
+  <Function id="_182" name="__builtin_cos" returns="_242" context="_1" mangled="cos" location="f0:39" file="f0" line="39" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_242" location="f0:39" file="f0" line="39"/>
+  </Function>
+  <Function id="_183" name="id3_tag_options" returns="_247" context="_1" location="f2:262" file="f2" line="262" extern="1">
+    <Argument type="_254" location="f2:262" file="f2" line="262"/>
+    <Argument type="_247" location="f2:262" file="f2" line="262"/>
+    <Argument type="_247" location="f2:262" file="f2" line="262"/>
+  </Function>
+  <Function id="_184" name="__builtin_ctz" returns="_247" context="_1" location="f0:96" file="f0" line="96" extern="1" attributes="nothrow const">
+    <Argument type="_247" location="f0:96" file="f0" line="96"/>
+  </Function>
+  <Function id="_185" name="__builtin_return_address" returns="_261" context="_1" location="f0:14" file="f0" line="14" extern="1">
+    <Argument name="LEVEL" type="_253" location="f0:14" file="f0" line="14"/>
+  </Function>
+  <Function id="_186" name="__builtin_isnan" returns="_246" context="_1" mangled="isnan" location="f0:144" file="f0" line="144" extern="1" attributes="nothrow const">
+    <Ellipsis/>
+  </Function>
+  <Struct id="_187" name="id3_file" context="_1" incomplete="1" mangled="8id3_file" demangled="id3_file" location="f2:247" file="f2" line="247" artificial="1" align="8"/>
+  <Function id="_188" name="id3_ucs4_getnumber" returns="_73" context="_1" location="f2:328" file="f2" line="328" extern="1">
+    <Argument type="_256" location="f2:328" file="f2" line="328"/>
+  </Function>
+  <Function id="_189" name="__builtin_csinhf" returns="_249" context="_1" mangled="csinhf" location="f0:117" file="f0" line="117" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:117" file="f0" line="117"/>
+  </Function>
+  <Function id="_190" name="__builtin_csinhl" returns="_250" context="_1" mangled="csinhl" location="f0:119" file="f0" line="119" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:119" file="f0" line="119"/>
+  </Function>
+  <Function id="_191" name="__builtin_csqrtf" returns="_249" context="_1" mangled="csqrtf" location="f0:120" file="f0" line="120" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:120" file="f0" line="120"/>
+  </Function>
+  <Function id="_192" name="__builtin_csqrtl" returns="_250" context="_1" mangled="csqrtl" location="f0:122" file="f0" line="122" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:122" file="f0" line="122"/>
+  </Function>
+  <Function id="_193" name="__builtin_floor" returns="_242" context="_1" mangled="floor" location="f0:51" file="f0" line="51" extern="1" attributes="nothrow const">
+    <Argument type="_242" location="f0:51" file="f0" line="51"/>
+  </Function>
+  <Function id="_194" name="__builtin_ldexp" returns="_242" context="_1" mangled="ldexp" location="f0:59" file="f0" line="59" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:59" file="f0" line="59"/>
+    <Argument type="_247" location="f0:59" file="f0" line="59"/>
+  </Function>
+  <Variable id="_195" name="cpp_sym_ID3_FRAME_YEAR" type="_243" init="(const char*)&quot;TDRC&quot;" context="_1" location="f1:10" file="f1" line="10"/>
+  <Function id="_196" name="id3_field_setstrings" returns="_247" context="_1" location="f2:291" file="f2" line="291" extern="1">
+    <Argument type="_251" location="f2:291" file="f2" line="291"/>
+    <Argument type="_253" location="f2:291" file="f2" line="291"/>
+    <Argument type="_309" location="f2:291" file="f2" line="291"/>
+  </Function>
+  <Function id="_197" name="id3_frame_delete" returns="_260" context="_1" location="f2:281" file="f2" line="281" extern="1">
+    <Argument type="_288" location="f2:281" file="f2" line="281"/>
+  </Function>
+  <Function id="_198" name="id3_ucs4_latin1duplicate" returns="_310" context="_1" location="f2:323" file="f2" line="323" extern="1">
+    <Argument type="_256" location="f2:323" file="f2" line="323"/>
+  </Function>
+  <Function id="_199" name="id3_field_setfulllatin1" returns="_247" context="_1" location="f2:295" file="f2" line="295" extern="1">
+    <Argument type="_251" location="f2:295" file="f2" line="295"/>
+    <Argument type="_287" location="f2:295" file="f2" line="295"/>
+  </Function>
+  <Function id="_200" name="__builtin_ccosf" returns="_249" context="_1" mangled="ccosf" location="f0:102" file="f0" line="102" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:102" file="f0" line="102"/>
+  </Function>
+  <Function id="_201" name="__builtin_ccosh" returns="_258" context="_1" mangled="ccosh" location="f0:106" file="f0" line="106" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:106" file="f0" line="106"/>
+  </Function>
+  <Function id="_202" name="__builtin_ccosl" returns="_250" context="_1" mangled="ccosl" location="f0:104" file="f0" line="104" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:104" file="f0" line="104"/>
+  </Function>
+  <Function id="_203" name="__builtin_va_arg_pack_len" returns="_247" context="_1" location="f0:148" file="f0" line="148" extern="1">
+    <Ellipsis/>
+  </Function>
+  <Function id="_204" name="__builtin_islessgreater" returns="_246" context="_1" location="f0:143" file="f0" line="143" extern="1" attributes="nothrow const">
+    <Ellipsis/>
+  </Function>
+  <Function id="_205" name="__builtin_ctanhf" returns="_249" context="_1" mangled="ctanhf" location="f0:126" file="f0" line="126" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:126" file="f0" line="126"/>
+  </Function>
+  <Function id="_206" name="__builtin_ctanhl" returns="_250" context="_1" mangled="ctanhl" location="f0:128" file="f0" line="128" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:128" file="f0" line="128"/>
+  </Function>
+  <Variable id="_207" name="cpp_sym_ID3_VERSION_MINOR" type="_247c" init="15" context="_1" location="f1:11" file="f1" line="11" static="1"/>
+  <Function id="_208" name="id3_file_open" returns="_291" context="_1" location="f2:247" file="f2" line="247" extern="1">
+    <Argument type="_243" location="f2:247" file="f2" line="247"/>
+    <Argument type="_209" location="f2:247" file="f2" line="247"/>
+  </Function>
+  <Enumeration id="_209" name="id3_file_mode" context="_1" location="f2:242" file="f2" line="242" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_FILE_MODE_READONLY" init="0"/>
+    <EnumValue name="ID3_FILE_MODE_READWRITE" init="1"/>
+  </Enumeration>
+  <Function id="_210" name="__builtin_ceilf" returns="_244" context="_1" mangled="ceilf" location="f0:37" file="f0" line="37" extern="1" attributes="nothrow const">
+    <Argument type="_244" location="f0:37" file="f0" line="37"/>
+  </Function>
+  <Function id="_211" name="__builtin_ceill" returns="_245" context="_1" mangled="ceill" location="f0:38" file="f0" line="38" extern="1" attributes="nothrow const">
+    <Argument type="_245" location="f0:38" file="f0" line="38"/>
+  </Function>
+  <Function id="_212" name="id3_genre_number" returns="_247" context="_1" location="f2:319" file="f2" line="319" extern="1">
+    <Argument type="_256" location="f2:319" file="f2" line="319"/>
+  </Function>
+  <Function id="_213" name="__builtin_csinf" returns="_249" context="_1" mangled="csinf" location="f0:114" file="f0" line="114" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:114" file="f0" line="114"/>
+  </Function>
+  <Function id="_214" name="__builtin_csinh" returns="_258" context="_1" mangled="csinh" location="f0:118" file="f0" line="118" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:118" file="f0" line="118"/>
+  </Function>
+  <Function id="_215" name="__builtin_csinl" returns="_250" context="_1" mangled="csinl" location="f0:116" file="f0" line="116" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:116" file="f0" line="116"/>
+  </Function>
+  <Variable id="_216" name="id3_version" type="_289c" context="_1" location="f2:355" file="f2" line="355" extern="1"/>
+  <Function id="_217" name="__builtin_acos" returns="_242" context="_1" mangled="acos" location="f0:24" file="f0" line="24" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:24" file="f0" line="24"/>
+  </Function>
+  <Function id="_218" name="__builtin_ctzll" returns="_247" context="_1" location="f0:98" file="f0" line="98" extern="1" attributes="nothrow const">
+    <Argument type="_248" location="f0:98" file="f0" line="98"/>
+  </Function>
+  <Function id="_219" name="__builtin_cargf" returns="_244" context="_1" mangled="cargf" location="f0:93" file="f0" line="93" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_249" location="f0:93" file="f0" line="93"/>
+  </Function>
+  <Function id="_220" name="__builtin_cargl" returns="_245" context="_1" mangled="cargl" location="f0:95" file="f0" line="95" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_250" location="f0:95" file="f0" line="95"/>
+  </Function>
+  <Function id="_221" name="__builtin_cosf" returns="_244" context="_1" mangled="cosf" location="f0:40" file="f0" line="40" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_244" location="f0:40" file="f0" line="40"/>
+  </Function>
+  <Function id="_222" name="__builtin_cosh" returns="_242" context="_1" mangled="cosh" location="f0:41" file="f0" line="41" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:41" file="f0" line="41"/>
+  </Function>
+  <Function id="_223" name="__builtin_cosl" returns="_245" context="_1" mangled="cosl" location="f0:44" file="f0" line="44" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_245" location="f0:44" file="f0" line="44"/>
+  </Function>
+  <Variable id="_224" name="cpp_sym_ID3_VERSION_MAJOR" type="_247c" init="0" context="_1" location="f1:14" file="f1" line="14" static="1"/>
+  <Function id="_225" name="id3_tag_detachframe" returns="_247" context="_1" location="f2:268" file="f2" line="268" extern="1">
+    <Argument type="_254" location="f2:268" file="f2" line="268"/>
+    <Argument type="_288" location="f2:268" file="f2" line="268"/>
+  </Function>
+  <Function id="_226" name="id3_frame_new" returns="_288" context="_1" location="f2:280" file="f2" line="280" extern="1">
+    <Argument type="_243" location="f2:280" file="f2" line="280"/>
+  </Function>
+  <Function id="_227" name="id3_field_addstring" returns="_247" context="_1" location="f2:292" file="f2" line="292" extern="1">
+    <Argument type="_251" location="f2:292" file="f2" line="292"/>
+    <Argument type="_256" location="f2:292" file="f2" line="292"/>
+  </Function>
+  <Function id="_228" name="id3_file_fdopen" returns="_291" context="_1" location="f2:248" file="f2" line="248" extern="1">
+    <Argument type="_247" location="f2:248" file="f2" line="248"/>
+    <Argument type="_209" location="f2:248" file="f2" line="248"/>
+  </Function>
+  <Function id="_229" name="__builtin_isgreater" returns="_246" context="_1" location="f0:137" file="f0" line="137" extern="1" attributes="nothrow const">
+    <Ellipsis/>
+  </Function>
+  <Union id="_230" name="id3_field" context="_1" mangled="9id3_field" demangled="id3_field" location="f2:205" file="f2" line="205" artificial="1" size="192" align="64" members="_311 _312 _313 _314 _315 _316 _317 _318 _319 _320 _321 _322 _323 _324 _325 _326 _327 _328 _329 " bases=""/>
+  <Function id="_231" name="id3_tag_version" returns="_253" context="_1" location="f2:260" file="f2" line="260" extern="1">
+    <Argument type="_285" location="f2:260" file="f2" line="260"/>
+  </Function>
+  <Function id="_232" name="__builtin_bswap32" returns="_253" context="_1" location="f0:157" file="f0" line="157" extern="1">
+    <Argument name="_data" type="_253" location="f0:157" file="f0" line="157"/>
+  </Function>
+  <Variable id="_233" name="cpp_sym_ID3_FRAME_GENRE" type="_243" init="(const char*)&quot;TCON&quot;" context="_1" location="f1:13" file="f1" line="13"/>
+  <Function id="_234" name="__builtin_sinf" returns="_244" context="_1" mangled="sinf" location="f0:76" file="f0" line="76" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_244" location="f0:76" file="f0" line="76"/>
+  </Function>
+  <Function id="_235" name="__builtin_sinh" returns="_242" context="_1" mangled="sinh" location="f0:77" file="f0" line="77" extern="1" attributes="nothrow">
+    <Argument type="_242" location="f0:77" file="f0" line="77"/>
+  </Function>
+  <Function id="_236" name="__builtin_sinl" returns="_245" context="_1" mangled="sinl" location="f0:80" file="f0" line="80" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_245" location="f0:80" file="f0" line="80"/>
+  </Function>
+  <Function id="_237" name="id3_file_close" returns="_247" context="_1" location="f2:249" file="f2" line="249" extern="1">
+    <Argument type="_291" location="f2:249" file="f2" line="249"/>
+  </Function>
+  <Function id="_238" name="__builtin_csin" returns="_258" context="_1" mangled="csin" location="f0:115" file="f0" line="115" extern="1" attributes="nothrow pure no vops">
+    <Argument type="_258" location="f0:115" file="f0" line="115"/>
+  </Function>
+  <Function id="_239" name="id3_tag_setlength" returns="_260" context="_1" location="f2:263" file="f2" line="263" extern="1">
+    <Argument type="_254" location="f2:263" file="f2" line="263"/>
+    <Argument type="_74" location="f2:263" file="f2" line="263"/>
+  </Function>
+  <Function id="_240" name="id3_field_type" returns="_241" context="_1" location="f2:287" file="f2" line="287" extern="1">
+    <Argument type="_257" location="f2:287" file="f2" line="287"/>
+  </Function>
+  <Enumeration id="_241" name="id3_field_type" context="_1" location="f2:179" file="f2" line="179" artificial="1" size="32" align="32">
+    <EnumValue name="ID3_FIELD_TYPE_TEXTENCODING" init="0"/>
+    <EnumValue name="ID3_FIELD_TYPE_LATIN1" init="1"/>
+    <EnumValue name="ID3_FIELD_TYPE_LATIN1FULL" init="2"/>
+    <EnumValue name="ID3_FIELD_TYPE_LATIN1LIST" init="3"/>
+    <EnumValue name="ID3_FIELD_TYPE_STRING" init="4"/>
+    <EnumValue name="ID3_FIELD_TYPE_STRINGFULL" init="5"/>
+    <EnumValue name="ID3_FIELD_TYPE_STRINGLIST" init="6"/>
+    <EnumValue name="ID3_FIELD_TYPE_LANGUAGE" init="7"/>
+    <EnumValue name="ID3_FIELD_TYPE_FRAMEID" init="8"/>
+    <EnumValue name="ID3_FIELD_TYPE_DATE" init="9"/>
+    <EnumValue name="ID3_FIELD_TYPE_INT8" init="10"/>
+    <EnumValue name="ID3_FIELD_TYPE_INT16" init="11"/>
+    <EnumValue name="ID3_FIELD_TYPE_INT24" init="12"/>
+    <EnumValue name="ID3_FIELD_TYPE_INT32" init="13"/>
+    <EnumValue name="ID3_FIELD_TYPE_INT32PLUS" init="14"/>
+    <EnumValue name="ID3_FIELD_TYPE_BINARYDATA" init="15"/>
+  </Enumeration>
+  <FundamentalType id="_242" name="double" size="64" align="64"/>
+  <PointerType id="_243" type="_330c" size="64" align="64"/>
+  <FundamentalType id="_244" name="float" size="32" align="32"/>
+  <FundamentalType id="_245" name="long double" size="128" align="128"/>
+  <FundamentalType id="_246" name="bool" size="8" align="8"/>
+  <FundamentalType id="_247" name="int" size="32" align="32"/>
+  <FundamentalType id="_248" name="long long int" size="64" align="64"/>
+  <FundamentalType id="_249" name="complex float" size="64" align="32"/>
+  <FundamentalType id="_250" name="complex long double" size="256" align="128"/>
+  <PointerType id="_251" type="_230" size="64" align="64"/>
+  <PointerType id="_252" type="_89c" size="64" align="64"/>
+  <FundamentalType id="_253" name="unsigned int" size="32" align="32"/>
+  <PointerType id="_254" type="_174" size="64" align="64"/>
+  <PointerType id="_255" type="_187c" size="64" align="64"/>
+  <PointerType id="_256" type="_81c" size="64" align="64"/>
+  <PointerType id="_257" type="_230c" size="64" align="64"/>
+  <FundamentalType id="_258" name="complex double" size="128" align="64"/>
+  <PointerType id="_259" type="_166c" size="64" align="64"/>
+  <FundamentalType id="_260" name="void" align="8"/>
+  <PointerType id="_261" type="_260" size="64" align="64"/>
+  <PointerType id="_262" type="_260c" size="64" align="64"/>
+  <CvQualifiedType id="_247c" type="_247" const="1"/>
+  <PointerType id="_264" type="_74" size="64" align="64"/>
+  <PointerType id="_265" type="_247" size="64" align="64"/>
+  <PointerType id="_266" type="_124" size="64" align="64"/>
+  <FundamentalType id="_267" name="long int" size="64" align="64"/>
+  <Field id="_268" name="id" type="_338" offset="0" context="_89" access="public" location="f2:146" file="f2" line="146"/>
+  <Field id="_269" name="description" type="_243" offset="64" context="_89" access="public" location="f2:147" file="f2" line="147"/>
+  <Field id="_270" name="refcount" type="_253" offset="128" context="_89" access="public" location="f2:148" file="f2" line="148"/>
+  <Field id="_271" name="flags" type="_247" offset="160" context="_89" access="public" location="f2:149" file="f2" line="149"/>
+  <Field id="_272" name="group_id" type="_247" offset="192" context="_89" access="public" location="f2:150" file="f2" line="150"/>
+  <Field id="_273" name="encryption_method" type="_247" offset="224" context="_89" access="public" location="f2:151" file="f2" line="151"/>
+  <Field id="_274" name="encoded" type="_286" offset="256" context="_89" access="public" location="f2:152" file="f2" line="152"/>
+  <Field id="_275" name="encoded_length" type="_74" offset="320" context="_89" access="public" location="f2:153" file="f2" line="153"/>
+  <Field id="_276" name="decoded_length" type="_74" offset="384" context="_89" access="public" location="f2:154" file="f2" line="154"/>
+  <Field id="_277" name="nfields" type="_253" offset="448" context="_89" access="public" location="f2:155" file="f2" line="155"/>
+  <Field id="_278" name="fields" type="_251" offset="512" context="_89" access="public" location="f2:156" file="f2" line="156"/>
+  <Destructor id="_279" name="id3_frame" artificial="1" throw="" context="_89" access="public" mangled="_ZN9id3_frameD1Ev *INTERNAL* " demangled="id3_frame::~id3_frame()" location="f2:145" file="f2" line="145" endline="145" inline="1">
+  </Destructor>
+  <OperatorMethod id="_280" name="=" returns="_339" artificial="1" throw="" context="_89" access="public" mangled="_ZN9id3_frameaSERKS_" demangled="id3_frame::operator=(id3_frame const&amp;)" location="f2:145" file="f2" line="145" endline="145" inline="1">
+    <Argument type="_340" location="f2:145" file="f2" line="145"/>
+  </OperatorMethod>
+  <Constructor id="_281" name="id3_frame" artificial="1" throw="" context="_89" access="public" mangled="_ZN9id3_frameC1ERKS_ *INTERNAL* " demangled="id3_frame::id3_frame(id3_frame const&amp;)" location="f2:145" file="f2" line="145" endline="145" inline="1">
+    <Argument type="_340" location="f2:145" file="f2" line="145"/>
+  </Constructor>
+  <Constructor id="_282" name="id3_frame" artificial="1" throw="" context="_89" access="public" mangled="_ZN9id3_frameC1Ev *INTERNAL* " demangled="id3_frame::id3_frame()" location="f2:145" file="f2" line="145" inline="1"/>
+  <PointerType id="_283" type="_244" size="64" align="64"/>
+  <PointerType id="_284" type="_245" size="64" align="64"/>
+  <PointerType id="_285" type="_174c" size="64" align="64"/>
+  <PointerType id="_286" type="_166" size="64" align="64"/>
+  <PointerType id="_287" type="_121c" size="64" align="64"/>
+  <PointerType id="_288" type="_89" size="64" align="64"/>
+  <ArrayType id="_289" min="0" max="" type="_330" align="8"/>
+  <CvQualifiedType id="_289c" type="_289" const="1"/>
+  <PointerType id="_291" type="_187" size="64" align="64"/>
+  <PointerType id="_292" type="_81" size="64" align="64"/>
+  <PointerType id="_293" type="_49c" size="64" align="64"/>
+  <PointerType id="_294" type="_49" size="64" align="64"/>
+  <Field id="_295" name="refcount" type="_253" offset="0" context="_174" access="public" location="f2:46" file="f2" line="46"/>
+  <Field id="_296" name="version" type="_253" offset="32" context="_174" access="public" location="f2:47" file="f2" line="47"/>
+  <Field id="_297" name="flags" type="_247" offset="64" context="_174" access="public" location="f2:48" file="f2" line="48"/>
+  <Field id="_298" name="extendedflags" type="_247" offset="96" context="_174" access="public" location="f2:49" file="f2" line="49"/>
+  <Field id="_299" name="restrictions" type="_247" offset="128" context="_174" access="public" location="f2:50" file="f2" line="50"/>
+  <Field id="_300" name="options" type="_247" offset="160" context="_174" access="public" location="f2:51" file="f2" line="51"/>
+  <Field id="_301" name="nframes" type="_253" offset="192" context="_174" access="public" location="f2:52" file="f2" line="52"/>
+  <Field id="_302" name="frames" type="_344" offset="256" context="_174" access="public" location="f2:53" file="f2" line="53"/>
+  <Field id="_303" name="paddedsize" type="_74" offset="320" context="_174" access="public" location="f2:54" file="f2" line="54"/>
+  <Destructor id="_304" name="id3_tag" artificial="1" throw="" context="_174" access="public" mangled="_ZN7id3_tagD1Ev *INTERNAL* " demangled="id3_tag::~id3_tag()" location="f2:45" file="f2" line="45" endline="45" inline="1">
+  </Destructor>
+  <OperatorMethod id="_305" name="=" returns="_345" artificial="1" throw="" context="_174" access="public" mangled="_ZN7id3_tagaSERKS_" demangled="id3_tag::operator=(id3_tag const&amp;)" location="f2:45" file="f2" line="45" endline="45" inline="1">
+    <Argument type="_346" location="f2:45" file="f2" line="45"/>
+  </OperatorMethod>
+  <Constructor id="_306" name="id3_tag" artificial="1" throw="" context="_174" access="public" mangled="_ZN7id3_tagC1ERKS_ *INTERNAL* " demangled="id3_tag::id3_tag(id3_tag const&amp;)" location="f2:45" file="f2" line="45" endline="45" inline="1">
+    <Argument type="_346" location="f2:45" file="f2" line="45"/>
+  </Constructor>
+  <Constructor id="_307" name="id3_tag" artificial="1" throw="" context="_174" access="public" mangled="_ZN7id3_tagC1Ev *INTERNAL* " demangled="id3_tag::id3_tag()" location="f2:45" file="f2" line="45" inline="1"/>
+  <PointerType id="_308" type="_124c" size="64" align="64"/>
+  <PointerType id="_309" type="_292" size="64" align="64"/>
+  <PointerType id="_310" type="_121" size="64" align="64"/>
+  <Field id="_311" name="type" type="_241" offset="0" context="_230" access="public" location="f2:206" file="f2" line="206"/>
+  <Field id="_312" name="number" type="_319" offset="0" context="_230" access="public" location="f2:210" file="f2" line="210"/>
+  <Field id="_313" name="latin1" type="_320" offset="0" context="_230" access="public" location="f2:214" file="f2" line="214"/>
+  <Field id="_314" name="latin1list" type="_321" offset="0" context="_230" access="public" location="f2:219" file="f2" line="219"/>
+  <Field id="_315" name="string" type="_322" offset="0" context="_230" access="public" location="f2:223" file="f2" line="223"/>
+  <Field id="_316" name="stringlist" type="_323" offset="0" context="_230" access="public" location="f2:228" file="f2" line="228"/>
+  <Field id="_317" name="immediate" type="_324" offset="0" context="_230" access="public" location="f2:232" file="f2" line="232"/>
+  <Field id="_318" name="binary" type="_325" offset="0" context="_230" access="public" location="f2:237" file="f2" line="237"/>
+  <Struct id="_319" context="_230" access="public" mangled="N9id3_field3._9E" demangled="id3_field::._9" location="f2:207" file="f2" line="207" artificial="1" size="128" align="64" members="_348 _349 _350 _351 _352 _353 " bases=""/>
+  <Struct id="_320" context="_230" access="public" mangled="N9id3_field4._10E" demangled="id3_field::._10" location="f2:211" file="f2" line="211" artificial="1" size="128" align="64" members="_354 _355 _356 _357 _358 _359 " bases=""/>
+  <Struct id="_321" context="_230" access="public" mangled="N9id3_field4._11E" demangled="id3_field::._11" location="f2:215" file="f2" line="215" artificial="1" size="128" align="64" members="_360 _361 _362 _363 _364 _365 _366 " bases=""/>
+  <Struct id="_322" context="_230" access="public" mangled="N9id3_field4._12E" demangled="id3_field::._12" location="f2:220" file="f2" line="220" artificial="1" size="128" align="64" members="_367 _368 _369 _370 _371 _372 " bases=""/>
+  <Struct id="_323" context="_230" access="public" mangled="N9id3_field4._13E" demangled="id3_field::._13" location="f2:224" file="f2" line="224" artificial="1" size="128" align="64" members="_373 _374 _375 _376 _377 _378 _379 " bases=""/>
+  <Struct id="_324" context="_230" access="public" mangled="N9id3_field4._14E" demangled="id3_field::._14" location="f2:229" file="f2" line="229" artificial="1" size="128" align="32" members="_380 _381 _382 _383 _384 _385 " bases=""/>
+  <Struct id="_325" context="_230" access="public" mangled="N9id3_field4._15E" demangled="id3_field::._15" location="f2:233" file="f2" line="233" artificial="1" size="192" align="64" members="_386 _387 _388 _389 _390 _391 _392 " bases=""/>
+  <Destructor id="_326" name="id3_field" artificial="1" throw="" context="_230" access="public" mangled="_ZN9id3_fieldD1Ev *INTERNAL* " demangled="id3_field::~id3_field()" location="f2:205" file="f2" line="205" endline="205" inline="1">
+  </Destructor>
+  <OperatorMethod id="_327" name="=" returns="_393" artificial="1" throw="" context="_230" access="public" mangled="_ZN9id3_fieldaSERKS_" demangled="id3_field::operator=(id3_field const&amp;)" location="f2:205" file="f2" line="205" endline="205" inline="1">
+    <Argument type="_394" location="f2:205" file="f2" line="205"/>
+  </OperatorMethod>
+  <Constructor id="_328" name="id3_field" artificial="1" throw="" context="_230" access="public" mangled="_ZN9id3_fieldC1ERKS_ *INTERNAL* " demangled="id3_field::id3_field(id3_field const&amp;)" location="f2:205" file="f2" line="205" endline="205" inline="1">
+    <Argument type="_394" location="f2:205" file="f2" line="205"/>
+  </Constructor>
+  <Constructor id="_329" name="id3_field" artificial="1" throw="" context="_230" access="public" mangled="_ZN9id3_fieldC1Ev *INTERNAL* " demangled="id3_field::id3_field()" location="f2:205" file="f2" line="205" inline="1"/>
+  <ArrayType id="_338" min="0" max="4u" type="_330" size="40" align="8"/>
+  <ReferenceType id="_339" type="_89" size="64" align="64"/>
+  <ReferenceType id="_340" type="_89c" size="64" align="64"/>
+  <FundamentalType id="_330" name="char" size="8" align="8"/>
+  <PointerType id="_344" type="_288" size="64" align="64"/>
+  <ReferenceType id="_345" type="_174" size="64" align="64"/>
+  <ReferenceType id="_346" type="_174c" size="64" align="64"/>
+  <Field id="_348" name="type" type="_241" offset="0" context="_319" access="public" location="f2:208" file="f2" line="208"/>
+  <Field id="_349" name="value" type="_267" offset="64" context="_319" access="public" location="f2:209" file="f2" line="209"/>
+  <Destructor id="_350" name="._9" artificial="1" throw="" context="_319" access="public" mangled="_ZN9id3_field3._9D1Ev *INTERNAL* " demangled="id3_field::._9::~._9()" location="f2:207" file="f2" line="207" endline="207" inline="1">
+  </Destructor>
+  <OperatorMethod id="_351" name="=" returns="_395" artificial="1" throw="" context="_319" access="public" mangled="_ZN9id3_field3._9aSERKS0_" demangled="id3_field::._9::operator=(id3_field::._9 const&amp;)" location="f2:207" file="f2" line="207" endline="207" inline="1">
+    <Argument type="_396" location="f2:207" file="f2" line="207"/>
+  </OperatorMethod>
+  <Constructor id="_352" artificial="1" throw="" context="_319" access="public" mangled="_ZN9id3_field3._9C1ERKS0_ *INTERNAL* " demangled="id3_field::._9::._9(id3_field::._9 const&amp;)" location="f2:207" file="f2" line="207" endline="207" inline="1">
+    <Argument type="_396" location="f2:207" file="f2" line="207"/>
+  </Constructor>
+  <Constructor id="_353" artificial="1" throw="" context="_319" access="public" mangled="_ZN9id3_field3._9C1Ev *INTERNAL* " demangled="id3_field::._9::._9()" location="f2:207" file="f2" line="207" inline="1"/>
+  <Field id="_354" name="type" type="_241" offset="0" context="_320" access="public" location="f2:212" file="f2" line="212"/>
+  <Field id="_355" name="ptr" type="_310" offset="64" context="_320" access="public" location="f2:213" file="f2" line="213"/>
+  <Destructor id="_356" name="._10" artificial="1" throw="" context="_320" access="public" mangled="_ZN9id3_field4._10D1Ev *INTERNAL* " demangled="id3_field::._10::~._10()" location="f2:211" file="f2" line="211" endline="211" inline="1">
+  </Destructor>
+  <OperatorMethod id="_357" name="=" returns="_397" artificial="1" throw="" context="_320" access="public" mangled="_ZN9id3_field4._10aSERKS0_" demangled="id3_field::._10::operator=(id3_field::._10 const&amp;)" location="f2:211" file="f2" line="211" endline="211" inline="1">
+    <Argument type="_398" location="f2:211" file="f2" line="211"/>
+  </OperatorMethod>
+  <Constructor id="_358" artificial="1" throw="" context="_320" access="public" mangled="_ZN9id3_field4._10C1ERKS0_ *INTERNAL* " demangled="id3_field::._10::._10(id3_field::._10 const&amp;)" location="f2:211" file="f2" line="211" endline="211" inline="1">
+    <Argument type="_398" location="f2:211" file="f2" line="211"/>
+  </Constructor>
+  <Constructor id="_359" artificial="1" throw="" context="_320" access="public" mangled="_ZN9id3_field4._10C1Ev *INTERNAL* " demangled="id3_field::._10::._10()" location="f2:211" file="f2" line="211" inline="1"/>
+  <Field id="_360" name="type" type="_241" offset="0" context="_321" access="public" location="f2:216" file="f2" line="216"/>
+  <Field id="_361" name="nstrings" type="_253" offset="32" context="_321" access="public" location="f2:217" file="f2" line="217"/>
+  <Field id="_362" name="strings" type="_399" offset="64" context="_321" access="public" location="f2:218" file="f2" line="218"/>
+  <Destructor id="_363" name="._11" artificial="1" throw="" context="_321" access="public" mangled="_ZN9id3_field4._11D1Ev *INTERNAL* " demangled="id3_field::._11::~._11()" location="f2:215" file="f2" line="215" endline="215" inline="1">
+  </Destructor>
+  <OperatorMethod id="_364" name="=" returns="_400" artificial="1" throw="" context="_321" access="public" mangled="_ZN9id3_field4._11aSERKS0_" demangled="id3_field::._11::operator=(id3_field::._11 const&amp;)" location="f2:215" file="f2" line="215" endline="215" inline="1">
+    <Argument type="_401" location="f2:215" file="f2" line="215"/>
+  </OperatorMethod>
+  <Constructor id="_365" artificial="1" throw="" context="_321" access="public" mangled="_ZN9id3_field4._11C1ERKS0_ *INTERNAL* " demangled="id3_field::._11::._11(id3_field::._11 const&amp;)" location="f2:215" file="f2" line="215" endline="215" inline="1">
+    <Argument type="_401" location="f2:215" file="f2" line="215"/>
+  </Constructor>
+  <Constructor id="_366" artificial="1" throw="" context="_321" access="public" mangled="_ZN9id3_field4._11C1Ev *INTERNAL* " demangled="id3_field::._11::._11()" location="f2:215" file="f2" line="215" inline="1"/>
+  <Field id="_367" name="type" type="_241" offset="0" context="_322" access="public" location="f2:221" file="f2" line="221"/>
+  <Field id="_368" name="ptr" type="_292" offset="64" context="_322" access="public" location="f2:222" file="f2" line="222"/>
+  <Destructor id="_369" name="._12" artificial="1" throw="" context="_322" access="public" mangled="_ZN9id3_field4._12D1Ev *INTERNAL* " demangled="id3_field::._12::~._12()" location="f2:220" file="f2" line="220" endline="220" inline="1">
+  </Destructor>
+  <OperatorMethod id="_370" name="=" returns="_402" artificial="1" throw="" context="_322" access="public" mangled="_ZN9id3_field4._12aSERKS0_" demangled="id3_field::._12::operator=(id3_field::._12 const&amp;)" location="f2:220" file="f2" line="220" endline="220" inline="1">
+    <Argument type="_403" location="f2:220" file="f2" line="220"/>
+  </OperatorMethod>
+  <Constructor id="_371" artificial="1" throw="" context="_322" access="public" mangled="_ZN9id3_field4._12C1ERKS0_ *INTERNAL* " demangled="id3_field::._12::._12(id3_field::._12 const&amp;)" location="f2:220" file="f2" line="220" endline="220" inline="1">
+    <Argument type="_403" location="f2:220" file="f2" line="220"/>
+  </Constructor>
+  <Constructor id="_372" artificial="1" throw="" context="_322" access="public" mangled="_ZN9id3_field4._12C1Ev *INTERNAL* " demangled="id3_field::._12::._12()" location="f2:220" file="f2" line="220" inline="1"/>
+  <Field id="_373" name="type" type="_241" offset="0" context="_323" access="public" location="f2:225" file="f2" line="225"/>
+  <Field id="_374" name="nstrings" type="_253" offset="32" context="_323" access="public" location="f2:226" file="f2" line="226"/>
+  <Field id="_375" name="strings" type="_309" offset="64" context="_323" access="public" location="f2:227" file="f2" line="227"/>
+  <Destructor id="_376" name="._13" artificial="1" throw="" context="_323" access="public" mangled="_ZN9id3_field4._13D1Ev *INTERNAL* " demangled="id3_field::._13::~._13()" location="f2:224" file="f2" line="224" endline="224" inline="1">
+  </Destructor>
+  <OperatorMethod id="_377" name="=" returns="_404" artificial="1" throw="" context="_323" access="public" mangled="_ZN9id3_field4._13aSERKS0_" demangled="id3_field::._13::operator=(id3_field::._13 const&amp;)" location="f2:224" file="f2" line="224" endline="224" inline="1">
+    <Argument type="_405" location="f2:224" file="f2" line="224"/>
+  </OperatorMethod>
+  <Constructor id="_378" artificial="1" throw="" context="_323" access="public" mangled="_ZN9id3_field4._13C1ERKS0_ *INTERNAL* " demangled="id3_field::._13::._13(id3_field::._13 const&amp;)" location="f2:224" file="f2" line="224" endline="224" inline="1">
+    <Argument type="_405" location="f2:224" file="f2" line="224"/>
+  </Constructor>
+  <Constructor id="_379" artificial="1" throw="" context="_323" access="public" mangled="_ZN9id3_field4._13C1Ev *INTERNAL* " demangled="id3_field::._13::._13()" location="f2:224" file="f2" line="224" inline="1"/>
+  <Field id="_380" name="type" type="_241" offset="0" context="_324" access="public" location="f2:230" file="f2" line="230"/>
+  <Field id="_381" name="value" type="_406" offset="32" context="_324" access="public" location="f2:231" file="f2" line="231"/>
+  <Destructor id="_382" name="._14" artificial="1" throw="" context="_324" access="public" mangled="_ZN9id3_field4._14D1Ev *INTERNAL* " demangled="id3_field::._14::~._14()" location="f2:229" file="f2" line="229" endline="229" inline="1">
+  </Destructor>
+  <OperatorMethod id="_383" name="=" returns="_407" artificial="1" throw="" context="_324" access="public" mangled="_ZN9id3_field4._14aSERKS0_" demangled="id3_field::._14::operator=(id3_field::._14 const&amp;)" location="f2:229" file="f2" line="229" endline="229" inline="1">
+    <Argument type="_408" location="f2:229" file="f2" line="229"/>
+  </OperatorMethod>
+  <Constructor id="_384" artificial="1" throw="" context="_324" access="public" mangled="_ZN9id3_field4._14C1ERKS0_ *INTERNAL* " demangled="id3_field::._14::._14(id3_field::._14 const&amp;)" location="f2:229" file="f2" line="229" endline="229" inline="1">
+    <Argument type="_408" location="f2:229" file="f2" line="229"/>
+  </Constructor>
+  <Constructor id="_385" artificial="1" throw="" context="_324" access="public" mangled="_ZN9id3_field4._14C1Ev *INTERNAL* " demangled="id3_field::._14::._14()" location="f2:229" file="f2" line="229" inline="1"/>
+  <Field id="_386" name="type" type="_241" offset="0" context="_325" access="public" location="f2:234" file="f2" line="234"/>
+  <Field id="_387" name="data" type="_286" offset="64" context="_325" access="public" location="f2:235" file="f2" line="235"/>
+  <Field id="_388" name="length" type="_74" offset="128" context="_325" access="public" location="f2:236" file="f2" line="236"/>
+  <Destructor id="_389" name="._15" artificial="1" throw="" context="_325" access="public" mangled="_ZN9id3_field4._15D1Ev *INTERNAL* " demangled="id3_field::._15::~._15()" location="f2:233" file="f2" line="233" endline="233" inline="1">
+  </Destructor>
+  <OperatorMethod id="_390" name="=" returns="_409" artificial="1" throw="" context="_325" access="public" mangled="_ZN9id3_field4._15aSERKS0_" demangled="id3_field::._15::operator=(id3_field::._15 const&amp;)" location="f2:233" file="f2" line="233" endline="233" inline="1">
+    <Argument type="_410" location="f2:233" file="f2" line="233"/>
+  </OperatorMethod>
+  <Constructor id="_391" artificial="1" throw="" context="_325" access="public" mangled="_ZN9id3_field4._15C1ERKS0_ *INTERNAL* " demangled="id3_field::._15::._15(id3_field::._15 const&amp;)" location="f2:233" file="f2" line="233" endline="233" inline="1">
+    <Argument type="_410" location="f2:233" file="f2" line="233"/>
+  </Constructor>
+  <Constructor id="_392" artificial="1" throw="" context="_325" access="public" mangled="_ZN9id3_field4._15C1Ev *INTERNAL* " demangled="id3_field::._15::._15()" location="f2:233" file="f2" line="233" inline="1"/>
+  <ReferenceType id="_393" type="_230" size="64" align="64"/>
+  <ReferenceType id="_394" type="_230c" size="64" align="64"/>
+  <ReferenceType id="_395" type="_319" size="64" align="64"/>
+  <ReferenceType id="_396" type="_319c" size="64" align="64"/>
+  <ReferenceType id="_397" type="_320" size="64" align="64"/>
+  <ReferenceType id="_398" type="_320c" size="64" align="64"/>
+  <PointerType id="_399" type="_310" size="64" align="64"/>
+  <ReferenceType id="_400" type="_321" size="64" align="64"/>
+  <ReferenceType id="_401" type="_321c" size="64" align="64"/>
+  <ReferenceType id="_402" type="_322" size="64" align="64"/>
+  <ReferenceType id="_403" type="_322c" size="64" align="64"/>
+  <ReferenceType id="_404" type="_323" size="64" align="64"/>
+  <ReferenceType id="_405" type="_323c" size="64" align="64"/>
+  <ArrayType id="_406" min="0" max="8u" type="_330" size="72" align="8"/>
+  <ReferenceType id="_407" type="_324" size="64" align="64"/>
+  <ReferenceType id="_408" type="_324c" size="64" align="64"/>
+  <ReferenceType id="_409" type="_325" size="64" align="64"/>
+  <ReferenceType id="_410" type="_325c" size="64" align="64"/>
+  <CvQualifiedType id="_330c" type="_330" const="1"/>
+  <CvQualifiedType id="_260c" type="_260" const="1"/>
+  <CvQualifiedType id="_174c" type="_174" const="1"/>
+  <CvQualifiedType id="_89c" type="_89" const="1"/>
+  <CvQualifiedType id="_319c" type="_319" const="1"/>
+  <CvQualifiedType id="_320c" type="_320" const="1"/>
+  <CvQualifiedType id="_321c" type="_321" const="1"/>
+  <CvQualifiedType id="_322c" type="_322" const="1"/>
+  <CvQualifiedType id="_323c" type="_323" const="1"/>
+  <CvQualifiedType id="_324c" type="_324" const="1"/>
+  <CvQualifiedType id="_325c" type="_325" const="1"/>
+  <CvQualifiedType id="_230c" type="_230" const="1"/>
+  <CvQualifiedType id="_187c" type="_187" const="1"/>
+  <CvQualifiedType id="_166c" type="_166" const="1"/>
+  <CvQualifiedType id="_81c" type="_81" const="1"/>
+  <CvQualifiedType id="_121c" type="_121" const="1"/>
+  <CvQualifiedType id="_49c" type="_49" const="1"/>
+  <CvQualifiedType id="_124c" type="_124" const="1"/>
+  <File id="f0" name="/usr/share/gccxml-0.9/GCC/4.8/gccxml_builtins.h"/>
+  <File id="f1" name="/tmp/tmp_eZcOS.cpp"/>
+  <File id="f2" name="/usr/include/id3tag.h"/>
+  <CPP_DUMP name="functions"><![CDATA[ID3_TAG_VERSION_MAJOR(x) (((x) >> 8) & 0xff)
+ID3_TAG_VERSION_MINOR(x) (((x) >> 0) & 0xff)
+ID3_VERSION_STRING(num) ID3_VERSION_STRINGIZE(num)
+ID3_VERSION_STRINGIZE(str) #str
+]]></CPP_DUMP>
+  <CPP_DUMP name="aliases"><![CDATA[]]></CPP_DUMP>
+  <CPP_DUMP name="excluded"><![CDATA[]]></CPP_DUMP>
+</GCC_XML>
