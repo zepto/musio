@@ -29,7 +29,7 @@ from .io_util import msg_out
 
 from .import_util import LazyImport
 
-_av = LazyImport('ffmpeg._av', globals(), locals(), ['_av'], 1)
+_av = LazyImport('ffmpeg.av', globals(), locals(), ['av'], 1)
 
 __supported_dict = {
     'ext': ['.*', '.flv', '.iflv', '.wma', '.wmv', '.avi', '.mpg'],
@@ -309,6 +309,10 @@ class FFmpegFile(AudioIO):
                                                      frame,
                                                      _av.byref(got_frame),
                                                      av_packet)
+
+                # Exit loop if no data was decoded.
+                if data_len < 0:
+                    break
 
                 # Don't finish the loop if we didn't get a frame.
                 # if not got_frame:
