@@ -77,6 +77,8 @@ class ID3Tags(dict):
                 continue
             field = id3_frame.contents.fields[1]
             ucs4 = field.stringlist.strings.contents
+            if tag_name == 'genre':
+                ucs4 = _id3tag.id3_genre_name(ucs4)
             field_val = _id3tag.id3_ucs4_utf8duplicate(ucs4)
             tag_val = _id3tag.string_at(field_val).decode('utf8', 'replace')
             id3_dict[tag_name] = tag_val
