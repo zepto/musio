@@ -105,6 +105,8 @@ class AudioPlayer(object):
         # Setup the msg_dict for sending messages to the child process.
         self._msg_dict = Manager().dict()
 
+        self._control_dict = {}
+
         # Create a pipe for sending and receiving messages.
         self._control_conn, self._player_conn = Pipe()
 
@@ -162,7 +164,8 @@ class AudioPlayer(object):
 
         """
 
-        self.stop()
+        if self._control_dict['playing']:
+            self.stop()
 
     def __len__(self):
         """ The length of the file if it has one.
@@ -300,6 +303,8 @@ class AudioPlayer(object):
         self._msg_dict['filename'] = filename
         self._msg_dict.update(kwargs)
 
+        self._control_dict.update(self._msg_dict)
+
         # Pause it so when we call play later it will start the player
         # but not the audio playback.  Call play again to start audio
         # playback.
@@ -328,6 +333,8 @@ class AudioPlayer(object):
             # Un-pause if paused.
             self._msg_dict['paused'] = False
 
+        self._control_dict.update(self._msg_dict)
+
     def stop(self):
         """ stop() -> Stop playback.
 
@@ -343,6 +350,8 @@ class AudioPlayer(object):
             # Un-Pause.
             self._msg_dict['paused'] = False
 
+        self._control_dict.update(self._msg_dict)
+
     def pause(self):
         """ pause() -> Pause playback.
 
@@ -350,6 +359,7 @@ class AudioPlayer(object):
 
         # Pause playback.
         self._msg_dict['paused'] = True
+        self._control_dict.update(self._msg_dict)
 
     @property
     def paused(self) -> bool:
