@@ -411,7 +411,10 @@ class MP3File(AudioIO):
             except ValueError:
                 continue
             field = id3_frame.contents.fields[1]
-            ucs4 = field.stringlist.strings.contents
+            try:
+                ucs4 = field.stringlist.strings.contents
+            except ValueError:
+                continue
             if tag_name == 'genre':
                 ucs4 = _id3tag.id3_genre_name(ucs4)
             field_val = _id3tag.id3_ucs4_utf8duplicate(ucs4)
