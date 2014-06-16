@@ -60,7 +60,7 @@ class Portaudio(DevIO):
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
                  unsigned=False, floatp=False, buffer_size=None,
-                 latency=0.0500000, devindex='default', callback=None,
+                 latency=0.0500000, device='default', callback=None,
                  **kwargs):
         """ Portaudio(mode='w', depth=16, rate=44100, channels=2,
         unsigned=False, floatp=False, buffer_size=4092, latency=500000,
@@ -83,7 +83,14 @@ class Portaudio(DevIO):
 
         self._rate = float(rate)
         self._floatp = floatp
-        self._devindex = devindex
+
+        try:
+            device = int(device)
+        except:
+            pass
+
+        self._devindex = device
+
         self._callback = callback
 
         self._devname = ''
@@ -208,6 +215,9 @@ class Portaudio(DevIO):
 
         dev_list = self.device_list()
         dev_index = self._devindex
+
+        if type(dev_index) is bytes:
+            dev_index = dev_index.decode()
 
         # Get the correct device index.
         if type(dev_index) is str:

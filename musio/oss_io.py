@@ -52,7 +52,8 @@ class Oss(DevIO):
     _supported_modes = 'rw'
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, buffer_size=None, **kwargs):
+                 bigendian=False, unsigned=False, buffer_size=None,
+                 device='default', **kwargs):
         """ Oss(depth=16, rate=44100, channels=2, bigendian=False,
         unsigned=False, buffer_size=None) -> Initialize the alsa pcm device.
 
@@ -70,6 +71,7 @@ class Oss(DevIO):
                                     'BE' if bigendian else 'LE'))
 
         self._format = audio_format
+        self._device = '/dev/dsp' if device == 'default' else device
 
         self._dsp = self._open()
 
@@ -94,7 +96,7 @@ class Oss(DevIO):
 
         """
 
-        dsp = ossaudiodev.open(self._mode)
+        dsp = ossaudiodev.open(self._device, self._mode)
         try:
             dsp.setparameters(self._format, self._channels, self._rate, True)
         except OSSAudioError as err:

@@ -148,11 +148,27 @@ if __name__ == '__main__':
     parser.add_argument('-q', '--quiet', action='store_false', default=True,
                         help='Don\'t show playback percentage.',
                         dest='show_position')
-    parser.add_argument('-d', '--debug', action='store_true', default=False,
+    parser.add_argument('--debug', action='store_true', default=False,
                         help='Enable debug error messages.',
                         dest='debug')
+    parser.add_argument('-d', '--device', action='store', default='default',
+                        help='Specify the device.',
+                        dest='device')
+    # parser.add_argument('--list-devices', action='store_true', default=False,
+    #                     help='List available devices.',
+    #                     dest='list_devices')
     parser.add_argument(dest='filename', nargs='+')
     args = parser.parse_args()
 
+    # if args.list_devices:
+    #     from musio.alsa import control
+    #     hints = control.POINTER(control.c_void_p)()
+    #     err = control.snd_device_name_hint(-1, b'pcm', control.byref(hints))
+    #     for i in hints:
+    #         if not i:
+    #             break
+    #         print(control.snd_device_name_get_hint(i, b'NAME').decode())
+    #         print(control.snd_device_name_get_hint(i, b'DESC').decode())
+    # else:
     if args.filename:
         main(args.__dict__)

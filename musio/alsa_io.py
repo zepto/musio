@@ -56,7 +56,7 @@ class Alsa(DevIO):
 
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
                  bigendian=False, unsigned=False, floatp=False,
-                 buffer_size=None, latency=500000, device=b'default',
+                 buffer_size=None, latency=500000, device='default',
                  **kwargs):
         """ Alsa(mode='w', depth=16, rate=44100, channels=2, bigendian=False,
         unsigned=False, buffer_size=None, latency=500000, device=b'default',
@@ -84,6 +84,8 @@ class Alsa(DevIO):
         self._pcm_format = pcm_format
         self._soft_resample = 1
         self._frame_size = 0
+        if not isinstance(device, bytes):
+            device = device.encode()
         self._device = device
 
         self._multiplier = channels * (depth >> 3)
