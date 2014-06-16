@@ -29,6 +29,7 @@
 from functools import wraps as functools_wraps
 from io import RawIOBase, SEEK_SET, SEEK_CUR, SEEK_END
 from os.path import basename as os_basename
+from os.path import isfile as os_isfile
 
 # If True errors will only print a message.
 IO_SOFT_ERRORS = True
@@ -127,6 +128,9 @@ class AudioIO(RawIOBase):
                               self._valid_depth))
 
         super(AudioIO, self).__init__()
+
+        if 'r' in mode and not os_isfile(filename):
+            raise(IOError("No such file or directory"))
 
         self._buffer_size = 8192  # 16384 // (depth // (8 // channels))
 

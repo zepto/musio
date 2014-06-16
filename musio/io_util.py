@@ -350,11 +350,12 @@ def open_file(filename: str, mode: str = 'r', mod_path: list = [],
         codec = get_codec(filename, mod_path=mod_path, blacklist=blacklist,
                           cached=False)
         if not codec:
-            raise IOError("Filetype not supported.")
+            raise IOError(return_err)
 
         try:
             open_codec = codec(filename, mode=mode, **kwargs)
         except IOError as err:
+            return_err = err
             print('Blacklisting (%s) because of error: %s' % (codec, err))
 
             mod_name = '%s.py' % codec.__module__.split('.')[-1]
@@ -372,6 +373,7 @@ def open_device(fileobj: AudioIO, mode: str = 'w', mod_path: list = [],
     """
 
     blacklist = kwargs.get('blacklist', [])
+    dev_name = kwargs.get('device', b'default')
 
     # Get the supported device
     device = get_io(fileobj, mod_path=mod_path, blacklist=blacklist)
@@ -383,7 +385,8 @@ def open_device(fileobj: AudioIO, mode: str = 'w', mod_path: list = [],
     # Open and return the device.
     return device(mode=mode, rate=fileobj.rate, channels=fileobj.channels,
                   depth=fileobj.depth, bigendian=fileobj.bigendian,
-                  unsigned=fileobj.unsigned, floatp=fileobj.floatp)
+                  unsigned=fileobj.unsigned, floatp=fileobj.floatp,
+                  device=dev_name)
 
 
 @contextmanager
