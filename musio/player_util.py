@@ -284,6 +284,8 @@ class AudioPlayer(object):
         except IOError as err:
             from time import sleep
             msg_dict['error'] = err
+            msg_dict['info'] = ''
+            msg_dict['length'] = 0
             print(err)
         finally:
             # Set playing to False for the parent.
@@ -307,8 +309,6 @@ class AudioPlayer(object):
         # Fill the message dictionary with the new info.
         self._msg_dict['show_position'] = self._show_position
         self._msg_dict['filename'] = filename
-        self._msg_dict['info'] = ''
-        self._msg_dict['length'] = 0
         self._msg_dict.update(kwargs)
 
         self._control_dict.update(self._msg_dict)
