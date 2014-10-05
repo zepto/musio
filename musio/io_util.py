@@ -377,13 +377,14 @@ def open_device(fileobj: AudioIO, mode: str = 'w', mod_path: list = [],
 
     # Get the supported device
     device = get_io(fileobj, mod_path=mod_path, blacklist=blacklist)
+    rate = kwargs.get('rate', fileobj.rate)
 
     if not device:
         print("Audio format not supported.")
         return None
 
     # Open and return the device.
-    return device(mode=mode, rate=fileobj.rate, channels=fileobj.channels,
+    return device(mode=mode, rate=rate, channels=fileobj.channels,
                   depth=fileobj.depth, bigendian=fileobj.bigendian,
                   unsigned=fileobj.unsigned, floatp=fileobj.floatp,
                   device=dev_name)
