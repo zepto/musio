@@ -160,7 +160,10 @@ class MP3File(AudioIO):
 
         """
 
-        repr_str = "filename='%(_filename)s', mode=%(_mode)s, depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, unsigned=%(_unsigned)s, quality=%(_quality)s, comment_dict=%(_comment_dict)s" % self
+        if self._mode == 'r':
+            repr_str = "filename='%(_filename)s', mode=%(_mode)s, depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, unsigned=%(_unsigned)s" % self
+        else:
+            repr_str = "filename='%(_filename)s', mode=%(_mode)s, depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, unsigned=%(_unsigned)s, quality=%(_quality)s, comment_dict=%(_comment_dict)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
