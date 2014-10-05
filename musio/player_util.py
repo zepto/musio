@@ -209,6 +209,17 @@ class AudioPlayer(object):
 
                 # Open an audio output device that can handle the data from
                 # fileobj.
+                if fileobj._rate < 44100:
+                    if py_imp == 'PyPy':
+                        blacklist = msg_dict.get('blacklist', [])
+                        blacklist.append('portaudio')
+                        msg_dict['blacklist'] = blacklist
+                    else:
+                        import audioop
+
+                        msg_dict['rate'] = 44100
+                        state = None
+
                 with open_device(fileobj, 'w', cached=True, **msg_dict) as device:
 
                     # Set the default number of loops to infinite.
@@ -250,6 +261,16 @@ class AudioPlayer(object):
                         if not msg_dict.get('paused', False):
                             # Read the next buffer full of data.
                             buf = fileobj.readline()
+
+                            if device._rate != fileobj._rate and py_imp != 'PyPy':
+                                # Convert the input sample rate to that of
+                                # the output device.
+                                buf, state = audioop.ratecv(buf,
+                                                            fileobj._width,
+                                                            fileobj._channels,
+                                                            fileobj._rate,
+                                                            int(device._rate),
+                                                            state)
 
                             # Filler for end of partial buffer to elminiate
                             # end of audio noise.
