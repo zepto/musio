@@ -27,6 +27,7 @@ from multiprocessing import Process, Manager, Pipe
 from io import SEEK_SET, SEEK_CUR, SEEK_END
 from functools import wraps as functools_wraps
 from platform import python_implementation
+from time import sleep as time_sleep
 
 py_imp = python_implementation()
 
@@ -220,7 +221,9 @@ class AudioPlayer(object):
                         msg_dict['rate'] = 44100
                         state = None
 
-                with open_device(fileobj, 'w', cached=True, **msg_dict) as device:
+                # with open_device(fileobj, 'w', cached=True, **msg_dict) as device:
+                device = open_device(fileobj, 'w', cached=True, **msg_dict)
+                try:
 
                     # Set the default number of loops to infinite.
                     fileobj.loops = msg_dict.get('loops', -1)
@@ -282,9 +285,14 @@ class AudioPlayer(object):
                             # Write buf.
                             written = device.write(buf + filler)
                         else:
+                            device.close()
+                            while msg_dict.get('paused', True):
+                                time_sleep(0.5)
+
+                            device = open_device(fileobj, 'w', cached=True, **msg_dict)
                             # Write a buffer of null bytes so the audio
                             # system can keep its buffer full.
-                            device.write(b'\x00' * device.buffer_size)
+                            # device.write(b'\x00' * device.buffer_size)
 
                         # Get and process any commands from the parent process.
                         if pipe.poll():
@@ -301,6 +309,11 @@ class AudioPlayer(object):
                                 fileobj.loops = command['setloops']
                             elif 'getloopcount' in command:
                                 pipe.send(fileobj.loop_count)
+                except:
+                    pass
+                finally:
+                    if not device.closed():
+                        device.close()
 
         except IOError as err:
             from time import sleep
