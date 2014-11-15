@@ -262,6 +262,8 @@ class AudioPlayer(object):
 
                         # Keep playing if not paused.
                         if not msg_dict.get('paused', False):
+                            if device.closed:
+                                device = open_device(fileobj, 'w', cached=True, **msg_dict)
                             # Read the next buffer full of data.
                             buf = fileobj.readline()
 
@@ -285,11 +287,11 @@ class AudioPlayer(object):
                             # Write buf.
                             written = device.write(buf + filler)
                         else:
-                            device.close()
-                            while msg_dict.get('paused', True):
-                                time_sleep(0.5)
+                            if not device.closed:
+                                device.close()
+                            # while msg_dict.get('paused', True):
+                            time_sleep(0.05)
 
-                            device = open_device(fileobj, 'w', cached=True, **msg_dict)
                             # Write a buffer of null bytes so the audio
                             # system can keep its buffer full.
                             # device.write(b'\x00' * device.buffer_size)
@@ -312,7 +314,7 @@ class AudioPlayer(object):
                 except:
                     pass
                 finally:
-                    if not device.closed():
+                    if not device.closed:
                         device.close()
 
         except IOError as err:
