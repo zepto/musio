@@ -289,7 +289,7 @@ class AudioPlayer(object):
                         else:
                             if not device.closed:
                                 device.close()
-                            # while msg_dict.get('paused', True):
+
                             time_sleep(0.05)
 
                             # Write a buffer of null bytes so the audio
@@ -311,8 +311,8 @@ class AudioPlayer(object):
                                 fileobj.loops = command['setloops']
                             elif 'getloopcount' in command:
                                 pipe.send(fileobj.loop_count)
-                except:
-                    pass
+                except Exception as err:
+                    print(err)
                 finally:
                     if not device.closed:
                         device.close()
