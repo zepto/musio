@@ -49,7 +49,7 @@ class Alsa(DevIO):
     """
 
     # Valid bit depths
-    _valid_depth = (32, 16, 8)
+    _valid_depth = (32, 24, 20, 18, 16, 8)
 
     # Supports reading and writing.
     _supported_modes = 'rw'
@@ -57,10 +57,10 @@ class Alsa(DevIO):
     def __init__(self, mode='w', depth=16, rate=44100, channels=2,
                  bigendian=False, unsigned=False, floatp=False,
                  buffer_size=None, latency=500000, device='default',
-                 **kwargs):
+                 three_byte=False, **kwargs):
         """ Alsa(mode='w', depth=16, rate=44100, channels=2, bigendian=False,
         unsigned=False, buffer_size=None, latency=500000, device=b'default',
-        **kwargs) -> Initialize the alsa pcm device.
+        three_byte=False, **kwargs) -> Initialize the alsa pcm device.
 
         """
 
@@ -70,17 +70,23 @@ class Alsa(DevIO):
         if floatp:
             pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_FLOAT_%s' %
                                 ('BE' if bigendian else 'LE'))
-        elif depth in (32, 16):
+        elif depth in (32, 24, 16) and not three_byte:
             pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_%s%s_%s' %
                                 ('U' if unsigned else 'S',
                                  depth,
                                  'BE' if bigendian else 'LE'))
+        elif depth in (24, 20, 18) and three_byte:
+            pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_%s%s_%s' %
+                                ('U' if unsigned else 'S',
+                                 depth,
+                                 '3BE' if bigendian else '3LE'))
         elif depth == 8:
             pcm_format = getattr(alsapcm, 'SND_PCM_FORMAT_%s%s' %
                                 ('U' if unsigned else 'S', depth))
         else:
             pcm_format = alsapcm.SND_PCM_FORMAT_U16_LE
 
+        self._three_byte = three_byte
         self._pcm_format = pcm_format
         self._soft_resample = 1
         self._frame_size = 0
@@ -97,7 +103,7 @@ class Alsa(DevIO):
 
         """
 
-        repr_str = "mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s, buffer_size=%(_buffer_size)s, latency=%(_latency)s, device=%(_device)s" % self
+        repr_str = "mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s, buffer_size=%(_buffer_size)s, latency=%(_latency)s, device=%(_device)s, three_byte=%(_three_byte)s" % self
 
         return '%s(%s)' % (self.__class__.__name__, repr_str)
 
