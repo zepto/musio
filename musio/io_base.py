@@ -132,7 +132,10 @@ class AudioIO(RawIOBase):
         if 'r' in mode and not os_isfile(filename):
             raise(IOError("No such file or directory"))
 
-        self._buffer_size = 8192  # 16384 // (depth // (8 // channels))
+        self.three_byte = False
+
+        # self._buffer_size = 8192  # 16384 // (depth // (8 // channels))
+        self._buffer_size = 0 #16384 // (depth // (8 // channels))
 
         self._filename = filename
         self._mode = mode
@@ -255,7 +258,7 @@ class AudioIO(RawIOBase):
 
         """
 
-        data = self.read(self._buffer_size)
+        data = self.read(self.buffer_size)
 
         if not data:
             raise StopIteration
@@ -369,7 +372,7 @@ class AudioIO(RawIOBase):
 
         if size == -1:
             # Return a whole buffer.
-            return self.read(self._buffer_size)
+            return self.read(self.buffer_size)
         else:
             # Return size bytes.
             return self.read(size)
@@ -517,6 +520,9 @@ class AudioIO(RawIOBase):
 
         """
 
+        if self._buffer_size <= 0:
+            self._buffer_size = 16384 // (self._depth // (8 // self._channels))
+
         return self._buffer_size
 
     @property
@@ -648,7 +654,7 @@ class DevIO(RawIOBase):
 
         """
 
-        return self.read(self._buffer_size)
+        return self.read(self.buffer_size)
 
     def __enter__(self) -> object:
         """ Provides the ability to use pythons with statement.
@@ -755,5 +761,8 @@ class DevIO(RawIOBase):
         """ The buffer size.
 
         """
+
+        if self._buffer_size <= 0:
+            self._buffer_size = 16384 // (self._depth // (8 // self._channels))
 
         return self._buffer_size
