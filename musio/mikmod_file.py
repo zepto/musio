@@ -307,7 +307,8 @@ class MikModFile(AudioIO):
                 except:
                     pass
                 if name:
-                    name = name.decode('cp437', 'replace')
+                    if type(name) != str:
+                        name = name.decode('cp437', 'replace')
                     key_str = '%-8s %3d:' % ('Instrument', i)
                     value_str = '%s %s' % (name, '')
                     tmp_list.append("%s %s" % (key_str, value_str))
