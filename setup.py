@@ -28,7 +28,7 @@ from distutils.core import setup
 setup(
     name='musio',
     packages=['musio', 'musio.audiality', 'musio.alsa', 'musio.dumb',
-              'musio.espeak', 'musio.faad', 'musio.ffmpeg',
+              'musio.espeak', 'musio.faad', 'musio.ffmpeg', 'musio.flac',
               'musio.fluidsynth', 'musio.gme', 'musio.id3tag', 'musio.lame',
               'musio.magic', 'musio.mikmod', 'musio.modplug', 'musio.mp4v2',
               'musio.mpg123', 'musio.ogg', 'musio.portaudio', 'musio.xmp'],
