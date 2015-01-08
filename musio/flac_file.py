@@ -95,8 +95,11 @@ class FlacFile(AudioIO):
 
         """
 
-        # Convert filename to bytes.
-        filename = filename.encode('utf-8', 'surrogateescape')
+        try:
+            # Convert filename to bytes.
+            filename = filename.encode('utf-8', 'surrogateescape')
+        except AttributeError:
+            pass
 
         decoder = _flac.FLAC__stream_decoder_new()
 
