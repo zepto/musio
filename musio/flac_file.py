@@ -23,7 +23,6 @@
 
 """
 
-import audioop
 from itertools import compress, cycle
 from array import array
 
@@ -110,7 +109,7 @@ class FlacFile(AudioIO):
                                                     None)
 
         if init != _flac.FLAC__STREAM_DECODER_INIT_STATUS_OK:
-            print(_flac.FLAC__StreamDecoderInitStatusString(init))
+            msg_out(_flac.FLAC__StreamDecoderInitStatusString(init))
             return None
 
         # Decode the first sample to get the metadata
@@ -198,7 +197,7 @@ class FlacFile(AudioIO):
 
         """
 
-        print('An error occured in flac_file: %s' % error_status)
+        msg_out('An error occured in flac_file: %s' % error_status)
 
     @io_wrapper
     def read(self, size: int) -> bytes:

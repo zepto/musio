@@ -1,6 +1,6 @@
 from musio.io_base import AudioIO, io_wrapper
 from musio.mp4v2 import _mp4v2
-from musio.mp4_file import Mp4
+from musio.mp4v2._mp4v2_wrapper import Mp4
 
 class Mp4File(AudioIO):
     """ A file like object for reading aac audio from mp4s.
@@ -50,6 +50,8 @@ class Mp4File(AudioIO):
 
         mp4_handle = Mp4(filename.encode())
 
+        # data, size = mp4_handle.get_configuration()
+        # self._data = _mp4v2.string_at(data, size.value)
         # Get the aac decoder.
 
         self._closed = False
