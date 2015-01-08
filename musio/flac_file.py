@@ -234,4 +234,3 @@ class FlacFile(AudioIO):
         self._data_buffer =  self._data_buffer[size:]
 
         return data
-
