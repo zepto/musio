@@ -43,7 +43,7 @@ class Mixer(object):
 
     """
 
-    def __init__(self, card='default', mixer='Master'):
+    def __init__(self, card='default', mixer='PCM'):
         """ Mixer('default', 'Master') -> Open the mixer on the specified card.
 
         """
@@ -119,3 +119,26 @@ class Mixer(object):
 
         self._test(_alsamixer.snd_mixer_close(self._mixer_t))
         self._test(_alsamixer.snd_mixer_selem_id_free(self._mixer_selem))
+
+    def __enter__(self) -> object:
+        """ Provides the ability to use pythons with statement.
+
+        """
+
+        try:
+            return self
+        except Exception as err:
+            print(err)
+            return None
+
+    def __exit__(self, exc_type, exc_value, traceback) -> bool:
+        """ Close the pcm when finished.
+
+        """
+
+        try:
+            self.close()
+            return not bool(exc_type)
+        except Exception as err:
+            print(err)
+            return False
