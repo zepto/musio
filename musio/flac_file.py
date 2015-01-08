@@ -144,16 +144,18 @@ class FlacFile(AudioIO):
             return _flac.FLAC__STREAM_DECODER_WRITE_STATUS_ABORT
 
         if depth == 16:
-            data = array('h', bytearray(((size * channels) * 2)))
-        elif depth in (24, 32):
-            data = array('i', bytearray(((size * channels) * 4)))
+            data = array('h', bytearray((size * channels) * 2))
+        elif depth == 24:
+            data = array('i', bytearray((size * channels) * 4))
+        elif depth == 8:
+            data = array('b', bytearray(size * channels))
         else:
             return _flac.FLAC__STREAM_DECODER_WRITE_STATUS_ABORT
 
         # Compute the sample size
         sample_size = size * channels
 
-        # Interleave the data so it can be played.
+        # Interleave the data.
         for i in range(size):
             for j in range(channels):
                 data[i * channels + j] = buf[j][i]
