@@ -133,9 +133,7 @@ class MikModFile(AudioIO):
 
         """
 
-        if type(value) is not bool:
-            print("Invalid value.  Should be True or False.")
-        elif value:
+        if value:
             _mikmod.md_mode.value |= _mikmod.DMODE_SURROUND
         else:
             _mikmod.md_mode.value &= ~_mikmod.DMODE_SURROUND
@@ -154,9 +152,7 @@ class MikModFile(AudioIO):
 
         """
 
-        if type(value) is not bool:
-            print("Invalid value.  Should be True or False.")
-        elif value:
+        if value:
             _mikmod.md_mode.value |= _mikmod.DMODE_INTERP
         else:
             _mikmod.md_mode.value &= ~_mikmod.DMODE_INTERP
@@ -175,8 +171,11 @@ class MikModFile(AudioIO):
 
         """
 
-        self._speed = int(value)
-        _mikmod.Player_SetTempo(self._speed)
+        try:
+            self._speed = int(value)
+            _mikmod.Player_SetTempo(self._speed)
+        except ValueError:
+            print("Invalid value for speed %s should be an number." % value)
 
     @property
     def volume(self):
@@ -192,8 +191,11 @@ class MikModFile(AudioIO):
 
         """
 
-        self._volume = int(value)
-        _mikmod.Player_SetVolume(self._volume)
+        try:
+            self._volume = int(value)
+            _mikmod.Player_SetVolume(self._volume)
+        except ValueError:
+            print("Invalid value for volume %s should be an number." % value)
 
     @property
     def reverb(self):
@@ -211,14 +213,20 @@ class MikModFile(AudioIO):
 
         """
 
-        _mikmod.md_reverb.value = int(value)
+        try:
+            _mikmod.md_reverb.value = int(value)
+        except ValueError:
+            print('Invalid value for reverb %s should be a number.' %s value)
 
     def _open(self, filename):
         """ _open(filename) -> Load the specified file.
 
         """
 
-        filename = filename.encode('utf-8', 'surrogateescape')
+        try:
+            filename = filename.encode('utf-8', 'surrogateescape')
+        except AttributeError:
+            pass
 
         # _mikmod.MikMod_RegisterAllDrivers()
         _mikmod.MikMod_RegisterDriver(_mikmod.byref(_mikmod_drv.drv_musio))
@@ -307,8 +315,10 @@ class MikModFile(AudioIO):
                 except:
                     pass
                 if name:
-                    if type(name) != str:
+                    try:
                         name = name.decode('cp437', 'replace')
+                    except AttributeError:
+                        pass
                     key_str = '%-8s %3d:' % ('Instrument', i)
                     value_str = '%s %s' % (name, '')
                     tmp_list.append("%s %s" % (key_str, value_str))
