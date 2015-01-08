@@ -216,7 +216,7 @@ class MikModFile(AudioIO):
         try:
             _mikmod.md_reverb.value = int(value)
         except ValueError:
-            print('Invalid value for reverb %s should be a number.' %s value)
+            print('Invalid value for reverb %s should be a number.' % value)
 
     def _open(self, filename):
         """ _open(filename) -> Load the specified file.
