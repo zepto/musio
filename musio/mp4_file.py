@@ -101,7 +101,11 @@ class Mp4File(AudioIO):
 
         """
 
-        filename = filename.encode('utf-8', 'surrogateescape')
+        try:
+            filename = filename.encode('utf-8', 'surrogateescape')
+        except AttributeError:
+            pass
+
         with silence(sys_stdout):
             mp4_handle = _mp4v2_wrapper.Mp4(filename)
 
