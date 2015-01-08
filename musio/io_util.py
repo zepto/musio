@@ -350,7 +350,7 @@ def open_file(filename: str, mode: str = 'r', mod_path: list = [],
         codec = get_codec(filename, mod_path=mod_path, blacklist=blacklist,
                           cached=False)
         if not codec:
-            raise IOError(return_err)
+            raise IOError("Error opening codec %s." % codec)
 
         try:
             open_codec = codec(filename, mode=mode, **kwargs)
@@ -374,20 +374,35 @@ def open_device(fileobj: AudioIO, mode: str = 'w', mod_path: list = [],
 
     blacklist = kwargs.get('blacklist', [])
     dev_name = kwargs.get('device', b'default')
-
-    # Get the supported device
-    device = get_io(fileobj, mod_path=mod_path, blacklist=blacklist)
     rate = kwargs.get('rate', fileobj.rate)
 
-    if not device:
-        print("Audio format not supported.")
-        return None
+    while True:
+        # Get the supported device
+        device = get_io(fileobj, mod_path=mod_path, blacklist=blacklist,
+                        cached=False)
 
-    # Open and return the device.
-    return device(mode=mode, rate=rate, channels=fileobj.channels,
-                  depth=fileobj.depth, bigendian=fileobj.bigendian,
-                  unsigned=fileobj.unsigned, floatp=fileobj.floatp,
-                  device=dev_name, three_byte=fileobj.three_byte)
+        if not device:
+            raise IOError("Error opening device %s." % device)
+
+        # Open and return the device.
+        try:
+            result =  device(mode=mode, rate=rate, channels=fileobj.channels,
+                            depth=fileobj.depth, bigendian=fileobj.bigendian,
+                            unsigned=fileobj.unsigned, floatp=fileobj.floatp,
+                            device=dev_name, three_byte=fileobj.three_byte)
+            break
+        except Exception as err:
+            return_err = err
+            print('Blacklisting (%s) because of error: %s' % (device, err))
+
+            mod_name = '%s.py' % device.__module__.split('.')[-1]
+
+            # Add the module to the blacklist.
+            blacklist.append(mod_name)
+            continue
+
+    return result
+
 
 
 @contextmanager
