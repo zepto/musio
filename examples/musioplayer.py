@@ -162,10 +162,19 @@ if __name__ == '__main__':
 
     if args.list_devices:
         try:
-            from musio.portaudio_io import Portaudio
-            with Portaudio() as t:
-                for i, j in enumerate(t.device_list()):
-                    print(i, j)
+            from musio.portaudio import portaudio
+            from musio.io_util import silence
+            from sys import stderr as sys_stderr
+
+            _portaudio = portaudio.Portaudio()
+
+            # Silence stderr
+            with silence(sys_stderr):
+                _portaudio.initialize()
+                dev_count = _portaudio.device_count
+                for i in range(dev_count):
+                    dev_name = _portaudio.device_name(i)
+                    print(i, dev_name)
         except:
             from musio.alsa import control
             hints = control.POINTER(control.c_void_p)()
