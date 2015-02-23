@@ -34,8 +34,10 @@ def main(args: dict) -> int:
     from time import sleep as time_sleep
     from termios import tcgetattr, tcsetattr, ECHO, ICANON, TCSANOW
     from termios import VMIN, VTIME
+    from os.path import splitext as os_splitext
 
     from musio.player_util import AudioPlayer
+    from musio.io_util import open_file
 
     if args['debug']:
         from musio import io_util
@@ -43,6 +45,11 @@ def main(args: dict) -> int:
 
     # Pop the filenames list out of the args dict.
     filenames = args.pop('filename')
+
+    # Recursively get all the files.
+    recurse = args.pop('recurse')
+    if recurse:
+        filenames = get_files(filenames)
 
     # Start player with no filename, and set the loops.
     player = AudioPlayer(**args)
@@ -66,8 +73,18 @@ def main(args: dict) -> int:
         # Loop over the filenames playing each one with the same
         # AudioPlayer object.
         for filename in filenames:
+            # if filename[-3:] not in ['mp3']:
+            #     continue
+            # Skip unsupported files.
+            try:
+                temp = open_file(filename)
+                temp.close()
+            except:
+                continue
+
             filename_bytes = filename.encode('utf-8', 'surrogateescape')
             filename_printable = filename_bytes.decode('utf-8', 'ignore')
+
             # Open next file.
             try:
                 player.open(filename, **args)
@@ -127,6 +144,29 @@ def main(args: dict) -> int:
     return 0
 
 
+def get_files(file_list):
+    """ Returns a list of all the files in filename.
+
+    """
+
+    from os.path import isdir as os_isdir
+    from os.path import isdir as os_isfile
+    from os.path import join as os_join
+    from os import walk as os_walk
+
+    out_list = []
+
+    for name in file_list:
+        if os_isdir(name):
+            for root, sub, files in os_walk(name):
+                join_list = [os_join(root, f) for f in files]
+                out_list.extend(join_list)
+        else:
+            out_list.append(name)
+
+    return out_list
+
+
 if __name__ == '__main__':
     from argparse import ArgumentParser
     parser = ArgumentParser(description="Musio music player")
@@ -154,6 +194,9 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--device', action='store', default='default',
                         help='Specify the device.',
                         dest='device')
+    parser.add_argument('-r', '--recursive', action='store_true', default=False,
+                        help='Recurse through all directories.',
+                        dest='recurse')
     parser.add_argument('--list-devices', action='store_true', default=False,
                         help='List available devices.',
                         dest='list_devices')
