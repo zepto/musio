@@ -71,6 +71,8 @@ class TextFile(AudioIO):
 
         super(TextFile, self).__init__(filename, mode)
 
+        self._rate = 0
+
         # Only read one line/sentence at a time.
         self._buffer_size = 1
 

@@ -267,7 +267,8 @@ class AudioPlayer(object):
                             # Read the next buffer full of data.
                             buf = fileobj.readline()
 
-                            if device._rate != fileobj._rate and py_imp != 'PyPy':
+                            if device._rate != fileobj._rate \
+                                    and py_imp != 'PyPy' and fileobj._rate != 0:
                                 # Convert the input sample rate to that of
                                 # the output device.
                                 buf, state = audioop.ratecv(buf,
