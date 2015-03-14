@@ -32,7 +32,7 @@ from .import_util import LazyImport
 _av = LazyImport('ffmpeg.av', globals(), locals(), ['av'], 1)
 
 __supported_dict = {
-    'ext': ['.flv', '.iflv', '.wma', '.wmv', '.avi', '.mpg'],
+    'ext': ['.webm', '.flv', '.iflv', '.wma', '.wmv', '.avi', '.mpg'],
     'protocol': ['http'],
     'handler': 'FFmpegFile',
     'dependencies': {
