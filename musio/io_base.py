@@ -129,8 +129,9 @@ class AudioIO(RawIOBase):
 
         super(AudioIO, self).__init__()
 
-        if 'r' in mode and not os_isfile(filename):
-            raise(IOError("No such file or directory"))
+        if filename:
+            if 'r' in mode and not os_isfile(filename):
+                raise(IOError("%s: No such file or directory" % filename))
 
         self.three_byte = False
 
