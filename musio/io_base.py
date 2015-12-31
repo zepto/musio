@@ -131,7 +131,8 @@ class AudioIO(RawIOBase):
 
         if filename:
             if 'r' in mode and not os_isfile(filename):
-                raise(IOError("%s: No such file or directory" % filename))
+                if not filename.startswith('http://'):
+                    raise(IOError("%s: No such file or directory" % filename))
 
         self.three_byte = False
 
