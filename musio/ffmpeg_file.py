@@ -32,7 +32,7 @@ from .import_util import LazyImport
 _av = LazyImport('ffmpeg.av', globals(), locals(), ['av'], 1)
 
 __supported_dict = {
-    'ext': ['.webm', '.flv', '.iflv', '.wma', '.wmv', '.avi', '.mpg'],
+    'ext': ['.webm', '.flv', '.iflv', '.wma', '.wmv', '.avi', '.mpg', '.m4a'],
     'protocol': ['http'],
     'handler': 'FFmpegFile',
     'dependencies': {
@@ -133,9 +133,6 @@ class FFmpegFile(AudioIO):
         #                                    None))
         # Deprecated.
         # self._check(_av.av_find_stream_info(format_context))
-
-        # Dump the file info.
-        #info = _av.dump_format(format_context, 0, filename, 0)
 
         nb_streams = format_context.contents.nb_streams
         streams = format_context.contents.streams
