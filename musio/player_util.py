@@ -165,7 +165,7 @@ class AudioPlayer(object):
 
         """
 
-        if self._control_dict['playing']:
+        if self._control_dict.get('playing', False):
             self.stop()
 
     def __len__(self):
@@ -232,8 +232,13 @@ class AudioPlayer(object):
                     buf = b'\x00' * device.buffer_size
                     written = 0
 
-                    # Loop until stopped or nothing read or written.
-                    while msg_dict['playing'] and (buf or msg_dict['paused']):
+                    # Loop until stopped.
+                    while msg_dict.get('playing', True):
+                        # Stop if the read buffer is empty or player is
+                        # not paused.
+                        if not (buf or msg_dict.get('paused', False)):
+                            break
+
                         # Print the stream position.
                         if msg_dict.get('show_position', False):
                             # Only print the position if the stream has a
@@ -262,8 +267,11 @@ class AudioPlayer(object):
 
                         # Keep playing if not paused.
                         if not msg_dict.get('paused', False):
+                            # Re-open the device after comming out of
+                            # paused state.
                             if device.closed:
                                 device = open_device(fileobj, 'w', cached=True, **msg_dict)
+
                             # Read the next buffer full of data.
                             buf = fileobj.readline()
 
@@ -288,6 +296,9 @@ class AudioPlayer(object):
                             # Write buf.
                             written = device.write(buf + filler)
                         else:
+                            # Close the device when paused and sleep to
+                            # open the audio for another process and
+                            # save cpu cycles.
                             if not device.closed:
                                 device.close()
 
