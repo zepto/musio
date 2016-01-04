@@ -77,9 +77,10 @@ def main(args: dict) -> int:
             #     continue
             # Skip unsupported files.
             try:
-                temp = open_file(filename)
+                temp = open_file(filename, soundfont=args.get('soundfont', ''))
                 temp.close()
-            except:
+            except Exception as err:
+                print(err)
                 continue
 
             filename_bytes = filename.encode('utf-8', 'surrogateescape')
