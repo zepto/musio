@@ -354,6 +354,7 @@ def open_file(filename: str, mode: str = 'r', mod_path: list = [],
 
         try:
             open_codec = codec(filename, mode=mode, **kwargs)
+            open_codec.loops = kwargs.get('loops', -1)
         except IOError as err:
             return_err = err
             print('Blacklisting (%s) because of error: %s' % (codec, err))
