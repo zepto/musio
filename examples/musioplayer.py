@@ -179,11 +179,11 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--path', action='store', default=[],
                         type=lambda a: a.split(','), help='Codec path',
                         dest='mod_path')
-    parser.add_argument('-b', '--blacklist', action='store', default=[],
-                        type=lambda a: a.split(','), help='Blacklist a Codec',
+    parser.add_argument('-b', '--blacklist', action='append', default=[],
+                        help='Blacklist a Codec',
                         dest='blacklist')
     parser.add_argument('-s', '--soundfont', action='store',
-                        default='/usr/share/soundfonts/fluidr3/FluidR3GM.SF2',
+                        default='/usr/share/soundfonts/FluidR3_GM2-2.sf2',
                         help='Soundfont to use when playing midis',
                         dest='soundfont')
     parser.add_argument('-q', '--quiet', action='store_false', default=True,
@@ -231,4 +231,9 @@ if __name__ == '__main__':
                 print('%s: %s' % (name, desc))
     else:
         if args.filename:
+            if args.blacklist:
+                # Fix comma seperated input.
+                for i, j in enumerate(args.blacklist):
+                    if ',' in j:
+                        args.blacklist.extend(args.blacklist.pop(i).split(','))
             main(args.__dict__)
