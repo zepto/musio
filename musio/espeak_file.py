@@ -91,6 +91,9 @@ class EspeakFile(AudioIO):
 
         super(EspeakFile, self).__init__(filename, 'r', 16, rate, 1)
 
+        # Make the buffer big to avoid underruns.
+        self._buffer_size = 16384
+
         self._voice = voice
         self.voice = voice
 
