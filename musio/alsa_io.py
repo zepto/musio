@@ -125,7 +125,8 @@ class Alsa(DevIO):
             print('(%(class_name)s.%(func_name)s): %(err_text)s' % locals())
 
             # Try to correct for the underrun.
-            err = alsapcm.snd_pcm_prepare(pcm)
+            # err = alsapcm.snd_pcm_prepare(pcm)
+            err = alsapcm.snd_pcm_recover(pcm, rc, 1)
             if err < 0:
                 # Recovery failed so raise IOError.
                 err_str = "(%s.%s) Underrun recovery failed: %s"
