@@ -208,20 +208,19 @@ class AudioPlayer(object):
                 msg_dict['info'] = str(fileobj)
                 msg_dict['length'] = fileobj.length
 
-                # Open an audio output device that can handle the data from
-                # fileobj.
                 if fileobj._rate < 44100:
-                    if py_imp == 'PyPy':
-                        blacklist = msg_dict.get('blacklist', [])
-                        blacklist.append('portaudio')
-                        msg_dict['blacklist'] = blacklist
-                    else:
-                        import audioop
+                    # if py_imp == 'PyPy':
+                    #     blacklist = msg_dict.get('blacklist', [])
+                    #     blacklist.append('portaudio')
+                    #     msg_dict['blacklist'] = blacklist
+                    # else:
+                    import audioop
 
-                        msg_dict['rate'] = 44100
-                        state = None
+                    # msg_dict['rate'] = 44100
+                    state = None
 
-                # with open_device(fileobj, 'w', cached=True, **msg_dict) as device:
+                # Open an audio output device that can handle the data
+                # from fileobj.
                 device = open_device(fileobj, 'w', cached=True, **msg_dict)
                 try:
 
@@ -270,13 +269,16 @@ class AudioPlayer(object):
                             # Re-open the device after comming out of
                             # paused state.
                             if device.closed:
-                                device = open_device(fileobj, 'w', cached=True, **msg_dict)
+                                device = open_device(fileobj, 'w', cached=True,
+                                                     **msg_dict)
 
                             # Read the next buffer full of data.
                             buf = fileobj.readline()
 
+                            # if device._rate != fileobj._rate \
+                            #         and py_imp != 'PyPy' and fileobj._rate != 0:
                             if device._rate != fileobj._rate \
-                                    and py_imp != 'PyPy' and fileobj._rate != 0:
+                                    and fileobj._rate != 0:
                                 # Convert the input sample rate to that of
                                 # the output device.
                                 buf, state = audioop.ratecv(buf,
