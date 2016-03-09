@@ -63,8 +63,8 @@ class EspeakText(AudioIO):
         rate = self._err_check(_espeak.espeak_Initialize(output, 0, None,
                                                          0))
 
-        super(EspeakText, self).__init__(filename='', mode='rw', depth=16,  rate=rate,
-                                         channels=1)
+        super(EspeakText, self).__init__(filename='', mode='rw', depth=16,
+                                         rate=rate, channels=1)
 
         self._text = text
 
