@@ -110,8 +110,11 @@ def main(args: dict) -> int:
                 if r:
                     command = r[0].readline().lower()
                 else:
-                    time_sleep(0.1)
-                    continue
+                    try:
+                        time_sleep(0.1)
+                        continue
+                    except KeyboardInterrupt:
+                        break
 
                 # Handle input commands.
                 if command.startswith('p') or command.startswith(' '):
@@ -135,9 +138,12 @@ def main(args: dict) -> int:
     except Exception as err:
         print("Error: %s" % err, flush=True)
     finally:
-        # Always stop the player.
-        if player.playing:
-            player.stop()
+        try:
+            # Always stop the player.
+            if player.playing:
+                player.stop()
+        except BrokenPipeError:
+            pass
 
         # Re-set the terminal state.
         tcsetattr(sys_stdin, TCSANOW, normal)

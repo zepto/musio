@@ -166,7 +166,10 @@ class AudioPlayer(object):
         """
 
         if self._control_dict.get('playing', False):
-            self.stop()
+            try:
+                self.stop()
+            except IOError:
+                pass
 
     def __len__(self):
         """ The length of the file if it has one.
@@ -273,7 +276,10 @@ class AudioPlayer(object):
                                                      **msg_dict)
 
                             # Read the next buffer full of data.
-                            buf = fileobj.readline()
+                            try:
+                                buf = fileobj.readline()
+                            except KeyboardInterrupt:
+                                break
 
                             # if device._rate != fileobj._rate \
                             #         and py_imp != 'PyPy' and fileobj._rate != 0:
@@ -296,7 +302,10 @@ class AudioPlayer(object):
                                 filler = ''
 
                             # Write buf.
-                            written = device.write(buf + filler)
+                            try:
+                                written = device.write(buf + filler)
+                            except KeyboardInterrupt:
+                                break
                         else:
                             # Close the device when paused and sleep to
                             # open the audio for another process and
@@ -338,8 +347,11 @@ class AudioPlayer(object):
             msg_dict['length'] = 0
             print(err)
         finally:
-            # Set playing to False for the parent.
-            msg_dict['playing'] = False
+            try:
+                # Set playing to False for the parent.
+                msg_dict['playing'] = False
+            except BrokenPipeError:
+                pass
 
     def open(self, filename: str, **kwargs):
         """ open(filename) -> Open an audio file to play.
