@@ -35,7 +35,11 @@ from os.path import abspath as os_abspath
 from os.path import dirname as os_dirname
 from ctypes.util import find_library as ctypes_find_library
 
-from .magic import magic as _magic
+try:
+    from .magic import magic as _magic
+except OSError:
+    _magic = None
+
 from .io_base import AudioIO, DevIO
 
 # Codec cache dictionary
@@ -494,6 +498,9 @@ class Magic(object):
 
         """
 
+        if not _magic:
+            return None
+
         self._magic = _magic.magic_open(flags)
         if _magic.magic_load(self._magic, None) != 0:
             print("Error: %s" % _magic.magic_error(self._magic).decode())
@@ -502,5 +509,8 @@ class Magic(object):
         """ Return the encoding of data.
 
         """
+
+        if not _magic:
+            return b'utf8'
 
         return _magic.magic_buffer(self._magic, data, len(data))
