@@ -160,13 +160,15 @@ def get_files(file_list):
     from os.path import isdir as os_isfile
     from os.path import join as os_join
     from os import walk as os_walk
+    from pathlib import Path
 
     out_list = []
+    ext = ['.mp3', '.flac', '.ogg', '.s3m', '.mod', '.xm', '.it']
 
     for name in file_list:
         if os_isdir(name):
             for root, sub, files in os_walk(name):
-                join_list = [os_join(root, f) for f in files]
+                join_list = [os_join(root, f) for f in files if Path(f.lower()).suffix in ext]
                 out_list.extend(join_list)
         else:
             out_list.append(name)
@@ -189,7 +191,7 @@ if __name__ == '__main__':
                         help='Blacklist a Codec',
                         dest='blacklist')
     parser.add_argument('-s', '--soundfont', action='store',
-                        default='/usr/share/soundfonts/FluidR3_GM2-2.sf2',
+                        default='/usr/share/soundfonts/FluidR3_GM.sf2',
                         help='Soundfont to use when playing midis',
                         dest='soundfont')
     parser.add_argument('-q', '--quiet', action='store_false', default=True,
