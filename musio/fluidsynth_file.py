@@ -507,7 +507,7 @@ class FluidsynthFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, soundfont, rate=44100, gain=1.0,
+    def __init__(self, filename, soundfont, rate=44100, gain=0.2,
                  reverb={'roomsize': 0.2, 'damping': 0.0, 'width': 0.5,
                          'level': 0.9},
                  chorus={'nr': 3, 'level': 2.0, 'speed': 0.3, 'depth_ms': 8.0,
