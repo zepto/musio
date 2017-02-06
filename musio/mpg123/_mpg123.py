@@ -1,8 +1,13 @@
+from ctypes.util import find_library
 from ctypes import *
+
+lib_name = find_library('mpg123')
+if not lib_name:
+    raise Exception("libmpg123 could not be found")
 
 STRING = c_char_p
 _libraries = {}
-_libraries['/usr/lib/libmpg123.so'] = CDLL('/usr/lib/libmpg123.so')
+_libraries['/usr/lib/libmpg123.so'] = CDLL(lib_name)
 WSTRING = c_wchar_p
 
 
