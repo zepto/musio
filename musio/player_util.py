@@ -120,6 +120,9 @@ class AudioPlayer(object):
 
         """
 
+        # Return nothing if no file is open.
+        if not self._filename: return ''
+
         # Wait for the stream to open.
         while 'info' not in self._msg_dict: pass
 
