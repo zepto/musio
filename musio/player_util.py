@@ -31,9 +31,6 @@ from time import sleep as time_sleep
 
 py_imp = python_implementation()
 
-if py_imp == 'PyPy':
-    from sys import stdout as sys_stdout
-
 from .io_util import open_file, open_device
 
 
@@ -215,11 +212,6 @@ class AudioPlayer(object):
                 msg_dict['length'] = fileobj.length
 
                 if fileobj._rate < 44100:
-                    # if py_imp == 'PyPy':
-                    #     blacklist = msg_dict.get('blacklist', [])
-                    #     blacklist.append('portaudio')
-                    #     msg_dict['blacklist'] = blacklist
-                    # else:
                     import audioop
 
                     # msg_dict['rate'] = 44100
@@ -260,15 +252,8 @@ class AudioPlayer(object):
 
                                 # Print the string and after erasing the old
                                 # one using ansi escapes.
-                                if py_imp == 'PyPy':
-                                    # Running in pypy which doesn't have the
-                                    # flush parameter in the print function.
-                                    print('\033[%dD\033[K%s' % (format_len,
-                                        pos_str), end='')
-                                    sys_stdout.flush()
-                                else:
-                                    print('\033[%dD\033[K%s' % (format_len,
-                                        pos_str), end='', flush=True)
+                                print('\033[%dD\033[K%s' % (format_len,
+                                    pos_str), end='', flush=True)
 
                         # Keep playing if not paused.
                         if not msg_dict.get('paused', False):
