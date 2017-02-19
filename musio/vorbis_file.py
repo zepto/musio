@@ -319,7 +319,7 @@ class VorbisFile(AudioIO):
 
         written = 0
 
-        for data_buffer in slice_buffer(data, self._buffer_size):
+        for data_buffer in slice_buffer(data, self.buffer_size):
             written += self._vorbis_file.write(self._encode(data_buffer))
 
         return written
