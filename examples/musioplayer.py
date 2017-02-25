@@ -37,7 +37,8 @@ def main(args: dict) -> int:
     from os.path import splitext as os_splitext
 
     from musio.player_util import AudioPlayer
-    from musio.io_util import open_file
+    from musio.io_util import open_file, get_codec
+    from musio.dummy_file import DummyFile
 
     if args['debug']:
         from musio import io_util
@@ -77,8 +78,11 @@ def main(args: dict) -> int:
             #     continue
             # Skip unsupported files.
             try:
-                temp = open_file(filename, soundfont=args.get('soundfont', ''))
-                temp.close()
+                # temp = open_file(filename, soundfont=args.get('soundfont', ''))
+                # temp.close()
+                temp = get_codec(filename, blacklist=['all'])
+                if temp == DummyFile:
+                    raise(IOError(f"File {filename} not supported."))
             except Exception as err:
                 print(err)
                 continue
