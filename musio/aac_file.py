@@ -42,6 +42,17 @@ __supported_dict = {
 }
 
 
+def bytes_to_pointer(data_type: object, data: object) -> object:
+    """ Return a ctypes pointer to a copy of data.
+
+    """
+
+    # Create a len(data) length pointer of type data_type.
+    c_pointer = data_type * len(data)
+    # Return a copy of cata in c_pointer.
+    return c_pointer.from_buffer_copy(data)
+
+
 class AACDecoder(object):
     """ An object to decode AAC audio data.
 
@@ -269,8 +280,7 @@ class AACFile(AudioIO):
         data_size = _neaacdec.c_ulong(data_size)
 
         # Cast the data to a C pointer to use in the decoder.
-        c_ubyte_p = _neaacdec.c_ubyte * len(data)
-        data_p = c_ubyte_p.from_buffer_copy(data)
+        data_p = bytes_to_pointer(_neaacdec.c_ubyte, data)
 
         # Seek back to the start.
         self._aac_file.seek(0)
@@ -317,8 +327,7 @@ class AACFile(AudioIO):
                     continue
 
             # Cast the bytes object to a type POINTER(ctypes.c_ubyte).
-            c_ubyte_p = _neaacdec.c_ubyte * len(encoded_data)
-            encoded_ubytes = c_ubyte_p.from_buffer_copy(encoded_data)
+            encoded_ubytes = bytes_to_pointer(_neaacdec.c_ubyte, encoded_data)
 
             # Decode into a temporary buffer.
             temp_data = self._aac_decoder.decode(encoded_ubytes,
