@@ -269,7 +269,8 @@ class AACFile(AudioIO):
         data_size = _neaacdec.c_ulong(data_size)
 
         # Cast the data to a C pointer to use in the decoder.
-        data_p = _neaacdec.cast(data, _neaacdec.POINTER(_neaacdec.c_ubyte))
+        c_ubyte_p = _neaacdec.c_ubyte * len(data)
+        data_p = c_ubyte_p.from_buffer_copy(data)
 
         # Seek back to the start.
         self._aac_file.seek(0)
@@ -316,8 +317,8 @@ class AACFile(AudioIO):
                     continue
 
             # Cast the bytes object to a type POINTER(ctypes.c_ubyte).
-            encoded_ubytes = _neaacdec.cast(encoded_data,
-                                            _neaacdec.POINTER(_neaacdec.c_ubyte))
+            c_ubyte_p = _neaacdec.c_ubyte * len(encoded_data)
+            encoded_ubytes = c_ubyte_p.from_buffer_copy(encoded_data)
 
             # Decode into a temporary buffer.
             temp_data = self._aac_decoder.decode(encoded_ubytes,
