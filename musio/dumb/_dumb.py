@@ -266,9 +266,9 @@ DUH_SIGRENDERER_CALLBACK = CFUNCTYPE(None, c_void_p, POINTER(POINTER(sample_t)),
 	#DUH_SIGRENDERER *sigrenderer,
 	#DUH_SIGRENDERER_CALLBACK callback, void *data
 #) DUMB_DEPRECATED;
-duh_sigrenderer_set_callback = _dumb_lib.duh_sigrenderer_set_callback
-duh_sigrenderer_set_callback.argtypes = [POINTER(DUH_SIGRENDERER), DUH_SIGRENDERER_CALLBACK, c_void_p]
-duh_sigrenderer_set_callback.restype = None
+# duh_sigrenderer_set_callback = _dumb_lib.duh_sigrenderer_set_callback
+# duh_sigrenderer_set_callback.argtypes = [POINTER(DUH_SIGRENDERER), DUH_SIGRENDERER_CALLBACK, c_void_p]
+# duh_sigrenderer_set_callback.restype = None
 
 #/* The 'callback' argument's type has changed for const-correctness. See the
  #* DUH_SIGRENDERER_CALLBACK definition just above. Also note that the samples
@@ -294,9 +294,9 @@ DUH_SIGRENDERER_ANALYSER_CALLBACK = CFUNCTYPE(None, c_void_p, POINTER(POINTER(sa
 	#DUH_SIGRENDERER *sigrenderer,
 	#DUH_SIGRENDERER_ANALYSER_CALLBACK callback, void *data
 #) DUMB_DEPRECATED;
-duh_sigrenderer_set_analyser_callback = _dumb_lib.duh_sigrenderer_set_analyser_callback
-duh_sigrenderer_set_analyser_callback.argtypes = [POINTER(DUH_SIGRENDERER), DUH_SIGRENDERER_ANALYSER_CALLBACK, c_void_p]
-duh_sigrenderer_set_analyser_callback.restype = None
+# duh_sigrenderer_set_analyser_callback = _dumb_lib.duh_sigrenderer_set_analyser_callback
+# duh_sigrenderer_set_analyser_callback.argtypes = [POINTER(DUH_SIGRENDERER), DUH_SIGRENDERER_ANALYSER_CALLBACK, c_void_p]
+# duh_sigrenderer_set_analyser_callback.restype = None
 
 #/* This is deprecated because the meaning of the 'samples' parameter in the
  #* callback needed to change. For stereo applications, the array used to be
@@ -345,9 +345,9 @@ duh_sigrenderer_set_sigparam.restype = None
 	#float volume, float delta,
 	#long size, sample_t **samples
 #) DUMB_DEPRECATED;
-duh_sigrenderer_get_samples = _dumb_lib.duh_sigrenderer_get_samples
-duh_sigrenderer_get_samples.argtypes = [POINTER(DUH_SIGRENDERER), c_float, c_float, c_long, POINTER(POINTER(sample_t))]
-duh_sigrenderer_get_samples.restype = c_long
+# duh_sigrenderer_get_samples = _dumb_lib.duh_sigrenderer_get_samples
+# duh_sigrenderer_get_samples.argtypes = [POINTER(DUH_SIGRENDERER), c_float, c_float, c_long, POINTER(POINTER(sample_t))]
+# duh_sigrenderer_get_samples.restype = c_long
 
 #/* The sample format has changed, so if you were using this function,
  #* you should switch to duh_sigrenderer_generate_samples() and change
@@ -399,9 +399,9 @@ duh_render.restype = c_long
 	#float volume, float delta,
 	#long size, sample_t **samples
 #) DUMB_DEPRECATED;
-duh_render_signal = _dumb_lib.duh_render_signal
-duh_render_signal.argtypes = [POINTER(DUH_SIGRENDERER), c_float, c_float, c_long, POINTER(POINTER(sample_t))]
-duh_render_signal.restype = c_long
+# duh_render_signal = _dumb_lib.duh_render_signal
+# duh_render_signal.argtypes = [POINTER(DUH_SIGRENDERER), c_float, c_float, c_long, POINTER(POINTER(sample_t))]
+# duh_render_signal.restype = c_long
 
 #/* Please use duh_sigrenderer_generate_samples(), and see the
  #* comments for the deprecated duh_sigrenderer_get_samples() too.
@@ -413,45 +413,45 @@ DUH_RENDERER = DUH_SIGRENDERER
 #/* Please use DUH_SIGRENDERER instead of DUH_RENDERER. */
 
 #DUH_SIGRENDERER *duh_start_renderer(DUH *duh, int n_channels, long pos) DUMB_DEPRECATED;
-duh_start_renderer = _dumb_lib.duh_start_renderer
-duh_start_renderer.argtypes = [POINTER(DUH), c_int, c_long]
-duh_start_renderer.restype = POINTER(DUH_SIGRENDERER)
+# duh_start_renderer = _dumb_lib.duh_start_renderer
+# duh_start_renderer.argtypes = [POINTER(DUH), c_int, c_long]
+# duh_start_renderer.restype = POINTER(DUH_SIGRENDERER)
 
 #/* Please use duh_start_sigrenderer() instead. Pass 0 for 'sig'. */
 
 #int duh_renderer_get_n_channels(DUH_SIGRENDERER *dr) DUMB_DEPRECATED;
-duh_renderer_get_n_channels = _dumb_lib.duh_renderer_get_n_channels
-duh_renderer_get_n_channels.argtypes = [POINTER(DUH_SIGRENDERER)]
-duh_renderer_get_n_channels.restype = c_int
+# duh_renderer_get_n_channels = _dumb_lib.duh_renderer_get_n_channels
+# duh_renderer_get_n_channels.argtypes = [POINTER(DUH_SIGRENDERER)]
+# duh_renderer_get_n_channels.restype = c_int
 
 #long duh_renderer_get_position(DUH_SIGRENDERER *dr) DUMB_DEPRECATED;
-duh_renderer_get_position = _dumb_lib.duh_renderer_get_position
-duh_renderer_get_position.argtypes = [POINTER(DUH_SIGRENDERER)]
-duh_renderer_get_position.restype = c_long
+# duh_renderer_get_position = _dumb_lib.duh_renderer_get_position
+# duh_renderer_get_position.argtypes = [POINTER(DUH_SIGRENDERER)]
+# duh_renderer_get_position.restype = c_long
 
 #/* Please use the duh_sigrenderer_*() equivalents of these two functions. */
 
 #void duh_end_renderer(DUH_SIGRENDERER *dr) DUMB_DEPRECATED;
-duh_end_renderer = _dumb_lib.duh_end_renderer
-duh_end_renderer.argtypes = [POINTER(DUH_SIGRENDERER)]
-duh_end_renderer.restype = None
+# duh_end_renderer = _dumb_lib.duh_end_renderer
+# duh_end_renderer.argtypes = [POINTER(DUH_SIGRENDERER)]
+# duh_end_renderer.restype = None
 
 #/* Please use duh_end_sigrenderer() instead. */
 
 #DUH_SIGRENDERER *duh_renderer_encapsulate_sigrenderer(DUH_SIGRENDERER *sigrenderer) DUMB_DEPRECATED;
-duh_renderer_encapsulate_sigrenderer = _dumb_lib.duh_renderer_encapsulate_sigrenderer
-duh_renderer_encapsulate_sigrenderer.argtypes = [POINTER(DUH_SIGRENDERER)]
-duh_renderer_encapsulate_sigrenderer.restype = POINTER(DUH_SIGRENDERER)
+# duh_renderer_encapsulate_sigrenderer = _dumb_lib.duh_renderer_encapsulate_sigrenderer
+# duh_renderer_encapsulate_sigrenderer.argtypes = [POINTER(DUH_SIGRENDERER)]
+# duh_renderer_encapsulate_sigrenderer.restype = POINTER(DUH_SIGRENDERER)
 
 #DUH_SIGRENDERER *duh_renderer_get_sigrenderer(DUH_SIGRENDERER *dr) DUMB_DEPRECATED;
-duh_renderer_get_sigrenderer = _dumb_lib.duh_renderer_get_sigrenderer
-duh_renderer_get_sigrenderer.argtypes = [POINTER(DUH_SIGRENDERER)]
-duh_renderer_get_sigrenderer.restype = POINTER(DUH_SIGRENDERER)
+# duh_renderer_get_sigrenderer = _dumb_lib.duh_renderer_get_sigrenderer
+# duh_renderer_get_sigrenderer.argtypes = [POINTER(DUH_SIGRENDERER)]
+# duh_renderer_get_sigrenderer.restype = POINTER(DUH_SIGRENDERER)
 
 #DUH_SIGRENDERER *duh_renderer_decompose_to_sigrenderer(DUH_SIGRENDERER *dr) DUMB_DEPRECATED;
-duh_renderer_decompose_to_sigrenderer = _dumb_lib.duh_renderer_decompose_to_sigrenderer
-duh_renderer_decompose_to_sigrenderer.argtypes = [POINTER(DUH_SIGRENDERER)]
-duh_renderer_decompose_to_sigrenderer.restype = POINTER(DUH_SIGRENDERER)
+# duh_renderer_decompose_to_sigrenderer = _dumb_lib.duh_renderer_decompose_to_sigrenderer
+# duh_renderer_decompose_to_sigrenderer.argtypes = [POINTER(DUH_SIGRENDERER)]
+# duh_renderer_decompose_to_sigrenderer.restype = POINTER(DUH_SIGRENDERER)
 
 #/* These functions have become no-ops that just return the parameter.
  #* So, for instance, replace
@@ -943,9 +943,9 @@ duh_get_raw_sigrenderer.restype = POINTER(sigrenderer_t)
 
 #ifdef DUMB_DECLARE_DEPRECATED
 #sample_t **create_sample_buffer(int n_channels, long length) DUMB_DEPRECATED;
-create_sample_buffer = _dumb_lib.create_sample_buffer
-create_sample_buffer.argtypes = [c_int, c_long]
-create_sample_buffer.restype = POINTER(POINTER(sample_t))
+# create_sample_buffer = _dumb_lib.create_sample_buffer
+# create_sample_buffer.argtypes = [c_int, c_long]
+# create_sample_buffer.restype = POINTER(POINTER(sample_t))
 
 #/* DUMB has been changed to interleave stereo samples. Use
  #* allocate_sample_buffer() instead, and see the comments for
@@ -953,14 +953,14 @@ create_sample_buffer.restype = POINTER(POINTER(sample_t))
  #*/
 #endif
 #sample_t **allocate_sample_buffer(int n_channels, long length);
-allocate_sample_buffer = _dumb_lib.allocate_sample_buffer
-allocate_sample_buffer.argtypes = [c_int, c_long]
-allocate_sample_buffer.restype = POINTER(POINTER(sample_t))
+# allocate_sample_buffer = _dumb_lib.allocate_sample_buffer
+# allocate_sample_buffer.argtypes = [c_int, c_long]
+# allocate_sample_buffer.restype = POINTER(POINTER(sample_t))
 
 #void destroy_sample_buffer(sample_t **samples);
-destroy_sample_buffer = _dumb_lib.destroy_sample_buffer
-destroy_sample_buffer.argtypes = [POINTER(POINTER(sample_t))]
-destroy_sample_buffer.restype = None
+# destroy_sample_buffer = _dumb_lib.destroy_sample_buffer
+# destroy_sample_buffer.argtypes = [POINTER(POINTER(sample_t))]
+# destroy_sample_buffer.restype = None
 
 
 
