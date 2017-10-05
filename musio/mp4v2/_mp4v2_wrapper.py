@@ -28,7 +28,7 @@ from functools import partial
 from . import _mp4v2
 
 
-class Mp4Handle(_mp4v2.MP4FileHandle):
+class Mp4Handle(object):
     """ Wraps the mp4v2 mp4 file handle object.
 
     """
@@ -38,26 +38,28 @@ class Mp4Handle(_mp4v2.MP4FileHandle):
 
         """
 
-        super(Mp4Handle, self).__init__(_mp4v2.MP4Read(filename, 0))
+        self._mp4_handle = _mp4v2.MP4FileHandle(_mp4v2.MP4Read(filename, 0))
 
-        self.track_read_sample = partial(_mp4v2.MP4ReadSample, self)
+        self.track_read_sample = partial(_mp4v2.MP4ReadSample,
+                                         self._mp4_handle)
         self.track_es_configuration = partial(_mp4v2.MP4GetTrackESConfiguration,
-                                              self)
-        self.track_type = partial(_mp4v2.MP4GetTrackType, self)
+                                              self._mp4_handle)
+        self.track_type = partial(_mp4v2.MP4GetTrackType, self._mp4_handle)
         self.track_esds_object_type = partial(_mp4v2.MP4GetTrackEsdsObjectTypeId,
-                                              self)
+                                              self._mp4_handle)
         self.track_audio_mpeg4_type = partial(_mp4v2.MP4GetTrackAudioMpeg4Type,
-                                              self)
+                                              self._mp4_handle)
         self.track_sample_count = partial(_mp4v2.MP4GetTrackNumberOfSamples,
-                                          self)
-        self.track_rate = partial(_mp4v2.MP4GetTrackBitRate, self)
-        self.track_name = partial(_mp4v2.MP4GetTrackName, self)
+                                          self._mp4_handle)
+        self.track_rate = partial(_mp4v2.MP4GetTrackBitRate, self._mp4_handle)
+        self.track_name = partial(_mp4v2.MP4GetTrackName, self._mp4_handle)
 
         self._closed = False
 
-        self._number_of_tracks = _mp4v2.MP4GetNumberOfTracks(self, None, 0)
+        self._number_of_tracks = _mp4v2.MP4GetNumberOfTracks(self._mp4_handle,
+                                                             None, 0)
         self._tags = _mp4v2.MP4TagsAlloc()
-        _mp4v2.MP4TagsFetch(self._tags, self)
+        _mp4v2.MP4TagsFetch(self._tags, self._mp4_handle)
 
     def close(self):
         """ Close the mp4 handle.
@@ -65,7 +67,7 @@ class Mp4Handle(_mp4v2.MP4FileHandle):
         """
 
         if not self._closed:
-            _mp4v2.MP4Close(self, _mp4v2.MP4_CLOSE_DO_NOT_COMPUTE_BITRATE)
+            _mp4v2.MP4Close(self._mp4_handle, _mp4v2.MP4_CLOSE_DO_NOT_COMPUTE_BITRATE)
             _mp4v2.MP4TagsFree(self._tags)
 
             self._closed = True
@@ -124,7 +126,7 @@ class Mp4Handle(_mp4v2.MP4FileHandle):
         return None
 
 
-class Mp4Track(_mp4v2.MP4TrackId):
+class Mp4Track(object):
     """ Wraps the mp4v2 track object.
 
     """
@@ -134,26 +136,34 @@ class Mp4Track(_mp4v2.MP4TrackId):
 
         """
 
-        super(Mp4Track, self).__init__(track)
-
         self._mp4_handle = mp4_handle
         self._mp4_track = track
+        self._mp4_track_id = _mp4v2.MP4TrackId(track)
 
-        self._read_sample = partial(mp4_handle.track_read_sample, self)
+        self._read_sample = partial(mp4_handle.track_read_sample,
+                                    self._mp4_track_id)
         self._es_configuration = partial(mp4_handle.track_es_configuration,
-                                         self)
+                                         self._mp4_track_id)
 
-        self._type = mp4_handle.track_type(self)
-        self._esds_object_type = mp4_handle.track_esds_object_type(self)
-        self._audio_mpeg4_type = mp4_handle.track_audio_mpeg4_type(self)
+        self._type = mp4_handle.track_type(self._mp4_track_id)
+        self._esds_object_type = mp4_handle.track_esds_object_type(self._mp4_track_id)
+        self._audio_mpeg4_type = mp4_handle.track_audio_mpeg4_type(self._mp4_track_id)
 
-        self._sample_count = mp4_handle.track_sample_count(self)
-        self._rate = mp4_handle.track_rate(self)
+        self._sample_count = mp4_handle.track_sample_count(self._mp4_track_id)
+        self._rate = mp4_handle.track_rate(self._mp4_track_id)
 
         name = _mp4v2.c_char_p()
-        ret = mp4_handle.track_name(self, name)
+        ret = mp4_handle.track_name(self._mp4_track_id, name)
 
         self._name = name
+
+    @property
+    def track_id(self):
+        """ The mp4 track id.
+
+        """
+
+        return self._mp4_track_id
 
     def read_sample(self, sample_id):
         """ Return the sample and its size.
@@ -226,7 +236,7 @@ class Mp4Track(_mp4v2.MP4TrackId):
         return self._audio_mpeg4_type
 
 
-class Mp4Sample(_mp4v2.MP4SampleId):
+class Mp4Sample(object):
     """ An mp4 sample contains the data and size.
 
     """
@@ -236,12 +246,20 @@ class Mp4Sample(_mp4v2.MP4SampleId):
 
         """
 
-        super(Mp4Sample, self).__init__(sample_id)
+        self._mp4_sample_id = _mp4v2.MP4SampleId(sample_id)
 
         self._data = data
         self._size = size
         self._id = sample_id
         self._last = last
+
+    @property
+    def sample_id(self):
+        """ The mp4 sample id.
+
+        """
+
+        return self._mp4_sample_id
 
     def islast(self):
         """ True if this is a the last sample.
