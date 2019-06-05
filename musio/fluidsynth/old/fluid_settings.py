@@ -177,8 +177,8 @@ fluid_settings_dupstr.restype = c_int
 
 
 #FLUIDSYNTH_API
-#int fluid_settings_getstr_default(fluid_settings_t* settings, const char *name, char** str);
-fluid_settings_getstr = _fluid_lib.fluid_settings_getstr_default
+#int fluid_settings_getstr(fluid_settings_t* settings, const char *name, char** str);
+fluid_settings_getstr = _fluid_lib.fluid_settings_getstr
 fluid_settings_getstr.argtypes = [POINTER(fluid_settings_t), c_char_p, POINTER(c_char_p)]
 fluid_settings_getstr.restype = c_int
 

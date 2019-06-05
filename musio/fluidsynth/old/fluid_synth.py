@@ -177,7 +177,7 @@ fluid_synth_unset_program.restype = c_int
 
 #FLUIDSYNTH_API int fluid_synth_get_channel_info (fluid_synth_t *synth, int chan,
 #fluid_synth_channel_info_t *info);
-fluid_synth_get_channel_info = _fluid_lib.fluid_synth_get_channel_preset
+fluid_synth_get_channel_info = _fluid_lib.fluid_synth_get_channel_info
 fluid_synth_get_channel_info.argtypes = [POINTER(fluid_synth_t), c_int, POINTER(fluid_synth_channel_info_t)]
 fluid_synth_get_channel_info.restype = c_int
 
@@ -347,12 +347,12 @@ fluid_synth_get_chorus_level.argtypes = [POINTER(fluid_synth_t)]
 fluid_synth_get_chorus_level.restype = c_double
 
 #FLUIDSYNTH_API double fluid_synth_get_chorus_speed_Hz(fluid_synth_t* synth);
-fluid_synth_get_chorus_speed_Hz = _fluid_lib.fluid_synth_get_chorus_speed
+fluid_synth_get_chorus_speed_Hz = _fluid_lib.fluid_synth_get_chorus_speed_Hz
 fluid_synth_get_chorus_speed_Hz.argtypes = [POINTER(fluid_synth_t)]
 fluid_synth_get_chorus_speed_Hz.restype = c_double
 
 #FLUIDSYNTH_API double fluid_synth_get_chorus_depth_ms(fluid_synth_t* synth);
-fluid_synth_get_chorus_depth_ms = _fluid_lib.fluid_synth_get_chorus_depth
+fluid_synth_get_chorus_depth_ms = _fluid_lib.fluid_synth_get_chorus_depth_ms
 fluid_synth_get_chorus_depth_ms.argtypes = [POINTER(fluid_synth_t)]
 fluid_synth_get_chorus_depth_ms.restype = c_double
 
@@ -459,6 +459,13 @@ fluid_synth_set_gen = _fluid_lib.fluid_synth_set_gen
 fluid_synth_set_gen.argtypes = [POINTER(fluid_synth_t), c_int, c_int, c_float]
 fluid_synth_set_gen.restype = c_int
 
+#FLUIDSYNTH_API int fluid_synth_set_gen2 (fluid_synth_t* synth, int chan,
+#int param, float value,
+#int absolute, int normalized);
+fluid_synth_set_gen2 = _fluid_lib.fluid_synth_set_gen2
+fluid_synth_set_gen2.argtypes = [POINTER(fluid_synth_t), c_int, c_int, c_float, c_int, c_int]
+fluid_synth_set_gen2.restype = c_int
+
 #FLUIDSYNTH_API float fluid_synth_get_gen(fluid_synth_t* synth, int chan, int param);
 fluid_synth_get_gen = _fluid_lib.fluid_synth_get_gen
 fluid_synth_get_gen.argtypes = [POINTER(fluid_synth_t), c_int, c_int]
@@ -468,12 +475,26 @@ fluid_synth_get_gen.restype = c_float
 
 # Tuning 
 
+#FLUIDSYNTH_API 
+#int fluid_synth_create_key_tuning(fluid_synth_t* synth, int bank, int prog,
+				  #const char* name, const double* pitch);
+fluid_synth_create_key_tuning = _fluid_lib.fluid_synth_create_key_tuning
+fluid_synth_create_key_tuning.argtypes = [POINTER(fluid_synth_t), c_int, c_int, c_char_p, POINTER(c_double)]
+fluid_synth_create_key_tuning.restype = c_int
+
 #FLUIDSYNTH_API
 #int fluid_synth_activate_key_tuning(fluid_synth_t* synth, int bank, int prog,
 #const char* name, const double* pitch, int apply);
 fluid_synth_activate_key_tuning = _fluid_lib.fluid_synth_activate_key_tuning
 fluid_synth_activate_key_tuning.argtypes = [POINTER(fluid_synth_t), c_int, c_int, c_char_p, POINTER(c_double), c_int]
 fluid_synth_activate_key_tuning.restype = c_int
+
+#FLUIDSYNTH_API 
+#int fluid_synth_create_octave_tuning(fluid_synth_t* synth, int bank, int prog,
+#const char* name, const double* pitch);
+fluid_synth_create_octave_tuning = _fluid_lib.fluid_synth_create_octave_tuning
+fluid_synth_create_octave_tuning.argtypes = [POINTER(fluid_synth_t), c_int, c_int, c_char_p, POINTER(c_double)]
+fluid_synth_create_octave_tuning.restype = c_int
 
 #FLUIDSYNTH_API
 #int fluid_synth_activate_octave_tuning(fluid_synth_t* synth, int bank, int prog,
@@ -489,12 +510,23 @@ fluid_synth_tune_notes = _fluid_lib.fluid_synth_tune_notes
 fluid_synth_tune_notes.argtypes = [POINTER(fluid_synth_t), c_int, c_int, c_int, c_char_p, POINTER(c_double), c_int]
 fluid_synth_tune_notes.restype = c_int
 
+#FLUIDSYNTH_API 
+#int fluid_synth_select_tuning(fluid_synth_t* synth, int chan, int bank, int prog);
+fluid_synth_select_tuning = _fluid_lib.fluid_synth_select_tuning
+fluid_synth_select_tuning.argtypes = [POINTER(fluid_synth_t), c_int, c_int, c_int]
+fluid_synth_select_tuning.restype = c_int
+
 #FLUIDSYNTH_API
 #int fluid_synth_activate_tuning(fluid_synth_t* synth, int chan, int bank, int prog,
 #int apply);
 fluid_synth_activate_tuning = _fluid_lib.fluid_synth_activate_tuning
 fluid_synth_activate_tuning.argtypes = [POINTER(fluid_synth_t), c_int, c_int, c_int, c_int]
 fluid_synth_activate_tuning.restype = c_int
+
+#FLUIDSYNTH_API int fluid_synth_reset_tuning(fluid_synth_t* synth, int chan);
+fluid_synth_reset_tuning = _fluid_lib.fluid_synth_reset_tuning
+fluid_synth_reset_tuning.argtypes = [POINTER(fluid_synth_t), c_int]
+fluid_synth_reset_tuning.restype = c_int
 
 #FLUIDSYNTH_API
 #int fluid_synth_deactivate_tuning(fluid_synth_t* synth, int chan, int apply);
@@ -616,3 +648,9 @@ fluid_synth_get_voicelist.restype = None
 fluid_synth_handle_midi_event = _fluid_lib.fluid_synth_handle_midi_event
 fluid_synth_handle_midi_event.argtypes = [c_void_p, POINTER(fluid_midi_event_t)]
 fluid_synth_handle_midi_event.restype = c_int
+
+#FLUIDSYNTH_API void fluid_synth_set_midi_router(fluid_synth_t* synth,
+#fluid_midi_router_t* router);
+fluid_synth_set_midi_router = _fluid_lib.fluid_synth_set_midi_router
+fluid_synth_set_midi_router.argtypes = [POINTER(fluid_synth_t), POINTER(fluid_midi_router_t)]
+fluid_synth_set_midi_router.restype = None
