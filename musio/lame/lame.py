@@ -1214,8 +1214,6 @@ id3tag_set_textinfo_utf16.argtypes = [lame_t, STRING, POINTER(c_ushort)]
 id3tag_set_comment_utf16 = _libraries['/usr/lib/libmp3lame.so'].id3tag_set_comment_utf16
 id3tag_set_comment_utf16.restype = c_int
 id3tag_set_comment_utf16.argtypes = [lame_t, STRING, POINTER(c_ushort), POINTER(c_ushort)]
-bitrate_table = (c_int * 16 * 3).in_dll(_libraries['/usr/lib/libmp3lame.so'], 'bitrate_table')
-samplerate_table = (c_int * 4 * 3).in_dll(_libraries['/usr/lib/libmp3lame.so'], 'samplerate_table')
 lame_get_bitrate = _libraries['/usr/lib/libmp3lame.so'].lame_get_bitrate
 lame_get_bitrate.restype = c_int
 lame_get_bitrate.argtypes = [c_int, c_int]
@@ -1332,9 +1330,6 @@ _IO_funlockfile.argtypes = [POINTER(_IO_FILE)]
 _IO_ftrylockfile = _libraries['/usr/lib/libmp3lame.so']._IO_ftrylockfile
 _IO_ftrylockfile.restype = c_int
 _IO_ftrylockfile.argtypes = [POINTER(_IO_FILE)]
-_IO_vfscanf = _libraries['/usr/lib/libmp3lame.so']._IO_vfscanf
-_IO_vfscanf.restype = c_int
-_IO_vfscanf.argtypes = [POINTER(_IO_FILE), STRING, POINTER(__va_list_tag), POINTER(c_int)]
 _IO_vfprintf = _libraries['/usr/lib/libmp3lame.so']._IO_vfprintf
 _IO_vfprintf.restype = c_int
 _IO_vfprintf.argtypes = [POINTER(_IO_FILE), STRING, POINTER(__va_list_tag)]
@@ -1634,7 +1629,7 @@ __all__ = ['lame_set_VBR_quality', '_ATFILE_SOURCE', 'EOF',
            'lame_get_VBR', 'lame_get_copyright', 'stdin', '__u_int',
            '__sprintf_chk', 'hip_decode1_headers', 'ssize_t',
            '__clock_t', 'lame_encode_buffer_long', '__fsfilcnt_t',
-           'samplerate_table', 'PSY_GPSYCHO', 'lame_get_samplerate',
+           'PSY_GPSYCHO', 'lame_get_samplerate',
            'vscanf', '__glibc_likely', '_IONBF', 'FILE',
            'ferror_unlocked', 'size_t', '__USE_XOPEN', 'V0',
            'lame_set_analysis', '_IO_ferror', '__USE_POSIX2',
@@ -1782,7 +1777,7 @@ __all__ = ['lame_set_VBR_quality', '_ATFILE_SOURCE', 'EOF',
            '_IO_EOF_SEEN', '_IO_vfprintf', '_IO_FIXED',
            'id3tag_set_title', 'lame_get_framesize', 'MEDIUM',
            '__vfprintf_chk', '_SVID_SOURCE', '__codecvt_result',
-           '__vasprintf_chk', 'fcloseall', 'bitrate_table', 'VBR_50',
+           '__vasprintf_chk', 'fcloseall', 'VBR_50',
            '_IOFBF', 'SEEK_END', '_IO_peekc', '__USE_BSD',
            'MDB_MAXIMUM', 'sys_errlist', '__CONCAT', 'ptrdiff_t',
            'ABR_8', '_IO_IN_BACKUP', '_IOS_NOREPLACE', 'LAME_OKAY',
@@ -1799,7 +1794,7 @@ __all__ = ['lame_set_VBR_quality', '_ATFILE_SOURCE', 'EOF',
            'lame_get_athaa_type', '_IO_getc',
            'lame_get_athaa_sensitivity', '_IO_UNIFIED_JUMPTABLES',
            'cuserid', 'id3tag_set_textinfo_utf16', 'lame_get_ATHonly',
-           '_IO_vfscanf', 'cookie_read_function_t', 'ungetc',
+           'cookie_read_function_t', 'ungetc',
            'EXTREME', 'lame_get_useTemporal', 'fileno_unlocked',
            '_IO_2_1_stderr_', 'fread', 'ftello',
            '_IO_FLAGS2_USER_WBUF', '__STRING', 'lame_set_brate',
