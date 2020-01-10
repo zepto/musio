@@ -63,7 +63,7 @@ class FlacFile(AudioIO):
         self._data_buffer = b''
         self._position = 0
 
-        self._info_dict = self._update_info(filename)
+        self._info_dict.update(self._update_info(filename))
 
         # Setup the decoder callbacks.
         self._write_callback = _flac.FLAC__StreamDecoderWriteCallback(self._write_status)

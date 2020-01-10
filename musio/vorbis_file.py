@@ -25,6 +25,7 @@
 
 from os.path import isfile as os_isfile
 from array import array
+import audioop
 
 from .io_base import AudioIO, io_wrapper
 from .io_util import slice_buffer
@@ -66,6 +67,12 @@ class VorbisFile(AudioIO):
         reading and writing.
 
         """
+
+        if depth == 24:
+            depth = 16
+            self._from_24 = True
+        else:
+            self._from_24 = False
 
         super(VorbisFile, self).__init__(filename=filename, mode=mode,
                                          depth=depth, rate=rate,
@@ -318,6 +325,9 @@ class VorbisFile(AudioIO):
         """
 
         written = 0
+
+        if self._from_24:
+            data = audioop.lin2lin(data, 3, self._depth // 8)
 
         for data_buffer in slice_buffer(data, self.buffer_size):
             written += self._vorbis_file.write(self._encode(data_buffer))

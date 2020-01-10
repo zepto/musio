@@ -26,6 +26,7 @@
 from os import getenv as os_getenv
 from sys import stderr as sys_stderr
 from array import array
+import audioop
 
 from .io_util import silence, msg_out
 from .io_base import AudioIO, io_wrapper
@@ -108,6 +109,14 @@ class MP3File(AudioIO):
         settings of the player.
 
         """
+
+        if depth == 24:
+            depth = 16
+            self._from_24 = True
+        else:
+            self._from_24 = False
+
+        self._state = None
 
         super(MP3File, self).__init__(filename, mode, depth, rate, channels)
 
@@ -505,6 +514,14 @@ class MP3File(AudioIO):
         """ write(str) -> Encodes and writes str to an mp3 file.
 
         """
+
+        if self._from_24:
+            data = audioop.lin2lin(data, 3, self._depth // 8)
+
+        if self._rate > 44100:
+            data, self._state = audioop.ratecv(data, self._depth // 8, 
+                                               self._channels, self._rate, 
+                                               44100, self._state)
 
         # Number of samples = bytes / ((bits per sample) / 8)
         num_samples = len(data) // (self._depth // 8)
