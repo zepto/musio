@@ -2128,9 +2128,6 @@ _IO_funlockfile.argtypes = [POINTER(_IO_FILE)]
 _IO_ftrylockfile = _libraries['/usr/lib/libFLAC.so']._IO_ftrylockfile
 _IO_ftrylockfile.restype = c_int
 _IO_ftrylockfile.argtypes = [POINTER(_IO_FILE)]
-_IO_vfscanf = _libraries['/usr/lib/libFLAC.so']._IO_vfscanf
-_IO_vfscanf.restype = c_int
-_IO_vfscanf.argtypes = [POINTER(_IO_FILE), STRING, POINTER(__va_list_tag), POINTER(c_int)]
 _IO_vfprintf = _libraries['/usr/lib/libFLAC.so']._IO_vfprintf
 _IO_vfprintf.restype = c_int
 _IO_vfprintf.argtypes = [POINTER(_IO_FILE), STRING, POINTER(__va_list_tag)]
@@ -2591,9 +2588,6 @@ realloc.argtypes = [c_void_p, size_t]
 free = _libraries['/usr/lib/libFLAC.so'].free
 free.restype = None
 free.argtypes = [c_void_p]
-cfree = _libraries['/usr/lib/libFLAC.so'].cfree
-cfree.restype = None
-cfree.argtypes = [c_void_p]
 valloc = _libraries['/usr/lib/libFLAC.so'].valloc
 valloc.restype = c_void_p
 valloc.argtypes = [size_t]
@@ -2952,7 +2946,7 @@ __all__ = ['FLAC__Metadata_Chain',
            'FLAC__StreamDecoderInitStatus',
            'FLAC__metadata_object_seektable_resize_points', 'perror',
            'fsfilcnt64_t', 'FLAC__STREAM_DECODER_READ_FRAME',
-           'fputs_unlocked', '_IOFBF', 'cfree', '_IOS_TRUNC',
+           'fputs_unlocked', '_IOFBF', '_IOS_TRUNC',
            'INTPTR_MIN',
            'FLAC__STREAM_METADATA_CUESHEET_TRACK_TYPE_LEN',
            'initstate_r', 'uint_least32_t', 'int_least64_t', 'ftello',
@@ -3532,7 +3526,7 @@ __all__ = ['FLAC__Metadata_Chain',
            'FLAC__StreamDecoderSeekCallback', 'getc_unlocked',
            'FLAC__Metadata_Iterator', 'tmpfile',
            'FLAC__metadata_object_vorbiscomment_replace_comment',
-           '_ENDIAN_H', '_IO_vfscanf', 'cookie_read_function_t',
+           '_ENDIAN_H', 'cookie_read_function_t',
            'FLAC__METADATA_CHAIN_STATUS_RENAME_ERROR',
            'FLAC__MetadataType',
            'FLAC__STREAM_DECODER_TELL_STATUS_ERROR',
