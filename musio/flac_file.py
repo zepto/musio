@@ -110,7 +110,6 @@ class FlacFile(AudioIO):
 
         return info_dict
 
-                print(e)
     def _open(self, filename):
         """ Open a flac file.
 
