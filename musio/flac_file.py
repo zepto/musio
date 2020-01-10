@@ -63,6 +63,8 @@ class FlacFile(AudioIO):
         self._data_buffer = b''
         self._position = 0
 
+        self._info_dict = self._update_info(filename)
+
         # Setup the decoder callbacks.
         self._write_callback = _flac.FLAC__StreamDecoderWriteCallback(self._write_status)
         self._metadata_callback = _flac.FLAC__StreamDecoderMetadataCallback(self._metadata_status)
@@ -89,6 +91,26 @@ class FlacFile(AudioIO):
 
         _flac.FLAC__stream_decoder_seek_absolute(self._decoder, position)
 
+    def _update_info(self, filename):
+        """ Updates the id3 info for the opened flac.
+
+        """
+
+        info_dict = {}
+        metadata = _flac.POINTER(_flac.FLAC__StreamMetadata)()
+        filename_b = filename.encode('utf-8', 'surrogateescape')
+        if _flac.FLAC__metadata_get_tags(filename_b, _flac.byref(metadata)):
+            for i in metadata.contents.data.vorbis_comment.comments:
+                length = i.length
+                entry = i.entry
+                entry_s = _flac.string_at(entry, length)
+                if not entry_s: break
+                name, value = entry_s.decode('utf-8', 'replace').split('=')
+                info_dict[name] = value
+
+        return info_dict
+
+                print(e)
     def _open(self, filename):
         """ Open a flac file.
 
