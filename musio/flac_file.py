@@ -106,7 +106,7 @@ class FlacFile(AudioIO):
                 entry_s = _flac.string_at(entry, length)
                 if not entry_s: break
                 name, value = entry_s.decode('utf-8', 'replace').split('=')
-                info_dict[name] = value
+                info_dict[name.lower()] = value
 
         return info_dict
 

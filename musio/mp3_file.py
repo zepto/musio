@@ -261,7 +261,13 @@ class MP3File(AudioIO):
 
 
         type_dict = {'title':b'TIT2', 'artist':b'TPE1', 'album':b'TALB',
-                     'year':b'TYER', 'track':b'TRCK', 'genre':b'TCON'}
+                     'year':b'TYER', 'track':b'TRCK', 'genre':b'TCON',
+                     'date':b'TYER', 'tracknumber':b'TRCK'}
+
+        tag_type_dict = {'title':'title', 'artist':'artist', 'album':'album',
+                         'year':'year', 'track':'track', 'genre':'genre',
+                         'date':'year', 'tracknumber':'track',
+                         'comment':'comment'}
 
         # Add the tags in comment_dict.
         for tag_type, tag in self._comment_dict.items():
@@ -277,6 +283,7 @@ class MP3File(AudioIO):
                     continue
 
             # Add all id3 tags.
+            tag_type = tag_type_dict.get(tag_type, '')
             tag_func = getattr(_lame, 'id3tag_set_%s' % tag_type, None)
             if tag_func:
                 if tag_func(self._global_flags, tag):
