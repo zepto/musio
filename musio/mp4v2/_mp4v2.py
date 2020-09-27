@@ -607,10 +607,6 @@ feof_unlocked.argtypes = [POINTER(FILE)]
 ferror_unlocked = _libraries['/usr/lib/libmp4v2.so'].ferror_unlocked
 ferror_unlocked.restype = c_int
 ferror_unlocked.argtypes = [POINTER(FILE)]
-sys_nerr = (c_int).in_dll(_libraries['/usr/lib/libmp4v2.so'], 'sys_nerr')
-sys_errlist = (STRING * 0).in_dll(_libraries['/usr/lib/libmp4v2.so'], 'sys_errlist')
-_sys_nerr = (c_int).in_dll(_libraries['/usr/lib/libmp4v2.so'], '_sys_nerr')
-_sys_errlist = (STRING * 0).in_dll(_libraries['/usr/lib/libmp4v2.so'], '_sys_errlist')
 __u_char = c_ubyte
 __u_short = c_ushort
 __u_int = c_uint
@@ -2150,7 +2146,7 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            'MP4TagsSetSortName', '_IO_seekoff',
            'MP4GetTrackNumberOfEdits', 'MP4SetVideoProfileLevel',
            '__USE_ANSI', 'MP4GetTrackMaxSampleSize', 'MPEG4_CSP_L3',
-           '_IO_IS_APPENDING', 'MP4ItmfGetItems', '_sys_nerr',
+           '_IO_IS_APPENDING', 'MP4ItmfGetItems',
            'scanf', 'MP4SetRtpTimestampStart', 'fclose',
            'MPEG4_NBP_L2', 'MP4AddTrackEdit', 'MP4FileMode',
            'MP4_ITMF_BT_IMPLICIT', '__asprintf',
@@ -2217,7 +2213,7 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            'MP4SetAmrModeSet', 'MP4_MPEG4_AAC_LC_AUDIO_TYPE',
            'MP4TagTrack_s', 'MP4CopyTrack', 'MP4AddTrack',
            '__warnattr', 'MP4V2_PROJECT_url_downloads',
-           'MP4_VIDEO_TRACK_TYPE', '_sys_errlist',
+           'MP4_VIDEO_TRACK_TYPE',
            'MP4TagsSetKeywords', '_IO_seekpos', 'funlockfile',
            'MP4GetHintTrackSdp', 'cookie_read_function_t', '_IO_padn',
            'MP4AddAmrAudioTrack', '_FEATURES_H',
@@ -2240,7 +2236,7 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            'MP4SetTrackEditDuration', '_IO_DONT_CLOSE',
            'MP4TagsSetComments', 'MPEG4_ACEP_L4', 'MPEG4_ACEP_L3',
            'MPEG4_ACEP_L2', 'MPEG4_ACEP_L1', 'MP4LogGetLevel',
-           'sys_nerr', '_IO_BAD_SEEN', '__USE_MISC',
+           '_IO_BAD_SEEN', '__USE_MISC',
            'MP4SampleDependencyType', 'MP4_MPEG4_AAC_LTP_AUDIO_TYPE',
            'puts', 'MP4GetTrackESConfiguration', 'obstack',
            'N11__mbstate_t3DOT_2E', 'MP4AddVideoTrack', 'va_arg',
@@ -2325,7 +2321,7 @@ __all__ = ['MP4_ITMF_BT_ISRC', '_ATFILE_SOURCE', 'EOF',
            'MP4GetTrackEsdsObjectTypeId', 'MPEG4_C_STUDIO_P_L3',
            'MP4_PCM16_BIG_ENDIAN_AUDIO_TYPE', 'MPEG4_C_STUDIO_P_L1',
            'MP4TagsSetReleaseDate', 'SEEK_END', '_IO_peekc',
-           'MP4SetH263Bitrates', '__USE_BSD', 'fseek', 'sys_errlist',
+           'MP4SetH263Bitrates', '__USE_BSD', 'fseek',
            'MP4SetH263DecoderVersion', '__CONCAT',
            'clearerr_unlocked', 'MP4LogLevel', 'MP4_LOG_ERROR',
            'MP4_MPEG4_INVALID_AUDIO_TYPE', '_IOS_NOREPLACE',
