@@ -1938,10 +1938,6 @@ __wcstombs_chk.argtypes = [STRING, WSTRING, size_t, size_t]
 wcstombs = _libraries['/usr/lib/libFLAC.so'].wcstombs
 wcstombs.restype = size_t
 wcstombs.argtypes = [STRING, WSTRING, size_t]
-sys_nerr = (c_int).in_dll(_libraries['/usr/lib/libFLAC.so'], 'sys_nerr')
-sys_errlist = (STRING * 0).in_dll(_libraries['/usr/lib/libFLAC.so'], 'sys_errlist')
-_sys_nerr = (c_int).in_dll(_libraries['/usr/lib/libFLAC.so'], '_sys_nerr')
-_sys_errlist = (STRING * 0).in_dll(_libraries['/usr/lib/libFLAC.so'], '_sys_errlist')
 class timeval(Structure):
     pass
 __time_t = c_long
@@ -3130,7 +3126,7 @@ __all__ = ['FLAC__Metadata_Chain',
            '_IO_IS_APPENDING', '__ldiv_t_defined',
            'FLAC__stream_encoder_get_loose_mid_side_stereo',
            'FLAC__stream_decoder_skip_single_frame', 'FLAC__uint16',
-           '_IO_ferror', '_sys_nerr', 'INT8_MIN',
+           '_IO_ferror', 'INT8_MIN',
            'FLAC__metadata_object_cuesheet_is_legal', '__W_CONTINUED',
            'system', 'fclose', '__bswap_constant_32', 'time_t',
            'FLAC__stream_encoder_set_max_residual_partition_order',
@@ -3315,7 +3311,7 @@ __all__ = ['FLAC__Metadata_Chain',
            'FLAC__METADATA_SIMPLE_ITERATOR_STATUS_NOT_A_FLAC_FILE',
            '_IO_DONT_CLOSE', 'alloca', 'INT_LEAST64_MAX',
            'FLAC__STREAM_METADATA_PICTURE_TYPE_FRONT_COVER',
-           '__uflow', 'FLAC__MIN_BLOCK_SIZE', 'sys_nerr', 'fileno',
+           '__uflow', 'FLAC__MIN_BLOCK_SIZE', 'fileno',
            '_IO_BAD_SEEN', '__USE_MISC', '__intptr_t',
            'FLAC__StreamMetadata_CueSheet_Track',
            '__BIT_TYPES_DEFINED__', 'putw', 'htole64',
@@ -3333,7 +3329,7 @@ __all__ = ['FLAC__Metadata_Chain',
            'FLAC__StreamEncoderInitStatus', 'WNOHANG',
            'FLAC__STREAM_METADATA_STREAMINFO_MIN_FRAME_SIZE_LEN',
            'N4wait3DOT_2E', '__dev_t', 'FLAC__FRAME_HEADER_SYNC_LEN',
-           '_sys_errlist', 'FLAC__StreamMetadata_Unknown', 'pselect',
+           'FLAC__StreamMetadata_Unknown', 'pselect',
            'FILENAME_MAX', 'L_cuserid', '_SYS_SYSMACROS_H',
            'FLAC_API_VERSION_REVISION', 'UINT16_MAX', 'drand48',
            'EXIT_SUCCESS', 'FLAC__StreamDecoderMetadataCallback',
@@ -3475,7 +3471,7 @@ __all__ = ['FLAC__Metadata_Chain',
            'FLAC__FRAME_NUMBER_TYPE_FRAME_NUMBER',
            'canonicalize_file_name', 'malloc',
            'FLAC__STREAM_DECODER_MEMORY_ALLOCATION_ERROR',
-           'sys_errlist', '__CONCAT', 'bsearch', 'clearerr_unlocked',
+           '__CONCAT', 'bsearch', 'clearerr_unlocked',
            'FLAC__STREAM_ENCODER_SEEK_STATUS_OK',
            'FLAC__metadata_object_seektable_is_legal',
            '_IO_IN_BACKUP', '_IOS_NOREPLACE',

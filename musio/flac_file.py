@@ -100,13 +100,17 @@ class FlacFile(AudioIO):
         metadata = _flac.POINTER(_flac.FLAC__StreamMetadata)()
         filename_b = filename.encode('utf-8', 'surrogateescape')
         if _flac.FLAC__metadata_get_tags(filename_b, _flac.byref(metadata)):
-            for i in metadata.contents.data.vorbis_comment.comments:
-                length = i.length
-                entry = i.entry
-                entry_s = _flac.string_at(entry, length)
-                if not entry_s: break
-                name, value = entry_s.decode('utf-8', 'replace').split('=')
-                info_dict[name.lower()] = value
+            try:
+                for i in metadata.contents.data.vorbis_comment.comments:
+                    length = i.length
+                    entry = i.entry
+                    entry_s = _flac.string_at(entry, length)
+                    if not entry_s: break
+                    name, value = entry_s.decode('utf-8', 'replace').split('=')
+                    info_dict[name.lower()] = value
+            except ValueError as err:
+                # Probably no comments.
+                pass
 
         return info_dict
 
