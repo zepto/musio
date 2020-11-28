@@ -81,7 +81,12 @@ class Mixer(object):
         """ get_volume(channel) -> Return the volume of the specified channel
         (0, 1) left or right.
 
+        return -1 if not volume control exists
+
         """
+
+        if not _alsamixer.snd_mixer_selem_has_playback_volume(self._mixer_elem):
+            return -1
 
         left_vol = _alsamixer.c_long()
         self._test(_alsamixer.snd_mixer_selem_get_playback_volume(self._mixer_elem, channel, left_vol))
@@ -91,7 +96,12 @@ class Mixer(object):
     def get_volume_range(self):
         """ Returns a tuple of the volume range.
 
+        return -1 if not volume control exists
+
         """
+
+        if not _alsamixer.snd_mixer_selem_has_playback_volume(self._mixer_elem):
+            return -1
 
         min_vol = _alsamixer.c_long()
         max_vol = _alsamixer.c_long()
@@ -104,7 +114,12 @@ class Mixer(object):
         the specified channel
         (0, 1) left or right.
 
+        return -1 if not volume control exists
+
         """
+
+        if not _alsamixer.snd_mixer_selem_has_playback_volume(self._mixer_elem):
+            return -1
 
         return round((100 / self.get_volume_range()[-1]) * self.get_volume(channel))
 
@@ -112,7 +127,12 @@ class Mixer(object):
         """ set_volume(value, channel=-1) -> Sets the volume to value.  Set
         channel to 0 for left channel, 1 for right channel, and -1 for both.
 
+        return -1 if not volume control exists
+
         """
+
+        if not _alsamixer.snd_mixer_selem_has_playback_volume(self._mixer_elem):
+            return -1
 
         c_value = _alsamixer.c_long(value)
 
@@ -125,7 +145,12 @@ class Mixer(object):
         """ is_muted(channel) -> Return True if muted els False.
         channel = (0, 1) left or right.
 
+        return -1 if not volume switch exists
+
         """
+
+        if not _alsamixer.snd_mixer_selem_has_playback_switch(self._mixer_elem):
+            return -1
 
         left_vol = _alsamixer.c_int()
         self._test(_alsamixer.snd_mixer_selem_get_playback_switch(self._mixer_elem, channel, left_vol))
@@ -136,7 +161,12 @@ class Mixer(object):
         """ mute(channel) -> Set mute status for channel to switch.
         channel = (0, 1) left or right.
 
+        return -1 if not volume switch exists
+
         """
+
+        if not _alsamixer.snd_mixer_selem_has_playback_switch(self._mixer_elem):
+            return -1
 
         if channel == -1:
             self._test(_alsamixer.snd_mixer_selem_set_playback_switch_all(self._mixer_elem, 0 if switch else 1))
