@@ -99,6 +99,15 @@ class Mixer(object):
 
         return (min_vol.value, max_vol.value)
 
+    def get_volume_percent(self, channel):
+        """ get_volume_percent(channel) -> Return the volume as a percent of
+        the specified channel
+        (0, 1) left or right.
+
+        """
+
+        return round((100 / self.get_volume_range()[-1]) * self.get_volume(channel))
+
     def set_volume(self, value, channel=-1):
         """ set_volume(value, channel=-1) -> Sets the volume to value.  Set
         channel to 0 for left channel, 1 for right channel, and -1 for both.
@@ -111,6 +120,28 @@ class Mixer(object):
             self._test(_alsamixer.snd_mixer_selem_set_playback_volume_all(self._mixer_elem, c_value))
         else:
             self._test(_alsamixer.snd_mixer_selem_set_playback_volume(self._mixer_elem, channel, c_value))
+
+    def is_muted(self, channel):
+        """ is_muted(channel) -> Return True if muted els False.
+        channel = (0, 1) left or right.
+
+        """
+
+        left_vol = _alsamixer.c_int()
+        self._test(_alsamixer.snd_mixer_selem_get_playback_switch(self._mixer_elem, channel, left_vol))
+
+        return left_vol.value == 0
+
+    def set_mute(self, switch, channel=-1):
+        """ mute(channel) -> Set mute status for channel to switch.
+        channel = (0, 1) left or right.
+
+        """
+
+        if channel == -1:
+            self._test(_alsamixer.snd_mixer_selem_set_playback_switch_all(self._mixer_elem, 0 if switch else 1))
+        else:
+            self._test(_alsamixer.snd_mixer_selem_set_playback_switch(self._mixer_elem, channel, 0 if switch else 1))
 
     def close(self):
         """ Close the mixer.
