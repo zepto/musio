@@ -390,10 +390,6 @@ feof_unlocked.argtypes = [POINTER(FILE)]
 ferror_unlocked = _libraries['/usr/lib/libespeak.so'].ferror_unlocked
 ferror_unlocked.restype = c_int
 ferror_unlocked.argtypes = [POINTER(FILE)]
-sys_nerr = (c_int).in_dll(_libraries['/usr/lib/libespeak.so'], 'sys_nerr')
-sys_errlist = (STRING * 0).in_dll(_libraries['/usr/lib/libespeak.so'], 'sys_errlist')
-_sys_nerr = (c_int).in_dll(_libraries['/usr/lib/libespeak.so'], '_sys_nerr')
-_sys_errlist = (STRING * 0).in_dll(_libraries['/usr/lib/libespeak.so'], '_sys_errlist')
 __u_char = c_ubyte
 __u_short = c_ushort
 __u_int = c_uint
@@ -1016,7 +1012,7 @@ __all__ = ['_ATFILE_SOURCE', 'EOF', 'getc_unlocked', '_IO_USER_LOCK',
            'AUDIO_OUTPUT_SYNCH_PLAYBACK', '_G_IO_IO_FILE_VERSION',
            '_POSIX_C_SOURCE', '_IO_ssize_t', '__blksize_t',
            '__USE_SVID', '_IO_seekoff', 'setbuf', '__USE_ANSI',
-           '__GLIBC__', '_IO_IS_APPENDING', '_sys_nerr', 'scanf',
+           '__GLIBC__', '_IO_IS_APPENDING',  'scanf',
            'fclose', '__asprintf', 'L_ctermid', '__mbstate_t',
            '__uint8_t', 'setbuffer', '_IO_INTERNAL', '__u_char',
            '__blkcnt64_t', '__STDC_ISO_10646__', '_IOS_NOCREATE',
@@ -1044,7 +1040,7 @@ __all__ = ['_ATFILE_SOURCE', 'EOF', 'getc_unlocked', '_IO_USER_LOCK',
            'espeak_Synth', '_G_fpos_t', 'espeakEVENT_SENTENCE',
            'espeakSILENCE', '__bos', 'cookie_close_function_t',
            '__ssize_t', 'espeak_SetParameter', '__warnattr',
-           'espeakEVENT_WORD', '_sys_errlist', 'fgetpos',
+           'espeakEVENT_WORD', 'fgetpos',
            'funlockfile', '_IO_padn', 'espeakCHARS_16BIT', 'vdprintf',
            '__getdelim', '__overflow', '__USE_XOPEN2K',
            '__FD_SETSIZE', 'EE_BUFFER_FULL', '__intptr_t',
@@ -1052,7 +1048,7 @@ __all__ = ['_ATFILE_SOURCE', 'EOF', 'getc_unlocked', '_IO_USER_LOCK',
            'espeak_Terminate', '_IO_FILE_plus', '_IO_va_list',
            '__blkcnt_t', '_IO_size_t', '_IO_flockfile',
            'espeak_AUDIO_OUTPUT', '__REDIRECT_NTH_LDBL', 'L_tmpnam',
-           'off64_t', '_IOS_BIN', 'tmpfile64', 'sys_nerr',
+           'off64_t', '_IOS_BIN', 'tmpfile64',
            '_IO_BAD_SEEN', '__USE_MISC', 'putw', 'puts', '__u_long',
            'obstack', 'N11__mbstate_t3DOT_2E', 'putc', 'vsnprintf',
            '_IO_HEX', 'fread', 'tmpnam', '__dev_t',
@@ -1088,7 +1084,7 @@ __all__ = ['_ATFILE_SOURCE', 'EOF', 'getc_unlocked', '_IO_USER_LOCK',
            'espeak_CompileDictionary', '_IO_EOF_SEEN', '_IO_vfprintf',
            '_IO_FIXED', 'N_SPEECH_PARAM', '_SVID_SOURCE',
            '_G_uint16_t', '__codecvt_result', 'fcloseall', '_IOFBF',
-           'SEEK_END', '_IO_peekc', '__USE_BSD', 'sys_errlist',
+           'SEEK_END', '_IO_peekc', '__USE_BSD',
            '__CONCAT', 'clearerr_unlocked', '_IO_IN_BACKUP',
            '_IOS_NOREPLACE', 'obstack_printf', '____FILE_defined',
            'SEEK_CUR', '__USE_UNIX98', '_IO_STDIO', 'fgets_unlocked',
