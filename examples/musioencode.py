@@ -159,7 +159,7 @@ if __name__ == '__main__':
     parser.add_argument('-tr', '--id3track', action='store', default='',
                         help='id3 Track tag', dest='track')
     parser.add_argument('-tg', '--genre', action='store', default=0,
-                        type=int, help='id3 Genre tag', dest='genre')
+                        help='id3 Genre tag', dest='genre')
     parser.add_argument('-p', '--path', action='store', default=[],
                         type=lambda a: a.split(','), help='Codec path',
                         dest='mod_path')

@@ -488,10 +488,6 @@ __fread_unlocked_chk.argtypes = [c_void_p, size_t, size_t, size_t, POINTER(FILE)
 fread_unlocked = _libraries['/usr/lib/libmp3lame.so'].fread_unlocked
 fread_unlocked.restype = size_t
 fread_unlocked.argtypes = [c_void_p, size_t, size_t, POINTER(FILE)]
-sys_nerr = (c_int).in_dll(_libraries['/usr/lib/libmp3lame.so'], 'sys_nerr')
-sys_errlist = (STRING * 0).in_dll(_libraries['/usr/lib/libmp3lame.so'], 'sys_errlist')
-_sys_nerr = (c_int).in_dll(_libraries['/usr/lib/libmp3lame.so'], '_sys_nerr')
-_sys_errlist = (STRING * 0).in_dll(_libraries['/usr/lib/libmp3lame.so'], '_sys_errlist')
 __u_char = c_ubyte
 __u_short = c_ushort
 __u_int = c_uint
@@ -1666,7 +1662,7 @@ __all__ = ['lame_set_VBR_quality', '_ATFILE_SOURCE', 'EOF',
            'PAD_NO', '__blksize_t', 'lame_set_nogap_total',
            '__USE_SVID', 'lame_get_AudiophileGain', '_IO_seekoff',
            'lame_get_force_ms', 'lame_get_out_samplerate',
-           '_IO_IS_APPENDING', 'lame_get_emphasis', '_sys_nerr',
+           '_IO_IS_APPENDING', 'lame_get_emphasis',
            'scanf', 'lame_set_findReplayGain',
            'lame_set_VBR_max_bitrate_kbps',
            'lame_get_allow_diff_short', 'get_lame_short_version',
@@ -1711,7 +1707,7 @@ __all__ = ['lame_set_VBR_quality', '_ATFILE_SOURCE', 'EOF',
            'hip_global_flags', '__io_write_fn', '__warnattr',
            'lame_get_VBR_mean_bitrate_kbps',
            'lame_set_compression_ratio', 'lame_get_id3v2_tag',
-           '_sys_errlist', 'fgetpos', 'lame_get_brate',
+           'fgetpos', 'lame_get_brate',
            'asm_optimizations_e', '_IO_padn', 'vdprintf',
            'lame_set_VBR_mean_bitrate_kbps', '__getdelim',
            'lame_encode_buffer_ieee_float', '__USE_XOPEN2K',
@@ -1724,7 +1720,7 @@ __all__ = ['lame_set_VBR_quality', '_ATFILE_SOURCE', 'EOF',
            '__vsnprintf_chk', '_IO_flockfile', '_IOS_INPUT',
            'lame_set_error_protection', 'FRONTEND_WRITEERROR',
            'L_tmpnam', 'off64_t', 'V2', 'lame_t', '_IOS_BIN',
-           '__uflow', 'tmpfile64', 'sys_nerr', '_IO_BAD_SEEN',
+           '__uflow', 'tmpfile64', '_IO_BAD_SEEN',
            '__USE_MISC', 'putw', 'puts', 'clearerr_unlocked',
            'obstack', 'N11__mbstate_t3DOT_2E', 'va_arg',
            'lame_stereo_mode_hist', 'putc', 'hip_set_msgf', '_IO_HEX',
@@ -1779,7 +1775,7 @@ __all__ = ['lame_set_VBR_quality', '_ATFILE_SOURCE', 'EOF',
            '__vfprintf_chk', '_SVID_SOURCE', '__codecvt_result',
            '__vasprintf_chk', 'fcloseall', 'VBR_50',
            '_IOFBF', 'SEEK_END', '_IO_peekc', '__USE_BSD',
-           'MDB_MAXIMUM', 'sys_errlist', '__CONCAT', 'ptrdiff_t',
+           'MDB_MAXIMUM', '__CONCAT', 'ptrdiff_t',
            'ABR_8', '_IO_IN_BACKUP', '_IOS_NOREPLACE', 'LAME_OKAY',
            '_ISOC11_SOURCE', 'obstack_printf', '____FILE_defined',
            'SEEK_CUR', 'fputs_unlocked', '__USE_UNIX98', '_IO_STDIO',

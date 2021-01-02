@@ -295,15 +295,8 @@ class Synth(object):
 
         """
 
-        # Make a temporary dict for faster access.
-        temp_dict = defaults
-
-        # Update the temp dict with the new values.
-        temp_dict.update(value_dict)
-
-        # Convert the temp dict to a tuple sorted by keys according to
-        # keys_tup, and return it.
-        return (temp_dict.get(i, 0) for i in keys_tup)
+        # Return a tuple sorted by keys according to keys_tup.
+        return ((defaults | value_dict).get(i, 0) for i in keys_tup)
 
     @reverb.setter
     def reverb(self, value):
