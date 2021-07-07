@@ -58,7 +58,7 @@ class OpusFile(AudioIO):
 
         super(OpusFile, self).__init__(filename, 'r', depth, rate, channels)
 
-        self._total_samples = 0
+        self._rate = 48000
         self._opus_file = None
         self._data_buffer = b''
         self._position = 0
@@ -95,14 +95,19 @@ class OpusFile(AudioIO):
 
         info_dict = {}
 
+        self._channels = _opus.op_channel_count(self._opus_file, -1)
+
         tags = _opus.op_tags(self._opus_file, -1)
         for i in range(tags.contents.comments):
-            comment = tags.contents.user_comments[i]
-            comment_len = tags.contents.comment_lengths[i]
-            comment_str = _opus.string_at(comment, comment_len)
-            name, value = comment_str.decode('utf-8', 'replace').split('=')
-            if name != 'METADATA_BLOCK_PICTURE':
-                info_dict[name] = value
+            try:
+                comment = tags.contents.user_comments[i]
+                comment_len = tags.contents.comment_lengths[i]
+                comment_str = _opus.string_at(comment, comment_len)
+                if b'METADATA_BLOCK_PICTURE' not in comment_str:
+                    name, value = comment_str.decode('utf-8', 'replace').split('=')
+                    info_dict[name] = value
+            except:
+                continue
 
         return info_dict
 
@@ -144,11 +149,14 @@ class OpusFile(AudioIO):
 
         """
 
-        byte_buffer = (_opus.opus_int16 * size)()
+        buf_size = 960
+        byte_buffer = (_opus.opus_int16 * buf_size)()
+
         data = self._data_buffer[:size]
 
         while len(data) < size:
-            bytes_read = _opus.op_read_stereo(self._opus_file, byte_buffer, size)
+            bytes_read = _opus.op_read_stereo(self._opus_file, byte_buffer,
+                                              buf_size)
 
             if bytes_read < 0:
                 msg_out(_opus.opus_strerror(bytes_read))
@@ -172,8 +180,8 @@ class OpusFile(AudioIO):
                     self.seek(0)
                     continue
 
-            data += _opus.string_at(byte_buffer, size)
+            data += _opus.string_at(byte_buffer, bytes_read * (self._channels * _opus.sizeof(_opus.opus_int16)))
 
         self._data_buffer =  data[size:]
 
-        return data
+        return data[:size]
