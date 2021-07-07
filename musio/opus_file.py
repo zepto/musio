@@ -37,7 +37,7 @@ __supported_dict = {
     'ext': ['.opus'],
     'handler': 'OpusFile',
     'dependencies': {
-        'ctypes': ['opus'],
+        'ctypes': ['opus', 'opusfile'],
         'python': []
     }
 }
