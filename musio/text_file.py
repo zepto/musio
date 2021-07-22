@@ -174,7 +174,7 @@ class TextFile(AudioIO):
         # Return all the lines if count is -1.
         if count == -1:
             self._index = self._length
-            return self._lines[slice_start:]
+            return self._line_list[slice_start:]
 
         # Calculate the last index to read to.
         slice_end = slice_start + count

@@ -391,7 +391,7 @@ def open_device(fileobj: AudioIO, mode: str = 'w', mod_path: list = [],
 
         # Open and return the device.
         try:
-            result =  device(mode=mode, rate=rate, channels=fileobj.channels,
+            result = device(mode=mode, rate=rate, channels=fileobj.channels,
                             depth=fileobj.depth, bigendian=fileobj.bigendian,
                             unsigned=fileobj.unsigned, floatp=fileobj.floatp,
                             device=dev_name, three_byte=fileobj.three_byte)
