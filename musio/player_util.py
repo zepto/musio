@@ -19,26 +19,21 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Player functions
+"""Player functions."""
 
-"""
-
-from multiprocessing import Process, Manager, Pipe
-from io import SEEK_SET, SEEK_CUR, SEEK_END
 from functools import wraps as functools_wraps
+from io import SEEK_CUR, SEEK_END, SEEK_SET
+from multiprocessing import Manager, Pipe, Process
 from platform import python_implementation
 from time import sleep as time_sleep
 
-py_imp = python_implementation()
+from .io_util import open_device, open_file
 
-from .io_util import open_file, open_device
+py_imp = python_implementation()
 
 
 def _play_proc(msg_dict):
-    """ Player process
-
-    """
-
+    """Player process."""
     # from oss_io import Oss as AudioIO
     # from alsa_io import Alsa as AudioIO
     from portaudio_io import Portaudio as AudioIO
@@ -59,12 +54,12 @@ def _play_proc(msg_dict):
                 break
 
 
-def play(filename, **kwargs):
-    """ play(filename, soundfont=None, loops=-1) -> Starts playing filename and
-    returns an object to send to stop to stop it playing.
+def play(filename: str, **kwargs) -> object:
+    """Play file <filename>.
 
+    Starts playing filename and returns an object to send to stop to stop it
+    playing.
     """
-
     playing = Manager().dict()
     playing['playing'] = True
     playing['filename'] = filename
@@ -77,26 +72,33 @@ def play(filename, **kwargs):
 
 
 def stop(player_tup):
-    """ stop(player_tup) -> Stop the player.
-
-    """
-
+    """Stop the player."""
     playing, play_t = player_tup
     playing['playing'] = False
     play_t.join()
 
 
 class AudioPlayer(object):
-    """ Play audio files.
+    """AudioPlayer.
 
+    An audio player object.
     """
 
-    def __init__(self, filename: str='', show_position: bool=False, **kwargs):
-        """ AudioPlayer(filename='', show_position=False, **kwargs) -> Open
-        filename and an appropriate audio io for it.
+    def __init__(self, filename: str = '', show_position: bool = False,
+                 **kwargs):
+        """__init__.
 
+        Parameters
+        ----------
+        self :
+            self
+        filename : str
+            filename
+        show_position : bool
+            show_position
+        kwargs :
+            kwargs
         """
-
         self._filename = filename
         self._show_position = show_position
 

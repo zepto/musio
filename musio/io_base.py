@@ -367,7 +367,7 @@ class AudioIO(RawIOBase):
         return bytes_read
 
     @io_wrapper
-    def readline(self, size: int = -1) -> str:
+    def readline(self, size: int = -1) -> bytes:
         """ readline(size=-1) -> Returns the next line or size bytes.
 
         """
