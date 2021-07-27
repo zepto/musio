@@ -19,16 +19,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Handles opening all supported files.
-
-"""
+"""Handles opening all supported files."""
 
 import audioop
 from os.path import basename as os_basename
 
+from .conversion_util import swap_endian
 from .io_base import AudioIO, io_wrapper
 from .io_util import get_codec
-from .conversion_util import swap_endian
 
 __supported_dict = {
     'ext': ['.*'],
@@ -38,22 +36,19 @@ __supported_dict = {
 
 
 class AllFile(AudioIO):
-    """ Handles all files get_codec can open.
-
-    """
+    """Handles all files get_codec can open."""
 
     # Valid bit depths.
     _valid_depth = (32, 16, 8)
 
-    def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, **kwargs):
-        """ AllFile(self, filename, mode='r', depth=16, rate=44100, channels=2,
-                    bigendian=False, unsigned=False, **kwargs) -> Loads the
-        correct codec for the file and acts as a wrapper providing additional
-        funcionality.
+    def __init__(self, filename: str, mode: str = 'r', depth: int = 16,
+                 rate: int = 44100, channels: int = 2,
+                 bigendian: bool = False, unsigned: bool = False, **kwargs):
+        """Loads and play all filetypes supported.
 
+        Load the correct codec for the file and acts as a wrapper providing
+        additional funcionality.
         """
-
         codec = get_codec(filename, blacklist=[os_basename(__file__)])
 
         self._supported_modes = getattr(codec, '_supported_modes', 'r')
@@ -96,24 +91,25 @@ class AllFile(AudioIO):
 
         # Make it stereo
         if self._source.channels < self._channels:
-            self._convert_channels = lambda data: audioop.tostereo(data,
-                                                                   self._width,
-                                                                   1, 1)
+            self._convert_channels = lambda data: audioop.tostereo(
+                data, self._width, 1, 1)
         # Make it mono
         elif self._source.channels > self._channels:
-            self._convert_channels = lambda data: audioop.tomono(data,
-                                                                 self._width,
-                                                                 1, 1)
+            self._convert_channels = lambda data: audioop.tomono(
+                data, self._width, 1, 1)
         else:
             self._convert_channels = lambda data: data
 
         # Convert the sample rate of the data to the requested rate.
         if self._rate != self._source.rate:
-            self._convert_rate = lambda data: audioop.ratecv(data, self._width,
-                                                             self._channels,
-                                                             self._source.rate,
-                                                             self._rate,
-                                                             self._state)
+            self._convert_rate = lambda data: audioop.ratecv(
+                data,
+                self._width,
+                self._channels,
+                self._source.rate,
+                self._rate,
+                self._state
+            )
         else:
             self._convert_rate = lambda data: (data, self._state)
 
@@ -122,64 +118,43 @@ class AllFile(AudioIO):
         else:
             self._convert_endian = lambda data: data
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
-
-        """
-
-        repr_str = "filename='%(_filename)s', mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(filename="{self._filename}", '
+                f'mode="{self._mode}", depth={self._depth}, '
+                f'rate={self._rate}, channels={self._channels}, '
+                f'bigendian={self._bigendian}, unsigned={self._unsigned})')
 
     def close(self):
-        """ Close.
-
-        """
-
+        """Close."""
         if not self.closed:
             self._source.close()
-
             self._closed = True
 
-    def _set_position(self, position):
-        """ Change the position of playback.
-
-        """
-
+    def _set_position(self, position: int):
+        """Change the position of playback."""
         self._source.position = position
 
-    def _get_position(self):
-        """ Returns the current position.
-
-        """
-
+    def _get_position(self) -> int:
+        """Return the current position."""
         return self._source.position
 
     @property
-    def loops(self):
-        """ How many times the file should loop.
-
-        """
-
+    def loops(self) -> int:
+        """Get how many times the file should loop."""
         return self._source.loops
 
     @loops.setter
-    def loops(self, value):
-        """ Set how many times the file should loop.
+    def loops(self, value: int):
+        """Set how many times the file should loop.
 
         To play forever use a value of -1.
-
         """
-
         self._source.loops = value
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Returns audio data with its format converted if
-        necessary.
-
-        """
-
+    def read(self, size: int = -1) -> bytes:
+        """Return audio data with its format converted if necessary."""
         data = self._buffer
 
         while len(data) < size:

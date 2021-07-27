@@ -19,16 +19,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A file like object to play libgme supported chip music.
-
-"""
+"""A file like object to play libgme supported chip music."""
 
 from functools import partial
-
-from .io_base import AudioIO, io_wrapper
-# from .gme import _gme
+from typing import Any
 
 from .import_util import LazyImport
+from .io_base import AudioIO, io_wrapper
 
 _gme = LazyImport('gme._gme', globals(), locals(), ['_gme'], 1)
 
@@ -43,12 +40,11 @@ __supported_dict = {
 }
 
 
-def _err(func_out):
-    """ _err(func_out) -> Check the function output and if it is not
-    empty raise an error.
+def _err(func_out: bytes) -> bytes:
+    """Verify function output.
 
+    Check the function output and if it is not empty raise an error.
     """
-
     if func_out:
         raise Exception(func_out.decode('cp437', 'replace'))
 
@@ -56,20 +52,13 @@ def _err(func_out):
 
 
 class GMEFile(AudioIO):
-    """ An object for accessing files supported by libgme.
-
-    """
+    """An object for accessing files supported by libgme."""
 
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, track=0, depth=16, rate=44100, channels=2,
-                 **kwargs):
-        """ GMEFile(filename, depth=16, rate=44100, channels=2) -> Initialize
-        the playback settings of the player.
-
-        """
-
+    def __init__(self, filename: str, track: int = 0, rate: int = 44100, **_):
+        """Initialize the playback settings of the player."""
         super(GMEFile, self).__init__(filename, 'r', 16, rate, 2)
 
         self._track = track
@@ -83,95 +72,67 @@ class GMEFile(AudioIO):
         # Start the track playing.
         self.track = track
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        return (f"{self.__class__.__name__}(filename='{self._filename}', "
+                f"track={self._track}, rate={self._rate})")
 
-        """
-
-        repr_str = "filename='%(_filename)s', track=%(_track)s, rate=%(_rate)s" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
-    def _set_position(self, position):
-        """ Change the position of playback.
-
-        """
-
+    def _set_position(self, position: int):
+        """Change the position of playback."""
         _err(_gme.gme_seek(self._music_emu, position))
 
-    def _get_position(self):
-        """ Updates the position variable.
-
-        """
-
+    def _get_position(self) -> int:
+        """Get the playback position."""
         return _gme.gme_tell(self._music_emu)
 
     @property
-    def stereo_depth(self):
-        """ Get the current stereo depth
-
-        """
-
+    def stereo_depth(self) -> float:
+        """Get the current stereo depth."""
         return self._stereo_depth
 
     @stereo_depth.setter
-    def stereo_depth(self, value):
-        """ Set the stereo depth.
-
-        """
-
+    def stereo_depth(self, value: float):
+        """Set the stereo depth."""
         if value < 0.0 or value > 1.0:
-            print("Invalid value %s: must in range 0.0-1.0" % value)
+            print(f"Invalid value {value}: must in range 0.0-1.0")
         else:
             self._stereo_depth = value
             _gme.gme_set_stereo_depth(self._music_emu, value)
 
     @property
-    def tempo(self):
-        """ Get the current tempo.
-
-        """
-
+    def tempo(self) -> int:
+        """Get the current tempo."""
         return self._tempo
 
     @tempo.setter
-    def tempo(self, tempo):
-        """ Set the tempo.
-
-        """
-
+    def tempo(self, tempo: int):
+        """Set the tempo."""
         self._tempo = tempo
         _gme.gme_set_tempo(self._music_emu, tempo)
 
     @property
-    def track(self):
-        """ Get the current track
-
-        """
-
+    def track(self) -> int:
+        """Get the current track."""
         return self._track
 
     @track.setter
-    def track(self, track):
-        """ Set the track
-
-        """
-
-        self._track = track % self._track_count
-
+    def track(self, track: int):
+        """Set the track."""
+        # Only set track to a value between 0 and self._track_count.
+        self._track = max(min(self._track_count - 1, track - 1), 0)
         _err(_gme.gme_start_track(self._music_emu, self._track))
+        self._info_dict = self._update_info()
 
-        self._update_info()
+    def _open(self, filename: str) -> object:
+        """Load the specified file."""
+        music_emu = _gme.ctypes.POINTER(_gme.Music_Emu)()
 
-    def _open(self, filename):
-        """ _load(filename) -> Load the specified file.
-
-        """
-
-        music_emu = _gme.POINTER(_gme.Music_Emu)()
-
-        filename = filename.encode('utf-8', 'surrogateescape')
-        _err(_gme.gme_open_file(filename, _gme.byref(music_emu), self._rate))
+        filename_b = filename.encode('utf-8', 'surrogateescape')
+        _err(_gme.gme_open_file(
+            filename_b,
+            _gme.ctypes.byref(music_emu),
+            self._rate
+        ))
 
         self._track_count = _gme.gme_track_count(music_emu)
 
@@ -179,19 +140,22 @@ class GMEFile(AudioIO):
 
         return music_emu
 
-    def _update_info(self):
-        """ _load_info() -> Load the information such as the module name
-        and message and the sample and instrument names.
+    def _update_info(self) -> dict:
+        """Load song information into dict.
 
+        Load the information such as the module name and message and the sample
+        and instrument names.
         """
-
-        info_t = _gme.POINTER(_gme.gme_info_t)()
-        track_info = _gme.gme_track_info(self._music_emu, _gme.byref(info_t),
-                                         self._track)
+        info_t = _gme.ctypes.POINTER(_gme.gme_info_t)()
+        _ = _gme.gme_track_info(
+            self._music_emu,
+            _gme.ctypes.byref(info_t),
+            self._track
+        )
 
         self._length = info_t.contents.play_length
 
-        info_dict = {'track': '%s/%s' % (self._track, self._track_count)}
+        info_dict = {"track": f"{self._track + 1}/{self._track_count}"}
 
         for i in ('system', 'song', 'copyright', 'author',
                   'comment', 'dumper', 'game'):
@@ -201,21 +165,18 @@ class GMEFile(AudioIO):
 
         _gme.gme_free_info(info_t)
 
-        self._info_dict = info_dict
+        return info_dict
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.
-
-        """
-
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and return it."""
         size //= self._channels
 
-        c_buffer = (_gme.c_short * size)()
+        c_buffer = (_gme.ctypes.c_short * size)()
 
         _gme.gme_play(self._music_emu, size, c_buffer)
 
-        data = _gme.string_at(c_buffer, _gme.sizeof(c_buffer))
+        data = _gme.ctypes.string_at(c_buffer, _gme.ctypes.sizeof(c_buffer))
 
         if _gme.gme_track_ended(self._music_emu):
             if self._loops == -1 or self._loops > self._loop_count:
@@ -227,10 +188,7 @@ class GMEFile(AudioIO):
         return data
 
     def close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and clean up."""
         if not self.closed:
             _gme.gme_delete(self._music_emu)
 
@@ -238,15 +196,10 @@ class GMEFile(AudioIO):
 
 
 class MusicEmu(object):
-    """ libgme music emu wrapper.
+    """GME wrapper. libgme music emu wrapper."""
 
-    """
-
-    def __init__(self, filename, rate=44100):
-        """ Create new music emu object.
-
-        """
-
+    def __init__(self, filename: str, rate: int = 44100):
+        """Create new music emu object."""
         super(MusicEmu, self).__init__()
 
         self._music_emu = self._open(filename, rate)
@@ -278,7 +231,7 @@ class MusicEmu(object):
         self.mute_voice = partial(_gme.gme_mute_voice, self._music_emu)
         self.mute_voices = partial(_gme.gme_mute_voices, self._music_emu)
 
-        self._equalizer = _gme.POINTER(_gme.gme_equalizer_t)()
+        self._equalizer = _gme.ctypes.POINTER(_gme.gme_equalizer_t)()
         self.equalizer = partial(_gme.gme_equalizer, self._music_emu,
                                  self._equalizer)
         self.set_equalizer = partial(_gme.gme_set_equalizer, self._equalizer)
@@ -289,32 +242,26 @@ class MusicEmu(object):
         self._closed = False
 
     @property
-    def length(self):
-        """ Current track length.
-
-        """
-
+    def length(self) -> int:
+        """Get the current track length."""
         return self._length
 
-    def start_track(self, track):
-        """ start_track(track) -> Start playing track.
-
-        """
-
+    def start_track(self, track: int):
+        """Start playing track."""
         self._track = track % self.track_count()
 
         self._start_track(self._track)
 
-        self._update_track_info()
+        self._track_info[track] = self._update_track_info(track)
 
-    def _update_track_info(self):
-        """ _update_track_info() -> Update the track info dictionary.
-
-        """
-
-        info_t = _gme.POINTER(_gme.gme_info_t)()
-        track_info = _gme.gme_track_info(self._music_emu, _gme.byref(info_t),
-                                         track)
+    def _update_track_info(self, track: int) -> dict:
+        """Update the track info dictionary."""
+        info_t = _gme.ctypes.POINTER(_gme.gme_info_t)()
+        _ = _gme.gme_track_info(
+            self._music_emu,
+            _gme.ctypes.byref(info_t),
+            track
+        )
 
         self._length = info_t.contents.play_length
 
@@ -329,50 +276,41 @@ class MusicEmu(object):
 
         _gme.gme_free_info(info_t)
 
-        self._track_info = info_dict
+        return info_dict
 
-    def track_info(self, track):
-        """ track_info(track) -> Return the info about the track.
+    def track_info(self, track: int) -> dict:
+        """Return the info about the track."""
+        return self._track_info[track]
 
-        """
-
-        return self._track_info
-
-    def read(self, size):
-        """ read(size) -> Read size bytes and return a bytes object.
-
-        """
-
+    def read(self, size: int = -1) -> bytes:
+        """Read size bytes and return a bytes object."""
         if self._closed:
             raise IOError("Can't read from closed file.")
 
         if self.track_ended():
             return b''
 
-        c_buffer = (_gme.c_short * size)()
+        c_buffer = (_gme.ctypes.c_short * size)()
 
         self.play(size, c_buffer)
 
         return _gme.string_at(c_buffer, _gme.sizeof(c_buffer))
 
-    def _open(self, filename, sample_rate):
-        """ _open(filename, sample_rate) -> Wrap the _gme.gme_open_file
-        function.
+    def _open(self, filename: str, sample_rate: int) -> Any:
+        """Wrap the _gme.gme_open_file function."""
+        filename_b = filename.encode('utf-8', 'surrogateescape')
 
-        """
+        music_emu = _gme.ctypes.POINTER(_gme.Music_Emu)()
 
-        filename = filename.encode('utf-8', 'surrogateescape')
-
-        music_emu = _gme.POINTER(_gme.Music_Emu)()
-
-        _err(_gme.gme_open_file(filename, _gme.byref(music_emu), sample_rate))
+        _err(_gme.gme_open_file(
+            filename_b,
+            _gme.ctypes.byref(music_emu),
+            sample_rate
+        ))
 
         return music_emu
 
     def close(self):
-        """ Cleanup.
-
-        """
-
+        """Cleanup."""
         self.delete()
         self._closed = True

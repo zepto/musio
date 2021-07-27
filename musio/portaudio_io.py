@@ -20,16 +20,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A wrapper for portaudio to allow it to be used with the 'with' statement.
-
-"""
+"""A wrapper for portaudio to allow it to be used with the 'with' statement."""
 
 from sys import stderr as sys_stderr
+from typing import Any, Callable, Union
 
+from .import_util import LazyImport
 from .io_base import DevIO, io_wrapper
 from .io_util import silence
-# from .portaudio import portaudio as _portaudio
-from .import_util import LazyImport
 
 _portaudio = LazyImport('portaudio.portaudio', globals(), locals(),
                         ['portaudio'], 1)
@@ -47,10 +45,7 @@ __supported_dict = {
 
 
 class Portaudio(DevIO):
-    """ A class that provides a file like object to write to a portaudio
-    stream.
-
-    """
+    """Provide a file like object to write to a portaudio stream."""
 
     # Valid bit depths
     _valid_depth = (32, 24, 16, 8)
@@ -58,35 +53,39 @@ class Portaudio(DevIO):
     # Supports reading and writing.
     _supported_modes = 'rw'
 
-    def __init__(self, mode='w', depth=16, rate=44100, channels=2,
-                 unsigned=False, floatp=False, buffer_size=None,
-                 latency=0.0500000, device='default', callback=None,
-                 **kwargs):
-        """ Portaudio(mode='w', depth=16, rate=44100, channels=2,
-        unsigned=False, floatp=False, buffer_size=4092, latency=500000,
-        devindex=1, callback=None) -> Initialize the portaudio device.
-
-        """
-
-        super(Portaudio, self).__init__(mode, depth, rate, channels, False,
-                                        unsigned, buffer_size, latency)
+    def __init__(self, mode: str = 'w', depth: int = 16, rate: int = 44100,
+                 channels: int = 2, unsigned: bool = False,
+                 floatp: bool = False, buffer_size: int = 0,
+                 latency: float = 0.0500000, device: Any = 'default',
+                 callback: Callable = None, **kwargs):
+        """Initialize the portaudio device."""
+        super(Portaudio, self).__init__(
+            mode,
+            depth,
+            rate,
+            channels,
+            False,
+            unsigned,
+            buffer_size,
+            latency
+        )
 
         if depth in [8, 16, 24, 32]:
             if floatp:
-                self._format = _portaudio.paFloat32
+                self._format = _portaudio._portaudio.paFloat32
             elif unsigned:
-                self._format = _portaudio.paUInt8
+                self._format = _portaudio._portaudio.paUInt8
             else:
-                self._format = getattr(_portaudio, 'paInt%s' % depth)
+                self._format = getattr(_portaudio._portaudio, f'paInt{depth}')
         else:
-            self._format = _portaudio.paInt16
+            self._format = _portaudio._portaudio.paInt16
 
         self._rate = float(rate)
         self._floatp = floatp
 
         try:
             device = int(device)
-        except:
+        except ValueError:
             pass
 
         self._devindex = device
@@ -95,67 +94,54 @@ class Portaudio(DevIO):
 
         self._devname = ''
 
-        self._stream = None
-        self._portaudio = None
-
-        self._open()
+        self._stream, self._portaudio = self._open()
 
         self._buffer_size = self._stream.buffer_size
 
         # Buffer to hold extra data.
         self._data = b''
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(mode="{self._mode}", '
+                f'depth={self._depth}, rate={self._rate}, '
+                f'channels={self._channels}, unsigned={self._unsigned}, '
+                f'floatp={self._floatp}, buffer_size={self._buffer_size}, '
+                f'latency={self._latency}, devindex={self._devindex}, '
+                f'callback={self._callback})')
 
-        """
-
-        repr_str = "mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, unsigned=%(_unsigned)s, floatp=%(_floatp)s, buffer_size=%(_buffer_size)s, latency=%(_latency)s, devindex=%(_devindex)s, callback=%(_callback)s" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
-    def device_list(self):
-        """ A list of the devices with thier names.
-
-        """
-
-        dev_count = self._portaudio.device_count
-        name_func = self._portaudio.device_name
+    def device_list(self, device: Any = None) -> list[str]:
+        """Return a list of the devices with thier names."""
+        device = self._portaudio if not device else device
+        dev_count = device.device_count
+        name_func = device.device_name
 
         return [name_func(i) for i in range(dev_count)]
 
-    def stop_stream(self):
-        """ Temporaraly stop the stream.  Use after a write if there won't be
-        another for a while.
+    def stop_stream(self) -> Union[int, bool]:
+        """Temporaraly stop the stream.
 
-        Instead of using this write silence until there is something else to
+        Use after a write if there won't be another for a while.  Instead of
+        using this write silence until there is something else to
         write.
-
         """
-
         return self._stream.stop()
 
-    def start_stream(self):
-        """ Start the stream.  Use before writing and after calling stop_stream.
+    def start_stream(self) -> Union[int, bool]:
+        """Start the stream.
 
+        Use before writing and after calling stop_stream.
         """
-
         return self._stream.start()
 
     @property
-    def rate(self):
-        """ The sample current sample rate.
-
-        """
-
+    def rate(self) -> int:
+        """Return the sample current sample rate."""
         return int(self._rate)
 
     @io_wrapper
     def write(self, data: bytes) -> int:
-        """ write(data) -> Write to the pcm device.
-
-        """
-
+        """Write to the pcm device."""
         # Calculate how many bytes are needed before it can write.
         write_size = self._buffer_size * self._channels * (self._depth >> 3)
 
@@ -189,10 +175,7 @@ class Portaudio(DevIO):
 
     @io_wrapper
     def read(self, size: int) -> bytes:
-        """ read(size) -> Read length data from stream.
-
-        """
-
+        """Read length data from stream."""
         data = b''
         while len(data) < size:
             try:
@@ -202,18 +185,15 @@ class Portaudio(DevIO):
                 print("(%s.read) %s" % (class_name, err))
         return data[:size]
 
-    def _open(self):
-        """ open -> Open the pcm audio output.
-
-        """
-
-        self._portaudio = _portaudio.Portaudio()
+    def _open(self) -> tuple[Any, Any]:
+        """Open the pcm audio output."""
+        portaudio = _portaudio.Portaudio()
 
         # Silence stderr
         with silence(sys_stderr):
-            self._portaudio.initialize()
+            portaudio.initialize()
 
-        dev_list = self.device_list()
+        dev_list = self.device_list(portaudio)
         dev_index = self._devindex
 
         if type(dev_index) is bytes:
@@ -248,22 +228,23 @@ class Portaudio(DevIO):
             in_params = None
 
         # Open a stream.
-        self._stream = _portaudio.Stream(rate=self._rate,
-                                         buffer_size=self._buffer_size,
-                                         input_params=in_params,
-                                         output_params=out_params,
-                                         callback=self._callback)
+        stream = _portaudio.Stream(
+            rate=self._rate,
+            buffer_size=self._buffer_size,
+            input_params=in_params,
+            output_params=out_params,
+            callback=self._callback
+        )
 
-        self._stream.open()
-        self._stream.start()
+        stream.open()
+        stream.start()
 
         self._closed = False
 
-    def close(self):
-        """ close -> Close the pcm.
+        return stream, portaudio
 
-        """
-
+    def close(self) -> None:
+        """Close the pcm."""
         if not self.closed:
             self._stream.stop()
             # Wait for the stream to stop.

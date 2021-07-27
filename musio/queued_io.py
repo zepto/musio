@@ -20,52 +20,48 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" QueuedWriter An object for using multiprocesses to write instead of
-blocking and clogging up the read.
+"""QueuedWriter.
 
+An object for using multiprocesses to write instead of blocking and clogging up
+the read.
 """
 
-from multiprocessing import Queue, Process, Manager
-from queue import Empty as queue_Empty
+from multiprocessing import Process, Queue
+from queue import Empty
+from typing import Callable, Union
 
 
-def _queue_writer(func, in_queue, out_queue):
-    """ _queue_writer(func, in_queue, out_queue) -> Read data from queue and
-    send it to func until 'EOF' is received.  When exiting it puts the sum of
-    the return values of func in out_queue.
+def _queue_writer(func: Callable, in_queue: Queue, out_queue: Queue):
+    """Read data from queue and send it to func until 'EOF' is received.
 
+    When exiting it puts the sum of the return values of func in out_queue.
     """
-
     written = 0
 
     while True:
         try:
             data = in_queue.get()
 
-            if not data: continue
-            if data == 'EOF': break
+            if not data:
+                continue
+            if data == 'EOF':
+                break
 
             # Send data to the writer function and add the return value
             # to written.
             written += func(data)
-        except queue_Empty as err:
-            print("Empty queue: %s" % err)
+        except Empty as err:
+            print(f"Empty queue: {err}")
 
     # Return the number of bytes written.
     out_queue.put(written)
 
 
 class QueuedWriter(object):
-    """ A queued multiprocess writter.
+    """A queued multiprocess writter."""
 
-    """
-
-    def __init__(self, func):
-        """ Queue_Writer(func) -> Fill a queue and call func with data as it is
-        able to use it.
-
-        """
-
+    def __init__(self, func: Callable):
+        """Fill a queue and call func with data as it is able to use it."""
         self._func = func
 
         # Queue to fill with data to be written.
@@ -81,19 +77,11 @@ class QueuedWriter(object):
         self._writer_p.start()
 
     def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
+        """Return a python expression to recreate this instance."""
+        return f"{self.__class__.__name__}(func={self._func})"
 
-        """
-
-        repr_str = "%(_func)s" % self.__dict__
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
-    def write(self, data):
-        """ Send more data down the queue to the processing function.
-
-        """
-
+    def write(self, data: Union[str, bytes]):
+        """Send more data down the queue to the processing function."""
         self._data_queue.put(data)
 
         return len(data)
@@ -101,10 +89,7 @@ class QueuedWriter(object):
     __call__ = write
 
     def close(self):
-        """ Close the queue and writer process.
-
-        """
-
+        """Close the queue and writer process."""
         # Send EOF to end the writer process.
         self._data_queue.put('EOF')
 
@@ -126,24 +111,18 @@ class QueuedWriter(object):
         # Return the writer result.
         return ret_val
 
-    def __enter__(self):
-        """ Provides the ability to use pythons with statement.
-
-        """
-
+    def __enter__(self) -> object:
+        """Provide the ability to use pythons with statement."""
         try:
             return self
         except Exception as err:
             print(err)
             return None
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        """ Close the file when finished.
-
-        """
-
+    def __exit__(self, exc_type, exc_value, traceback) -> bool:
+        """Close the file when finished."""
         try:
-            return self.close() or not bool(exc_type)
+            return bool(self.close()) or not bool(exc_type)
         except Exception as err:
             print(err)
             return False

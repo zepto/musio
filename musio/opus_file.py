@@ -19,19 +19,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A module for reading Opus files.
+"""A module for reading Opus files."""
 
-"""
+from typing import Any
 
-from itertools import compress, cycle
-from array import array
-
+from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
 from .io_util import msg_out
 
-from .import_util import LazyImport
-
 _opus = LazyImport('opus.opus', globals(), locals(), ['opus'], 1)
+
 
 __supported_dict = {
     'ext': ['.opus'],
@@ -42,57 +39,45 @@ __supported_dict = {
     }
 }
 
-class OpusFile(AudioIO):
-    """ A file like object for reading media files with opus
 
-    """
+class OpusFile(AudioIO):
+    """A file like object for reading media files with opus."""
+
+    _valid_depth = (16,)
 
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=48000, channels=2, **kwargs):
-        """ OpusFile(filename, depth=16, rate=48000, channels=2) ->
-        Initialize the playback settings of the player.
-
-        """
-
-        super(OpusFile, self).__init__(filename, 'r', depth, rate, channels)
+    def __init__(self, filename: str, **_):
+        """Initialize the playback settings of the player."""
+        super(OpusFile, self).__init__(filename, 'r', 16, 48000, 2)
 
         self._rate = 48000
-        self._opus_file = None
         self._data_buffer = b''
         self._position = 0
         self._length = 0
 
         self._opus_file = self._open(filename)
+
         if self._opus_file:
             self._length = _opus.op_pcm_total(self._opus_file, -1)
             self._closed = False
             self._info_dict.update(self._update_info())
         else:
-            raise(OSError("Failed to open opus: %s." % filename))
+            raise(OSError(f"Failed to open opus: {filename}."))
 
-    def _get_position(self):
-        """ Updates the position variable.
-
-        """
-
+    def _get_position(self) -> int:
+        """Update the position variable."""
         # Update the position.
         self._position = _opus.op_pcm_tell(self._opus_file)
         return self._position
 
-    def _set_position(self, position):
-        """ Change the position of playback.
-
-        """
-
+    def _set_position(self, position: int):
+        """Change the position of playback."""
         _opus.op_pcm_seek(self._opus_file, position)
 
-    def _update_info(self):
-        """ Updates the id3 info for the opened flac.
-
-        """
-
+    def _update_info(self) -> dict:
+        """Update the id3 info for the opened flac."""
         info_dict = {}
 
         self._channels = _opus.op_channel_count(self._opus_file, -1)
@@ -104,26 +89,26 @@ class OpusFile(AudioIO):
                 comment_len = tags.contents.comment_lengths[i]
                 comment_str = _opus.string_at(comment, comment_len)
                 if b'METADATA_BLOCK_PICTURE' not in comment_str:
-                    name, value = comment_str.decode('utf-8', 'replace').split('=')
+                    name, value = comment_str.decode(
+                        'utf-8',
+                        'replace'
+                    ).split('=')
                     info_dict[name] = value
-            except:
+            except Exception:
                 continue
 
         return info_dict
 
-    def _open(self, filename):
-        """ Open a opus file.
-
-        """
-
+    def _open(self, filename: str) -> Any:
+        """Open a opus file."""
         try:
             # Convert filename to bytes.
-            filename = filename.encode('utf-8', 'surrogateescape')
+            filename_b = filename.encode('utf-8', 'surrogateescape')
         except AttributeError:
-            pass
+            filename_b = filename.encode()
 
         err = _opus.c_int()
-        opus_file = _opus.op_open_file(filename, _opus.byref(err))
+        opus_file = _opus.op_open_file(filename_b, _opus.byref(err))
 
         if err.value != _opus.OPUS_OK:
             msg_out(_opus.opus_strerror(err))
@@ -132,31 +117,30 @@ class OpusFile(AudioIO):
         return opus_file
 
     def close(self):
-        """ Close and finish the flac decoder.
-
-        """
-
+        """Close and finish the flac decoder."""
         if not self.closed and self._opus_file:
             _opus.op_free(self._opus_file)
 
             self._closed = True
-            self._opus_file = None
+            del(self._opus_file)
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.  If
-        size is None then read a buffer size.
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and returns it.
 
+        If size is None then read a buffer size.
         """
-
         buf_size = 960
         byte_buffer = (_opus.opus_int16 * buf_size)()
 
         data = self._data_buffer[:size]
 
         while len(data) < size:
-            bytes_read = _opus.op_read_stereo(self._opus_file, byte_buffer,
-                                              buf_size)
+            bytes_read = _opus.op_read_stereo(
+                self._opus_file,
+                byte_buffer,
+                buf_size
+            )
 
             if bytes_read < 0:
                 msg_out(_opus.opus_strerror(bytes_read))
@@ -180,8 +164,11 @@ class OpusFile(AudioIO):
                     self.seek(0)
                     continue
 
-            data += _opus.string_at(byte_buffer, bytes_read * (self._channels * _opus.sizeof(_opus.opus_int16)))
+            data += _opus.string_at(
+                byte_buffer,
+                bytes_read * (self._channels * _opus.sizeof(_opus.opus_int16))
+            )
 
-        self._data_buffer =  data[size:]
+        self._data_buffer = data[size:]
 
         return data[:size]

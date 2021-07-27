@@ -19,9 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A Dummy file.
-
-"""
+"""A Dummy file."""
 
 from .io_base import AudioIO, io_wrapper
 
@@ -32,9 +30,7 @@ __supported_dict = {
 
 
 class DummyFile(AudioIO):
-    """ Handles all files with read and write.
-
-    """
+    """Handles all files with read and write."""
 
     # Valid bit depths.
     _valid_depth = (32, 16, 8)
@@ -42,15 +38,10 @@ class DummyFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'rw'
 
-    def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, **kwargs):
-        """ AllFile(self, filename, mode='r', depth=16, rate=44100, channels=2,
-                    bigendian=False, unsigned=False, **kwargs) -> Loads the
-        correct codec for the file and acts as a wrapper providing additional
-        funcionality.
-
-        """
-
+    def __init__(self, filename: str, mode: str = 'r', depth: int = 16,
+                 rate: int = 44100, channels: int = 2, bigendian: bool = False,
+                 unsigned: bool = False, **_):
+        """Fake file."""
         super(DummyFile, self).__init__(filename, mode, depth, rate, channels)
 
         self._bigendian = bigendian
@@ -62,28 +53,19 @@ class DummyFile(AudioIO):
 
         self ._closed = False
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
-
-        """
-
-        repr_str = "filename='%(_filename)s', mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(filename="{self._filename}", '
+                f'mode="{self._mode}", depth={self._depth}, '
+                f'rate={self._rate}, channels={self._channels}, '
+                f'bigendian={self._bigendian}, unsigned={self._unsigned})')
 
     def close(self):
-        """ Close.
-
-        """
-
+        """Close."""
         if not self.closed:
             self._closed = True
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Returns audio data with its format converted if
-        necessary.
-
-        """
-
+    def read(self, size: int = -1) -> bytes:
+        """Return audio data with its format converted if necessary."""
         return b'\x00' * size

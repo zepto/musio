@@ -19,11 +19,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A class to handle wave audio like python files.
-
-"""
+"""A class to handle wave audio like python files."""
 
 import wave
+from typing import Any
 
 from .io_base import AudioIO, io_wrapper
 
@@ -34,9 +33,7 @@ __supported_dict = {
 
 
 class WaveFile(AudioIO):
-    """ A class for wav file access.
-
-    """
+    """A class for wav file access."""
 
     # Valid bit depths.
     _valid_depth = (16, 8)
@@ -44,27 +41,31 @@ class WaveFile(AudioIO):
     # Both reading and writing are supported
     _supported_modes = 'rw'
 
-    def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2,
-                 **kwargs):
-        """ WaveFile(filename, mode='r', depth=16, rate=44100, channels=2) ->
-        Initialize the playback settings of the player.
-
-        """
-
+    def __init__(self, filename: str, mode: str = 'r', depth: int = 16,
+                 rate: int = 44100, channels: int = 2, **_):
+        """Initialize the playback settings of the player."""
         self._mode = mode
 
         self._wave = self._open(filename)
 
         if 'r' in mode:
-            super(WaveFile, self).__init__(filename, mode,
-                                           self._wave.getsampwidth() * 8,
-                                           self._wave.getframerate(),
-                                           self._wave.getnchannels())
+            super(WaveFile, self).__init__(
+                filename,
+                mode,
+                self._wave.getsampwidth() * 8,
+                self._wave.getframerate(),
+                self._wave.getnchannels()
+            )
             self._length = self._wave.getnframes()
             self._width = self._wave.getsampwidth()
         elif 'w' in mode:
-            super(WaveFile, self).__init__(filename, mode, depth, rate,
-                                           channels)
+            super(WaveFile, self).__init__(
+                filename,
+                mode,
+                depth,
+                rate,
+                channels
+            )
             self._wave.setnchannels(channels)
             self._wave.setsampwidth(depth // 8)
             self._wave.setframerate(rate)
@@ -74,44 +75,29 @@ class WaveFile(AudioIO):
         if self._depth == 8:
             self._unsigned = True
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(filename="{self._filename}", '
+                f'mode={self._mode}, depth={self._depth}, rate={self._rate}, '
+                f'channels={self._channels}')
 
-        """
-
-        repr_str = "filename='%(_filename)s', mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
-    def _set_position(self, position):
-        """ Change the position of playback.
-
-        """
-
+    def _set_position(self, position: int):
+        """Change the position of playback."""
         self._wave.setpos(position)
 
-    def _get_position(self):
-        """ Updates the position variable.
-
-        """
-
+    def _get_position(self) -> int:
+        """Get position."""
         return self._wave.tell()
 
     @io_wrapper
     def write(self, data: bytes) -> int:
-        """ write(data) -> Write data to wave file.
-
-        """
-
+        """Write data to wave file."""
         # Do this so it doesn't return None which is not an int.
         return self._wave.writeframes(data) or 0
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.
-
-        """
-
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and return it."""
         size //= self._channels * (self._depth >> 3)
 
         if self.position >= self._length:
@@ -121,20 +107,14 @@ class WaveFile(AudioIO):
 
         return self._wave.readframes(size)
 
-    def _open(self, filename):
-        """ _load(filename) -> Load the specified file.
-
-        """
-
+    def _open(self, filename: str) -> Any:
+        """Load the specified file."""
         wave_file = wave.open(filename, self._mode)
 
         return wave_file
 
     def close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and clean up."""
         if not self.closed:
             self._wave.close()
 

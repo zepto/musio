@@ -19,21 +19,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" get_codec       Function for loading the default/first filetype codecs
-    get_io       Function for loading the default/first device
+"""Convienience functions for audio file and device opening.
 
+get_codec       Function for loading the default/first filetype codecs
+get_io       Function for loading the default/first device
 """
 
 from contextlib import contextmanager
+from ctypes.util import find_library
 from importlib import import_module
-from os.path import splitext as os_splitext
-from os.path import join as os_join
-from os.path import basename as os_basename
-from os import listdir as os_listdir
-from os.path import isdir as os_isdir
-from os.path import abspath as os_abspath
-from os.path import dirname as os_dirname
-from ctypes.util import find_library as ctypes_find_library
+from os import listdir
+from os.path import abspath, basename, dirname, isdir, splitext
+from typing import IO, Any, Generator, Union
 
 try:
     from .magic import magic as _magic
@@ -49,106 +46,99 @@ __codec_cache = {}
 __io_cache = {}
 
 # Set to True to enable debut output
-DEBUG=False
+DEBUG = False
 
 
 def msg_out(message: str, *args):
-    """ Print message if DEBUG is True.
-
-    """
-
+    """Print message if DEBUG is True."""
     if DEBUG:
         print(message, *args)
 
 
-def slice_buffer(data: bytes, size: int) -> bytes:
-    """ slice_buffer(data, size) -> A generator that yields slices of bytes
-    from the data buffer.
-
-    """
-
+def slice_buffer(data: bytes, size: int) -> Generator[bytes, None, None]:
+    """Generate slices of bytes from the data buffer."""
     for i in range(0, len(data), size):
         yield data[i:i + size]
 
 
-def _build_mod_list(mod_path: list, suffix: str, blacklist: list) -> list:
-    """ _build_mod_list(mod_path, suffix) -> Add all the paths in mod_path to
-    sys.path and return a list of all modules in sys.path ending in suffix.
+def _build_mod_list(
+    mod_path: list[str],
+    suffix: str,
+    blacklist: list[str]
+) -> Generator[tuple[str, str], None, None]:
+    """Build a list of modules.
 
+    Add all the paths in mod_path to sys.path and return a list of all modules
+    in sys.path ending in suffix.
     """
-
     from sys import path as sys_path
 
     mod_path = [mod_path] if type(mod_path) is str else mod_path
     blacklist = [blacklist] if type(blacklist) is str else blacklist
 
     # Add suffix to all names in blacklist.
-    blacklist.extend(['%s%s' % (name, suffix) for name in blacklist
-                                                if not name.endswith(suffix)])
+    blacklist.extend(
+        [f"{name}{suffix}" for name in blacklist if not name.endswith(suffix)]
+    )
 
     # Add the path of this file to the search path.
-    mod_path.append(os_abspath(os_dirname(__file__)))
+    mod_path.append(abspath(dirname(__file__)))
 
     # Add the path(s) in mod_path to sys.path so we can import from
     # them.
-    [sys_path.extend((path, os_dirname(path.rstrip('/'))))
-                        for path in mod_path
-                            if path not in sys_path]
+    for path in mod_path:
+        if path not in sys_path:
+            sys_path.extend((path, dirname(path.rstrip('/'))))
 
-    # Build the list of modules ending in suffix in the mod_path(s).
-    mod_list = ((path, name) for path in sys_path
-                                if os_isdir(path)
-                                    for name in os_listdir(path)
-                                        if name.endswith(suffix) and
-                                           name not in blacklist)
+    def isdir_list(path: str) -> list[str]:
+        """Return a list of files from path if path is a directory."""
+        return listdir(path) if isdir(path) else []
 
-    return mod_list
+    # Return a genorator list of modules ending in suffix in the mod_path(s).
+    return (
+        (path, name) for path in sys_path for name in isdir_list(path)
+        if name not in blacklist and name.endswith(suffix)
+    )
 
 
 def _check_dependencies(dependencies: dict) -> bool:
-    """ Returns True if all the dependencies pass.
-
-    """
-
+    """Return True if all the dependencies pass."""
     # Loop through the dependencies and check each one.
     for key, value in dependencies.items():
         if key == 'ctypes':
             # Check for c libraries.
-            if not all((ctypes_find_library(lib) for lib in value)):
+            if not all((find_library(lib) for lib in value)):
                 return False
         elif key == 'python':
             # Check for python modules.
             try:
                 [__import__(mod) for mod in value]
-            except ImportError as err:
+            except ImportError:
                 return False
 
     # Everything passed.
     return True
 
 
-def get_codec(filename: str, mod_path: list = [], cached: bool = True,
-              blacklist: list = []) -> AudioIO:
-    """ get_codec(filename, mod_path=[], cached=True, blacklist=[]) -> Load the
-    codecs in the path and return the first one that can play the file, or the
-    one with the default attribute set.
+def get_codec(filename: str, mod_path: list[str] = [], cached: bool = True,
+              blacklist: list[str] = []) -> Union[AudioIO, None]:
+    """Load a codec that can handle the file.
 
-        filename        The file the codec needs to handle
-        mod_path        Additional search paths for modules
-        cached          Use cached codecs if available
-        blacklist       Modules not to load
+    Load the codecs in the path and return the first one that can play the
+    file, or the one with the default attribute set.
 
+    filename        The file the codec needs to handle
+    mod_path        Additional search paths for modules
+    cached          Use cached codecs if available
+    blacklist       Modules not to load
     """
-
     # Codec cache dictionary
     global __codec_cache
 
     from urllib.parse import urlparse
 
-    from .import_util import load_lazy_import, unload_lazy_import
-
     # Get the file extension.
-    file_ext = os_splitext(filename)[1].lower()
+    file_ext = splitext(filename)[1].lower()
 
     # Get protocol.
     file_prot = urlparse(filename).scheme
@@ -166,36 +156,37 @@ def get_codec(filename: str, mod_path: list = [], cached: bool = True,
     codec = None
     dummy = None
 
-    # Make importing lazy.
-    # load_lazy_import(mod_path=mod_path)
-
     # This packages name.
     this_pkgname = __name__.split('.', 1)[0]
 
     # Load the codec module that can handle file.
     for path, name in mod_list:
         # Get the package name from path.
-        pkgname = os_basename(path.rstrip('/'))
+        pkgname = basename(path.rstrip('/'))
 
         # Import the package if it is different from this one.
         if pkgname != this_pkgname and pkgname:
             try:
                 __import__(pkgname)
-            except ImportError as err:
+            except ImportError:
                 continue
 
         # Load the module.
         try:
-            module = import_module('.%s' % os_splitext(name)[0], pkgname)
+            module = import_module(f'.{splitext(name)[0]}', pkgname)
         except ImportError as err:
-            print("Skipping module: (%s) because of error: %s" % (name, err))
+            print(f"Skipping module: ({name}) because of error: {err}")
             continue
 
         # Get the filetypes and handler from module.
         supported_dict = getattr(module, '__supported_dict', {})
 
         # Get the handler.
-        handler = getattr(module, supported_dict.get('handler', 'dummy'), None)
+        handler = getattr(
+            module,
+            supported_dict.get('handler', 'dummy'),
+            None
+        )
 
         # Don't even check this module if it does not have a handler.
         if not handler:
@@ -211,7 +202,7 @@ def get_codec(filename: str, mod_path: list = [], cached: bool = True,
         if not _check_dependencies(dependencies):
             continue
 
-        issupported = supported_dict.get('issupported', lambda *a: False)
+        issupported = supported_dict.get('issupported', lambda *_: False)
         ext = supported_dict.get('ext', [])
         protocol = supported_dict.get('protocol', [])
 
@@ -226,30 +217,27 @@ def get_codec(filename: str, mod_path: list = [], cached: bool = True,
         # Check if filename is supported.
         if issupported(filename) or file_ext in ext or file_prot in protocol:
             codec = handler
-            if default: break
+            if default:
+                break
         elif not codec and '.*' in ext:
             codec = handler
 
-    # Turn off lazy imports.
-    # unload_lazy_import()
-
     # No codec was found so default to the dummy codec.
-    if not codec: codec = dummy
+    if not codec:
+        codec = dummy
 
     return codec
 
 
-def get_io(fileobj: AudioIO, mod_path: list = [], cached: bool = True,
-           blacklist: list = []) -> DevIO:
-    """ get_io(fileobj, mod_path=[], cached=True, blacklist=[]) -> Finds a
-    audio device that can take the data read from fileobj and returns it.
+def get_io(fileobj: AudioIO, mod_path: list[str] = [], cached: bool = True,
+           blacklist: list[str] = []) -> Union[Any, DevIO, None]:
+    """Get a matching audio device.
 
+    Find a audio device that can take the data read from fileobj and returns
+    it.
     """
-
     # IO device cache dictionary
     global __io_cache
-
-    from .import_util import load_lazy_import, unload_lazy_import
 
     # Get the file input data type.
     annotations = getattr(getattr(fileobj, 'read'), '__annotations__', {})
@@ -272,31 +260,32 @@ def get_io(fileobj: AudioIO, mod_path: list = [], cached: bool = True,
     device = None
     dummy = None
 
-    # Make importing lazy.
-    # load_lazy_import(mod_path=mod_path)
-
     # This packages name.
     this_pkgname = __name__.split('.', 1)[0]
 
     # Load the codec module that can handle file.
     for path, name in mod_list:
         # Get the package name from path.
-        pkgname = os_basename(path.rstrip('/'))
+        pkgname = basename(path.rstrip('/'))
 
         # Import the package if it is different from this one.
         if pkgname != this_pkgname and pkgname:
             try:
                 __import__(pkgname)
-            except ImportError as err:
+            except ImportError:
                 continue
 
         # Load the module.
-        module = import_module('.%s' % os_splitext(name)[0], pkgname)
+        module = import_module(f'.{splitext(name)[0]}', pkgname)
 
         # Get the filetypes and handler from module.
         supported_dict = getattr(module, '__supported_dict', {})
 
-        handler = getattr(module, supported_dict.get('handler', 'dummy'), None)
+        handler = getattr(
+            module,
+            supported_dict.get('handler', 'dummy'),
+            None
+        )
 
         if not handler:
             continue
@@ -325,45 +314,44 @@ def get_io(fileobj: AudioIO, mod_path: list = [], cached: bool = True,
         # Check if filename is supported.
         if 'r' in fileobj.mode and file_input in output_t:
             device = handler
-            if default: break
+            if default:
+                break
         elif 'w' in fileobj.mode and file_output in input_t:
             device = handler
-            if default: break
-
-    # Turn off lazy imports.
-    # unload_lazy_import()
+            if default:
+                break
 
     # No device was found so use the dummy_io.
-    if not device: device = dummy
+    if not device:
+        device = dummy
 
     return device
 
 
-def open_file(filename: str, mode: str = 'r', mod_path: list = [],
-              **kwargs: dict) -> AudioIO:
-    """ open_file(filename, mode='r') -> Returns the open file.
-
-    """
-
-    blacklist = kwargs.get('blacklist', [])
-
+def open_file(filename: str, mode: str = 'r', mod_path: list[str] = [],
+              blacklist: list[str] = [], **kwargs: dict) -> AudioIO:
+    """Return the open file."""
     open_codec = None
 
     # Loop until a codec is found that can open the file.
     while not open_codec:
-        codec = get_codec(filename, mod_path=mod_path, blacklist=blacklist,
-                          cached=False)
+        codec = get_codec(
+            filename,
+            mod_path=mod_path,
+            blacklist=blacklist,
+            cached=False
+        )
+
         if not codec:
-            raise IOError("Error opening codec %s." % codec)
+            raise IOError(f"Error opening codec {codec}.")
 
         try:
             open_codec = codec(filename, mode=mode, **kwargs)
             open_codec.loops = kwargs.get('loops', -1)
         except IOError as err:
-            return_err = err
-            print('Blacklisting (%s) because of error: %s' % (codec, err))
+            print(f"Blacklisting ({codec}) because of error: {err}")
 
-            mod_name = '%s.py' % codec.__module__.split('.')[-1]
+            mod_name = f"{codec.__module__.split('.')[-1]}.py"
 
             # Add the module to the blacklist.
             blacklist.append(mod_name)
@@ -371,36 +359,42 @@ def open_file(filename: str, mode: str = 'r', mod_path: list = [],
     return open_codec
 
 
-def open_device(fileobj: AudioIO, mode: str = 'w', mod_path: list = [],
-                **kwargs: dict) -> DevIO:
-    """ open_device(fileobj, mode='r') -> Returns an open audio device.
-
-    """
-
-    blacklist = kwargs.get('blacklist', [])
+def open_device(fileobj: AudioIO, mode: str = 'w', mod_path: list[str] = [],
+                blacklist: list[str] = [], **kwargs: dict) -> DevIO:
+    """Return an open audio device."""
     dev_name = kwargs.get('device', b'default')
     rate = kwargs.get('rate', fileobj.rate)
 
     while True:
         # Get the supported device
-        device = get_io(fileobj, mod_path=mod_path, blacklist=blacklist,
-                        cached=False)
+        device = get_io(
+            fileobj,
+            mod_path=mod_path,
+            blacklist=blacklist,
+            cached=False
+        )
 
         if not device:
-            raise IOError("Error opening device %s." % device)
+            raise IOError(f"Error opening device {device}.")
 
         # Open and return the device.
         try:
-            result = device(mode=mode, rate=rate, channels=fileobj.channels,
-                            depth=fileobj.depth, bigendian=fileobj.bigendian,
-                            unsigned=fileobj.unsigned, floatp=fileobj.floatp,
-                            device=dev_name, three_byte=fileobj.three_byte)
+            result = device(
+                mode=mode,
+                rate=rate,
+                channels=fileobj.channels,
+                depth=fileobj.depth,
+                bigendian=fileobj.bigendian,
+                unsigned=fileobj.unsigned,
+                floatp=fileobj.floatp,
+                device=dev_name,
+                three_byte=fileobj.three_byte
+            )
             break
         except Exception as err:
-            return_err = err
-            print('Blacklisting (%s) because of error: %s' % (device, err))
+            print(f"Blacklisting ({device}) because of error: {err}.")
 
-            mod_name = '%s.py' % device.__module__.split('.')[-1]
+            mod_name = f"{device.__module__.split('.')[-1]}.py"
 
             # Add the module to the blacklist.
             blacklist.append(mod_name)
@@ -409,18 +403,10 @@ def open_device(fileobj: AudioIO, mode: str = 'w', mod_path: list = [],
     return result
 
 
-
 @contextmanager
-def silence(fd: "File descripter"):
-    """ silence(fd) -> Silence any output from fd.
-
-    """
-
-    from os import dup as os_dup
-    from os import pipe as os_pipe
-    from os import dup2 as os_dup2
-    from os import close as os_close
-    from os import fdopen as os_fdopen
+def silence(fd: IO):
+    """Silence any output from fd."""
+    from os import close, dup, dup2, fdopen, pipe
 
     # Backup the file
     old_fd = fd
@@ -429,42 +415,34 @@ def silence(fd: "File descripter"):
     fd.flush()
 
     # Create a duplicate of fd
-    new_fd = os_dup(fd.fileno())
+    new_fd = dup(fd.fileno())
 
     # Create a pipe to write to.
-    read, write = os_pipe()
+    read, write = pipe()
 
     # Set the write to the fd filenumber
-    os_dup2(write, fd.fileno())
+    dup2(write, fd.fileno())
 
     # Close the pipe.
-    os_close(write)
-    os_close(read)
+    close(write)
+    close(read)
 
     # Set fd to the new fd
-    fd = os_fdopen(new_fd, 'w')
+    fd = fdopen(new_fd, 'w')
 
     try:
         # Run the commands in the 'with' statement.
         yield
     finally:
         # Return the fd back to its original state.
-        os_dup2(fd.fileno(), old_fd.fileno())
+        dup2(fd.fileno(), old_fd.fileno())
         fd = old_fd
 
+
 @contextmanager
-def py_silence(new_stdout: "File descripter"=None,
-               new_stderr: "File descripter"=None):
-    """ py_silence(new_stdout, new_stderr) -> Silence any output from fd.  In
-    python.
-
-    """
-
-    from os import devnull as os_devnull
+def py_silence(new_stdout: IO = None, new_stderr: IO = None):
+    """Silence any output from fd.  In python."""
     import sys
-
-    stdout = new_stdout or sys.stdout
-    stderr = new_stderr or sys.stderr
 
     # Backup the file
     old_stdout = sys.stdout
@@ -487,29 +465,24 @@ def py_silence(new_stdout: "File descripter"=None,
         sys.stdout = old_stdout
         sys.stderr = old_stderr
 
+
 class Magic(object):
-    """ Magic object for testing string encoding.
+    """Magic object for testing string encoding."""
 
-    """
+    def __init__(self, flags: int = 1024):
+        """Object for testing text encoding.
 
-    def __init__(self, flags=1024):
-        """ Magic(flags=magic.MAGIC_MIME_ENCODING) -> Object for testing text
-        encoding.
-
+        Default flags: magic.MAGIC_MIME_ENCODING
         """
-
         if not _magic:
             return None
 
         self._magic = _magic.magic_open(flags)
         if _magic.magic_load(self._magic, None) != 0:
-            print("Error: %s" % _magic.magic_error(self._magic).decode())
+            print(f"Error: {_magic.magic_error(self._magic).decode()}")
 
     def check(self, data):
-        """ Return the encoding of data.
-
-        """
-
+        """Return the encoding of data."""
         if not _magic:
             return b'utf8'
 

@@ -19,35 +19,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Audio conversion utilities.
+"""Audio conversion utilities."""
 
-"""
-
+import audioop
 from array import array
-try:
-    import audioop
-except ImportError as err:
-    print("audioop functionality will be disabled because of error: %s" % (err))
-    audioop = None
 
 from .io_base import AudioIO, io_wrapper
 
 
-def swap_endian(data):
-    """ swap_endian(data) -> Swap the endianness of the data.
-
-    """
-
+def swap_endian(data: bytes) -> bytes:
+    """Swap the endianness of the data."""
     data_array = array('h', data)
     data_array.byteswap()
 
-    return data_array.tostring()
+    return data_array.tobytes()
 
 
 class ConvertReader(AudioIO):
-    """ Audio data reader that converts it.
-
-    """
+    """Audio data reader that converts it."""
 
     # Valid bit depths
     _valid_depth = (16, 8)
@@ -55,15 +44,11 @@ class ConvertReader(AudioIO):
     # Only reading
     _supported_modes = 'r'
 
-    def __init__(self, source, depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, **kwargs):
-        """ ConvertReader(self, source, depth=16, rate=44100, channels=2,
-        bigendian=False, unsigned=False, **kwargs) -> Set up the format to
-        convert read data to.
-
-        """
-
-        super(ConvertReader, self).__init__(source, 'r', depth, rate, channels)
+    def __init__(self, source: AudioIO, depth: int = 16, rate: int = 44100,
+                 channels: int = 2, bigendian: bool = False,
+                 unsigned: bool = False, **_):
+        """Set up the format to convert read data to."""
+        super(ConvertReader, self).__init__("", 'r', depth, rate, channels)
 
         self._source = source
 
@@ -77,23 +62,16 @@ class ConvertReader(AudioIO):
         self._closed = False
 
     def close(self):
-        """ Close.
-
-        """
-
+        """Close."""
         self._closed = True
 
     @io_wrapper
-    def read(self, size=None):
-        """ Convert the samples to the given rate and makes it mono or stereo
+    def read(self, size: int = -1) -> bytes:
+        """Convert audio.
+
+        Convert the samples to the given rate and makes it mono or stereo
         depending on the channels value. The data is buffered so
-
         """
-
-        if not audioop:
-            print("audioop not found so returning empty byte")
-            return b'\x00'
-
         data = self._buffer
 
         while len(data) < size:

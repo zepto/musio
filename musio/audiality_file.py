@@ -19,21 +19,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A module for reading agws.
-
-"""
+"""A module for reading agws."""
 
 import os
-from time import sleep
-from tempfile import mktemp
-from sys import stdout as sys_stdout
 from sys import stderr as sys_stderr
-
-from .io_base import AudioIO, io_wrapper
-from .io_util import silence
-# from .audiality import audiality as _agw
+from sys import stdout as sys_stdout
+# from tempfile import mktemp
+from typing import BinaryIO
 
 from .import_util import LazyImport
+from .io_base import AudioIO, io_wrapper
+from .io_util import silence
 
 _agw = LazyImport('audiality.audiality', globals(), locals(),
                   ['audiality'], 1)
@@ -49,66 +45,52 @@ __supported_dict = {
 
 
 class AgwFile(AudioIO):
-    """ A file like object for reading agws.
-
-    """
+    """A file like object for reading agws."""
 
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=44100, channels=2, quality=4,
-                 latency=50, **kwargs):
-        """ AgwFile(filename, depth=16, rate=44100, channels=2, quality=4,
-        latency=50) -> Initialize
-        the playback settings of the player.
-
-        """
-
+    def __init__(self, filename: str, depth: int = 16, rate: int = 44100,
+                 channels: int = 2, quality: int = 4, latency: int = 50, **_):
+        """Initialize the playback settings of the player."""
         super(AgwFile, self).__init__(filename, 'r', depth, rate, channels)
 
-        self._raw_filename = None
-        self._raw_file = None
         self._quality = quality
         self._latency = latency
         self._depth = 16
 
-        self._raw_file = self._open(filename)
+        self._raw_file, self._raw_filename = self._open(filename)
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(filename="{self._filename}", '
+                f'depth={self._depth}, rate={self._rate}, '
+                f'channels={self._channels}, quality={self._quality}, '
+                f'latency={self._latency})')
 
-        """
-
-        repr_str = "filename='%(_filename)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, quality=%(_quality)s, latency=%(_latency)s" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
-    def _open(self, filename):
-        """ _open(filename) -> Load the specified file.
-
-        """
-
-        filename = filename.encode('utf-8', 'surrogateescape')
+    def _open(self, filename: str) -> tuple[BinaryIO, str]:
+        """Load the specified file."""
+        filename_b = filename.encode("utf-8", "surrogateescape")
 
         # Stop the audiality library from printing information.
         # redirect_cstd()
 
-        name = os.path.basename(filename)
-        path = os.path.dirname(filename)
+        name = os.path.basename(filename_b)
+        path = os.path.dirname(filename_b)
 
         # Create a temporary fifo in the current directory.
-        self._raw_filename = os.path.basename(mktemp())
+        raw_filename = "musio.raw"
         try:
-            if not os.path.isfile(self._raw_filename):
-                os.mkfifo(self._raw_filename)
+            if not os.path.isfile(raw_filename):
+                os.mkfifo(raw_filename)
         except OSError as err:
-            print("Failed to create FIFO: %s" % err)
+            print(f"Failed to create FIFO: {err}")
 
-        output = 'disk:%s' % self._raw_filename
+        output = f"disk:{raw_filename}"
 
         # Silence stdout and stderr.
         with silence(sys_stdout), silence(sys_stderr):
-            # Open the audio engine and startit.
+            # Open the audio engine and start it.
             _agw.ady_open()
             _agw.ady_set_interface(1, output.encode())
             _agw.ady_start(self._rate, self._latency, 0)
@@ -123,7 +105,7 @@ class AgwFile(AudioIO):
         agw_id = _agw.ady_wave_load(0, name, -1)
 
         if agw_id:
-            raise IOError("Error loading %s, %s" % (name, agw_id))
+            raise IOError(f"Error loading {name}, {agw_id}")
 
         # Start playing.
         _agw.music_play(1, agw_id)
@@ -135,22 +117,18 @@ class AgwFile(AudioIO):
         self._closed = False
 
         # Open the raw file that is written to.
-        return open(self._raw_filename, 'rb', buffering=0)
+        return open(raw_filename, "rb", buffering=0), raw_filename
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.  If
-        size is None then read a buffer size.
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and return it.
 
+        If size is None then read a buffer size.
         """
-
         return self._raw_file.read(size)
 
     def close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and clean up."""
         if not self.closed:
             # Change the interface to an empty string to disconnect it
             # so it can be stopped.

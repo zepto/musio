@@ -19,114 +19,80 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Portaudio module.
+"""Portaudio module."""
 
-"""
+from typing import Any, Callable, Union
+# from ._portaudio import *
+from . import _portaudio
 
-from ._portaudio import *
+class Info(dict[Any, Any]):
+    """An info class."""
 
-class Info(object):
-    """ An info class.
-
-    """
-
-    def __init__(self, info_struct):
-        """ Info(info_struct) -> Wrap a struct to make it easier to access.
-
-        """
-
+    def __init__(self, info_struct: _portaudio.Structure):
+        """Wrap a struct in a dict to make it easier to access."""
         for key, val in info_struct.contents._fields_:
             setattr(self, key, getattr(info_struct.contents, key))
 
 
 class Portaudio(object):
-    """ A portaudio object that can be used with the 'with' statement
+    """Portaudio class.
+
+    A portaudio object that can be used with the 'with' statement
     to initialize and terminate portaudio.  Portaudio has to be initialized
     before any portaudio functions are called.
-
     """
 
-    def initialize(self):
-        """ Initialize portaudio.  Has to be called first.
+    def initialize(self) -> int:
+        """Initialize portaudio.  Has to be called first."""
+        return _portaudio.Pa_Initialize()
 
-        """
-
-        return Pa_Initialize()
-
-    def terminate(self):
-        """ Terminate portaudio.
-
-        """
-
-        return Pa_Terminate()
+    def terminate(self) -> int:
+        """Terminate portaudio."""
+        return _portaudio.Pa_Terminate()
 
     @property
-    def device_count(self):
-        """ The number of valid devices available.
+    def device_count(self) -> int:
+        """The number of valid devices available."""
+        return _portaudio.Pa_GetDeviceCount()
 
-        """
-
-        return Pa_GetDeviceCount()
-
-    def device_name(self, devindex):
-        """ The name if the device at index 'devindex.'
-
-        """
-
+    def device_name(self, devindex: int) -> str:
+        """The name if the device at index 'devindex.'"""
         try:
-            return Pa_GetDeviceInfo(devindex).contents.name.decode()
+            return _portaudio.Pa_GetDeviceInfo(devindex).contents.name.decode()
         except Exception as err:
-            return None
+            return f'{err}'
 
     @property
-    def default_output_device(self):
-        """ The index of the default output device.
-
-        """
-
-        return Pa_GetDefaultOutputDevice()
+    def default_output_device(self) -> int:
+        """The index of the default output device."""
+        return _portaudio.Pa_GetDefaultOutputDevice()
 
     @property
-    def default_input_device(self):
-        """ The index of the default input device.
-
-        """
-
-        return Pa_GetDefaultInputDevice()
+    def default_input_device(self) -> int:
+        """The index of the default input device."""
+        return _portaudio.Pa_GetDefaultInputDevice()
 
     @property
-    def api_count(self):
-        """ The number of valid host apis.
-
-        """
-
-        return Pa_GetHostApiCount()
+    def api_count(self) -> int:
+        """The number of valid host apis."""
+        return _portaudio.Pa_GetHostApiCount()
 
     @property
-    def default_api(self):
-        """ The index of the default host api.
+    def default_api(self) -> int:
+        """The index of the default host api."""
+        return _portaudio.Pa_GetDefaultHostApi()
 
-        """
-
-        return Pa_GetDefaultHostApi()
-
-    def __enter__(self):
-        """ Provides the ability to use pythons with statement.
-
-        """
-
+    def __enter__(self) -> object:
+        """Provides the ability to use pythons with statement."""
         try:
             self.initialize()
             return self
         except Exception as err:
             print(err)
-            return None
+            return object
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        """ Close the pcm when finished.
-
-        """
-
+    def __exit__(self, exc_type, exc_value, traceback) -> bool:
+        """Close the pcm when finished."""
         try:
             self.terminate()
             return not bool(exc_type)
@@ -135,24 +101,18 @@ class Portaudio(object):
             return False
 
 
-class StreamParams(PaStreamParameters):
-    """ Portaudio stream parameters wrapper class.
+class StreamParams(_portaudio.PaStreamParameters):
+    """Portaudio stream parameters wrapper class."""
 
-    """
-
-    def __init__(self, device_index=0, channels=2, samp_format=paInt16,
-            latency=500000):
-        """ StreamParams(device_index=1, channels=2, samp_format=paInt16,
-        latency=500000) -> Create a parameter object.  Use when creating
-        a stream.
-
-        """
-
-        max_dev_index = Pa_GetDeviceCount()
+    def __init__(self, device_index: int = 0, channels: int = 2,
+                 samp_format: _portaudio.c_ulong = _portaudio.paInt16,
+                 latency: float = 500000):
+        """Create a parameter object.  Use when creating a stream."""
+        max_dev_index = _portaudio.Pa_GetDeviceCount()
         if device_index not in range(max_dev_index):
-            print("Invalid device, should be 0-%s.  Using default." % \
-                    (max_dev_index - 1))
-            device_index = Pa_GetDefaultOutputDevice()
+            print(f"Invalid device, should be 0-{max_dev_index-1}. "
+                  f" Using default.")
+            device_index = _portaudio.Pa_GetDefaultOutputDevice()
 
         super(StreamParams, self).__init__()
 
@@ -162,13 +122,13 @@ class StreamParams(PaStreamParameters):
         self.suggestedLatency = latency
         self.hostApiSpecificStreamInfo = None
 
-        if samp_format in (paFloat32, paInt32):
+        if samp_format in (_portaudio.paFloat32, _portaudio.paInt32):
             depth = 32
-        elif samp_format == paInt24:
+        elif samp_format == _portaudio.paInt24:
             depth = 24
-        elif samp_format == paInt16:
+        elif samp_format == _portaudio.paInt16:
             depth = 16
-        elif samp_format in (paInt8, paUInt8):
+        elif samp_format in (_portaudio.paInt8, _portaudio.paUInt8):
             depth = 8
         else:
             depth = 16
@@ -178,53 +138,49 @@ class StreamParams(PaStreamParameters):
         self._multiplier = channels * (depth >> 3)
 
     @property
-    def multiplier(self):
-        """ The number to multiplay the frame count by to get the
-        actual size of the buffer.
+    def multiplier(self) -> int:
+        """Buffer multiplier.
 
+        The number to multiply the frame count by to get the actual size of the
+        buffer.
         """
-
         return self._multiplier
 
     @property
-    def device_info(self):
-        """ The info on the selected device.
+    def device_info(self) -> dict:
+        """The info on the selected device."""
+        return Info(_portaudio.Pa_GetDeviceInfo(self.device))
 
-        """
-
-        return Info(Pa_GetDeviceInfo(self.device))
-
-    def check(self, direction='output', rate=None):
-        """ check(direction='output', rate=None) -> Check the parameters.
-
-        """
-
+    def check(self, direction: str = 'output', rate: int = 0) -> int:
+        """Check the parameters."""
         dev_info = self.device_info
         if not rate:
             rate = dev_info.defaultSampleRate
         if direction == 'output':
-            result = Pa_IsFormatSupported(None, self, rate)
+            result = _portaudio.Pa_IsFormatSupported(None, self, rate)
         else:
-            result = Pa_IsFormatSupported(self, None, rate)
-        if result != paFormatIsSupported:
-            raise ValueError("Invalid %s parameters: %s" % (direction, Pa_GetErrorText(result)))
+            result = _portaudio.Pa_IsFormatSupported(self, None, rate)
+        if result != _portaudio.paFormatIsSupported:
+            raise ValueError(f"Invalid {direction} parameters: "
+                             f"{_portaudio.Pa_GetErrorText(result)}")
 
         return rate
 
 
 class Stream(object):
-    """ A Portaudio stream.
+    """A Portaudio stream."""
 
-    """
-
-    def __init__(self, input_params=None, output_params=None, callback=None, 
-            flags=0, rate=None, buffer_size=0):
+    def __init__(self, input_params: StreamParams = None,
+                 output_params: StreamParams = None,
+                 callback: Callable = None, flags: int = 0,
+                 rate: int = 0, buffer_size: int = 0):
         """ Open a new portaudio stream.
 
         """
 
         if not input_params and not output_params:
-            raise ValueError("Specify either input parameters or output parameters or both.")
+            raise ValueError("Specify either input parameters or output "
+                             "parameters or both.")
 
         if input_params:
             rate = input_params.check('input', rate)
@@ -233,7 +189,9 @@ class Stream(object):
             rate = output_params.check('output', rate)
 
         if callback:
-            self._pa_stream_callback = PaStreamCallback(self._pa_stream_callback_f)
+            self._pa_stream_callback = _portaudio.PaStreamCallback(
+                self._pa_stream_callback_f
+            )
         else:
             self._pa_stream_callback = None
 
@@ -246,47 +204,45 @@ class Stream(object):
 
         self._input_multiplier = getattr(input_params, 'multiplier', 1)
 
-        self._stream = (POINTER(PaStream))()
+        self._stream = (_portaudio.POINTER(_portaudio.PaStream))()
 
     @property
-    def buffer_size(self):
-        """ The optimal buffer size for this stream
-
-        """
-
+    def buffer_size(self) -> int:
+        """The optimal buffer size for this stream."""
         return self._buffer_size
 
-    def open(self):
-        """ Opens a portaudio stream.
-
-        """
-
+    def open(self) -> int:
+        """Opens a portaudio stream."""
         if self._pa_stream_callback:
             buffer_size = self._buffer_size
         else:
             # Jack will segfault unless this is zero.
             buffer_size = 0
 
-        return Pa_OpenStream(byref(self._stream), self._input_params,
-                             self._output_params, self._rate,
-                             buffer_size, self._flags,
-                             self._pa_stream_callback, None)
+        return _portaudio.Pa_OpenStream(
+            _portaudio.byref(self._stream),
+            self._input_params,
+            self._output_params,
+            self._rate,
+            buffer_size,
+            self._flags,
+            self._pa_stream_callback,
+            None
+        )
 
-    def close(self):
-        """ Closes a portaudio stream.
+    def close(self) -> int:
+        """Close a portaudio stream."""
+        return _portaudio.Pa_CloseStream(self._stream)
 
-        """
-
-        return Pa_CloseStream(self._stream)
-
-    def _pa_stream_callback_f(self, in_data, out_buffer, frame_count,
-                              time_info, status_flags, user_data):
-        """ The stream callback.
-
-        """
-
+    def _pa_stream_callback_f(self, in_data: Any, out_buffer: Any,
+                              frame_count: int, time_info: Any,
+                              status_flags: int, user_data: Any) -> int:
+        """Callback function for portaudio."""
         if in_data:
-            in_str = string_at(in_data, frame_count * (self._input_multiplier))
+            in_str = _portaudio.string_at(
+                in_data,
+                frame_count * (self._input_multiplier)
+            )
         else:
             in_str = b''
 
@@ -294,98 +250,80 @@ class Stream(object):
 
         if out_buffer and not data:
             print("Done.")
-            return paComplete
+            return _portaudio.paComplete
         elif out_buffer:
-            memmove(out_buffer, c_buffer(data), len(data))
+            _portaudio.memmove(
+                out_buffer,
+                _portaudio.c_buffer(data),
+                len(data)
+            )
 
-        return paContinue
-
-    @property
-    def active(self):
-        """ Returns a boolean value indecating whether the stream is active.
-
-        """
-
-        return bool(Pa_IsStreamActive(self._stream))
+        return _portaudio.paContinue
 
     @property
-    def stopped(self):
-        """ Returns a boolean indecating whether the stream is stopped.
+    def active(self) -> bool:
+        """Return a boolean value indecating whether the stream is active."""
+        return bool(_portaudio.Pa_IsStreamActive(self._stream))
 
-        """
+    @property
+    def stopped(self) -> bool:
+        """Return a boolean indecating whether the stream is stopped."""
+        return bool(_portaudio.Pa_IsStreamStopped(self._stream))
 
-        return bool(Pa_IsStreamStopped(self._stream))
-
-    def start(self):
-        """ Starts the stream.
-
-        """
-
+    def start(self) -> Union[int, bool]:
+        """Start the stream."""
         if not self.active:
-            ret_val = Pa_StartStream(self._stream)
+            ret_val = _portaudio.Pa_StartStream(self._stream)
             if not self._callback:
                 if self._output_params:
-                    buffer_size = Pa_GetStreamWriteAvailable(self._stream)
+                    buffer_size = _portaudio.Pa_GetStreamWriteAvailable(
+                        self._stream
+                    )
                     if buffer_size < self._buffer_size:
                         self._buffer_size = buffer_size - (buffer_size % 2)
                 elif self._input_params:
-                    buffer_size = Pa_GetStreamReadAvailable(self._stream)
+                    buffer_size = _portaudio.Pa_GetStreamReadAvailable(
+                        self._stream
+                    )
             return ret_val
         else:
             return False
 
-    def stop(self):
-        """ Stops an active stream.
-
-        """
-
+    def stop(self) -> Union[int, bool]:
+        """Stop an active stream."""
         if not self.stopped:
-            return Pa_StopStream(self._stream)
+            return _portaudio.Pa_StopStream(self._stream)
 
         return False
 
-    def abort(self):
-        """ Aborts the stream and drops any pending buffers.
-
-        """
-
+    def abort(self) -> Union[int, bool]:
+        """Abort the stream and drops any pending buffers."""
         if self.active:
-            return Pa_AbortStream(self._stream)
+            return _portaudio.Pa_AbortStream(self._stream)
         else:
             return False
 
-    def write(self, data, length=None):
-        """ write(data, length) -> Write a 'length' size buffer of data to
-        the stream.
-
-        """
-
+    def write(self, data: bytes, length: int = 0) -> int:
+        """Write a 'length' size buffer of data to the stream."""
         if not length:
             length = self._buffer_size
 
-        return Pa_WriteStream(self._stream, data, length)
+        return _portaudio.Pa_WriteStream(self._stream, data, length)
 
-    def read(self, length):
-        """ read(length) -> Read a 'length' size buffer from the stream
-        and returns it.
-
-        """
-
+    def read(self, length: int) -> bytes:
+        """Read a 'length' size buffer from the stream and returns it."""
         if not length:
             length = self._buffer_size
 
         read_length = length // self._input_multiplier
 
-        data_buffer = create_string_buffer(length)
-        Pa_ReadStream(self._stream, data_buffer, read_length)
+        data_buffer = _portaudio.create_string_buffer(length)
+        _portaudio.Pa_ReadStream(self._stream, data_buffer, read_length)
 
         return data_buffer.raw
 
-    def __enter__(self):
-        """ Provides the ability to use pythons with statement.
-
-        """
-
+    def __enter__(self) -> Any:
+        """Provide the ability to use pythons with statement."""
         try:
             self.open()
             return self
@@ -393,11 +331,8 @@ class Stream(object):
             print(err)
             return None
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        """ Close the pcm when finished.
-
-        """
-
+    def __exit__(self, exc_type, exc_value, traceback) -> bool:
+        """Close the pcm when finished."""
         try:
             self.close()
             return not bool(exc_type)

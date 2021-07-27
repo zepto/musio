@@ -22,6 +22,7 @@
 
 """
 
+from typing import Any, Callable
 from ctypes.util import find_library
 from ctypes import *
 
@@ -31,11 +32,8 @@ if not lib_name:
 
 _portaudio_lib = cdll.LoadLibrary(lib_name)
 
-def _err_check(result, func, args):
-    """ Raise an exception when an error occurs.
-
-    """
-
+def _err_check(result: int, func: Callable, args: Any) -> int:
+    """Raise an exception when an error occurs."""
     if type(result) is int:
         if int(result) < paNoError:
             raise IOError("PortAudio error in %s: %s" % \

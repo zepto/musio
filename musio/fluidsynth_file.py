@@ -18,16 +18,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-""" Fluidsynth module.
-
-"""
+"""Fluidsynth module."""
 
 from functools import partial
-
-from .io_base import AudioIO, io_wrapper
-# from .fluidsynth import fluidsynth as _fluidsynth
+from typing import Any, Callable, Generator, Union
 
 from .import_util import LazyImport
+from .io_base import AudioIO, io_wrapper
 
 _fluidsynth = LazyImport('fluidsynth.fluidsynth', globals(), locals(),
                          ['fluidsynth'], 1)
@@ -69,15 +66,10 @@ FLUID_REVERB_DEFAULT_LEVEL = 0.9
 
 
 class Settings(object):
-    """ Fluidsynth settings wrapper.
-
-    """
+    """Fluidsynth settings wrapper."""
 
     def __init__(self):
-        """ Create new fluidsynth settings.
-
-        """
-
+        """Create new fluidsynth settings."""
         self._settings = _fluidsynth.new_fluid_settings()
 
         self.setstr = partial(_fluidsynth.fluid_settings_setstr,
@@ -97,11 +89,9 @@ class Settings(object):
         self.delete = partial(_fluidsynth.delete_fluid_settings,
                               self._settings)
 
-    def set(self, key, value):
-        """ Set the setting item 'key' to value 'value.'
-
-        """
-
+    def set(self, key: str,
+            value: Union[bytes, int, float]) -> Union[Callable, int]:
+        """Set the setting item 'key' to value 'value'."""
         if type(value) is str:
             set_func = self.setstr
         elif type(value) is int:
@@ -114,49 +104,37 @@ class Settings(object):
         return set_func(key, value)
     __setitem__ = set
 
-    def get(self, key):
-        """ Return the current setting for 'key.'
-
-        """
-
-        key = key.encode('utf8', 'replace')
-        key_type = _fluidsynth.fluid_settings_get_type(self._settings, key)
+    def get(self, key: str) -> Union[bytes, int, float]:
+        """Return the current setting for 'key'."""
+        key_b = key.encode('utf8', 'replace')
+        key_type = _fluidsynth.fluid_settings_get_type(self._settings, key_b)
         if key_type == _fluidsynth.FLUID_NUM_TYPE:
             buffer = _fluidsynth.c_double()
-            self.getnum(key, _fluidsynth.byref(buffer))
+            self.getnum(key_b, _fluidsynth.byref(buffer))
             return buffer.value
         elif key_type == _fluidsynth.FLUID_INT_TYPE:
             buffer = _fluidsynth.c_int()
-            self.getint(key, _fluidsynth.byref(buffer))
+            self.getint(key_b, _fluidsynth.byref(buffer))
             return buffer.value
         elif key_type == _fluidsynth.FLUID_STR_TYPE:
             buffer = _fluidsynth.c_char_p()
-            self.getstr(key, _fluidsynth.byref(buffer))
+            self.getstr(key_b, _fluidsynth.byref(buffer))
             return _fluidsynth.string_at(buffer).decode('ascii', 'ignore')
         else:
             return -1
     __getitem__ = get
 
     @property
-    def object(self):
-        """ Return the settings object.
-
-        """
-
+    def object(self) -> Any:
+        """Return the settings object."""
         return self._settings
 
 
 class Synth(object):
-    """ Fluidsynth synth wrapper.
+    """Fluidsynth synth wrapper."""
 
-    """
-
-    def __init__(self, settings, address=None):
-        """ Synth(settings) -> Create a new fluid synth object, with the
-        settings 'settings.'
-
-        """
-
+    def __init__(self, settings: Settings, address: Any = None):
+        """Create a new fluid synth object, with the settings 'settings'."""
         self._reverb = {
             'roomsize': 0.2,
             'damping': 0.0,
@@ -185,13 +163,13 @@ class Synth(object):
         self.set_reverb = partial(_fluidsynth.fluid_synth_set_reverb,
                                   self.object)
         self.get_reverb_roomsize = partial(
-                _fluidsynth.fluid_synth_get_reverb_roomsize, self.object)
+            _fluidsynth.fluid_synth_get_reverb_roomsize, self.object)
         self.get_reverb_damp = partial(_fluidsynth.fluid_synth_get_reverb_damp,
                                        self.object)
         self.get_reverb_level = partial(
-                _fluidsynth.fluid_synth_get_reverb_level, self.object)
+            _fluidsynth.fluid_synth_get_reverb_level, self.object)
         self.get_reverb_width = partial(
-                _fluidsynth.fluid_synth_get_reverb_width, self.object)
+            _fluidsynth.fluid_synth_get_reverb_width, self.object)
 
         # Chorus setting methods
         self.enable_chorus = partial(_fluidsynth.fluid_synth_set_chorus_on,
@@ -201,11 +179,11 @@ class Synth(object):
         self.get_chorus_nr = partial(_fluidsynth.fluid_synth_get_chorus_nr,
                                      self.object)
         self.get_chorus_level = partial(
-                _fluidsynth.fluid_synth_get_chorus_level, self.object)
+            _fluidsynth.fluid_synth_get_chorus_level, self.object)
         self.get_chorus_speed_Hz = partial(
-                _fluidsynth.fluid_synth_get_chorus_speed_Hz, self.object)
+            _fluidsynth.fluid_synth_get_chorus_speed_Hz, self.object)
         self.get_chorus_depth_ms = partial(
-                _fluidsynth.fluid_synth_get_chorus_depth_ms, self.object)
+            _fluidsynth.fluid_synth_get_chorus_depth_ms, self.object)
         self.get_chorus_type = partial(_fluidsynth.fluid_synth_get_chorus_type,
                                        self.object)
 
@@ -214,9 +192,8 @@ class Synth(object):
         self.load_soundfont = partial(_fluidsynth.fluid_synth_sfload,
                                       self.object)
         self.load_soundfont.__doc__ = \
-                """ load_soundfont(filename, reset) -> Load the specified
+            """load_soundfont(filename, reset) -> Load the specified
         soundfont.  If reset is 1 then reset all channels.
-
         """
 
         # Gain setting methods
@@ -234,150 +211,127 @@ class Synth(object):
                                        self.object)
 
         self.set_interp_method = partial(
-                _fluidsynth.fluid_synth_set_interp_method.restype, self.object)
+            _fluidsynth.fluid_synth_set_interp_method.restype, self.object)
 
-    def read_s16(self, size):
-        """ read_s16(size) -> Read size amount of signed 16 bit data and
-        return it.
-
-        """
-
+    def read_s16(self, size: int) -> bytes:
+        """Read size amount of signed 16 bit data and return it."""
         multiplier = self._settings.get('synth.audio-channels') * 4
         buf = _fluidsynth.create_string_buffer(size * multiplier)
         self.write_s16(size, buf, 0, 2, buf, 1, 2)
         return _fluidsynth.string_at(buf, _fluidsynth.sizeof(buf))
 
-    def read_float(self, size):
-        """ read_float(size) -> Read size amount of floating point data and
-        return it.
-
-        """
-
+    def read_float(self, size: int) -> bytes:
+        """Read size amount of floating point data and return it."""
         multiplier = self._settings.get('synth.audio-channels') * 2
         buf = (_fluidsynth.c_float * size)()
         self.write_float(size / multiplier, buf, 0, 2, buf, 1, 2)
         return _fluidsynth.string_at(buf, _fluidsynth.sizeof(buf))
 
     @property
-    def gain(self):
-        """ The synth gain.
-
-        """
-
+    def gain(self) -> float:
+        """Get the synth gain."""
         return self.get_gain()
 
     @gain.setter
-    def gain(self, value):
-        """ Set the gain.
-
-        """
-
+    def gain(self, value: float):
+        """Set the gain."""
         if value < 0.0 or value > 10.0:
             print("Value must be in range 0.0-10.0")
             return
         self.set_gain(float(value))
 
     @property
-    def reverb(self):
-        """ A tuple representing the current reverb settings.
-            (roomsize, damping, width, level)
+    def reverb(self) -> dict[str, int]:
+        """Get Reverb.
 
+        A tuple representing the current reverb settings.  (roomsize, damping,
+        width, level)
         """
-
         return dict(zip(('roomsize', 'damping', 'width', 'level'),
                         (self.get_reverb_roomsize(), self.get_reverb_damp(),
                          self.get_reverb_width(), self.get_reverb_level())))
 
-    def _dict_to_tup(self, value_dict, keys_tup, defaults):
-        """ _dict_to_tup(value_dict, keys_tup, defaults) -> Returns a tuple of
-        the values of value_dict and default combined and in the order of
-        keys_tups.
-
-        """
-
-        # Return a tuple sorted by keys according to keys_tup.
-        return ((defaults | value_dict).get(i, 0) for i in keys_tup)
-
     @reverb.setter
-    def reverb(self, value):
-        """ A tuple representing the current reverb settings.
-            (roomsize, damping, width, level)
+    def reverb(self, value: dict):
+        """Set the reverb.
 
+        A tuple representing the current reverb settings.  (roomsize, damping,
+        width, level)
         """
-
         if hasattr(value, 'get'):
             name_tup = ('roomsize', 'damping', 'width', 'level')
-            value = self._dict_to_tup(value, name_tup, self._reverb)
+            value_t = self._dict_to_tup(value, name_tup, self._reverb)
+        else:
+            value_t = value
 
-        self.set_reverb(*value)
+        self.set_reverb(*value_t)
 
         # Update object variable so we can use the new values next time.
         self._reverb = self.reverb
 
-    @property
-    def chorus(self):
-        """ A tuple representing the current chorus settings.
-            (level, speed, depth_ms, type)
+    def _dict_to_tup(self, value_dict: dict, keys_tup: tuple,
+                     defaults: dict) -> Generator[int, None, None]:
+        """Convert a dictionary to a tuple of ints.
 
+        Return agenerator of the values of value_dict and default combined and
+        in the order of keys_tups.
         """
+        # Return a tuple sorted by keys according to keys_tup.
+        return ((defaults | value_dict).get(i, 0) for i in keys_tup)
 
+    @property
+    def chorus(self) -> dict[str, int]:
+        """Get chorus setting.
+
+        A dict representing the current chorus settings.  (level, speed,
+        depth_ms, type)
+        """
         return dict(zip(('nr', 'level', 'speed', 'depth_ms', 'type'),
                         (self.get_chorus_nr(), self.get_chorus_level(),
                          self.get_chorus_speed_Hz(),
                          self.get_chorus_depth_ms(), self.get_chorus_type())))
 
     @chorus.setter
-    def chorus(self, value):
-        """ A tuple representing the current chorus settings.
-            (level, speed, depth_ms, type)
+    def chorus(self, value: dict[str, int]):
+        """Set chorus.
 
+        A tuple representing the current chorus settings.  (level, speed,
+        depth_ms, type)
         """
-
         if hasattr(value, 'get'):
             name_tup = ('nr', 'level', 'speed', 'depth_ms', 'type')
-            value = self._dict_to_tup(value, name_tup, self._chorus)
+            value_t = self._dict_to_tup(value, name_tup, self._chorus)
+        else:
+            value_t = value
 
-        self.set_chorus(*value)
+        self.set_chorus(*value_t)
 
         # Update object variable so we can use the new values next time.
         self._chorus = self.chorus
 
     @property
-    def object(self):
-        """ The synth object.
-
-        """
-
+    def object(self) -> Any:
+        """Get the synth object."""
         return self._synth
 
     @classmethod
-    def process(cls, synth, length, num_in, in_data, num_out, out_data):
-        """ Process midi event to produce audio.
-
-        """
-
+    def cls_process(cls, synth: Any, length: int, num_in: int,
+                    in_data: bytes, num_out: int, out_data: bytes) -> int:
+        """Process midi event to produce audio."""
         return _fluidsynth.fluid_synth_process(synth, length, num_in, in_data,
                                                num_out, out_data)
 
     @classmethod
-    def from_address(cls, address):
-        """ Return the synth object at the given address.
-
-        """
-
+    def from_address(cls, address: int) -> int:
+        """Return the synth object at the given address."""
         return _fluidsynth.fluid_synth_t.from_address(address)
 
 
 class Player(object):
-    """ A fluidsynth player.
+    """A fluidsynth player."""
 
-    """
-
-    def __init__(self, synth):
-        """ Player(synth) -> Create a new fluidsynth player.
-
-        """
-
+    def __init__(self, synth: Synth):
+        """Create a new fluidsynth player."""
         self._player = _fluidsynth.new_fluid_player(synth.object)
 
         self.play = partial(_fluidsynth.fluid_player_play, self.object)
@@ -385,9 +339,8 @@ class Player(object):
         self.join = partial(_fluidsynth.fluid_player_join, self.object)
         self.set_loop = partial(_fluidsynth.fluid_player_set_loop, self.object)
         self.set_loop.__doc__ = \
-                """ set_loop(loop) -> Set the number of times to loop.  A
+            """set_loop(loop) -> Set the number of times to loop.  A
         loop value of -1 means to loop forever.
-
         """
 
         self.set_tempo = partial(_fluidsynth.fluid_player_set_midi_tempo,
@@ -398,9 +351,7 @@ class Player(object):
 
         self.load_midi = partial(_fluidsynth.fluid_player_add, self.object)
         self.load_midi.__doc__ = \
-                """ load_midi(filename) -> Load the specified midi file.
-
-        """
+            """load_midi(filename) -> Load the specified midi file."""
 
         self.get_status = partial(_fluidsynth.fluid_player_get_status,
                                   self.object)
@@ -408,109 +359,101 @@ class Player(object):
         self.delete = partial(_fluidsynth.delete_fluid_player, self._player)
 
     @property
-    def object(self):
-        """ The player object.
-
-        """
-
+    def object(self) -> Any:
+        """Get the player object."""
         return self._player
 
     @property
-    def done(self):
-        """ True if player is done.
-
-        """
-
+    def done(self) -> bool:
+        """Return True if player is done."""
         return self.get_status() == _fluidsynth.FLUID_PLAYER_DONE
 
     @property
-    def ready(self):
-        """ True if player is ready.
-
-        """
-
+    def ready(self) -> bool:
+        """Return True if player is ready."""
         return self.get_status() == _fluidsynth.FLUID_PLAYER_READY
 
     @property
-    def playing(self):
-        """ True if player is playing
-
-        """
-
+    def playing(self) -> bool:
+        """Return True if player is playing."""
         return self.get_status() == _fluidsynth.FLUID_PLAYER_PLAYING
 
 
 class AudioDriver(object):
-    """ A fluidsynth audio driver.
+    """A fluidsynth audio driver."""
 
-    """
+    def __init__(self, settings: Settings, synth: Synth,
+                 process_func: Callable = None):
+        """Create a new fluidsynth audio driver.
 
-    def __init__(self, settings, synth, process_func=None):
-        """ AudioDriver(settings, synth, process_func=None) -> Create a new
-        fluidsynth audio driver.  Process_func can be None or a function to
-        process audio data before it is played.
-
+        Process_func can be None or a function to process audio data before it
+        is played.
         """
-
         self._settings = settings
         self._synth = synth
         self._process_func = process_func
 
         if not process_func:
-            self._adriver = \
-                _fluidsynth.new_fluid_audio_driver(settings.object,
-                                                   synth.object)
+            self._adriver = _fluidsynth.new_fluid_audio_driver(
+                settings.object,
+                synth.object
+            )
         else:
-            self._process_callback = \
-                _fluidsynth.fluid_audio_func_t(self._process_callback_f)
-            self._adriver = \
-                _fluidsynth.new_fluid_audio_driver2(settings.object,
-                                                    self._process_callback,
-                                                    synth.object)
+            self._process_callback = _fluidsynth.fluid_audio_func_t(
+                self._process_callback_f)
+            self._adriver = _fluidsynth.new_fluid_audio_driver2(
+                settings.object,
+                self._process_callback,
+                synth.object
+            )
 
         self.delete = partial(_fluidsynth.delete_fluid_audio_driver,
                               self._adriver)
 
-    def _process_callback_f(self, synth_p, length, num_in, in_data, num_out,
-                            out_data):
-        """ Process audio data before it is played.
-
-        """
-
+    def _process_callback_f(self, synth_p: Any, length: int, num_in: int,
+                            in_data: bytes, num_out: int,
+                            out_data: bytes) -> Any:
+        """Process audio data before it is played."""
         synth = Synth(self._settings, synth_p)
         if synth.process(length, num_in, in_data, num_out, out_data) != 0:
             return -1
-        return self._process_func(synth, length, num_in, in_data, num_out,
-                                  out_data)
+        if self._process_func:
+            return self._process_func(
+                synth,
+                length,
+                num_in,
+                in_data,
+                num_out,
+                out_data
+            )
 
     @property
-    def object(self):
-        """ The audio driver object.
-
-        """
-
+    def object(self) -> Any:
+        """Get the audio driver object."""
         return self._adriver
 
 
 class FluidsynthFile(AudioIO):
-    """ Access a midi file like a regular file.
-
-    """
+    """Access a midi file like a regular file."""
 
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, soundfont, rate=44100, gain=0.2,
-                 reverb={'roomsize': 0.2, 'damping': 0.0, 'width': 0.5,
-                         'level': 0.9},
-                 chorus={'nr': 3, 'level': 2.0, 'speed': 0.3, 'depth_ms': 8.0,
-                         'type': 0}, **kwargs):
-        """ FluidsynthFile(filename, soundfont, rate=44100, gain=0.2,
-        reverb=(0.2, 0.0, 0.5, 0.9), chorus=(3, 2.0, 0.3, 8.0, 0)) ->
-        Initialize the playback settings of the player.
-
-        """
-
+    def __init__(self, filename: str, soundfont: str, rate: int = 44100,
+                 gain: float = 0.2,
+                 reverb: dict = {
+                     'roomsize': 0.2,
+                     'damping': 0.0,
+                     'width': 0.5,
+                     'level': 0.9
+                 }, chorus: dict = {
+                     'nr': 3,
+                     'level': 2.0,
+                     'speed': 0.3,
+                     'depth_ms': 8.0,
+                     'type': 0
+                 }, **_):
+        """Initialize the playback settings of the player."""
         super(FluidsynthFile, self).__init__(filename=filename, mode='r',
                                              rate=rate, depth=16,
                                              channels=2)
@@ -543,34 +486,27 @@ class FluidsynthFile(AudioIO):
 
         # Load the midi and soundfont.
         if not self._open(filename, soundfont):
-            raise IOError("Error loading midi '%s' and soundfont '%s'" % \
-                          (filename, soundfont))
+            raise IOError(f"Error loading midi '{filename}' and "
+                          f"soundfont '{soundfont}'")
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
-
-        """
-
-        repr_str = "filename='%(_filename)s', soundfont='%(_soundfont)s', rate=%(_rate)s, gain=%(_gain)s, reverb=%(_reverb)s, chorus=%(_chorus)s" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        return (f"{self.__class__.__name__}(filename='{self._filename}', "
+                f"soundfont='{self._soundfont}', rate={self._rate}, "
+                f"gain={self._gain}, revert={self._reverb}, "
+                f"chorus={self._chorus})")
 
     @property
-    def loops(self):
-        """ How many times the module should play.
-
-        """
-
+    def loops(self) -> int:
+        """Get how many times the file should play."""
         return self._loops
 
     @loops.setter
-    def loops(self, value):
-        """ Set how many times the module should play.
+    def loops(self, value: int):
+        """Set how many times the file should play.
 
         To play forever use a value of -1.
-
         """
-
         if self._player.ready:
             self._loops = value
 
@@ -582,85 +518,76 @@ class FluidsynthFile(AudioIO):
                 self._player.set_loop(value)
 
     @property
-    def gain(self):
-        """ The current gain.
-
-        """
-
+    def gain(self) -> float:
+        """Get the current gain."""
         return self._synth.gain
 
     @gain.setter
-    def gain(self, value):
-        """ Set the volume.
-
-        """
-
+    def gain(self, value: float):
+        """Set the volume."""
         self._synth.gain = value
 
     @property
-    def reverb(self):
-        """ A tuple representing the current reverb settings.
-            (roomsize, damping, width, level)
+    def reverb(self) -> dict[str, int]:
+        """Get the reverb.
 
+        A dict representing the current reverb settings.  (roomsize, damping,
+        width, level)
         """
-
         return self._synth.reverb
 
     @reverb.setter
-    def reverb(self, value):
-        """ A tuple representing the current reverb settings.
-            (roomsize, damping, width, level)
+    def reverb(self, value: dict[str, int]):
+        """Set the reverb.
 
+        A dict representing the current reverb settings.  (roomsize, damping,
+        width, level)
         """
-
         self._synth.reverb = value
         self._reverb = self._synth._reverb
 
     @property
-    def chorus(self):
-        """ A tuple representing the current chorus settings.
-            (level, speed, depth_ms, type)
+    def chorus(self) -> dict[str, int]:
+        """Get the chorus.
 
+        A dict representing the current chorus settings.  (level, speed,
+        depth_ms, type)
         """
-
         return self._synth.chorus
 
     @chorus.setter
-    def chorus(self, value):
-        """ A tuple representing the current chorus settings.
-            (level, speed, depth_ms, type)
+    def chorus(self, value: dict[str, int]):
+        """Set the chorus.
 
+        A tuple representing the current chorus settings.  (level, speed,
+        depth_ms, type)
         """
-
         self._synth.chorus = value
         self._chorus = self._synth._chorus
 
-    def _open(self, filename, soundfont):
-        """ _load(filename) -> Load the specified file.
-
-        """
-
+    def _open(self, filename: str, soundfont: str) -> bool:
+        """Load the specified file."""
         # Convert midi name to bytes object so the ctypes function can use it.
-        filename = filename.encode('utf-8', 'surrogateescape')
+        filename_b = filename.encode('utf-8', 'surrogateescape')
 
         # Check if filename is a valid midi.
-        if not self._player.is_midifile(filename):
-            raise IOError("Not a midi file: %s" % filename)
+        if not self._player.is_midifile(filename_b):
+            raise IOError(f"Not a midi file: {filename}")
 
         # Load midi.
-        if self._player.load_midi(filename) < 0:
+        if self._player.load_midi(filename_b) < 0:
             return False
 
         # Convert soundfont name to bytes object so the ctypes function
         # can use it.
-        soundfont = soundfont.encode('utf8', 'replace')
+        soundfont_b = soundfont.encode('utf8', 'replace')
 
         # Check if soundfont is a soundfont.
-        if not self._synth.is_soundfont(soundfont):
-            raise IOError("Not a soundfont: %s" % soundfont)
+        if not self._synth.is_soundfont(soundfont_b):
+            raise IOError(f"Not a soundfont: {soundfont}")
 
         # Load soundfont.
-        if self._synth.load_soundfont(soundfont, True) < 0:
+        if self._synth.load_soundfont(soundfont_b, True) < 0:
             return False
 
         self._closed = False
@@ -668,11 +595,8 @@ class FluidsynthFile(AudioIO):
         return True
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.
-
-        """
-
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and return it."""
         if self._player.done:
             return b''
         elif self._player.ready and not self._player.playing:
@@ -685,10 +609,7 @@ class FluidsynthFile(AudioIO):
         return self._synth.read_s16(size)
 
     def close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and clean up."""
         if not self.closed:
             self._player.stop()
             self._player.delete()

@@ -21,18 +21,21 @@
 
 """Player functions."""
 
+import audioop
 from functools import wraps as functools_wraps
 from io import SEEK_CUR, SEEK_END, SEEK_SET
 from multiprocessing import Manager, Pipe, Process
+from multiprocessing.connection import Connection
 from platform import python_implementation
 from time import sleep as time_sleep
+from typing import Any, Callable, Union
 
 from .io_util import open_device, open_file
 
 py_imp = python_implementation()
 
 
-def _play_proc(msg_dict):
+def _play_proc(msg_dict: dict):
     """Player process."""
     # from oss_io import Oss as AudioIO
     # from alsa_io import Alsa as AudioIO
@@ -54,7 +57,7 @@ def _play_proc(msg_dict):
                 break
 
 
-def play(filename: str, **kwargs) -> object:
+def play(filename: str, **kwargs) -> tuple[dict, Process]:
     """Play file <filename>.
 
     Starts playing filename and returns an object to send to stop to stop it
@@ -71,7 +74,7 @@ def play(filename: str, **kwargs) -> object:
     return playing, play_t
 
 
-def stop(player_tup):
+def stop(player_tup: tuple):
     """Stop the player."""
     playing, play_t = player_tup
     playing['playing'] = False
@@ -115,44 +118,32 @@ class AudioPlayer(object):
             self.open(filename, **kwargs)
 
     def __str__(self) -> str:
-        """ The information about the open file.
-
-        """
-
+        """Get the information about the open file."""
         # Return nothing if no file is open.
-        if not self._filename: return ''
+        if not self._filename:
+            return ''
 
         # Wait for the stream to open.
-        while 'info' not in self._msg_dict: pass
+        while 'info' not in self._msg_dict:
+            pass
 
         # Return the info string.
         return self._msg_dict.get('info', '')
 
     def __repr__(self) -> str:
-        """ __repr__ -> Returns a python expression to recreate this instance.
+        """Return a python expression to recreate this instance."""
+        return f"{self.__class__.__name__}(filename={self._filename})"
 
-        """
-
-        repr_str = "filename='%(_filename)s'" % self.__dict__
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
-    def __enter__(self):
-        """ Provides the ability to use pythons with statement.
-
-        """
-
+    def __enter__(self) -> Union[object, None]:
+        """Provide the ability to use pythons with statement."""
         try:
             return self
         except Exception as err:
             print(err)
             return None
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        """ Stop playback when finished.
-
-        """
-
+    def __exit__(self, exc_type, exc_value, traceback) -> bool:
+        """Stop playback when finished."""
         try:
             self.stop()
             self._control_conn.close()
@@ -163,33 +154,25 @@ class AudioPlayer(object):
             return False
 
     def __del__(self):
-        """ Stop playback before deleting.
-
-        """
-
+        """Stop playback before deleting."""
         if self._control_dict.get('playing', False):
             try:
                 self.stop()
             except IOError:
                 pass
 
-    def __len__(self):
-        """ The length of the file if it has one.
-
-        """
-
+    def __len__(self) -> int:
+        """Get the length of the file if it has one."""
         return self.length if self.length >= 0 else 0
 
-    def playing_wrapper(func):
-        """ Wrap methods and only call them if the stream is playing
-
-        """
-
+    def playing_wrapper(func: Callable):
+        """Wrap methods and only call them if the stream is playing"""
         @functools_wraps(func)
-        def wrapper(self, *args, **kwargs):
-            """ Check if stream is playing and if it is then call func
-            otherwise print a message and exit.
+        def wrapper(self, *args, **kwargs) -> Callable:
+            """Check if stream is playing.
 
+            Check if stream is playing and if it is then call func otherwise
+            print a message and exit.
             """
 
             if not self.playing:
@@ -200,28 +183,20 @@ class AudioPlayer(object):
 
         return wrapper
 
-    def _play_proc(self, msg_dict: dict, pipe: Pipe):
-        """ Player process
-
-        """
-
+    def _play_proc(self, msg_dict: dict, pipe: Connection):
+        """Player process"""
         # Open the file to play.
         try:
-            with open_file(cached=True, **msg_dict) as fileobj:
-
+            with open_file(**msg_dict) as fileobj:
                 # Put the file info in msg_dict.
                 msg_dict['info'] = str(fileobj)
                 msg_dict['length'] = fileobj.length
 
-                if fileobj._rate < 44100:
-                    import audioop
-
-                    # msg_dict['rate'] = 44100
-                    state = None
+                state = None
 
                 # Open an audio output device that can handle the data
                 # from fileobj.
-                device = open_device(fileobj, 'w', cached=True, **msg_dict)
+                device = open_device(fileobj, 'w', **msg_dict)
                 try:
 
                     # Set the default number of loops to infinite.
@@ -247,23 +222,27 @@ class AudioPlayer(object):
                                 pos = (fileobj.position * 100) / fileobj.length
 
                                 # Make the string.
-                                pos_str = 'Position: %.2f%%' % pos
+                                pos_str = f"Position: {pos:.2f}%"
 
                                 # Find the length of the string.
                                 format_len = len(pos_str) + 2
 
                                 # Print the string and after erasing the old
                                 # one using ansi escapes.
-                                print('\033[%dD\033[K%s' % (format_len,
-                                    pos_str), end='', flush=True)
+                                print(f"\033[{format_len}D\033[K{pos_str}",
+                                      end='', flush=True)
 
                         # Keep playing if not paused.
                         if not msg_dict.get('paused', False):
                             # Re-open the device after comming out of
                             # paused state.
                             if device.closed:
-                                device = open_device(fileobj, 'w', cached=True,
-                                                     **msg_dict)
+                                device = open_device(
+                                    fileobj,
+                                    'w',
+                                    cached=True,
+                                    **msg_dict
+                                )
 
                             # Read the next buffer full of data.
                             try:
@@ -277,23 +256,26 @@ class AudioPlayer(object):
                                     and fileobj._rate != 0:
                                 # Convert the input sample rate to that of
                                 # the output device.
-                                buf, state = audioop.ratecv(buf,
-                                                            fileobj._width,
-                                                            fileobj._channels,
-                                                            fileobj._rate,
-                                                            int(device._rate),
-                                                            state)
+                                buf, state = audioop.ratecv(
+                                    buf,
+                                    fileobj._width,
+                                    fileobj._channels,
+                                    fileobj._rate,
+                                    int(device._rate),
+                                    state
+                                )
 
                             # Filler for end of partial buffer to elminiate
                             # end of audio noise.
                             if type(buf) == bytes:
-                                filler = b'\x00' * (device.buffer_size - len(buf))
+                                filler = b'\x00' * \
+                                    (device.buffer_size - len(buf))
                             else:
-                                filler = ''
+                                filler = b''
 
                             # Write buf.
                             try:
-                                written = device.write(buf + filler)
+                                _ = device.write(buf + filler)
                             except KeyboardInterrupt:
                                 break
                         else:
@@ -344,10 +326,7 @@ class AudioPlayer(object):
                 pass
 
     def open(self, filename: str, **kwargs):
-        """ open(filename) -> Open an audio file to play.
-
-        """
-
+        """Open an audio file to play."""
         # Stop the current file from playing.
         self.stop()
 
@@ -375,17 +354,16 @@ class AudioPlayer(object):
         self.play()
 
     def play(self):
-        """ play() -> Start playback.
-
-        """
-
+        """Start playback."""
         if not self._msg_dict.get('playing', False):
             # Set playing to True for the child process.
             self._msg_dict['playing'] = True
 
             # Open a new process to play a file in the background.
-            self._play_p = Process(target=self._play_proc,
-                                   args=(self._msg_dict, self._player_conn))
+            self._play_p = Process(
+                target=self._play_proc,
+                args=(self._msg_dict, self._player_conn)
+            )
 
             # Start the process.
             self._play_p.start()
@@ -396,10 +374,7 @@ class AudioPlayer(object):
         self._control_dict.update(self._msg_dict)
 
     def stop(self):
-        """ stop() -> Stop playback.
-
-        """
-
+        """Stop playback."""
         if self._msg_dict.get('playing', False):
             # Stop playback.
             self._msg_dict['playing'] = False
@@ -413,100 +388,67 @@ class AudioPlayer(object):
         self._control_dict.update(self._msg_dict)
 
     def pause(self):
-        """ pause() -> Pause playback.
-
-        """
-
+        """Pause playback."""
         # Pause playback.
         self._msg_dict['paused'] = True
         self._control_dict.update(self._msg_dict)
 
     @property
     def error(self) -> bool:
-        """ True if playing.
-
-        """
-
+        """Return True if playing."""
         return self._msg_dict.get('error', False)
 
     @property
     def paused(self) -> bool:
-        """ True if playback is paused.
-
-        """
-
+        """Return True if playback is paused."""
         return self._msg_dict.get('paused', False)
 
     @property
     def playing(self) -> bool:
-        """ True if playing.
-
-        """
-
+        """Return True if playing."""
         return self._msg_dict.get('playing', False)
 
     @property
     def length(self) -> int:
-        """ Length of audio.
-
-        """
-
+        """Get the length of audio."""
         return self._msg_dict.get('length', 0)
 
     @property
     @playing_wrapper
     def position(self) -> int:
-        """ Current position.
-
-        """
-
+        """Get the current position."""
         self._control_conn.send('getposition')
         return self._control_conn.recv()
 
     @position.setter
     @playing_wrapper
     def position(self, value: int):
-        """ Set the current position.
-
-        """
-
+        """Set the current position."""
         self._control_conn.send({'setposition': int(value)})
 
     @property
     @playing_wrapper
     def loops(self) -> int:
-        """ Number of times to loop (playback time + 1).
-
-        """
-
+        """Get the number of times to loop (playback time + 1)."""
         self._control_conn.send('getloops')
         return self._control_conn.recv()
 
     @loops.setter
     @playing_wrapper
     def loops(self, value: int):
-        """ Number of times to loop (playback time + 1).
-
-        """
-
+        """Set the number of times to loop (playback time + 1)."""
         self._control_conn.send({'setloops': int(value)})
 
     @property
     @playing_wrapper
     def loop_count(self) -> int:
-        """ Number of times the player has looped.
-
-        """
-
+        """Get the number of times the player has looped."""
         self._control_conn.send('getloopcount')
         return self._control_conn.recv()
 
     @playing_wrapper
-    def seek(self, offset: int, whence=SEEK_SET) -> int:
-        """ seek(position) -> Seek to position in mod.
-
-        """
-
+    def seek(self, offset: int, whence: int = SEEK_SET) -> int:
+        """Seek to position in mod."""
         if whence == SEEK_CUR:
             self.position += offset
         elif whence == SEEK_END:
@@ -518,8 +460,5 @@ class AudioPlayer(object):
 
     @playing_wrapper
     def tell(self) -> int:
-        """ tell -> Returns the current position.
-
-        """
-
+        """Return the current position."""
         return self.position

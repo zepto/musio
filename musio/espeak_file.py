@@ -19,34 +19,27 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A TTS module using the espeak library.
+"""A TTS module using the espeak library."""
 
-"""
-
-
-from functools import wraps as functools_wraps
 from sys import stderr as sys_stderr
+from typing import Any
 
+from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
 from .io_util import msg_out
-from .import_util import LazyImport
-# from .espeak import _espeak
 
 _espeak = LazyImport('espeak._espeak', globals(), locals(), ['_espeak'], 1)
 
 
-def issupported(filename, *args):
-    """ issupported(filename) -> Returns True if file is supported else False.
-
-    """
-
+def issupported(filename, *_):
+    """Return True if file is supported else False."""
     import mimetypes
 
     # Initialize mimetypes.
     mimetypes.init()
 
     # Get the mime type of filename.
-    mimetype, encoding = mimetypes.guess_type(filename)
+    mimetype, _ = mimetypes.guess_type(filename)
 
     # If no mimtype was found then filename is not supported.
     if not mimetype:
@@ -54,6 +47,7 @@ def issupported(filename, *args):
 
     # File containing text are supported.
     return True if 'text' in mimetype else False
+
 
 __supported_dict = {
     'ext': ['.txt'],
@@ -68,9 +62,7 @@ __supported_dict = {
 
 
 class EspeakFile(AudioIO):
-    """ Espeak wrapper for text to speech synthesis
-
-    """
+    """Espeak wrapper for text to speech synthesis."""
 
     # Valid bit depths.
     _valid_depth = (16,)
@@ -78,16 +70,12 @@ class EspeakFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename: str, mode: str='r', voice: str='en-us',
-                 **kwargs):
-        """ Espeak tts object.
-
-        """
-
+    def __init__(self, filename: str, mode: str = 'r', voice: str = 'en-us',
+                 **_):
+        """Espeak tts object."""
         # Initialize espeak and get the sample rate.
         output = _espeak.AUDIO_OUTPUT_RETRIEVAL
-        rate = self._err_check(_espeak.espeak_Initialize(output, 0, None,
-                                                         0))
+        rate = self._err_check(_espeak.espeak_Initialize(output, 0, None, 0))
 
         super(EspeakFile, self).__init__(filename, 'r', 16, rate, 1)
 
@@ -109,11 +97,7 @@ class EspeakFile(AudioIO):
         self._closed = False
 
     def _open(self):
-        """ _open() -> Open the classes file and set it up for read/write
-        access.
-
-        """
-
+        """Open the classes file and set it up for read/write access."""
         # Get the file and length
         text = ''
         with open(self._filename, 'r') as txt_file:
@@ -123,26 +107,30 @@ class EspeakFile(AudioIO):
             text_length = len(text)
 
             # Speak the file
-            self._err_check(_espeak.espeak_Synth(text, text_length, 0,
-                                                 _espeak.POS_CHARACTER, 0,
-                                                 _espeak.espeakCHARS_UTF8,
-                                                 None, None))
+            self._err_check(
+                _espeak.espeak_Synth(
+                    text,
+                    text_length,
+                    0,
+                    _espeak.POS_CHARACTER,
+                    0,
+                    _espeak.espeakCHARS_UTF8,
+                    None,
+                    None
+                )
+            )
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(filename="{self._filename}", '
+                f'mode="{self._mode}", voice="{self._voice}")')
 
-        """
+    def __call__(self, wav: Any, numsamples: int, _: Any) -> int:
+        """Make the class callable.
 
-        repr_str = "filename='%(_filename)s', mode='%(_mode)s', voice='%(_voice)s'" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
-    def __call__(self, wav, numsamples, events):
-        """ Make the class callable so it can be called as the espeak synth
+        Make this class callable so it can be called as the espeak synth
         callback.
-
         """
-
         # Stop if the end of the synthesis is reached.
         if not wav:
             self._done = True
@@ -159,140 +147,101 @@ class EspeakFile(AudioIO):
         # Return value 0 means to keep playing 1 means to stop.
         return 0 if self._speaking else 1
 
-    def _err_check(self, ret_val):
-        """ Checks the 'ret_val' for error status (<0) and prints and error
-        message.  Returns 'ret_val' for the calling function to use.
+    def _err_check(self, ret_val: int) -> int:
+        """Check for errors.
 
+        Check the 'ret_val' for error status (<0) and prints and error message.
+        Returns 'ret_val' for the calling function to use.
         """
         try:
             assert(ret_val >= 0)
         except Exception as err:
-            msg_out("There was and error %s %s" % (err, ret_val),
-                  file=sys_stderr)
+            msg_out(f"There was and error {err} {ret_val}", file=sys_stderr)
 
         return ret_val
 
     def _get_position(self) -> int:
-        """ Returns the current position.
-
-        """
-
+        """Return the current position."""
         return self._position
 
     def _set_position(self, position: int):
-        """ Change the position of playback.
-
-        """
-
+        """Change the position of playback."""
         if position <= self._length:
             self._position = position
 
     @property
-    def range(self):
-        """ The current inflection range.
-
-        """
-
+    def range(self) -> int:
+        """Return the current inflection range."""
         return _espeak.espeak_GetParameter(_espeak.espeakRANGE, 1)
 
     @range.setter
-    def range(self, value):
-        """ Set the inflection range.
-
-        """
-
-        self._err_check(_espeak.espeak_SetParameter(_espeak.espeakRANGE,
-                                                    int(value), 0))
+    def range(self, value: int):
+        """Set the inflection range."""
+        self._err_check(
+            _espeak.espeak_SetParameter(_espeak.espeakRANGE, int(value), 0)
+        )
 
     @property
-    def pitch(self):
-        """ The current pitch.
-
-        """
-
+    def pitch(self) -> int:
+        """Return the current pitch."""
         return _espeak.espeak_GetParameter(_espeak.espeakPITCH, 1)
 
     @pitch.setter
-    def pitch(self, value):
-        """ Set the pitch.
-
-        """
-
-        self._err_check(_espeak.espeak_SetParameter(_espeak.espeakPITCH,
-                                                    int(value), 0))
+    def pitch(self, value: int):
+        """Set the pitch."""
+        self._err_check(
+            _espeak.espeak_SetParameter(_espeak.espeakPITCH, int(value), 0)
+        )
 
     @property
-    def volume(self):
-        """ The current volume.
-
-        """
-
+    def volume(self) -> int:
+        """Return the current volume."""
         return _espeak.espeak_GetParameter(_espeak.espeakVOLUME, 1)
 
     @volume.setter
-    def volume(self, value):
-        """ Set the pitch.
-
-        """
-
-        self._err_check(_espeak.espeak_SetParameter(_espeak.espeakVOLUME,
-                                                    int(value), 0))
+    def volume(self, value: int):
+        """Set the pitch."""
+        self._err_check(
+            _espeak.espeak_SetParameter(_espeak.espeakVOLUME, int(value), 0)
+        )
 
     @property
-    def speed(self):
-        """ The current rate.
-
-        """
-
+    def speed(self) -> int:
+        """Return the current rate."""
         return _espeak.espeak_GetParameter(_espeak.espeakRATE, 1)
 
     @speed.setter
-    def speed(self, value):
-        """ Set the rate.
-
-        """
-
-        self._err_check(_espeak.espeak_SetParameter(_espeak.espeakRATE,
-                                                    int(value), 0))
+    def speed(self, value: int):
+        """Set the rate."""
+        self._err_check(
+            _espeak.espeak_SetParameter(_espeak.espeakRATE, int(value), 0)
+        )
 
     @property
-    def voice(self):
-        """ The current voice.
-
-        """
-
+    def voice(self) -> str:
+        """Return the current voice."""
         voice = _espeak.espeak_GetCurrentVoice()
         return voice.contents.languages[1:].decode()
 
     @voice.setter
-    def voice(self, value):
-        """ Set the espeak voice.
-
-        """
-
+    def voice(self, value: str):
+        """Set the espeak voice."""
         self._voice = value
 
-        if not isinstance(value, bytes):
-            value = value.encode()
+        voice_b = value.encode()
 
-        self._err_check(_espeak.espeak_SetVoiceByName(value))
+        self._err_check(_espeak.espeak_SetVoiceByName(voice_b))
 
     @property
-    def isspeaking(self):
-        """ Is it speaking.
-
-        """
-
+    def isspeaking(self) -> bool:
+        """Is it speaking."""
         return self._speaking
 
     def list_voices(self):
-        """ Print a list of available voices.
-
-        """
-
+        """Print a list of available voices."""
         voices = _espeak.espeak_ListVoices(None)
-        print("%-21s %-22s %s" % ("Language", "Name", "Identifier"))
-        print('-'*55)
+        print(f'{"Language":21} {"Name":22} Identifier')
+        print(f'{"-":->55}')
         for voice in voices:
             if not voice:
                 break
@@ -300,13 +249,10 @@ class EspeakFile(AudioIO):
             lang = voice.languages.decode()
             name = voice.name.decode()
             ident = voice.identifier.decode()
-            print("%-22s %-22s %s" % (lang, name, ident))
+            print(f'{lang:22} {name:22} {ident}')
 
     def close(self):
-        """ Stop speaking.
-
-        """
-
+        """Stop speaking."""
         if not self.closed:
             self._speaking = False
 
@@ -316,11 +262,8 @@ class EspeakFile(AudioIO):
             self._closed = True
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ Read from the data buffer.
-
-        """
-
+    def read(self, size: int = -1) -> bytes:
+        """Read from the data buffer."""
         # Start speaking
         if not self._done and not self._speaking:
             self._speaking = True

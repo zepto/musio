@@ -19,18 +19,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Dumb is a class to handle module music using the dumb library.
+"""Dumb is a class to handle module music using the dumb library."""
 
-"""
+from ctypes import Union as c_Union
+from ctypes import c_short, c_ubyte
+from typing import Any, Callable
 
-from ctypes import Union, c_short, c_ubyte
-
-from .io_base import AudioIO, io_wrapper
 from .conversion_util import swap_endian
-
-# from .dumb import _dumb
-
 from .import_util import LazyImport
+from .io_base import AudioIO, io_wrapper
 
 _dumb = LazyImport('dumb._dumb', globals(), locals(), ['_dumb'], 1)
 
@@ -45,10 +42,8 @@ __supported_dict = {
 }
 
 
-class Buffer(Union):
-    """ A union for taking the samples from duh_render.
-
-    """
+class Buffer(c_Union):
+    """A union for taking the samples from duh_render."""
 
     _fields_ = [
         ("s16", c_short * 8192),
@@ -57,9 +52,7 @@ class Buffer(Union):
 
 
 class DumbFile(AudioIO):
-    """ File like object to access module music supported by dumb.
-
-    """
+    """File like object to access module music supported by dumb."""
 
     # Valid bit depths.
     _valid_depth = (16, 8)
@@ -67,13 +60,10 @@ class DumbFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, **kwargs):
-        """ DumbFile(filename, depth=16, rate=44100, channels=2) -> Initialize
-        the playback settings of the player.
-
-        """
-
+    def __init__(self, filename: str, depth: int = 16, rate: int = 44100,
+                 channels: int = 2, bigendian: bool = False,
+                 unsigned: bool = False, **kwargs):
+        """Initialize the playback settings of the player."""
         super(DumbFile, self).__init__(filename, 'r', depth, rate, channels)
 
         # Set the volume to half, so it doesn't overdrive the speakers.
@@ -89,7 +79,7 @@ class DumbFile(AudioIO):
         self._buffer_ref = _dumb.pointer(self._buffer)
 
         # Set data_list to buffer.s8 or buffer.s16 depending on bit depth.
-        self._data_list = getattr(self._buffer, 's%s' % self._depth)
+        self._data_list = getattr(self._buffer, f"s{self._depth}")
 
         # Define the conversion function.
         if depth == 16 and bigendian:
@@ -111,184 +101,145 @@ class DumbFile(AudioIO):
         self._it_sig_r = _dumb.duh_get_it_sigrenderer(self._sig_r)
         loop_callback = _dumb.CFUNCTYPE(_dumb.c_long, _dumb.c_void_p)
         self._loop_callback_f = loop_callback(self._loop_callback)
-        _dumb.dumb_it_set_loop_callback(self._it_sig_r, self._loop_callback_f,
-                                        None)
+        _dumb.dumb_it_set_loop_callback(
+            self._it_sig_r, self._loop_callback_f, None)
 
         # Load info into the info dict.
         self._load_info()
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(filename="{self._filename}", '
+                f'depth={self._depth}, rate={self._rate}, '
+                f'channels={self._channels}, bigendian={self._bigendian}, '
+                f'unsigned={self._unsigned})')
 
+    def _loop_callback(self, _: Any) -> int:
+        """Increase the loop counter when the module loops.
+
+        If self._loops does not equal -1 and has not reached self._loop_count
+        then return True to keep looping.
         """
-
-        repr_str = "filename='%(_filename)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
-    def _loop_callback(self, data):
-        """ _loop_callback(data) -> Called everytime the module loops.
-
-        """
-
         # Increment the loop counter.
         self._loop_count += 1
 
         return int(self._loops != -1 and self._loop_count > self._loops)
 
-    def to_seconds(self, position):
-        """ Convert the provided position/length to seconds.
-
-        """
-
+    def to_seconds(self, position: int) -> float:
+        """Convert the provided position/length to seconds."""
         return position / 65536
 
-    def _set_position(self, position):
-        """ Change the position of playback.
+    def _set_position(self, position: int):
+        """Change the position of playback."""
+        self._sig_r = _dumb.duh_start_sigrenderer(
+            self._duh, 0, self._channels, position)
 
-        """
-
-        self._sig_r = _dumb.duh_start_sigrenderer(self._duh, 0, self._channels,
-                                                  position)
-
-    def _get_position(self):
-        """ Updates the position variable.
-
-        """
-
+    def _get_position(self) -> int:
+        """Update the position variable."""
         # Update the position.
         return _dumb.duh_sigrenderer_get_position(self._sig_r)
 
     @property
-    def convert_func(self):
-        """ The function used to convert the module data to the correct
-        format.
-
-        """
-
+    def convert_func(self) -> Callable[[bytes], bytes]:
+        """Convert the module data to the correct format."""
         return self._convert_func
 
     @convert_func.setter
-    def convert_func(self, function):
-        """ Set the function used to convert the module data to the correct
-        format.  The function should take a string and return a string.
+    def convert_func(self, function: Callable[[bytes], bytes]):
+        """Set convert function.
 
+        Set the function used to convert the module data to the correct format.
+        The function should take a string and return a string.
         """
-
         self._convert_func = function
 
     @property
-    def volume(self):
-        """ Get the current volume.
-
-        """
-
+    def volume(self) -> float:
+        """Get the current volume."""
         return self._volume
 
     @volume.setter
-    def volume(self, value):
-        """ Set the volume.
-
-        """
-
+    def volume(self, value: float):
+        """Set the volume."""
         self._volume = value
 
     @property
-    def speed(self):
-        """ Get the current speed.
-
-        """
-
+    def speed(self) -> float:
+        """Get the current speed."""
         return self._delta * (self._rate / 65536.0)
 
     @speed.setter
-    def speed(self, speed):
-        """ Set the speed.
-
-        """
-
+    def speed(self, speed: float):
+        """Set the speed."""
         self._delta = (65536.0 * speed) / self._rate
 
     @property
-    def resampling(self):
-        """ The current resample mode.
-
-        """
-
+    def resampling(self) -> int:
+        """Get the current resample mode."""
         return _dumb.dumb_resampling_quality.value
 
     @resampling.setter
-    def resampling(self, value):
-        """ resampling(mode) -> Set the resampling mode.
-
-        """
-
+    def resampling(self, value: int):
+        """Set the resampling mode."""
         if value not in range(3):
             raise ValueError('Invalid value, has to be in range 0-2')
         else:
             _dumb.dumb_resampling_quality.value = int(value)
 
     @property
-    def max_to_mix(self):
-        """ Maximum number of samples to mix at a time.
-
-        """
-
+    def max_to_mix(self) -> int:
+        """Maximum number of samples to mix at a time."""
         return _dumb.dumb_it_max_to_mix.value
 
     @max_to_mix.setter
-    def max_to_mix(self, value):
-        """ Set the maximum number of samples to mix at a time.
-
-        """
-
+    def max_to_mix(self, value: int):
+        """Set the maximum number of samples to mix at a time."""
         _dumb.dumb_it_max_to_mix.value = value
 
     def _load_info(self):
-        """ Load the module music info.
+        """Load the module music info."""
+        def load_list(key: str, name_func: Callable, filename_func: Callable,
+                      sig_data: bytes, count: int) -> list[str]:
+            """Fill list.
 
-        """
-
-        def load_list(key, name_func, filename_func, sig_data, count):
-            """ _load_list(fill_list, name_func, filename_func, sig_data,
-            count) -> Load a list of names and filenames from sig_data into
-            fill_list.
-
+            Load a list of names and filenames from sig_data into fill_list.
             """
-
             fill_list = []
 
             for i in range(count):
-                try:
-                    name = name_func(sig_data, i).decode('cp437', 'replace')
-                except:
-                    pass
+                name = name_func(sig_data, i).decode('cp437', 'replace')
                 if name:
                     name = name.replace('\r', '\n')
                     filename = filename_func(sig_data, i)
                     filename = filename.decode('cp437', 'replace')
                     filename = filename.replace('\r', '\n')
-                    key_str = '%-8s %03d:' % (key.capitalize(), i)
-                    value_str = '%s %s' % (name, filename)
-                    fill_list.append("%s %s" % (key_str, value_str))
+                    fill_list.append(f"{key.capitalize():8} {i:03} {name} "
+                                     f"{filename}")
 
             return fill_list
 
         sig_data = _dumb.duh_get_it_sigdata(self._duh)
         num_smp = _dumb.dumb_it_sd_get_n_samples(sig_data)
         if num_smp > 0:
-            tmp_list = load_list('sample', _dumb.dumb_it_sd_get_sample_name,
-                                 _dumb.dumb_it_sd_get_sample_filename,
-                                 sig_data, num_smp)
+            tmp_list = load_list(
+                'sample',
+                _dumb.dumb_it_sd_get_sample_name,
+                _dumb.dumb_it_sd_get_sample_filename,
+                sig_data,
+                num_smp
+            )
             if tmp_list:
                 self._info_dict['samples'] = tmp_list
 
         num_inst = _dumb.dumb_it_sd_get_n_instruments(sig_data)
         if num_inst > 0:
-            tmp_list = load_list('instrument',
-                                 _dumb.dumb_it_sd_get_instrument_name,
-                                 _dumb.dumb_it_sd_get_instrument_filename,
-                                 sig_data, num_inst)
+            tmp_list = load_list(
+                'instrument',
+                _dumb.dumb_it_sd_get_instrument_name,
+                _dumb.dumb_it_sd_get_instrument_filename,
+                sig_data,
+                num_inst
+            )
             if tmp_list:
                 self._info_dict['instruments'] = tmp_list
 
@@ -302,12 +253,11 @@ class DumbFile(AudioIO):
             self._info_dict['message'] = message
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.  If
-        size is None then read a buffer size.
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and return it.
 
+        If size is None then read a buffer size.
         """
-
         c_size = size
 
         # Don't over fill the buffer or it will crash.
@@ -328,10 +278,15 @@ class DumbFile(AudioIO):
                 read_size = c_size // (self._channels * (self._depth >> 3))
 
             # Render read_size amount of data.
-            render_size = _dumb.duh_render(self._sig_r, self._depth,
-                                           self._unsigned, self._volume,
-                                           self._delta, read_size,
-                                           self._buffer_ref)
+            render_size = _dumb.duh_render(
+                self._sig_r,
+                self._depth,
+                self._unsigned,
+                self._volume,
+                self._delta,
+                read_size,
+                self._buffer_ref
+            )
 
             # Nothing rendered so exit loop.
             if render_size < 1:
@@ -345,15 +300,17 @@ class DumbFile(AudioIO):
 
         return data
 
-    def _open(self):
-        """ _open(filename) -> Load the specified file.
-
-        """
-
+    def _open(self) -> Any:
+        """Load the specified file."""
         _dumb.dumb_register_stdfiles()
 
-        func_tup = (_dumb.load_duh, _dumb.dumb_load_xm, _dumb.dumb_load_s3m,
-                    _dumb.dumb_load_it, _dumb.dumb_load_mod)
+        func_tup = (
+            _dumb.load_duh,
+            _dumb.dumb_load_xm,
+            _dumb.dumb_load_s3m,
+            _dumb.dumb_load_it,
+            _dumb.dumb_load_mod
+        )
 
         # Convert the filename to a bytes object.
         bytes_filename = self._filename.encode('utf-8', 'surrogateescape')
@@ -363,8 +320,7 @@ class DumbFile(AudioIO):
             if duh:
                 break
         else:
-            raise IOError("Error unable to load %s" % self._filename)
-            return None
+            raise IOError(f"Error unable to load {self._filename}")
 
         self.resampling = _dumb.DUMB_RQ_CUBIC
         self.max_to_mix = 256
@@ -374,10 +330,7 @@ class DumbFile(AudioIO):
         return duh
 
     def close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and cleans up."""
         if not self.closed:
             _dumb.duh_end_sigrenderer(self._sig_r)
             _dumb.unload_duh(self._duh)

@@ -20,15 +20,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A thin ossaudiodev wrapper that allows it to be used with the with
-statement.
+"""OSS wrapper.
 
+A thin ossaudiodev wrapper that allows it to be used with the with statement.
 """
 
-from .io_base import DevIO, io_wrapper
-# import ossaudiodev
+from typing import Any
 
 from .import_util import LazyImport
+from .io_base import DevIO, io_wrapper
+
 ossaudiodev = LazyImport('ossaudiodev', globals(), locals(), [], 0)
 
 __supported_dict = {
@@ -40,9 +41,9 @@ __supported_dict = {
 
 
 class Oss(DevIO):
-    """ A class that provides a file like object to write to an oss pcm
-    object.
+    """OSS file object for reading and writing.
 
+    A class that provides a file like object to write to an oss pcm object.
     """
 
     # Valid bit depths.
@@ -51,24 +52,23 @@ class Oss(DevIO):
     # Supports reading and writing.
     _supported_modes = 'rw'
 
-    def __init__(self, mode='w', depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, buffer_size=None,
-                 device='default', **kwargs):
-        """ Oss(depth=16, rate=44100, channels=2, bigendian=False,
-        unsigned=False, buffer_size=None) -> Initialize the alsa pcm device.
-
-        """
-
-        super(Oss, self).__init__(mode, depth, rate, channels, bigendian,
-                                  unsigned, buffer_size)
+    def __init__(self, mode: str = 'w', depth: int = 16, rate: int = 44100,
+                 channels: int = 2, bigendian: bool = False,
+                 unsigned: bool = False, buffer_size: int = 0,
+                 device: str = 'default', **kwargs):
+        """Initialize the alsa pcm device."""
+        super(Oss, self).__init__(mode, depth, rate,
+                                  channels, bigendian, unsigned, buffer_size)
 
         if depth == 8:
-            audio_format = getattr(ossaudiodev, "AFMT_%s8" %
-                                   ('U' if unsigned else 'S'))
+            audio_format = getattr(
+                ossaudiodev, f"AFMT_{'U' if unsigned else 'S'}8")
         else:
-            audio_format = getattr(ossaudiodev, "AFMT_%s16_%s" %
-                                   ('U' if unsigned else 'S',
-                                    'BE' if bigendian else 'LE'))
+            audio_format = getattr(
+                ossaudiodev,
+                f"AFMT_{'U' if unsigned else 'S'}16_"
+                f"{'BE' if bigendian else 'LE'}"
+            )
 
         self._format = audio_format
         self._device = '/dev/dsp' if device == 'default' else device
@@ -77,42 +77,29 @@ class Oss(DevIO):
 
     @io_wrapper
     def write(self, data: bytes) -> int:
-        """ write(data) -> Write to the pcm device.
-
-        """
-
+        """Write to the pcm device."""
         return self._dsp.write(data)
 
     @io_wrapper
     def read(self, size: int) -> bytes:
-        """ read(size=0) -> Read length bytes from input.
-
-        """
-
+        """Read length bytes from input."""
         return self._dsp.read(size)
 
-    def _open(self):
-        """ open -> Open the pcm audio output.
-
-        """
-
+    def _open(self) -> Any:
+        """Open the pcm audio output."""
         dsp = ossaudiodev.open(self._device, self._mode)
         try:
             dsp.setparameters(self._format, self._channels, self._rate, True)
         except OSSAudioError as err:
-            print("Error opening dsp: %s" % err)
+            print(f"Error opening dsp: {err}")
 
         self._closed = False
 
         return dsp
 
     def close(self):
-        """ close -> Close the pcm.
-
-        """
-
+        """Close the pcm."""
         if not self.closed:
             self._dsp.close()
-            self._dsp = None
 
             self._closed = True

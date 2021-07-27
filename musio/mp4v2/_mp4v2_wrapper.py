@@ -4,104 +4,98 @@
 #
 # mp4v2 object oriented wrapper module.
 # Copyright (C) 2010 Josiah Gordon <josiahg@gmail.com>
-# 
+#
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Wrap various mp4v2 functions into python classes.
-
-"""
+"""Wrap various mp4v2 functions into python classes."""
 
 from functools import partial
+from typing import Any, Generator
 
 from . import _mp4v2
 
 
 class Mp4Handle(object):
-    """ Wraps the mp4v2 mp4 file handle object.
+    """Wraps the mp4v2 mp4 file handle object."""
 
-    """
-
-    def __init__(self, filename):
-        """ Initializes and creates partial functions.
-
-        """
-
+    def __init__(self, filename: str):
+        """Initialize and create partial functions."""
         self._mp4_handle = _mp4v2.MP4FileHandle(_mp4v2.MP4Read(filename, 0))
 
-        self.track_read_sample = partial(_mp4v2.MP4ReadSample,
-                                         self._mp4_handle)
-        self.track_es_configuration = partial(_mp4v2.MP4GetTrackESConfiguration,
-                                              self._mp4_handle)
+        self.track_read_sample = partial(
+            _mp4v2.MP4ReadSample,
+            self._mp4_handle
+        )
+        self.track_es_configuration = partial(
+            _mp4v2.MP4GetTrackESConfiguration,
+            self._mp4_handle
+        )
         self.track_type = partial(_mp4v2.MP4GetTrackType, self._mp4_handle)
-        self.track_esds_object_type = partial(_mp4v2.MP4GetTrackEsdsObjectTypeId,
-                                              self._mp4_handle)
-        self.track_audio_mpeg4_type = partial(_mp4v2.MP4GetTrackAudioMpeg4Type,
-                                              self._mp4_handle)
-        self.track_sample_count = partial(_mp4v2.MP4GetTrackNumberOfSamples,
-                                          self._mp4_handle)
+        self.track_esds_object_type = partial(
+            _mp4v2.MP4GetTrackEsdsObjectTypeId,
+            self._mp4_handle
+        )
+        self.track_audio_mpeg4_type = partial(
+            _mp4v2.MP4GetTrackAudioMpeg4Type,
+            self._mp4_handle
+        )
+        self.track_sample_count = partial(
+            _mp4v2.MP4GetTrackNumberOfSamples,
+            self._mp4_handle
+        )
         self.track_rate = partial(_mp4v2.MP4GetTrackBitRate, self._mp4_handle)
         self.track_name = partial(_mp4v2.MP4GetTrackName, self._mp4_handle)
 
         self._closed = False
 
-        self._number_of_tracks = _mp4v2.MP4GetNumberOfTracks(self._mp4_handle,
-                                                             None, 0)
+        self._number_of_tracks = _mp4v2.MP4GetNumberOfTracks(
+            self._mp4_handle,
+            None,
+            0
+        )
         self._tags = _mp4v2.MP4TagsAlloc()
         _mp4v2.MP4TagsFetch(self._tags, self._mp4_handle)
 
     def close(self):
-        """ Close the mp4 handle.
-
-        """
-
+        """Close the mp4 handle."""
         if not self._closed:
-            _mp4v2.MP4Close(self._mp4_handle, _mp4v2.MP4_CLOSE_DO_NOT_COMPUTE_BITRATE)
+            _mp4v2.MP4Close(
+                self._mp4_handle,
+                _mp4v2.MP4_CLOSE_DO_NOT_COMPUTE_BITRATE
+            )
             _mp4v2.MP4TagsFree(self._tags)
 
             self._closed = True
 
     @property
-    def tags(self):
-        """ The mp4 tags.
-
-        """
-
+    def tags(self) -> Any:
+        """Get the mp4 tags."""
         return self._tags
 
     @property
-    def track_count(self):
-        """ The number of tracks in this mp4.
-
-        """
-
+    def track_count(self) -> int:
+        """Get the number of tracks in this mp4."""
         return self._number_of_tracks
 
-    def tracks(self):
-        """ Yield a track object for each track.
-
-        """
-
+    def tracks(self) -> Generator[Any, None, None]:
+        """Yield a track object for each track."""
         for track in range(1, self.track_count + 1):
             yield Mp4Track(self, track)
 
-    def get_aac_track(self):
-        """ Returns the AAC track in the mp4 if there is any otherwise it
-        returns 0.
-
-        """
-
+    def get_aac_track(self) -> Any:
+        """Return the AAC track in the mp4 or None."""
         # Tracks start at 1.
         for track in self.tracks():
             track_type = track.type.decode()
@@ -123,19 +117,14 @@ class Mp4Handle(object):
                 return track
 
         # An invalid track.
-        return None
+        raise(Exception('Invalid AAC track.'))
 
 
 class Mp4Track(object):
-    """ Wraps the mp4v2 track object.
+    """Wraps the mp4v2 track object."""
 
-    """
-
-    def __init__(self, mp4_handle, track=1):
-        """ Initializes the track and creates partial functions.
-
-        """
-
+    def __init__(self, mp4_handle: Any, track: int = 1):
+        """Initialize the track and create partial functions."""
         self._mp4_handle = mp4_handle
         self._mp4_track = track
         self._mp4_track_id = _mp4v2.MP4TrackId(track)
@@ -146,30 +135,26 @@ class Mp4Track(object):
                                          self._mp4_track_id)
 
         self._type = mp4_handle.track_type(self._mp4_track_id)
-        self._esds_object_type = mp4_handle.track_esds_object_type(self._mp4_track_id)
-        self._audio_mpeg4_type = mp4_handle.track_audio_mpeg4_type(self._mp4_track_id)
+        self._esds_object_type = mp4_handle.track_esds_object_type(
+            self._mp4_track_id)
+        self._audio_mpeg4_type = mp4_handle.track_audio_mpeg4_type(
+            self._mp4_track_id)
 
         self._sample_count = mp4_handle.track_sample_count(self._mp4_track_id)
         self._rate = mp4_handle.track_rate(self._mp4_track_id)
 
         name = _mp4v2.c_char_p()
-        ret = mp4_handle.track_name(self._mp4_track_id, name)
+        _ = mp4_handle.track_name(self._mp4_track_id, name)
 
         self._name = name
 
     @property
-    def track_id(self):
-        """ The mp4 track id.
+    def track_id(self) -> int:
+        """Get the mp4 track id."""
+        return self._mp4_track_id.value
 
-        """
-
-        return self._mp4_track_id
-
-    def read_sample(self, sample_id):
-        """ Return the sample and its size.
-
-        """
-
+    def read_sample(self, sample_id: int) -> Any:
+        """Return the sample and its size."""
         # Is this the last sample.
         last = (sample_id == self._sample_count)
 
@@ -178,19 +163,25 @@ class Mp4Track(object):
 
         # Don't read past the end of the file.
         if sample_id <= self._sample_count:
-            self._read_sample(sample_id, _mp4v2.byref(data_buffer),
-                              _mp4v2.byref(buffer_size), None, None, None,
-                              None)
+            self._read_sample(
+                sample_id,
+                _mp4v2.byref(data_buffer),
+                _mp4v2.byref(buffer_size),
+                None,
+                None,
+                None,
+                None
+            )
 
         # Return a sample object.
         return Mp4Sample(sample_id, data_buffer, buffer_size, last)
 
-    def get_configuration(self):
-        """ Return a buffer and size to use with faad init functions to find
-        the sample rate and channels.
+    def get_configuration(self) -> tuple[Any, Any]:
+        """Get the configuration.
 
+        Return a buffer and size to use with faad init functions to find the
+        sample rate and channels.
         """
-
         data_buffer = _mp4v2.POINTER(_mp4v2.c_ubyte)()
         buffer_size = _mp4v2.c_uint32()
 
@@ -204,48 +195,32 @@ class Mp4Track(object):
         return (data_buffer, _mp4v2.c_ulong(buffer_size.value))
 
     @property
-    def sample_count(self):
-        """ The number of samples in the track.
-
-        """
-
+    def sample_count(self) -> int:
+        """Get the number of samples in the track."""
         return self._sample_count
 
     @property
-    def type(self):
-        """ The type of the current track.
-
-        """
-
+    def type(self) -> bytes:
+        """Get the type of the current track."""
         return self._type
 
     @property
-    def object_type(self):
-        """ The track object type.
-
-        """
-
+    def object_type(self) -> int:
+        """Get the track object type."""
         return self._esds_object_type
 
     @property
-    def audio_mpeg4_type(self):
-        """ The type of mpeg4 audio for the track.
-
-        """
-
+    def audio_mpeg4_type(self) -> int:
+        """Get the type of mpeg4 audio for the track."""
         return self._audio_mpeg4_type
 
 
 class Mp4Sample(object):
-    """ An mp4 sample contains the data and size.
+    """An mp4 sample contains the data and size."""
 
-    """
-
-    def __init__(self, sample_id, data, size, last=False):
-        """ Initialize the sample.
-
-        """
-
+    def __init__(self, sample_id: int, data: Any, size: Any,
+                 last: bool = False):
+        """Initialize the sample."""
         self._mp4_sample_id = _mp4v2.MP4SampleId(sample_id)
 
         self._data = data
@@ -254,77 +229,51 @@ class Mp4Sample(object):
         self._last = last
 
     @property
-    def sample_id(self):
-        """ The mp4 sample id.
+    def sample_id(self) -> int:
+        """Get the mp4 sample id."""
+        return self._mp4_sample_id.value
 
-        """
-
-        return self._mp4_sample_id
-
-    def islast(self):
-        """ True if this is a the last sample.
-
-        """
-
+    def islast(self) -> bool:
+        """Return True if this is a the last sample."""
         return self._last
 
     @property
-    def id(self):
-        """ The current sample id.
-
-        """
-
+    def id(self) -> int:
+        """Get the current sample id."""
         return self._id
 
     @property
-    def data(self):
-        """ The sample data.
-
-        """
-
+    def data(self) -> bytes:
+        """Get the sample data."""
         return self._data
 
     @property
-    def size(self):
-        """ The size of the sample.
-
-        """
-
+    def size(self) -> int:
+        """Get the size of the sample."""
         return self._size
 
 
 class Mp4(object):
-    """ Provides easy access to the AAC audio in mp4s.
+    """Provides easy access to the AAC audio in mp4s."""
 
-    """
-
-    def __init__(self, filename):
-        """ Initialize class variables.
-
-        """
-
+    def __init__(self, filename: str):
+        """Initialize class variables."""
         self._mp4_handle = Mp4Handle(filename)
 
         self._aac_track = self._mp4_handle.get_aac_track()
         if not self._aac_track:
-            raise Exception("No AAC track in %s" % filename)
+            raise Exception(f"No AAC track in {filename}")
 
         self._sample_count = self._aac_track.sample_count
         self._current_sample = 1
 
     def close(self):
-        """ Close the mp4.
-
-        """
-
+        """Close the mp4."""
         self._mp4_handle.close()
-        self._mp4_handle = None
+        del(self._mp4_handle)
 
-    def get_tag_dict(self):
-        """ Returns a dictionary of tags from the mp4 or an empty dict.
-
-        """
-
+    def get_tag_dict(self) -> dict:
+        """Return a dictionary of tags from the mp4 or an empty dict."""
         tag_dict = {}
 
         tags = self._mp4_handle.tags
@@ -351,21 +300,15 @@ class Mp4(object):
         return tag_dict
 
     def get_configuration(self):
-        """ Return a buffer and size to use with faad init functions to find
-        the sample rate and channels.
+        """Get config.
 
+        Return a buffer and size to use with faad init functions to find the
+        sample rate and channels.
         """
-
         return self._aac_track.get_configuration()
 
-    def read(self):
-        """ Read the next sample from the aac audio in the open mp4.
-
-        """
-
-        if not self._mp4_handle:
-            return (b'', 0)
-
+    def read(self) -> Mp4Sample:
+        """Read the next sample from the aac audio in the open mp4."""
         sample = self._aac_track.read_sample(self._current_sample)
 
         self._current_sample += 1
@@ -373,28 +316,19 @@ class Mp4(object):
         return sample
 
     @property
-    def current_sample(self):
-        """ The next sample to read.
-
-        """
-
+    def current_sample(self) -> int:
+        """Get the next sample to read."""
         return self._current_sample
 
     @current_sample.setter
-    def current_sample(self, value):
-        """ The next sample to read.
-
-        """
-
+    def current_sample(self, value: int):
+        """Set the next sample to read."""
         if value in range(1, self._sample_count):
             self._current_sample = value
         else:
             self._current_sample = 1
 
     @property
-    def sample_count(self):
-        """ Number of samples in the aac track.
-
-        """
-
+    def sample_count(self) -> int:
+        """Get the number of samples in the aac track."""
         return self._sample_count

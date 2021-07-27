@@ -60,21 +60,21 @@ class MikModFile(AudioIO):
         super(MikModFile, self).__init__(filename, 'r', depth, rate, channels)
 
         if depth == 8:
-            _mikmod.md_mode.value &= ~_mikmod.DMODE_16BITS
+            _mikmod.md_mode &= ~_mikmod.DMODE_16BITS
             self._unsigned = True
         else:
-            _mikmod.md_mode.value |= _mikmod.DMODE_16BITS
+            _mikmod.md_mode |= _mikmod.DMODE_16BITS
 
         if channels == 1:
-            _mikmod.md_mode.value &= ~_mikmod.DMODE_STEREO
+            _mikmod.md_mode &= ~_mikmod.DMODE_STEREO
         else:
-            _mikmod.md_mode.value |= _mikmod.DMODE_STEREO \
+            _mikmod.md_mode |= _mikmod.DMODE_STEREO \
                 | _mikmod.DMODE_HQMIXER
 
-        _mikmod.md_mixfreq.value = rate
+        _mikmod.md_mixfreq = rate
 
         # Use custom driver.
-        _mikmod.md_device.value = 0
+        _mikmod.md_device = 0
 
         self._module = self._open(filename)
         self._length = self._module.contents.numpos
@@ -259,7 +259,7 @@ class MikModFile(AudioIO):
             tmp_list = []
             for i in range(num_smp):
                 try:
-                    name = module.contents.samples[i].samplename
+                    name = _mikmod.ctypes.string_at(module.contents.samples[i].samplename)
                     name = name.decode('cp437', 'replace')
                 except Exception:
                     continue
@@ -275,7 +275,7 @@ class MikModFile(AudioIO):
             tmp_list = []
             for i in range(num_ins):
                 try:
-                    name = module.contents.instruments[i].insname
+                    name = _mikmod.ctypes.string_at(module.contents.instruments[i].insname)
                     name = name.decode('cp437', 'replace')
                 except Exception:
                     continue
@@ -286,10 +286,10 @@ class MikModFile(AudioIO):
             if any(tmp_list):
                 self._info_dict['instruments'] = tmp_list
 
-        mod_type = module.contents.modtype.decode('cp437', 'replace')
+        mod_type = _mikmod.ctypes.string_at(module.contents.modtype).decode('cp437', 'replace')
         self._info_dict['type'] = mod_type
 
-        name = module.contents.songname
+        name = _mikmod.ctypes.string_at(module.contents.songname)
         self._info_dict['name'] = name.decode('cp437', 'replace')
 
         comment = module.contents.comment

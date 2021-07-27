@@ -19,11 +19,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A module for reading raws.
-
-"""
+"""A module for reading raws."""
 
 from os.path import getsize as os_getsize
+from typing import IO, Any
 
 from .io_base import AudioIO, io_wrapper
 
@@ -34,20 +33,14 @@ __supported_dict = {
 
 
 class RawFile(AudioIO):
-    """ A file like object for reading raws.
-
-    """
+    """A file like object for reading raws."""
 
     # Both reading and writing are supported
     _supported_modes = 'rw'
 
-    def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2,
-                 **kwargs):
-        """ RawFile(filename, mode='r', depth=16, rate=44100, channels=2) ->
-        Initialize the playback settings of the player.
-
-        """
-
+    def __init__(self, filename: str, mode: str = 'r', depth: int = 16,
+                 rate: int = 44100, channels: int = 2, **_):
+        """Initialize the playback settings of the player."""
         super(RawFile, self).__init__(filename, mode, depth, rate, channels)
 
         if 'r' in mode:
@@ -57,46 +50,32 @@ class RawFile(AudioIO):
 
         self.seek = self._file.seek
         self.tell = self._file.tell
-        self.write = self._file.write
 
-    def _set_position(self, position):
-        """ Change the position of playback.
-
-        """
-
+    def _set_position(self, position: int):
+        """Change the position of playback."""
         self._file.seek(position)
 
-    def _get_position(self):
-        """ Updates the position variable.
-
-        """
-
+    def _get_position(self) -> int:
+        """Get position."""
         return self._file.tell()
 
-    def _open(self, filename):
-        """ _open(filename) -> Load the specified file.
-
-        """
-
+    def _open(self, filename: str) -> IO[Any]:
+        """Load the specified file."""
         self._closed = False
 
         return open(filename, '%sb' % self._mode, buffering=0)
 
     @io_wrapper
     def write(self, data: bytes) -> int:
-        """ write(data) -> Write data to raw audio file.
-
-        """
-
+        """Write data to raw audio file."""
         return self._file.write(data)
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.  If
-        size is None then read a buffer size.
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and return it.
 
+        If size is None then read a buffer size.
         """
-
         if self.position >= self._length:
             if self._loops == -1 or self._loop_count < self._loops:
                 self._loop_count += 1
@@ -105,10 +84,7 @@ class RawFile(AudioIO):
         return self._file.read(size)
 
     def close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and clean up."""
         if not self.closed:
             self._file.close()
             self._closed = True

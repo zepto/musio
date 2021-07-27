@@ -20,15 +20,15 @@
 
 """Mikmod module."""
 
-import ctypes
 import sys
+from ctypes import *
 from ctypes.util import find_library
 
 miklib_name = find_library("mikmod")
 if not miklib_name:
     raise Exception("libmikmod could not be found")
 
-_mikmod_lib = ctypes.cdll.LoadLibrary(miklib_name)
+_mikmod_lib = cdll.LoadLibrary(miklib_name)
 
 # /*
 # *	========== Library version
@@ -50,40 +50,41 @@ def LIBMIKMOD_VERSION():
 # MIKMODAPI extern long MikMod_GetVersion(void);
 MikMod_GetVersion = _mikmod_lib.MikMod_GetVersion
 MikMod_GetVersion.argtypes = []
-MikMod_GetVersion.restype = ctypes.c_long
+MikMod_GetVersion.restype = c_long
 
 # /*
 # *	========== Platform independent-type definitions
 # */
 
-CHAR = ctypes.c_char_p
+CHAR = c_char_p
+STRING = c_char_p
 
 
 # if defined(__arch64__) || defined(__alpha) || defined(__x86_64) || defined(_LP64)
 if sys.maxsize >> 31:
     # /* 64 bit architectures */
 
-    SBYTE = ctypes.c_byte  # /* 1 byte, signed */
-    UBYTE = ctypes.c_ubyte  # /* 1 byte, unsigned */
-    SWORD = ctypes.c_short  # /* 2 bytes, signed */
-    UWORD = ctypes.c_ushort  # /* 2 bytes, unsigned */
-    SLONG = ctypes.c_long  # /* 4 bytes, signed */
-    ULONG = ctypes.c_uint  # /* 4 bytes, unsigned */
-    BOOL = ctypes.c_int  # /* 0=false, <>0 true */
+    SBYTE = c_char  # /* 1 byte, signed */
+    UBYTE = c_ubyte  # /* 1 byte, unsigned */
+    SWORD = c_short  # /* 2 bytes, signed */
+    UWORD = c_ushort  # /* 2 bytes, unsigned */
+    SLONG = c_long  # /* 4 bytes, signed */
+    ULONG = c_ulong  # /* 4 bytes, unsigned */
+    BOOL = c_int  # /* 0=false, <>0 true */
 
 # else
 else:
     # /* 32 bit architectures */
 
-    SBYTE = ctypes.c_byte  # /* 1 byte, signed */
-    UBYTE = ctypes.c_ubyte  # /* 1 byte, unsigned */
-    SWORD = ctypes.c_short  # /* 2 bytes, signed */
-    UWORD = ctypes.c_ushort  # /* 2 bytes, unsigned */
-    SLONG = ctypes.c_long  # /* 4 bytes, signed */
+    SBYTE = c_char  # /* 1 byte, signed */
+    UBYTE = c_ubyte  # /* 1 byte, unsigned */
+    SWORD = c_short  # /* 2 bytes, signed */
+    UWORD = c_ushort  # /* 2 bytes, unsigned */
+    SLONG = c_long  # /* 4 bytes, signed */
     # if !defined(__OS2__)&&!defined(__EMX__)&&!defined(WIN32)
     if sys.platform not in ["os2", "win32"]:
-        ULONG = ctypes.c_uint  # /* 4 bytes, unsigned */
-        BOOL = ctypes.c_int  # /* 0=false, <>0 true */
+        ULONG = c_ulong  # /* 4 bytes, unsigned */
+        BOOL = c_int  # /* 0=false, <>0 true */
 # endif
 # endif
 
@@ -177,21 +178,21 @@ MMERR_MAX = 65
 # */
 
 # typedef void (MikMod_handler)(void);
-MikMod_handler = ctypes.CFUNCTYPE(None)
+MikMod_handler = CFUNCTYPE(None)
 
 # typedef MikMod_handler *MikMod_handler_t;
-MikMod_handler_t = ctypes.POINTER(MikMod_handler)
+MikMod_handler_t = POINTER(MikMod_handler)
 
 # MIKMODAPI extern int  MikMod_errno;
-MikMod_errno = ctypes.c_int.in_dll(_mikmod_lib, "MikMod_errno")
+MikMod_errno = c_int.in_dll(_mikmod_lib, "MikMod_errno")
 
 # MIKMODAPI extern BOOL MikMod_critical;
-MikMod_critical = ctypes.c_int.in_dll(_mikmod_lib, "MikMod_critical")
+MikMod_critical = c_int.in_dll(_mikmod_lib, "MikMod_critical")
 
 # MIKMODAPI extern char *MikMod_strerror(int);
 MikMod_strerror = _mikmod_lib.MikMod_strerror
-MikMod_strerror.argtypes = [ctypes.c_int]
-MikMod_strerror.restype = ctypes.c_char_p
+MikMod_strerror.argtypes = [c_int]
+MikMod_strerror.restype = c_char_p
 
 # MIKMODAPI extern MikMod_handler_t MikMod_RegisterErrorHandler(MikMod_handler_t);
 MikMod_RegisterErrorHandler = _mikmod_lib.MikMod_RegisterErrorHandler
@@ -204,7 +205,7 @@ MikMod_RegisterErrorHandler.restype = MikMod_handler_t
 # */
 
 # struct MDRIVER;
-class MDRIVER(ctypes.Structure):
+class MDRIVER(Structure):
     pass
 
 
@@ -221,13 +222,13 @@ MikMod_InfoDriver.restype = CHAR
 
 # MIKMODAPI extern void   MikMod_RegisterDriver(struct MDRIVER*);
 MikMod_RegisterDriver = _mikmod_lib.MikMod_RegisterDriver
-MikMod_RegisterDriver.argtypes = [ctypes.POINTER(MDRIVER)]
+MikMod_RegisterDriver.argtypes = [POINTER(MDRIVER)]
 MikMod_RegisterDriver.restype = None
 
 # MIKMODAPI extern int    MikMod_DriverFromAlias(CHAR*);
 MikMod_DriverFromAlias = _mikmod_lib.MikMod_DriverFromAlias
 MikMod_DriverFromAlias.argtypes = [CHAR]
-MikMod_DriverFromAlias.restype = ctypes.c_int
+MikMod_DriverFromAlias.restype = c_int
 
 
 # MIKMODAPI extern BOOL   MikMod_Init(CHAR*);
@@ -247,7 +248,7 @@ MikMod_Reset.restype = BOOL
 
 # MIKMODAPI extern BOOL   MikMod_SetNumVoices(int,int);
 MikMod_SetNumVoices = _mikmod_lib.MikMod_SetNumVoices
-MikMod_SetNumVoices.argtypes = [ctypes.c_int, ctypes.c_int]
+MikMod_SetNumVoices.argtypes = [c_int, c_int]
 MikMod_SetNumVoices.restype = BOOL
 
 # MIKMODAPI extern BOOL   MikMod_Active(void);
@@ -292,44 +293,28 @@ MikMod_Unlock.restype = None
 # */
 
 # typedef struct MREADER {
-class MREADER(ctypes.Structure):
+class MREADER(Structure):
     pass
 
 
 MREADER._fields_ = [
-    (
-        "Seek",
-        ctypes.CFUNCTYPE(BOOL, ctypes.POINTER(MREADER), ctypes.c_long, ctypes.c_int),
-    ),
-    ("Tell", ctypes.CFUNCTYPE(ctypes.c_long, ctypes.POINTER(MREADER))),
-    (
-        "Read",
-        ctypes.CFUNCTYPE(
-            BOOL, ctypes.POINTER(MREADER), ctypes.c_void_p, ctypes.c_size_t
-        ),
-    ),
-    ("Get", ctypes.CFUNCTYPE(ctypes.c_int, ctypes.POINTER(MREADER))),
-    ("Eof", ctypes.CFUNCTYPE(BOOL, ctypes.POINTER(MREADER))),
+    ("Seek", CFUNCTYPE(BOOL, POINTER(MREADER), c_long, c_int)),
+    ("Tell", CFUNCTYPE(c_long, POINTER(MREADER))),
+    ("Read", CFUNCTYPE(BOOL, POINTER(MREADER), c_void_p, c_size_t)),
+    ("Get", CFUNCTYPE(c_int, POINTER(MREADER))),
+    ("Eof", CFUNCTYPE(BOOL, POINTER(MREADER))),
 ]
 
 
-class MWRITER(ctypes.Structure):
+class MWRITER(Structure):
     pass
 
 
 MWRITER._fields_ = [
-    (
-        "Seek",
-        ctypes.CFUNCTYPE(BOOL, ctypes.POINTER(MWRITER), ctypes.c_long, ctypes.c_int),
-    ),
-    ("Tell", ctypes.CFUNCTYPE(ctypes.c_long, ctypes.POINTER(MWRITER))),
-    (
-        "Write",
-        ctypes.CFUNCTYPE(
-            BOOL, ctypes.POINTER(MWRITER), ctypes.c_void_p, ctypes.c_size_t
-        ),
-    ),
-    ("Put", ctypes.CFUNCTYPE(BOOL, ctypes.POINTER(MWRITER), ctypes.c_int)),
+    ("Seek", CFUNCTYPE(BOOL, POINTER(MWRITER), c_long, c_int)),
+    ("Tell", CFUNCTYPE(c_long, POINTER(MWRITER))),
+    ("Write", CFUNCTYPE(BOOL, POINTER(MWRITER), c_void_p, c_size_t)),
+    ("Put", CFUNCTYPE(BOOL, POINTER(MWRITER), c_int)),
 ]
 
 # /*
@@ -374,7 +359,7 @@ PAN_RIGHT = 255
 PAN_SURROUND = 512  # /* panning value for Dolby Surround */
 
 
-class _SAMPLE(ctypes.Structure):
+class _SAMPLE(Structure):
     _fields_ = [
         ("panning", SWORD),  # panning (0-255 or PAN_SURROUND)
         ("speed", ULONG),  # Base playing speed/frequency of note
@@ -405,15 +390,15 @@ class _SAMPLE(ctypes.Structure):
         ("seekpos", ULONG),  # seek position in file
         # sample handle used by individual drivers
         ("handle", SWORD),
-        ("onfree", ctypes.CFUNCTYPE(None, ctypes.c_void_p)),
-        ("ctx", ctypes.c_void_p),
+        ("onfree", CFUNCTYPE(None, c_void_p)),
+        ("ctx", c_void_p),
     ]
 
 
 SAMPLE = _SAMPLE
 
 
-class FILE(ctypes.Structure):
+class FILE(Structure):
     _fields_ = []
 
 
@@ -423,26 +408,26 @@ class FILE(ctypes.Structure):
 # MIKMODAPI extern SAMPLE *Sample_Load(CHAR*);
 Sample_Load = _mikmod_lib.Sample_Load
 Sample_Load.argtypes = [CHAR]
-Sample_Load.restype = ctypes.POINTER(SAMPLE)
+Sample_Load.restype = POINTER(SAMPLE)
 
 # MIKMODAPI extern SAMPLE *Sample_LoadFP(FILE*);
 Sample_LoadFP = _mikmod_lib.Sample_LoadFP
-Sample_LoadFP.argtypes = [ctypes.POINTER(FILE)]
-Sample_LoadFP.restype = ctypes.POINTER(SAMPLE)
+Sample_LoadFP.argtypes = [POINTER(FILE)]
+Sample_LoadFP.restype = POINTER(SAMPLE)
 
 # MIKMODAPI extern SAMPLE *Sample_LoadGeneric(MREADER*);
 Sample_LoadGeneric = _mikmod_lib.Sample_LoadGeneric
-Sample_LoadGeneric.argtypes = [ctypes.POINTER(MREADER)]
-Sample_LoadGeneric.restype = ctypes.POINTER(SAMPLE)
+Sample_LoadGeneric.argtypes = [POINTER(MREADER)]
+Sample_LoadGeneric.restype = POINTER(SAMPLE)
 
 # MIKMODAPI extern void   Sample_Free(SAMPLE*);
 Sample_Free = _mikmod_lib.Sample_Free
-Sample_Free.argtypes = [ctypes.POINTER(SAMPLE)]
+Sample_Free.argtypes = [POINTER(SAMPLE)]
 Sample_Free.restype = None
 
 # MIKMODAPI extern SBYTE  Sample_Play(SAMPLE*,ULONG,UBYTE);
 Sample_Play = _mikmod_lib.Sample_Play
-Sample_Play.argtypes = [ctypes.POINTER(SAMPLE), ULONG, UBYTE]
+Sample_Play.argtypes = [POINTER(SAMPLE), ULONG, UBYTE]
 Sample_Play.restype = SBYTE
 
 
@@ -478,7 +463,7 @@ Voice_GetPanning.restype = ULONG
 
 # MIKMODAPI extern void   Voice_Play(SBYTE,SAMPLE*,ULONG);
 Voice_Play = _mikmod_lib.Voice_Play
-Voice_Play.argtypes = [SBYTE, ctypes.POINTER(SAMPLE), ULONG]
+Voice_Play.argtypes = [SBYTE, POINTER(SAMPLE), ULONG]
 Voice_Play.restype = None
 
 # MIKMODAPI extern void   Voice_Stop(SBYTE);
@@ -517,7 +502,7 @@ INSTNOTES = 120
 # /* Envelope point */
 
 
-class _ENVPT(ctypes.Structure):
+class _ENVPT(Structure):
     _fields_ = [("pos", SWORD), ("val", SWORD)]
 
 
@@ -529,7 +514,7 @@ ENVPOINTS = 32
 # /* Instrument structure */
 
 
-class _INSTRUMENT(ctypes.Structure):
+class _INSTRUMENT(Structure):
     _fields_ = [
         ("insname", CHAR),
         ("flags", UBYTE),
@@ -575,14 +560,14 @@ class _INSTRUMENT(ctypes.Structure):
 INSTRUMENT = _INSTRUMENT
 
 
-class _MP_CONTROL(ctypes.Structure):
+class _MP_CONTROL(Structure):
     pass
 
 
 MP_CONTROL = _MP_CONTROL
 
 
-class _MP_VOICE(ctypes.Structure):
+class _MP_VOICE(Structure):
     pass
 
 
@@ -612,7 +597,7 @@ UF_PANNING = 0x0400  # /* module uses panning effects or have
 # 		  non-tracker default initial panning */
 
 
-class _MODULE(ctypes.Structure):
+class _MODULE(Structure):
     # general module information
     _fields_ = [
         ("songname", CHAR),  # name of the song
@@ -628,8 +613,8 @@ class _MODULE(ctypes.Structure):
         ("numpat", UWORD),  # number of patterns in this so
         ("numins", UWORD),  # number of instruments
         ("numsmp", UWORD),  # number of samples
-        ("instruments", ctypes.POINTER(INSTRUMENT)),  # all instruments
-        ("samples", ctypes.POINTER(SAMPLE)),  # all samples
+        ("instruments", POINTER(INSTRUMENT)),  # all instruments
+        ("samples", POINTER(SAMPLE)),  # all samples
         ("realchn", UBYTE),  # real number of channels used
         # total number of channels used (incl NNAs)
         ("totalchn", UBYTE),
@@ -663,11 +648,11 @@ class _MODULE(ctypes.Structure):
         # internal module representation
         ("numtrk", UWORD),  # number of tracks
         # array of numtrk pointers to tracks
-        ("tracks", ctypes.POINTER(ctypes.POINTER(UBYTE))),
-        ("patterns", ctypes.POINTER(UWORD)),  # array of Patterns
+        ("tracks", POINTER(POINTER(UBYTE))),
+        ("patterns", POINTER(UWORD)),  # array of Patterns
         # array of number of rows for each pattern
-        ("pattrows", ctypes.POINTER(UWORD)),
-        ("positions", ctypes.POINTER(UWORD)),  # all positions
+        ("pattrows", POINTER(UWORD)),
+        ("positions", POINTER(UWORD)),  # all positions
         ("forbid", BOOL),  # if true, no player update!
         # number of rows on current pattern
         ("numrow", UWORD),
@@ -676,9 +661,9 @@ class _MODULE(ctypes.Structure):
         # used for song time computation
         ("sngremainder", UWORD),
         # Effects Channel info (size pf->numchn)
-        ("control", ctypes.POINTER(MP_CONTROL)),
+        ("control", POINTER(MP_CONTROL)),
         # Audio Voice information (size md_numchn)
-        ("voice", ctypes.POINTER(MP_VOICE)),
+        ("voice", POINTER(MP_VOICE)),
         ("globalslide", UBYTE),  # global volume slide rate
         # module has just looped to position -1
         ("pat_repcrazy", UBYTE),
@@ -704,7 +689,7 @@ MODULE = _MODULE
 # struct MLOADER;
 
 
-class MLOADER(ctypes.Structure):
+class MLOADER(Structure):
     pass
 
 
@@ -720,7 +705,7 @@ MikMod_RegisterAllLoaders.restype = None
 
 # MIKMODAPI extern void    MikMod_RegisterLoader(struct MLOADER*);
 MikMod_RegisterLoader = _mikmod_lib.MikMod_RegisterLoader
-MikMod_RegisterLoader.argtypes = [ctypes.POINTER(MLOADER)]
+MikMod_RegisterLoader.argtypes = [POINTER(MLOADER)]
 MikMod_RegisterLoader.restype = None
 
 # MIKMODAPI extern struct MLOADER load_669; /* 669 and Extended-669 (by Tran/Renaissance) */
@@ -766,18 +751,18 @@ load_xm = MLOADER.in_dll(_mikmod_lib, "load_xm")
 
 # MIKMODAPI extern MODULE* Player_Load(CHAR*,int,BOOL);
 Player_Load = _mikmod_lib.Player_Load
-Player_Load.argtypes = [CHAR, ctypes.c_int, BOOL]
-Player_Load.restype = ctypes.POINTER(MODULE)
+Player_Load.argtypes = [CHAR, c_int, BOOL]
+Player_Load.restype = POINTER(MODULE)
 
 # MIKMODAPI extern MODULE* Player_LoadFP(FILE*,int,BOOL);
 Player_LoadFP = _mikmod_lib.Player_LoadFP
-Player_LoadFP.argtypes = [ctypes.POINTER(FILE), ctypes.c_int, BOOL]
-Player_LoadFP.restype = ctypes.POINTER(MODULE)
+Player_LoadFP.argtypes = [POINTER(FILE), c_int, BOOL]
+Player_LoadFP.restype = POINTER(MODULE)
 
 # MIKMODAPI extern MODULE* Player_LoadGeneric(MREADER*,int,BOOL);
 Player_LoadGeneric = _mikmod_lib.Player_LoadGeneric
-Player_LoadGeneric.argtypes = [ctypes.POINTER(MREADER), ctypes.c_int, BOOL]
-Player_LoadGeneric.restype = ctypes.POINTER(MODULE)
+Player_LoadGeneric.argtypes = [POINTER(MREADER), c_int, BOOL]
+Player_LoadGeneric.restype = POINTER(MODULE)
 
 # MIKMODAPI extern CHAR*   Player_LoadTitle(CHAR*);
 Player_LoadTitle = _mikmod_lib.Player_LoadTitle
@@ -786,17 +771,17 @@ Player_LoadTitle.restype = CHAR
 
 # MIKMODAPI extern CHAR*   Player_LoadTitleFP(FILE*);
 Player_LoadTitleFP = _mikmod_lib.Player_LoadTitleFP
-Player_LoadTitleFP.argtypes = [ctypes.POINTER(FILE)]
+Player_LoadTitleFP.argtypes = [POINTER(FILE)]
 Player_LoadTitleFP.restype = CHAR
 
 # MIKMODAPI extern void    Player_Free(MODULE*);
 Player_Free = _mikmod_lib.Player_Free
-Player_Free.argtypes = [ctypes.POINTER(MODULE)]
+Player_Free.argtypes = [POINTER(MODULE)]
 Player_Free.restype = None
 
 # MIKMODAPI extern void    Player_Start(MODULE*);
 Player_Start = _mikmod_lib.Player_Start
-Player_Start.argtypes = [ctypes.POINTER(MODULE)]
+Player_Start.argtypes = [POINTER(MODULE)]
 Player_Start.restype = None
 
 # MIKMODAPI extern BOOL    Player_Active(void);
@@ -847,7 +832,7 @@ Player_SetVolume.restype = None
 # MIKMODAPI extern MODULE* Player_GetModule(void);
 Player_GetModule = _mikmod_lib.Player_GetModule
 Player_GetModule.argtypes = []
-Player_GetModule.restype = ctypes.POINTER(MODULE)
+Player_GetModule.restype = POINTER(MODULE)
 
 # MIKMODAPI extern void    Player_SetSpeed(UWORD);
 Player_SetSpeed = _mikmod_lib.Player_SetSpeed
@@ -877,7 +862,7 @@ Player_ToggleMute.restype = None
 # MIKMODAPI extern int     Player_GetChannelVoice(UBYTE);
 Player_GetChannelVoice = _mikmod_lib.Player_GetChannelVoice
 Player_GetChannelVoice.argtypes = [UBYTE]
-Player_GetChannelVoice.restype = ctypes.c_int
+Player_GetChannelVoice.restype = c_int
 
 # MIKMODAPI extern UWORD   Player_GetChannelPeriod(UBYTE);
 Player_GetChannelPeriod = _mikmod_lib.Player_GetChannelPeriod
@@ -886,9 +871,9 @@ Player_GetChannelPeriod.restype = UWORD
 
 
 # typedef void (MikMod_player)(void);
-MikMod_player = ctypes.CFUNCTYPE(None)
+MikMod_player = CFUNCTYPE(None)
 # typedef MikMod_player *MikMod_player_t;
-MikMod_player_t = ctypes.POINTER(MikMod_player)
+MikMod_player_t = POINTER(MikMod_player)
 
 # MIKMODAPI extern MikMod_player_t MikMod_RegisterPlayer(MikMod_player_t);
 MikMod_RegisterPlayer = _mikmod_lib.MikMod_RegisterPlayer
@@ -926,46 +911,42 @@ DMODE_REVERSE = 0x0400  # /* reverse stereo */
 # struct SAMPLOAD;
 
 
-class SAMPLOAD(ctypes.Structure):
+class SAMPLOAD(Structure):
     pass
 
 
 MDRIVER._fields_ = [
-    ("next", ctypes.POINTER(MDRIVER)),
+    ("next", POINTER(MDRIVER)),
     ("Name", CHAR),
     ("Version", CHAR),
-    ("HardVoiceLimit", UBYTE),
-    ("SoftVoiceLimit", UBYTE),
+    ("HardVoiceLimit", UBYTE),  # /* Limit of hardware mixer voices */
+    ("SoftVoiceLimit", UBYTE),  # /* Limit of software mixer voices */
     ("Alias", CHAR),
-    ("CmdLineHelp", CHAR),
-    ("CommandLine", ctypes.CFUNCTYPE(None, CHAR)),
-    ("IsPresent", ctypes.CFUNCTYPE(BOOL)),
-    ("SampleLoad", ctypes.CFUNCTYPE(SWORD, ctypes.POINTER(SAMPLOAD), ctypes.c_int)),
-    ("SampleUnload", ctypes.CFUNCTYPE(None, SWORD)),
-    ("FreeSampleSpace", ctypes.CFUNCTYPE(ULONG, ctypes.c_int)),
-    ("RealSampleLength", ctypes.CFUNCTYPE(ULONG, ctypes.c_int, ctypes.POINTER(SAMPLE))),
-    ("Init", ctypes.CFUNCTYPE(ctypes.c_int)),
-    ("Exit", ctypes.CFUNCTYPE(None)),
-    ("Reset", ctypes.CFUNCTYPE(ctypes.c_int)),
-    ("SetNumVoices", ctypes.CFUNCTYPE(ctypes.c_int)),
-    ("PlayStart", ctypes.CFUNCTYPE(ctypes.c_int)),
-    ("PlayStop", ctypes.CFUNCTYPE(None)),
-    ("Update", ctypes.CFUNCTYPE(None)),
-    ("Pause", ctypes.CFUNCTYPE(None)),
-    ("VoiceSetVolume", ctypes.CFUNCTYPE(None, UBYTE, UWORD)),
-    ("VoiceGetVolume", ctypes.CFUNCTYPE(UWORD, UBYTE)),
-    ("VoiceSetFrequency", ctypes.CFUNCTYPE(None, UBYTE, ULONG)),
-    ("VoiceGetFrequency", ctypes.CFUNCTYPE(ULONG, UBYTE)),
-    ("VoiceSetPanning", ctypes.CFUNCTYPE(None, UBYTE, ULONG)),
-    ("VoiceGetPanning", ctypes.CFUNCTYPE(ULONG, UBYTE)),
-    (
-        "VoicePlay",
-        ctypes.CFUNCTYPE(None, UBYTE, SWORD, ULONG, ULONG, ULONG, ULONG, UWORD),
-    ),
-    ("VoiceStop", ctypes.CFUNCTYPE(None, UBYTE)),
-    ("VoiceStopped", ctypes.CFUNCTYPE(BOOL, UBYTE)),
-    ("VoiceGetPosition", ctypes.CFUNCTYPE(SLONG, UBYTE)),
-    ("VoiceRealVolume", ctypes.CFUNCTYPE(ULONG, UBYTE)),
+    ("CommandLine", CFUNCTYPE(None, CHAR)),
+    ("IsPresent", CFUNCTYPE(BOOL)),
+    ("SampleLoad", CFUNCTYPE(SWORD, POINTER(SAMPLOAD), c_int)),
+    ("SampleUnload", CFUNCTYPE(None, SWORD)),
+    ("FreeSampleSpace", CFUNCTYPE(ULONG, c_int)),
+    ("RealSampleLength", CFUNCTYPE(ULONG, c_int, POINTER(SAMPLE))),
+    ("Init", CFUNCTYPE(BOOL)),
+    ("Exit", CFUNCTYPE(None)),
+    ("Reset", CFUNCTYPE(BOOL)),
+    ("SetNumVoices", CFUNCTYPE(BOOL)),
+    ("PlayStart", CFUNCTYPE(BOOL)),
+    ("PlayStop", CFUNCTYPE(None)),
+    ("Update", CFUNCTYPE(None)),
+    ("Pause", CFUNCTYPE(None)),
+    ("VoiceSetVolume", CFUNCTYPE(None, UBYTE, UWORD)),
+    ("VoiceGetVolume", CFUNCTYPE(UWORD, UBYTE)),
+    ("VoiceSetFrequency", CFUNCTYPE(None, UBYTE, ULONG)),
+    ("VoiceGetFrequency", CFUNCTYPE(ULONG, UBYTE)),
+    ("VoiceSetPanning", CFUNCTYPE(None, UBYTE, ULONG)),
+    ("VoiceGetPanning", CFUNCTYPE(ULONG, UBYTE)),
+    ("VoicePlay", CFUNCTYPE(None, UBYTE, SWORD, ULONG, ULONG, ULONG, ULONG, UWORD)),
+    ("VoiceStop", CFUNCTYPE(None, UBYTE)),
+    ("VoiceStopped", CFUNCTYPE(BOOL, UBYTE)),
+    ("VoiceGetPosition", CFUNCTYPE(SLONG, UBYTE)),
+    ("VoiceRealVolume", CFUNCTYPE(ULONG, UBYTE)),
 ]
 
 # /* These variables can be changed at ANY time and results will be immediate */
@@ -993,7 +974,7 @@ md_mode = UWORD.in_dll(_mikmod_lib, "md_mode")
 
 # /* The following variable should not be changed! */
 # MIKMODAPI extern MDRIVER* md_driver;   /* Current driver in use. */
-md_driver = ctypes.POINTER(MDRIVER).in_dll(_mikmod_lib, "md_driver")
+md_driver = POINTER(MDRIVER).in_dll(_mikmod_lib, "md_driver")
 
 # /* Known drivers list */
 
@@ -1065,12 +1046,12 @@ VC_SetNumVoices.restype = BOOL
 
 # MIKMODAPI extern ULONG VC_SampleSpace(int);
 VC_SampleSpace = _mikmod_lib.VC_SampleSpace
-VC_SampleSpace.argtypes = [ctypes.c_int]
+VC_SampleSpace.argtypes = [c_int]
 VC_SampleSpace.restype = ULONG
 
 # MIKMODAPI extern ULONG VC_SampleLength(int,SAMPLE*);
 VC_SampleLength = _mikmod_lib.VC_SampleLength
-VC_SampleLength.argtypes = [ctypes.c_int, ctypes.POINTER(SAMPLE)]
+VC_SampleLength.argtypes = [c_int, POINTER(SAMPLE)]
 VC_SampleLength.restype = ULONG
 
 
@@ -1087,7 +1068,7 @@ VC_PlayStop.restype = None
 
 # MIKMODAPI extern SWORD VC_SampleLoad(struct SAMPLOAD*,int);
 VC_SampleLoad = _mikmod_lib.VC_SampleLoad
-VC_SampleLoad.argtypes = [ctypes.POINTER(SAMPLOAD), ctypes.c_int]
+VC_SampleLoad.argtypes = [POINTER(SAMPLOAD), c_int]
 VC_SampleLoad.restype = SWORD
 
 # MIKMODAPI extern void  VC_SampleUnload(SWORD);
@@ -1098,15 +1079,12 @@ VC_SampleUnload.restype = None
 
 # MIKMODAPI extern ULONG VC_WriteBytes(SBYTE*,ULONG);
 VC_WriteBytes = _mikmod_lib.VC_WriteBytes
-VC_WriteBytes.argtypes = [ctypes.POINTER(SBYTE), ULONG]
+VC_WriteBytes.argtypes = [POINTER(SBYTE), ULONG]
 VC_WriteBytes.restype = ULONG
-VC_WriteBytes = _mikmod_lib.VC_WriteBytes
-VC_WriteBytes.restype = ULONG
-VC_WriteBytes.argtypes = [ctypes.POINTER(SBYTE), ULONG]
 
 # MIKMODAPI extern ULONG VC_SilenceBytes(SBYTE*,ULONG);
 VC_SilenceBytes = _mikmod_lib.VC_SilenceBytes
-VC_SilenceBytes.argtypes = [ctypes.POINTER(SBYTE), ULONG]
+VC_SilenceBytes.argtypes = [POINTER(SBYTE), ULONG]
 VC_SilenceBytes.restype = ULONG
 
 

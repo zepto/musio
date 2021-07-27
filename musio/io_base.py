@@ -19,33 +19,28 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" io_wrapper      Function for wrapping audio io functions
+"""Base IO classes and utility functions.
 
-    AudioIO         Abstract class for audio file IO
-    DevIO           Abstract class for audio device IO
+io_wrapper      Function for wrapping audio io functions
 
+AudioIO         Abstract class for audio file IO
+DevIO           Abstract class for audio device IO
 """
 
-from functools import wraps as functools_wraps
-from io import RawIOBase, SEEK_SET, SEEK_CUR, SEEK_END
-from os.path import basename as os_basename
-from os.path import isfile as os_isfile
+from functools import wraps
+from io import SEEK_CUR, SEEK_END, SEEK_SET, RawIOBase
+from os.path import basename, isfile
+from typing import Any, Callable, Union
 
 # If True errors will only print a message.
 IO_SOFT_ERRORS = True
 
 
-def io_wrapper(func):
-    """ Wrap io methods.
-
-    """
-
-    @functools_wraps(func)
-    def wrapper(self, *args):
-        """ Call the wrapped function.
-
-        """
-
+def io_wrapper(func: Callable) -> Callable:
+    """Wrap io methods."""
+    @wraps(func)
+    def wrapper(self, *args) -> Union[int, bytes]:
+        """Call the wrapped function."""
         class_name = self.__class__.__name__
         func_name = func.__name__
         func_annotations = getattr(func, '__annotations__', {})
@@ -55,7 +50,8 @@ def io_wrapper(func):
 
         if self._closed:
             # Don't close the stream more than once.
-            if func_name == 'close': return None
+            if func_name == 'close':
+                return 0
 
             # Don't operate on a closed stream.
             err_str = "({class_name}) Can't {func_name}, stream is closed."
@@ -88,7 +84,7 @@ def io_wrapper(func):
         except IOError as err:
             if IO_SOFT_ERRORS:
                 # Only print the error message.
-                print("(%s.%s) %s" % (class_name, func_name, err))
+                print(f"({class_name}.{func_name}) {err}")
             else:
                 # Re-raise the error.
                 raise
@@ -100,9 +96,7 @@ def io_wrapper(func):
 
 
 class AudioIO(RawIOBase):
-    """ File like access for audio files.
-
-    """
+    """File like access for audio files."""
 
     # Valid bit depths
     _valid_depth = (32, 16, 8)
@@ -110,34 +104,28 @@ class AudioIO(RawIOBase):
     # Both reading and writing are supported
     _supported_modes = 'rw'
 
-    def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2):
-        """ AudioIO(filename, [mode='r', depth=16, rate=44100, channels=2])
-        -> Open an audio file for file like access to audio files.
-
-        """
-
+    def __init__(self, filename: str, mode: str = 'r', depth: int = 16,
+                 rate: int = 44100, channels: int = 2):
+        """Open an audio file for file like access to audio files."""
         if not all([i in self._supported_modes for i in mode]):
-            raise ValueError("(%s) Mode has to be one of %s." %
-                             (self.__class__.__name__,
-                             self._supported_modes))
+            raise ValueError(f"({self.__class__.__name__}) Mode has to be one "
+                             f"of {self._supported_modes}.")
 
         if depth not in self._valid_depth:
-            raise ValueError("(%s) Invalid depth %s, valid depths are %s" %
-                             (self.__class__.__name__,
-                              depth,
-                              self._valid_depth))
+            raise ValueError(f"({self.__class__.__name__}) Invalid depth "
+                             f"{depth}, valid depths are {self._valid_depth}")
 
         super(AudioIO, self).__init__()
 
         if filename:
-            if 'r' in mode and not os_isfile(filename):
+            if 'r' in mode and not isfile(filename):
                 if not filename.startswith('http://'):
-                    raise(IOError("%s: No such file or directory" % filename))
+                    raise(IOError(f"{filename}: No such file or directory"))
 
         self.three_byte = False
 
         # self._buffer_size = 8192  # 16384 // (depth // (8 // channels))
-        self._buffer_size = 0 #16384 // (depth // (8 // channels))
+        self._buffer_size = 0  # 16384 // (depth // (8 // channels))
 
         self._filename = filename
         self._mode = mode
@@ -160,16 +148,13 @@ class AudioIO(RawIOBase):
         self._closed = True
 
         # The default name is the filename minus the extension.
-        name = os_basename(self._filename.rsplit('.', 1)[0])
+        name = basename(self._filename.rsplit('.', 1)[0])
 
-        self._info_dict = {'name': name}
+        self._info_dict = {}
+        self._info_dict['name'] = name
 
     def __str__(self) -> str:
-        """ __str__ -> Return a string representation of the module
-        information.
-
-        """
-
+        """Return a string representation of the module information."""
         str_list = ['\n']
 
         max_key_len = max(len(key) for key in self._info_dict.keys())
@@ -179,68 +164,46 @@ class AudioIO(RawIOBase):
                 continue
 
             if type(value) in (list, tuple, set):
-                str_list.insert(0, '\t%s' % '\n\t'.join(value))
-                str_list.insert(0, "\n%s" % key.lower().capitalize())
+                str_list.insert(0, f'\t{f"{chr(10)}{chr(9)}".join(value)}')
+                str_list.insert(0, f"\n{key.lower().capitalize()}")
                 continue
             value = str(value).strip()
 
-            # str_list.append("%-*s: %s" % (max_key_len,
-            #                               key.lower().capitalize(), value))
-
             # Format the info in a list as follows:
             # key (right align by space max_key_len): value
-            str_list.append("{1:<{0}}: {2}".format(max_key_len,
-                                                   key.lower().capitalize(),
-                                                   value))
+            str_list.append(f'{key.lower().capitalize():<{max_key_len}}: '
+                            f'{value}')
 
         return '\n'.join(str_list)
 
     def __repr__(self) -> str:
-        """ __repr__ -> Returns a python expression to recreate this instance.
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(filename="{self._filename}", '
+                f'depth={self._depth}, rate={self._rate}, '
+                f'channels={self._channels}')
 
-        """
-
-        repr_str = "filename='%(_filename)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
-    def __getitem__(self, item):
-        """ Return the attribute.
-
-        """
-
+    def __getitem__(self, item: Any) -> Any:
+        """Return the attribute."""
         return getattr(self, item)
 
-    def __len__(self):
-        """ The length of the file if it has one.
-
-        """
-
+    def __len__(self) -> int:
+        """Get the length of the file if it has one."""
         return self._length if self._length >= 0 else 0
 
-    def __bool__(self):
-        """ Always return True.
-
-        """
-
+    def __bool__(self) -> bool:
+        """Return True always."""
         return True
 
-    def __enter__(self):
-        """ Provides the ability to use pythons with statement.
-
-        """
-
+    def __enter__(self) -> RawIOBase:
+        """Provide the ability to use pythons with statement."""
         try:
             return self
         except Exception as err:
             print(err)
-            return None
+            return super()
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        """ Close the file when finished.
-
-        """
-
+    def __exit__(self, exc_type, exc_value, traceback) -> bool:
+        """Close the file when finished."""
         try:
             self.close()
             return not bool(exc_type)
@@ -248,18 +211,12 @@ class AudioIO(RawIOBase):
             print(err)
             return False
 
-    def __iter__(self):
-        """ Returns an iter of this object.
-
-        """
-
+    def __iter__(self) -> RawIOBase:
+        """Return an iter of this object."""
         return self
 
-    def __next__(self) -> bytes:
-        """ Return the next buffer.
-
-        """
-
+    def __next__(self) -> Union[bytes, str]:
+        """Return the next buffer."""
         data = self.read(self.buffer_size)
 
         if not data:
@@ -268,32 +225,20 @@ class AudioIO(RawIOBase):
             return data
 
     def writable(self) -> bool:
-        """ Return wether this device is writable.
-
-        """
-
+        """Return wether this device is writable."""
         return 'w' in self._mode
 
     def readable(self) -> bool:
-        """ Return wether this device is readable.
-
-        """
-
+        """Return wether this device is readable."""
         return 'r' in self._mode
 
     def seekable(self) -> bool:
-        """ The file is seekable if self._length is > 0
-
-        """
-
+        """Return True if self._length is > 0."""
         return self._length >= 0
 
     @io_wrapper
     def seek(self, offset: int, whence: int = SEEK_SET) -> int:
-        """ seek(offset, whence) -> Seek to position in mod.
-
-        """
-
+        """Seek to position in mod."""
         if whence == SEEK_CUR:
             self.position += offset
         elif whence == SEEK_END:
@@ -305,27 +250,17 @@ class AudioIO(RawIOBase):
 
     @io_wrapper
     def tell(self) -> int:
-        """ tell -> Returns the current position.
-
-        """
-
+        """Return the current position."""
         return self.position
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size) -> Reads size amount of data and returns it.
-
-        """
-
+    def read(self, size: int = -1) -> Union[bytes, str]:
+        """Read size amount of data and returns it."""
         raise NotImplementedError("Read method not implemented.")
 
     @io_wrapper
-    def readall(self):
-        """ readall() -> Read and return all the data until the end of the
-        stream.
-
-        """
-
+    def readall(self) -> Union[bytes, str]:
+        """Read and return all the data until the end of the stream."""
         # Get the return type of the read method or bytes.
         annotations = getattr(self.read, '__annotations__', {})
         return_type = annotations.get('return', bytes)
@@ -344,21 +279,23 @@ class AudioIO(RawIOBase):
 
     @io_wrapper
     def readinto(self, barray: bytearray) -> int:
-        """ Read up to len(barray) into bytearray barray and return the number
-        of bytes read otherwise returns None.
+        """Read into a bytearray.
 
+        Read up to len(barray) into bytearray barray and return the number of
+        bytes read otherwise returns None.
         """
-
         # Read len(barray) number of bytes.
         data = self.read(len(barray))
 
         # Return None if no data was read.
-        if not data: return None
+        if not data:
+            return 0
 
         bytes_read = len(data)
 
         # Convert string data to bytes
-        if type(data) is str: data = data.encode()
+        if type(data) is str:
+            data = data.encode()
 
         # Set barray to data.
         barray[:bytes_read] = data
@@ -367,11 +304,8 @@ class AudioIO(RawIOBase):
         return bytes_read
 
     @io_wrapper
-    def readline(self, size: int = -1) -> bytes:
-        """ readline(size=-1) -> Returns the next line or size bytes.
-
-        """
-
+    def readline(self, size: int = -1) -> Union[bytes, str]:
+        """Return the next line or size bytes."""
         if size == -1:
             # Return a whole buffer.
             return self.read(self.buffer_size)
@@ -380,148 +314,94 @@ class AudioIO(RawIOBase):
             return self.read(size)
 
     @io_wrapper
-    def write(self, data: bytes) -> int:
-        """ write(data) -> Write data to file.
-
-        """
-
+    def write(self, data: Union[bytes, str]) -> int:
+        """Write data to file."""
         raise NotImplementedError("Write method not implemented.")
 
     @property
-    def closed(self):
-        """ Return true if closed.
-
-        """
-
+    def closed(self) -> bool:
+        """Return true if closed."""
         return self._closed
 
-    def _open(self):
-        """ _open() -> Open the classes file and set it up for read/write
-        access.
-
-        """
-
+    def _open(self) -> Any:
+        """Open the classes file and set it up for read/write access."""
         raise NotImplementedError("Open method not implemented.")
 
-    def to_seconds(self, position: int) -> int:
-        """ Convert the provided position/length to seconds.
-
-        """
-
-        return position
+    def to_seconds(self, position: int) -> float:
+        """Convert the provided position/length to seconds."""
+        return float(position)
 
     def _set_position(self, position: int):
-        """ Change the position of playback.
-
-        """
-
+        """Change the position of playback."""
         pass
 
     def _get_position(self) -> int:
-        """ Returns the current position.
-
-        """
-
+        """Return the current position."""
         return 0
 
     @property
     def loops(self) -> int:
-        """ How many times the file should loop.
-
-        """
-
+        """How many times the file should loop."""
         return self._loops
 
     @loops.setter
     def loops(self, value: int):
-        """ Set how many times the file should loop.
+        """Set how many times the file should loop.
 
         To play forever use a value of -1.
-
         """
-
         self._loops = value
 
     @property
     @io_wrapper
     def position(self) -> int:
-        """ Get the current position.
-
-        """
-
+        """Get the current position."""
         return self._get_position()
 
     @position.setter
     @io_wrapper
     def position(self, position: int):
-        """ Set the position.
-
-        """
-
+        """Set the position."""
         self._set_position(int(position))
 
     @property
     def mode(self) -> str:
-        """ Get the mode.
-
-        """
-
+        """Get the mode."""
         return self._mode
 
     @property
     def loop_count(self) -> int:
-        """ How many times the stream has looped.
-
-        """
-
+        """How many times the stream has looped."""
         return self._loop_count
 
     @property
     def length(self) -> int:
-        """ Get the length.
-
-        """
-
+        """Get the length."""
         return self._length
 
     @property
-    def floatp(self) -> int:
-        """ Get the if the audio is floating point.
-
-        """
-
+    def floatp(self) -> bool:
+        """Get if the audio is floating point."""
         return self._floatp
 
     @property
     def depth(self) -> int:
-        """ Get the current bit depth.
-
-        """
-
+        """Get the current bit depth."""
         return self._depth
 
     @property
     def rate(self) -> int:
-        """ The current sample rate.
-
-        """
-
+        """Get the current sample rate."""
         return self._rate
 
     @property
     def channels(self) -> int:
-        """ Get the current channel count.
-
-        """
-
+        """Get the current channel count."""
         return self._channels
 
     @property
     def buffer_size(self) -> int:
-        """ Get the current buffer size.
-
-        """
-
+        """Get the current buffer size."""
         if self._buffer_size <= 0:
             self._buffer_size = 16384 // (self._depth // (8 // self._channels))
 
@@ -529,48 +409,34 @@ class AudioIO(RawIOBase):
 
     @property
     def unsigned(self) -> bool:
-        """ Whether the player is producing signed data.
-
-        """
-
+        """Whether the player is producing signed data."""
         return self._unsigned
 
     @property
     def bigendian(self) -> bool:
-        """ Whether the player is using bigendian.
-
-        """
-
+        """Whether the player is using bigendian."""
         return self._bigendian
 
 
 class DevIO(RawIOBase):
-    """ File like access to audio device.
-
-    """
+    """File like access to audio device."""
 
     _valid_depth = (32, 24, 16, 8)
     _supported_modes = 'rw'
 
-    def __init__(self, mode='w', depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, buffer_size=None,
-                 latency=500000):
-        """ DevIO(depth=16, rate=44100, channels=2, bigendian=False,
-        unsigned=False, buffer_size=None, latency=500000) -> Initialize an
-        audio device for either reading or writing.
-
-        """
-
+    def __init__(self, mode: str = 'w', depth: int = 16, rate: int = 44100,
+                 channels: int = 2, bigendian: bool = False,
+                 unsigned: bool = False, buffer_size: int = 0,
+                 latency: float = 500000):
+        """Initialize an audio device for either reading or writing."""
         if mode not in self._supported_modes:
-            raise ValueError("(%s) Mode has to be one of %s." %
-                             self.__class__.__name__,
-                             self._supported_modes)
+            raise ValueError(f"({self.__class__.__name__}) Mode has to be "
+                             f"one of {self._supported_modes}.")
 
         if depth not in self._valid_depth:
-            raise ValueError("(%s) Invalid depth %s.  Valid depths are: %s" %
-                             (self.__class__.__name__,
-                             depth,
-                             self._valid_depth))
+            raise ValueError(f"({self.__class__.__name__}) Invalid depth "
+                             f"{depth}.  Valid depths are: "
+                             f"{self._valid_depth}")
 
         super(DevIO, self).__init__()
 
@@ -592,88 +458,56 @@ class DevIO(RawIOBase):
         self._closed = True
 
     def __repr__(self) -> str:
-        """ __repr__ -> Returns a python expression to recreate this instance.
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(mode="{self._mode}", '
+                f'depth={self._depth}, rate={self._rate}, '
+                f'channels={self._channels}, bigendian={self._bigendian}, '
+                f'unsigned={self._unsigned}, buffer_size={self._buffer_size})')
 
-        """
-
-        repr_str = "mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s, buffer_size=%(_buffer_size)s" % self
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
-
-    def __getitem__(self, item) -> object:
-        """ Return the attribute.
-
-        """
-
+    def __getitem__(self, item: Any) -> Any:
+        """Return the attribute."""
         return getattr(self, item)
 
     def writable(self) -> bool:
-        """ Return wether this device is writable.
-
-        """
-
+        """Return wether this device is writable."""
         return 'w' in self._mode
 
     def readable(self) -> bool:
-        """ Return wether this device is readable.
-
-        """
-
+        """Return wether this device is readable."""
         return 'r' in self._mode
 
     def seekable(self) -> bool:
-        """ Is this stream seekable.
-
-        """
-
+        """Is this stream seekable."""
         # It is a device it can't be seeked.
         return False
 
     @property
     def closed(self) -> bool:
-        """ Return true if closed.
-
-        """
-
+        """Return true if closed."""
         return self._closed
 
-    def _open(self) -> object:
-        """ open -> Open the pcm audio output.
-
-        """
-
+    def _open(self) -> Union[Any, None]:
+        """Open the pcm audio output."""
         raise NotImplementedError("Open method not implemented.")
 
-    def __iter__(self) -> iter:
-        """ Returns an iter of this object.
-
-        """
-
+    def __iter__(self) -> RawIOBase:
+        """Return an iter of this object."""
         return self
 
-    def __next__(self) -> str:
-        """ Return the next buffer.
-
-        """
-
+    def __next__(self) -> Union[str, bytes]:
+        """Return the next buffer."""
         return self.read(self.buffer_size)
 
-    def __enter__(self) -> object:
-        """ Provides the ability to use pythons with statement.
-
-        """
-
+    def __enter__(self) -> RawIOBase:
+        """Provide the ability to use pythons with statement."""
         try:
             return self
         except Exception as err:
             print(err)
-            return None
+            return super()
 
     def __exit__(self, exc_type, exc_value, traceback) -> bool:
-        """ Close the pcm when finished.
-
-        """
-
+        """Close the pcm when finished."""
         try:
             self.close()
             return not bool(exc_type)
@@ -682,25 +516,23 @@ class DevIO(RawIOBase):
             return False
 
     @io_wrapper
-    def read(self, length: int) -> bytes:
-        """ read(length) -> Read from pcm.
-
-        """
-
+    def read(self, length: int) -> Union[bytes, str]:
+        """Read from pcm."""
         raise NotImplementedError("Read method not implemented.")
 
     @io_wrapper
     def readinto(self, barray: bytearray) -> int:
-        """ Read up to len(barray) into bytearray barray and return the number
-        of bytes read otherwise returns None.
+        """Read into bytearray.
 
+        Read up to len(barray) into bytearray barray and return the number of
+        bytes read otherwise returns 0.
         """
-
         # Read len(barray) number of bytes.
         data = self.read(len(barray))
 
         # Return None if no data was read.
-        if not data: return None
+        if not data:
+            return 0
 
         bytes_read = len(data)
 
@@ -711,59 +543,38 @@ class DevIO(RawIOBase):
         return bytes_read
 
     @io_wrapper
-    def write(self, data: bytes) -> int:
-        """ write(data) -> Write to the pcm device.
-
-        """
-
+    def write(self, data: Union[bytes, str]) -> int:
+        """Write to the pcm device."""
         raise NotImplementedError("Write method not implemented.")
 
     @property
     def mode(self) -> str:
-        """ Get the mode.
-
-        """
-
+        """Get the mode."""
         return self._mode
 
     @property
     def depth(self) -> int:
-        """ The current depth rate.
-
-        """
-
+        """Return the current depth rate."""
         return self._depth
 
     @property
     def unsigned(self) -> int:
-        """ The sample current sample rate.
-
-        """
-
+        """Return the sample current sample rate."""
         return self._unsigned
 
     @property
     def rate(self) -> int:
-        """ The sample current sample rate.
-
-        """
-
+        """Return the sample current sample rate."""
         return self._rate
 
     @property
     def channels(self) -> int:
-        """ The number of output channels.
-
-        """
-
+        """Return the number of output channels."""
         return self._channels
 
     @property
     def buffer_size(self) -> int:
-        """ The buffer size.
-
-        """
-
+        """Return the buffer size."""
         if self._buffer_size <= 0:
             self._buffer_size = 16384 // (self._depth // (8 // self._channels))
 

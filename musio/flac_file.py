@@ -19,17 +19,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A module for reading FLAC files.
+"""A module for reading FLAC files."""
 
-"""
-
-from itertools import compress, cycle
 from array import array
-
-from .io_base import AudioIO, io_wrapper
-from .io_util import msg_out
+from itertools import compress, cycle
+from typing import Any
 
 from .import_util import LazyImport
+from .io_base import AudioIO, io_wrapper
+from .io_util import msg_out
 
 _flac = LazyImport('flac.flac', globals(), locals(), ['flac'], 1)
 
@@ -42,20 +40,16 @@ __supported_dict = {
     }
 }
 
-class FlacFile(AudioIO):
-    """ A file like object for reading media files with ffmpeg.
 
-    """
+class FlacFile(AudioIO):
+    """A file like object for reading media files with ffmpeg."""
 
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=44100, channels=2, **kwargs):
-        """ FlacFile(filename, depth=16, rate=44100, channels=2) ->
-        Initialize the playback settings of the player.
-
-        """
-
+    def __init__(self, filename: str, depth: int = 16, rate: int = 44100,
+                 channels: int = 2, **_):
+        """Initialize the playback settings of the player."""
         super(FlacFile, self).__init__(filename, 'r', depth, rate, channels)
 
         self._total_samples = 0
@@ -66,36 +60,30 @@ class FlacFile(AudioIO):
         self._info_dict.update(self._update_info(filename))
 
         # Setup the decoder callbacks.
-        self._write_callback = _flac.FLAC__StreamDecoderWriteCallback(self._write_status)
-        self._metadata_callback = _flac.FLAC__StreamDecoderMetadataCallback(self._metadata_status)
-        self._error_callback = _flac.FLAC__StreamDecoderErrorCallback(self._error_status)
+        self._write_callback = _flac.FLAC__StreamDecoderWriteCallback(
+            self._write_status)
+        self._metadata_callback = _flac.FLAC__StreamDecoderMetadataCallback(
+            self._metadata_status)
+        self._error_callback = _flac.FLAC__StreamDecoderErrorCallback(
+            self._error_status)
 
         self._decoder = self._open(filename)
         if self._decoder:
             self._closed = False
         else:
-            raise(OSError("Failed to open FLAC: %s." % filename))
+            raise(OSError(f"Failed to open FLAC: {filename}"))
 
-    def _get_position(self):
-        """ Updates the position variable.
-
-        """
-
+    def _get_position(self) -> int:
+        """Return the position."""
         # Update the position.
         return self._position
 
-    def _set_position(self, position):
-        """ Change the position of playback.
-
-        """
-
+    def _set_position(self, position: int):
+        """Change the position of playback."""
         _flac.FLAC__stream_decoder_seek_absolute(self._decoder, position)
 
-    def _update_info(self, filename):
-        """ Updates the id3 info for the opened flac.
-
-        """
-
+    def _update_info(self, filename: str) -> dict:
+        """Updatesthe id3 info for the opened flac."""
         info_dict = {}
         metadata = _flac.POINTER(_flac.FLAC__StreamMetadata)()
         filename_b = filename.encode('utf-8', 'surrogateescape')
@@ -105,33 +93,34 @@ class FlacFile(AudioIO):
                     length = i.length
                     entry = i.entry
                     entry_s = _flac.string_at(entry, length)
-                    if not entry_s: break
+                    if not entry_s:
+                        break
                     name, value = entry_s.decode('utf-8', 'replace').split('=')
                     info_dict[name.lower()] = value
-            except ValueError as err:
+            except ValueError:
                 # Probably no comments.
                 pass
 
         return info_dict
 
-    def _open(self, filename):
-        """ Open a flac file.
-
-        """
-
+    def _open(self, filename: str) -> Any:
+        """Open a flac file."""
         try:
             # Convert filename to bytes.
-            filename = filename.encode('utf-8', 'surrogateescape')
+            filename_b = filename.encode('utf-8', 'surrogateescape')
         except AttributeError:
-            pass
+            filename_b = filename
 
         decoder = _flac.FLAC__stream_decoder_new()
 
-        init = _flac.FLAC__stream_decoder_init_file(decoder, filename,
-                                                    self._write_callback,
-                                                    self._metadata_callback,
-                                                    self._error_callback,
-                                                    None)
+        init = _flac.FLAC__stream_decoder_init_file(
+            decoder,
+            filename_b,
+            self._write_callback,
+            self._metadata_callback,
+            self._error_callback,
+            None
+        )
 
         if init != _flac.FLAC__STREAM_DECODER_INIT_STATUS_OK:
             msg_out(_flac.FLAC__StreamDecoderInitStatusString(init))
@@ -143,10 +132,7 @@ class FlacFile(AudioIO):
         return decoder
 
     def close(self):
-        """ Close and finish the flac decoder.
-
-        """
-
+        """Close and finish the flac decoder."""
         if not self.closed and self._decoder:
             _flac.FLAC__stream_decoder_finish(self._decoder)
             _flac.FLAC__stream_decoder_delete(self._decoder)
@@ -154,16 +140,17 @@ class FlacFile(AudioIO):
             self._closed = True
             self._decoder = None
 
-    def _write_status(self, decoder, frame, buf, client_data):
-        """ write_status callback function  Called when the decoder has decoded
+    def _write_status(self, decoder: Any, frame: Any, buf: Any,
+                      client_data: Any) -> int:
+        """Write_Status callback.
+
+        Write_status callback function  Called when the decoder has decoded
         a sample from the flac file.
-
         """
-
         channels = frame.contents.header.channels
         size = frame.contents.header.blocksize
         depth = frame.contents.header.bits_per_sample
-        rate = frame.contents.header.sample_rate
+        _ = frame.contents.header.sample_rate
         size = frame.contents.header.blocksize
 
         # Only 1 and 2 channels are supported.
@@ -191,7 +178,7 @@ class FlacFile(AudioIO):
 
         if depth == 24:
             # Discard every 4th byte to make 3-byte 24-bit.
-            data = compress(data, cycle([1,1,1,0]))
+            data = compress(data, cycle([1, 1, 1, 0]))
             data = bytes(data)[:sample_size * 3]
         else:
             data = bytes(data)
@@ -203,11 +190,9 @@ class FlacFile(AudioIO):
 
         return _flac.FLAC__STREAM_DECODER_WRITE_STATUS_CONTINUE
 
-    def _metadata_status(self, decoder, metadata, client_data):
-        """ metadata callback  Called when the decoder is initialized.
-
-        """
-
+    def _metadata_status(self, decoder: Any, metadata: Any,
+                         client_data: Any):
+        """Metadata callback.  Called when the decoder is initialized."""
         self._channels = metadata.contents.data.stream_info.channels
         self._rate = metadata.contents.data.stream_info.sample_rate
         self._total_samples = metadata.contents.data.stream_info.total_samples
@@ -217,20 +202,16 @@ class FlacFile(AudioIO):
         if self._depth == 24:
             self.three_byte = True
 
-    def _error_status(self, decoder, error_status, client_data):
-        """ Error callback  Called when the decoder encounters an error.
-
-        """
-
-        msg_out('An error occured in flac_file: %s' % error_status)
+    def _error_status(self, decoder: Any, error_status: str, client_data: Any):
+        """Error callback  Called when the decoder encounters an error."""
+        msg_out(f'An error occured in flac_file: {error_status}')
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.  If
-        size is None then read a buffer size.
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and return it.
 
+        If size is None then read a buffer size.
         """
-
         while len(self._data_buffer) < size:
             # Get the current decoder state.
             decode_state = _flac.FLAC__stream_decoder_get_state(self._decoder)
@@ -256,8 +237,7 @@ class FlacFile(AudioIO):
                 # Decode the next sample.
                 _flac.FLAC__stream_decoder_process_single(self._decoder)
 
-
         data = self._data_buffer[:size]
-        self._data_buffer =  self._data_buffer[size:]
+        self._data_buffer = self._data_buffer[size:]
 
         return data

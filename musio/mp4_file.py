@@ -19,23 +19,18 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A module for reading aac audio from mp4s.
-
-"""
+"""A module for reading aac audio from mp4s."""
 
 from sys import stdout as sys_stdout
+from typing import Any
 
 from .aac_file import AACDecoder
+from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
 from .io_util import silence
-# from .mp4v2 import _mp4v2
 
-from .import_util import LazyImport
-
-_mp4v2 = LazyImport('mp4v2._mp4v2', globals(), locals(),
-                    ['_mp4v2'], 1)
 _mp4v2_wrapper = LazyImport('mp4v2._mp4v2_wrapper', globals(), locals(),
-                        ['mp4v2._mp4v2_wrapper'], 1)
+                            ['mp4v2._mp4v2_wrapper'], 1)
 
 __supported_dict = {
     'ext': ['.mp4', '.m4v', '.m4a'],
@@ -48,87 +43,63 @@ __supported_dict = {
 
 
 class Mp4File(AudioIO):
-    """ A file like object for reading aac audio from mp4s.
-
-    """
+    """A file like object for reading aac audio from mp4s."""
 
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=44100, channels=2, **kwargs):
-        """ Mpg4File(filename, depth=16, rate=44100, channels=2) -> Initialize
-        the playback settings of the player.
-
-        """
-
+    def __init__(self, filename: str, depth: int = 16, rate: int = 44100,
+                 channels: int = 2, **_):
+        """Initialize the playback settings of the player."""
         super(Mp4File, self).__init__(filename, 'r', depth, rate, channels)
 
-        self._tags_dict = {}
+        self._mp4_handle, self._aac_decoder = self._open(filename)
 
-        self._aac_decoder = None
-        self._mp4_handle = self._open(filename)
-
-        self._update_info()
+        self._info_dict |= self._update_info()
 
         self._length = self._mp4_handle.sample_count
 
-        self._data = b''
+        self._data_buffer = b''
 
-    def to_seconds(self, position):
-        """ Convert the provided position/length to seconds.
-
-        """
-
+    def to_seconds(self, position: int) -> float:
+        """Convert the provided position/length to seconds."""
         return (position * 1024) / self._rate
 
-    def _set_position(self, position):
-        """ Change the position of playback.
-
-        """
-
+    def _set_position(self, position: int):
+        """Change the position of playback."""
         self._mp4_handle.current_sample = position
 
-    def _get_position(self):
-        """ Updates the position variable.
-
-        """
-
+    def _get_position(self) -> int:
+        """Get the position."""
         # Update the position.
         return self._mp4_handle.current_sample
 
-    def _open(self, filename):
-        """ _open(filename) -> Load the specified file.
-
-        """
-
+    def _open(self, filename: str) -> tuple[Any, Any]:
+        """Load the specified file."""
         try:
-            filename = filename.encode('utf-8', 'surrogateescape')
+            filename_b = filename.encode('utf-8', 'surrogateescape')
         except AttributeError:
-            pass
+            filename_b = filename.encode()
 
         with silence(sys_stdout):
-            mp4_handle = _mp4v2_wrapper.Mp4(filename)
+            mp4_handle = _mp4v2_wrapper.Mp4(filename_b)
 
         # Get the aac decoder.
-        self._aac_decoder = AACDecoder(*mp4_handle.get_configuration(),
-                                       mp4=True)
+        aac_decoder = AACDecoder(*mp4_handle.get_configuration(), mp4=True)
 
-        self._rate = self._aac_decoder.rate
-        self._channels = self._aac_decoder.channels
-        self._depth = self._aac_decoder.depth
+        self._rate = aac_decoder.rate
+        self._channels = aac_decoder.channels
+        self._depth = aac_decoder.depth
 
         self._closed = False
 
-        return mp4_handle
+        return mp4_handle, aac_decoder
 
-    def _update_info(self):
-        """ Updates the id3 info for the opened mp3.
-
-        """
-
+    def _update_info(self) -> dict:
+        """Return the information dictionary."""
         tags_dict = self._mp4_handle.get_tag_dict()
 
-        info_dict = self._info_dict
+        info_dict = {}
 
         for i in ['name', 'artist', 'albumArtist', 'album', 'composer',
                   'comments', 'genre', 'releaseDate', 'track', 'disk',
@@ -140,16 +111,15 @@ class Mp4File(AudioIO):
             elif hasattr(value, 'value'):
                 info_dict[i] = value.value
 
-        self._tags_dict = self._info_dict = info_dict
+        return info_dict
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.  If
-        size is None then read a buffer size.
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and return it.
 
+        If size is None then read a buffer size.
         """
-
-        data = self._data
+        data = self._data_buffer
 
         while len(data) < size:
             # Read the next sample.
@@ -175,16 +145,13 @@ class Mp4File(AudioIO):
             data += temp_data
 
         # Store extra data for next read.
-        self._data = data[size:]
+        self._data_buffer = data[size:]
 
         # Only return the requested amount of data.
         return data[:size]
 
     def close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and clean up."""
         if not self.closed:
             self._mp4_handle.close()
             self._aac_decoder.close()

@@ -19,9 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A Dummy io device.
-
-"""
+"""A Dummy io device."""
 
 from .io_base import DevIO, io_wrapper
 
@@ -34,9 +32,7 @@ __supported_dict = {
 
 
 class Dummy(DevIO):
-    """ A class that provides a file like object to write to a dummy pcm.
-
-    """
+    """A class that provides a file like object to write to a dummy pcm."""
 
     # Valid bit depths.
     _valid_depth = (32, 24, 16, 8)
@@ -44,59 +40,49 @@ class Dummy(DevIO):
     # Supports reading and writing.
     _supported_modes = 'rw'
 
-    def __init__(self, mode='w', depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, buffer_size=None,
-                 latency=500000, **kwargs):
-        """ Dummy(mode='w', depth=16, rate=44100, channels=2, bigendian=False,
-        unsigned=False, buffer_size=None, latency=500000, **kwargs) ->
-        Initialize the dummy pcm device.
-
-        """
-
-        super(Dummy, self).__init__(mode, depth, rate, channels, bigendian,
-                                    unsigned, buffer_size)
+    def __init__(self, mode: str = 'w', depth: int = 16, rate: int = 44100,
+                 channels: int = 2, bigendian: bool = False,
+                 unsigned: bool = False, buffer_size: int = 0,
+                 latency: float = 500000, **kwargs):
+        """Initialize the dummy pcm device."""
+        super(Dummy, self).__init__(
+            mode,
+            depth,
+            rate,
+            channels,
+            bigendian,
+            unsigned,
+            buffer_size
+        )
 
         self._dummy = self._open()
 
     def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
-
-        """
-
-        repr_str = "mode='{_mode}', depth={_depth}, rate={_rate}, channels={_channels}, bigendian={_bigendian}, unsigned={_unsigned}, buffer_size={_buffer_size}, latency={_latency}".format(**self.__dict__)
-
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(mode="{self._mode}", '
+                f'depth={self._depth}, rate={self._rate}, '
+                f'channels={self._channels}, bigendian={self._bigendian}, '
+                f'unsigned={self._unsigned}, buffer_size={self._buffer_size})'
+                f'latency={self._latency}')
 
     @io_wrapper
     def write(self, data: bytes) -> int:
-        """ write(data) -> Write to the pcm device.
-
-        """
-
+        """Write to the pcm device."""
         return len(data)
 
     @io_wrapper
     def read(self, size: int) -> bytes:
-        """ read(size=0) -> Read length bytes from input.
-
-        """
-
+        """Read length bytes from input."""
         return b'\x00' * size
 
     def _open(self):
-        """ open -> Open the pcm audio output.
-
-        """
-
+        """Open the pcm audio output."""
         self._closed = False
 
         return True
 
     def close(self):
-        """ close -> Close the pcm.
-
-        """
-
+        """Close the pcm."""
         if not self.closed:
             self._dummy = None
 

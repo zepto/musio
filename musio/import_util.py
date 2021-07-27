@@ -19,42 +19,37 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Import utility functions and classes
+"""Import utility functions and classes.
 
-    LazyImport      Import modules when they are accessed
-    OnDemand        Load modules when they are accessed
-
+LazyImport      Import modules when they are accessed
+OnDemand        Load modules when they are accessed
 """
 
 
-from os import walk as os_walk
-from os.path import isdir as os_isdir
-from os.path import abspath as os_abspath
-from os.path import dirname as os_dirname
-from os.path import basename as os_basename
-from types import ModuleType as types_ModuleType
 import sys
+from os import walk
+from os.path import abspath, basename, dirname, isdir
+from types import ModuleType
+from typing import Any, Generator
 
 
-class Module(types_ModuleType):
+class Module(ModuleType):
+    """Empty module class."""
     pass
 
 
-class LazyImport(types_ModuleType):
-    """ LazyImport only loads the module when one of its attributes is
-    accessed.
+class LazyImport(ModuleType):
+    """Load module when they are accessed.
 
+    LazyImport only loads the module when one of its attributes is accessed.
     """
 
-    def __init__(self, name, globals={}, locals={}, fromlist=[], level=0):
-        """ LazyImport(module_name, globals={}, locals={}, fromlist=[],
-        level=0) -> Load module only when it is needed.
-
-        """
-
+    def __init__(self, name: str, globals: dict = {}, locals: dict = {},
+                 fromlist: list = [], level: int = 0):
+        """Load module only when it is needed."""
         super(LazyImport, self).__init__(name)
 
-        # package = os_basename(os_dirname(__file__))
+        # package = basename(dirname(__file__))
         # print(package, name)
         # if name.startswith('.'):
         #     name = '%s%s' % (package, name)
@@ -72,14 +67,14 @@ class LazyImport(types_ModuleType):
         self.__mod__ = None
         # self.__name__ = name
 
-    def __getattribute__(self, attr):
-        """ Import the module and set __getattribute__ so this method is not
-        called again.
+    def __getattribute__(self, attr: Any) -> Any:
+        """Import module.
 
+        Import the module and set __getattribute__ so this method is not called
+        again.
         """
-
         # Set the class to a new empty module so getattr will work.
-        self.__class__ = type('Module', (types_ModuleType,), {})
+        self.__class__ = type('Module', (ModuleType,), {})
 
         # print('__getattribute__: ', self.__name__, attr)
         # if attr == "__package__":
@@ -87,14 +82,18 @@ class LazyImport(types_ModuleType):
 
         # Test if this method has been called.
         if not getattr(self, '__mod__', None):
-            # Remove previous occurance of module from sys.modules.
+            # Remove previous occurrence of module from sys.modules.
             if self.__name__ in sys.modules:
                 sys.modules.pop(self.__name__)
 
             # Import the module.
-            self.__mod__ = __import__(self.__name__, self._globals,
-                                      self._locals, self._fromlist,
-                                      self._level)
+            self.__mod__ = __import__(
+                self.__name__,
+                self._globals,
+                self._locals,
+                self._fromlist,
+                self._level
+            )
 
             # Add the modules dict items to this module.
             self.__dict__.update(self.__mod__.__dict__)
@@ -111,17 +110,11 @@ class LazyImport(types_ModuleType):
 
 
 class OnDemand(object):
-    """ Load modules when accessed.
+    """Load modules when accessed."""
 
-    """
-
-    def __init__(self, module_name, globals={}, locals={}, fromlist=[],
-                 level=0):
-        """ OnDemand(module_name, globals={}, locals={}, fromlist=[], level=0)
-        -> Load module only when it is needed.
-
-        """
-
+    def __init__(self, module_name: str, globals: dict = {}, locals: dict = {},
+                 fromlist: list = [], level: int = 0):
+        """Load module only when it is needed."""
         self._module_name = module_name
         self._globals = globals
         self._locals = locals
@@ -130,12 +123,14 @@ class OnDemand(object):
         self._module = None
 
     def _import(self):
-        """ Import the module.
-
-        """
-
-        self._module = __import__(self._module_name, self._globals,
-                                  self._locals, self._fromlist, self._level)
+        """Import the module."""
+        self._module = __import__(
+            self._module_name,
+            self._globals,
+            self._locals,
+            self._fromlist,
+            self._level
+        )
 
     def __getattr__(self, attr):
         """ Load the module if it is not already loaded.  Returns the modules
@@ -162,17 +157,14 @@ class OnDemand(object):
 
 
 # Try to make a lazy module.
-class LazyModule(types_ModuleType):
-    """ LazyModule only loads the module when one of its attributes is
-    accessed.
+class LazyModule(ModuleType):
+    """Load module when one of it attributes is accessed.
 
+    LazyModule only loads the module when one of its attributes is accessed.
     """
 
-    def __getattribute__(self, attr):
-        """ Initialize the module and add it to sys.modules.
-
-        """
-
+    def __getattribute__(self, attr: Any) -> Any:
+        """Initialize the module and add it to sys.modules."""
         self.__class__ = Module
         print(self.__name__, 'get', attr)
         exec('import %s' % self.__name__)
@@ -219,51 +211,52 @@ class LazyImp(object):
         return sys.modules[fullname]
 
 
-def _build_mod_list(mod_path: list) -> list:
-    """ _build_mod_list(mod_path, suffix) -> Add all the paths in mod_path to
-    sys.path and return a list of all modules in sys.path ending in suffix.
+def _build_mod_list(mod_path: list) -> Generator[str, None, None]:
+    """Build a list of module matching a criteria.
 
+    Add all the paths in mod_path to sys.path and return a list of all modules
+    in sys.path ending in suffix.
     """
-
     mod_path = [mod_path] if type(mod_path) is str else mod_path
 
     # Add the path of this file to the search path.
-    mod_path.append(os_abspath(os_dirname(__file__)))
+    mod_path.append(abspath(dirname(__file__)))
 
     # Build the list of modules in mod_path(s).
-    mod_list = ('{0}.{1}.{2}'.format(os_basename(path), \
-                    os_basename(root).replace(os_basename(path), ''), \
-                    name.rsplit('.', 1)[0]).replace('..', '.') \
-                    for path in mod_path \
-                        if os_isdir(path) \
-                            for root, dirs, files in os_walk(path) \
-                                for name in files \
-                                    if name.endswith('.py'))
+    mod_list = (
+        f"{basename(path)}.{basename(root).replace(basename(path), '')}."
+        f"{name.rsplit('.', 1)[0]}".replace('..', '.')
+        for path in mod_path if isdir(path) for root, _, files in walk(path)
+        for name in files if name.endswith('.py')
+    )
+    # mod_list = ('{0}.{1}.{2}'.format(basename(path), \
+    #                 basename(root).replace(basename(path), ''), \
+    #                 name.rsplit('.', 1)[0]).replace('..', '.') \
+    #                 for path in mod_path \
+    #                     if isdir(path) \
+    #                         for root, dirs, files in walk(path) \
+    #                             for name in files \
+    #                                 if name.endswith('.py'))
 
     return mod_list
 
 
 class LazyImporter(object):
-    """ LazyImporter uses LazyImport to load the module when one of its
-    attributes is accessed.
+    """Import module when it is accessed.
 
+    LazyImporter uses LazyImport to load the module when one of its attributes
+    is accessed.
     """
 
-    def __init__(self, skip=[], mod_path=[]):
-        """ LazyImporter() -> Initialize the lazy importer.
-
-        """
-
+    def __init__(self, skip: list = [], mod_path: list = []):
+        """Initialize the lazy importer."""
         # List to hold module names that were already loaded.
         self._loaded = skip
 
         self._mods = tuple(_build_mod_list(mod_path))
 
-    def find_module(self, fullname, path=None):
-        """ Use self.
-
-        """
-
+    def find_module(self, fullname: str) -> object:
+        """Use self."""
         # Use pythons importer if fullname is asked for more than once,
         # because it will mean that an attribute was requested from the
         # lazy module.
@@ -272,11 +265,8 @@ class LazyImporter(object):
 
         return self
 
-    def load_module(self, fullname):
-        """ Load the module.
-
-        """
-
+    def load_module(self, fullname: str) -> object:
+        """Load the module."""
         # Log that this module has been handled so it can load.
         self._loaded.append(fullname)
 
@@ -304,19 +294,13 @@ class LazyImporter(object):
         return module
 
 
-def load_lazy_import(skip=[], mod_path=[]):
-    """ Insert the lazy importer.
-
-    """
-
+def load_lazy_import(skip: list = [], mod_path: list = []):
+    """Insert the lazy importer."""
     # Make LazyImporter the default importer.
     sys.meta_path.insert(0, LazyImporter(skip, mod_path))
 
 
 def unload_lazy_import():
-    """ Remove lazy importer.
-
-    """
-
+    """Remove lazy importer."""
     # Remove LazyImporter from sys.meta_path.
     [sys.meta_path.remove(i) for i in sys.meta_path if type(i) is LazyImporter]

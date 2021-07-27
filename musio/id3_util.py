@@ -19,9 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A module for reading id3 tags.
-
-"""
+"""A module for reading id3 tags."""
 
 from .import_util import LazyImport
 
@@ -30,42 +28,34 @@ _id3tag = LazyImport('id3tag.id3tag', globals(), locals(),
 
 
 class ID3Tags(dict):
-    """ A dictionary of the id3 tags in a file.
+    """A dictionary of the id3 tags in a file."""
 
-    """
-
-    def __init__(self, filename):
-        """ ID3Tags(filename) -> A dictionary of the id3 tags in the file.
-
-        """
-
+    def __init__(self, filename: str):
+        """Create a dictionary of the id3 tags in the file."""
         self.update(self._get_id3tags(filename))
 
-    def _get_id3tags(self, filename):
-        """ Use libid3tag to read the id3tags.
-
-        """
-
+    def _get_id3tags(self, filename: str) -> dict:
+        """Use libid3tag to read the id3tags."""
         bytes_filename = filename.encode('utf-8', 'surrogateescape')
         id3_file = _id3tag.id3_file_open(bytes_filename, 0)
         id3_tag = _id3tag.id3_file_tag(id3_file)
         fields_dict = {
-                'title': b'TIT2',
-                'artist': b'TPE1',
-                'album': b'TALB',
-                'track': b'TRCK',
-                'year': b'TDRC',
-                'genre': b'TCON',
-                'subtitle': b'TIT3',
-                'copyright': b'TCOP',
-                'produced': b'TPRO',
-                'orchestra': b'TPE2',
-                'conductor': b'TPE3',
-                'lyricist': b'TEXT',
-                'publisher': b'TPUB',
-                'station': b'TRSN',
-                'encoder': b'TENC',
-                }
+            'title': b'TIT2',
+            'artist': b'TPE1',
+            'album': b'TALB',
+            'track': b'TRCK',
+            'year': b'TDRC',
+            'genre': b'TCON',
+            'subtitle': b'TIT3',
+            'copyright': b'TCOP',
+            'produced': b'TPRO',
+            'orchestra': b'TPE2',
+            'conductor': b'TPE3',
+            'lyricist': b'TEXT',
+            'publisher': b'TPUB',
+            'station': b'TRSN',
+            'encoder': b'TENC',
+        }
 
         id3_dict = {}
 
@@ -76,7 +66,10 @@ class ID3Tags(dict):
             except ValueError:
                 continue
             field = id3_frame.contents.fields[1]
-            ucs4 = field.stringlist.strings.contents
+            try:
+                ucs4 = field.stringlist.strings.contents
+            except ValueError:
+                continue
             if tag_name == 'genre':
                 ucs4 = _id3tag.id3_genre_name(ucs4)
             field_val = _id3tag.id3_ucs4_utf8duplicate(ucs4)
@@ -91,8 +84,8 @@ class ID3Tags(dict):
             except ValueError:
                 break
             i += 1
-            # ucs4 = _id3tag.id3_field_getstring(_id3tag.id3_frame_field(frame, 2))
-            ucs4 = _id3tag.id3_field_getfullstring(_id3tag.id3_frame_field(frame, 3))
+            ucs4 = _id3tag.id3_field_getfullstring(
+                _id3tag.id3_frame_field(frame, 3))
             field_val = _id3tag.id3_ucs4_utf8duplicate(ucs4)
             tag_val = _id3tag.string_at(field_val).decode('utf8', 'replace')
             id3_dict['comment'] = tag_val

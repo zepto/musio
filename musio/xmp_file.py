@@ -19,12 +19,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A module for reading media files using xmp.
+"""A module for reading media files using xmp."""
 
-"""
+from typing import Any
 
 from musio.io_base import AudioIO, io_wrapper
-# from .xmp import _xmp
+
 from .import_util import LazyImport
 
 _xmp = LazyImport('xmp._xmp', globals(), locals(), ['_xmp'], 1)
@@ -48,9 +48,7 @@ __supported_dict = {
 
 
 class XMPFile(AudioIO):
-    """ A file like object for reading media files with ffmpeg.
-
-    """
+    """A file like object for reading media files with ffmpeg."""
 
     # Valid bit depths
     _valid_depth = (16, 8)
@@ -58,13 +56,9 @@ class XMPFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename, depth=16, rate=44100, channels=2,
-                 unsigned=False, **kwargs):
-        """ XMPFile(filename, depth=16, rate=44100, channels=2, unsigned=False)
-        -> Initialize the playback settings of the player.
-
-        """
-
+    def __init__(self, filename: str, depth: int = 16, rate: int = 44100,
+                 channels: int = 2, unsigned: bool = False, **kwargs):
+        """Initialize the playback settings of the player."""
         super(XMPFile, self).__init__(filename, 'r', depth, rate, channels)
 
         self._flags = 0
@@ -79,10 +73,8 @@ class XMPFile(AudioIO):
         if unsigned:
             self._flags |= _xmp.XMP_FORMAT_UNSIGNED
 
-        self.__module_info = None
-        self.__frame_info = None
-
-        self.__xmp_context = self._open(filename)
+        self.__module_info, self.__frame_info, self.__xmp_context = \
+            self._open(filename)
 
         self._length = self.__frame_info.total_time
 
@@ -90,18 +82,12 @@ class XMPFile(AudioIO):
 
         self._load_info()
 
-    def to_seconds(self, position):
-        """ Convert the provided position/length to seconds.
-
-        """
-
+    def to_seconds(self, position: int) -> float:
+        """Convert the provided position/length to seconds."""
         return position / 1000
 
-    def _set_position(self, position):
-        """ Change the position of playback.
-
-        """
-
+    def _set_position(self, position: int):
+        """Change the position of playback."""
         if position > self.position:
             position += self._length // self.__module_info.mod.contents.len
         else:
@@ -109,30 +95,27 @@ class XMPFile(AudioIO):
 
         _xmp.xmp_seek_time(self.__xmp_context, position)
 
-    def _get_position(self):
-        """ Updates the position variable.
-
-        """
-
+    def _get_position(self) -> int:
+        """Update the position variable."""
         return self.__frame_info.time
 
-    def _open(self, filename):
-        """ _open(filename) -> Load the specified file.
-
-        """
-
-        filename = filename.encode('utf-8', 'surrogateescape')
+    def _open(self, filename: str) -> tuple[Any, Any, Any]:
+        """Load the specified file."""
+        filename_b = filename.encode('utf-8', 'surrogateescape')
 
         xmp_context = _xmp.xmp_create_context()  # (_xmp.c_char * 4096)()
 
-        if _xmp.xmp_load_module(xmp_context, filename) != 0:
-            raise IOError("Can't load module: %s" % filename)
+        ret = _xmp.xmp_load_module(xmp_context, filename_b)
+        if ret != 0:
+            raise IOError(
+                f"Can't load module: {filename_b} error number {ret}"
+            )
 
-        self.__module_info = _xmp.xmp_module_info()
-        _xmp.xmp_get_module_info(xmp_context, _xmp.byref(self.__module_info))
+        module_info = _xmp.xmp_module_info()
+        _xmp.xmp_get_module_info(xmp_context, _xmp.byref(module_info))
 
-        self.__frame_info = _xmp.xmp_frame_info()
-        _xmp.xmp_get_frame_info(xmp_context, _xmp.byref(self.__frame_info))
+        frame_info = _xmp.xmp_frame_info()
+        _xmp.xmp_get_frame_info(xmp_context, _xmp.byref(frame_info))
 
         _xmp.xmp_set_player(xmp_context, _xmp.XMP_PLAYER_INTERP,
                             _xmp.XMP_INTERP_SPLINE)
@@ -144,27 +127,19 @@ class XMPFile(AudioIO):
 
         _xmp.xmp_start_player(xmp_context, self._rate, self._flags)
 
-        return xmp_context
+        return module_info, frame_info, xmp_context
 
     def _load_info(self):
-        """ Load the module music info.
-
-        """
-
-        def load_list(key: str, index: str, count: int) -> list:
-            """ _load_list(key, index, count) -> Load a list of names and
-            filenames into a list.
-
-            """
-
+        """Load the module music info."""
+        def load_list(key: str, index: str, count: int) -> list[str]:
+            """Load a list of names and filenames into a list."""
             fill_list = []
 
             for i in range(count):
                 tmp = getattr(self.__module_info.mod.contents, index)[i]
                 name = tmp.name.decode('cp437', 'replace')
                 if name:
-                    key_str = '%-8s %02d:' % (key.capitalize(), i)
-                    fill_list.append('%s %s' % (key_str, name))
+                    fill_list.append(f"{key.capitalize():8} {i:02} {name}")
 
             return fill_list
 
@@ -196,12 +171,11 @@ class XMPFile(AudioIO):
             self._info_dict['comment'] = comment.decode('cp437', 'replace')
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size=None) -> Reads size amount of data and returns it.  If
-        size is None read buffer_size of data.
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and returns it.
 
+        If size is None read buffer_size of data.
         """
-
         # Only update the global data buffer.
         data = self._data
         old_count = 0
@@ -243,10 +217,7 @@ class XMPFile(AudioIO):
         return data[:size]
 
     def close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and cleans up."""
         if not self.closed:
             _xmp.xmp_end_player(self.__xmp_context)
             _xmp.xmp_release_module(self.__xmp_context)

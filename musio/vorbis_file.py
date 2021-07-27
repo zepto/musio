@@ -19,24 +19,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" A module for reading ogg vorbis files.
+"""A module for reading ogg vorbis files."""
 
-"""
-
-from os.path import isfile as os_isfile
-from array import array
 import audioop
+from array import array
+from os.path import isfile
+from typing import Any
 
+from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
 from .io_util import slice_buffer
-# from .ogg import vorbisfile as _vorbisfile
-# from .ogg import vorbisenc as _vorbisenc
-from .import_util import LazyImport
 
 _vorbisfile = LazyImport('ogg.vorbisfile', globals(), locals(),
                          ['_vorbisfile'], 1)
 _vorbisenc = LazyImport('ogg.vorbisenc_wrapper', globals(), locals(),
                         ['vorbisenc_wrapper'], 1)
+
 
 __supported_dict = {
     'ext': ['.ogg', '.ogv'],
@@ -49,9 +47,7 @@ __supported_dict = {
 
 
 class VorbisFile(AudioIO):
-    """ Read and write ogg vorbis files.
-
-    """
+    """Read and write ogg vorbis files."""
 
     # Valid bit depths
     _valid_depth = (32, 16, 8)
@@ -59,23 +55,19 @@ class VorbisFile(AudioIO):
     # Both reading and writing are supported
     _supported_modes = 'rw'
 
-    def __init__(self, filename, mode='r', depth=16, rate=44100, channels=2,
-                 bigendian=False, unsigned=False, quality=.5, comment_dict={},
-                 **kwargs):
-        """ VorbisFile(filename, mode='r', depth=16, channels=2,
-        bigendian=False, unsigned=False,) -> Initialize the file object for
-        reading and writing.
-
-        """
-
+    def __init__(self, filename: str, mode: str = 'r', depth: int = 16,
+                 rate: int = 44100, channels: int = 2, bigendian: bool = False,
+                 unsigned: bool = False, quality: float = .5,
+                 comment_dict: dict[str, Any] = {}, **_):
+        """Initialize the file object for reading and writing."""
         if depth == 24:
             depth = 16
             self._from_24 = True
         else:
             self._from_24 = False
 
-        super(VorbisFile, self).__init__(filename=filename, mode=mode,
-                                         depth=depth, rate=rate,
+        super(VorbisFile, self).__init__(filename=filename,
+                                         mode=mode, depth=depth, rate=rate,
                                          channels=channels)
 
         self._signed = not unsigned
@@ -83,8 +75,8 @@ class VorbisFile(AudioIO):
         self._bigendian = bigendian
 
         if mode == 'r':
-            if not os_isfile(filename):
-                raise OSError("File not found: %s" % filename)
+            if not isfile(filename):
+                raise OSError(f"File not found: {filename}")
 
             self._vorbis_file = self._read_open(filename)
 
@@ -112,65 +104,56 @@ class VorbisFile(AudioIO):
             self._vorbis_file = self._write_open(filename)
 
     def close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and cleans up."""
         if self._mode == 'r':
             self._read_close()
         else:
             self._write_close()
 
-    def to_seconds(self, position):
-        """ Convert the provided position/length to seconds.
-
-        """
-
+    def to_seconds(self, position: int) -> float:
+        """Convert the provided position/length to seconds."""
         return position / self._rate
 
-    def _set_position(self, position):
-        """ Change the position of playback.
-
-        """
-
+    def _set_position(self, position: int):
+        """Change the position of playback."""
         file_pointer = _vorbisfile.pointer(self._vorbis_file)
 
         if _vorbisfile.ov_seekable(file_pointer):
             _vorbisfile.ov_pcm_seek_lap(file_pointer, position)
 
-    def _get_position(self):
-        """ Updates the position variable.
-
-        """
-
+    def _get_position(self) -> int:
+        """Get the current position."""
         file_pointer = _vorbisfile.pointer(self._vorbis_file)
 
         # Update the position.
         return _vorbisfile.ov_pcm_tell(file_pointer)
 
-    def __repr__(self):
-        """ __repr__ -> Returns a python expression to recreate this instance.
-
-        """
-
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
         if self._mode == 'r':
-            repr_str = "filename='%(_filename)s', mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, bigendian=%(_bigendian)s, unsigned=%(_unsigned)s" % self
+            repr_str = (f"filename='{self._filename}', mode={self._mode}, "
+                        f"depth={self._depth}, rate={self._rate}, "
+                        f"channels={self._channels}, "
+                        f"bigendian={self._bigendian}, "
+                        f"unsigned={self._unsigned}")
         else:
-            repr_str = "filename='%(_filename)s', mode='%(_mode)s', depth=%(_depth)s, rate=%(_rate)s, channels=%(_channels)s, quality=%(_quality)s, comment_dict=%(_comment_dict)s" % self
+            repr_str = (f"filename='{self._filename}', mode={self._mode}, "
+                        f"depth={self._depth}, rate={self._rate}, "
+                        f"channels={self._channels}, "
+                        f"unsigned={self._unsigned}, quality={self._quality}, "
+                        f"comment_dict={self._comment_dict}")
 
-        return '%s(%s)' % (self.__class__.__name__, repr_str)
+        return f"{self.__class__.__name__}({repr_str})"
 
-    def _read_open(self, filename):
-        """ _open(filename) -> Load the specified file.
-
-        """
-
+    def _read_open(self, filename: str) -> Any:
+        """Load the specified file."""
         vorbis_file = _vorbisfile.OggVorbis_File()
 
-        filename = filename.encode('utf-8', 'surrogateescape')
+        filename_b = filename.encode('utf-8', 'surrogateescape')
 
-        if _vorbisfile.ov_fopen(filename, _vorbisfile.byref(vorbis_file)) < 0:
-            raise IOError('Error opening file: %s' % filename)
+        if _vorbisfile.ov_fopen(filename_b,
+                                _vorbisfile.byref(vorbis_file)) < 0:
+            raise IOError(f'Error opening file: {filename}')
 
         comments = _vorbisfile.ov_comment(_vorbisfile.byref(vorbis_file), -1)
         info = _vorbisfile.ov_info(_vorbisfile.byref(vorbis_file), -1)
@@ -188,7 +171,8 @@ class VorbisFile(AudioIO):
         # Build info dict.
         for comment in comments:
             # Exit loop after the last comment.
-            if not comment or b'metadata' in comment.lower(): break
+            if not comment or b'metadata' in comment.lower():
+                break
 
             comment_list = comment.decode('utf8', 'replace').split('=')
 
@@ -200,14 +184,14 @@ class VorbisFile(AudioIO):
 
             try:
                 self._info_dict.update(dict((comment_list,)))
-            except Exception as err:
+            except Exception:
                 pass
 
         if not self._info_dict.get('name', ''):
             album = self._info_dict.get('album', '')
             title = self._info_dict.get('title', '')
             if album and title:
-                name = ('%s - %s' % (album.strip(), title.strip()))
+                name = (f"{album.strip()} - {title.strip()}")
             else:
                 name = self._filename
 
@@ -219,12 +203,11 @@ class VorbisFile(AudioIO):
         return vorbis_file
 
     @io_wrapper
-    def read(self, size: int) -> bytes:
-        """ read(size) -> Reads size amount of data and returns it.  If
-        size is None then read a buffer size.
+    def read(self, size: int = -1) -> bytes:
+        """Read size amount of data and returns it.
 
+        If size is None then read a buffer size.
         """
-
         bytesread = -1
 
         bitstream = _vorbisfile.pointer(_vorbisfile.c_int())
@@ -270,21 +253,15 @@ class VorbisFile(AudioIO):
         return data[:size]
 
     def _read_close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and cleans up."""
         if not self.closed:
             _vorbisfile.ov_clear(_vorbisfile.byref(self._vorbis_file))
-            self._vorbis_file = None
+            del(self._vorbis_file)
 
             self._closed = True
 
-    def _write_open(self, filename):
-        """ _open(filename) -> Load the specified file.
-
-        """
-
+    def _write_open(self, filename: str) -> Any:
+        """Load the specified file."""
         ret = self._info.encode_init_vbr(self._channels, self._rate,
                                          _vorbisfile.c_float(self._quality))
 
@@ -301,8 +278,12 @@ class VorbisFile(AudioIO):
         header_comm = _vorbisenc.OggPacket()
         header_code = _vorbisenc.OggPacket()
 
-        self._dsp_state.headerout(self._comment, header, header_comm,
-                                  header_code)
+        self._dsp_state.headerout(
+            self._comment,
+            header,
+            header_comm,
+            header_code
+        )
         self._stream_state.packetin(header)
         self._stream_state.packetin(header_comm)
         self._stream_state.packetin(header_code)
@@ -320,10 +301,7 @@ class VorbisFile(AudioIO):
 
     @io_wrapper
     def write(self, data: bytes) -> int:
-        """ write(str) -> Encodes and writes str to an ogg file.
-
-        """
-
+        """Encode and writes str to an ogg file."""
         written = 0
 
         if self._from_24:
@@ -334,13 +312,12 @@ class VorbisFile(AudioIO):
 
         return written
 
-    def _fill_buffer(self, data):
-        """ fill_buffer(data) -> Fill the dsp buffer with data.
+    def _fill_buffer(self, data: bytes) -> int:
+        """Fill the dsp buffer with data.
+
         De-interleaves the data in 'data', and puts it in the dsps two
         dimensional floating point array.
-
         """
-
         data_size = len(data) // (self._depth // (8 // self._channels))
 
         dsp_buffer = self._dsp_state.get_buffer(data_size)
@@ -358,11 +335,8 @@ class VorbisFile(AudioIO):
 
         return data_size
 
-    def _encode(self, data):
-        """ _encode(str) -> Returns the vorbis encoded str.
-
-        """
-
+    def _encode(self, data: bytes) -> bytes:
+        """Return the vorbis encoded str."""
         data_size = self._fill_buffer(data) if data else 0
 
         self._dsp_state.wrote(data_size)
@@ -376,19 +350,17 @@ class VorbisFile(AudioIO):
             while self._dsp_state.bitrate_flushpacket(self._packet):
                 self._stream_state.packetin(self._packet)
                 while not self._page.eos:
-                    if not self._stream_state.pageout(self._page): break
+                    if not self._stream_state.pageout(self._page):
+                        break
                     page_buffer += bytes(self._page)
 
         return page_buffer
 
     def _write_close(self):
-        """ close -> Closes and cleans up.
-
-        """
-
+        """Close and cleans up."""
         if not self.closed:
             # Finalize the file.
-            self._vorbis_file.write(self._encode(None))
+            self._vorbis_file.write(self._encode(b''))
 
             # Close and clear everything.
             self._vorbis_file.close()
@@ -397,7 +369,7 @@ class VorbisFile(AudioIO):
             self._comment.clear()
             self._info.clear()
 
-            self._vorbis_file = None
+            del(self._vorbis_file)
 
             # The file is closed.
             self._closed = True
