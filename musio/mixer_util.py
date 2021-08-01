@@ -52,6 +52,12 @@ class Mixer(object):
         return (f"{__class__.__name__}(card='{self._card}', "
                 f"mixer='{self._mixer}')")
 
+    def __str__(self) -> str:
+        """Get the status of the open device."""
+        return (f"{'Card'}\t:\t{self._card}\n{'Mixer'}\t:\t{self._mixer:}\n"
+                f"Volume\t:\t{(self.get_volume(0), self.get_volume(1))}"
+                f"\nMuted\t:\t{(self.is_muted(0), self.is_muted(1))}")
+
     def _test(self, value: Any):
         """Test if the value is valid.  If it is not raise and error."""
         assert(not value)
@@ -170,12 +176,32 @@ class Mixer(object):
             self._test(_alsamixer.snd_mixer_selem_set_playback_switch(
                 self._mixer_elem, channel, 0 if switch else 1))
 
+    @property
+    def volume(self) -> int:
+        """Get volume."""
+        return self.get_volume(0)
+
+    @volume.setter
+    def volume(self, value: int):
+        """Set volume."""
+        self.set_volume(value)
+
+    @property
+    def mute(self) -> bool:
+        """Get mute status."""
+        return self.is_muted(0)
+
+    @mute.setter
+    def mute(self, value: bool):
+        """Set mute status."""
+        self.set_mute(value)
+
     def close(self):
         """Close the mixer."""
         self._test(_alsamixer.snd_mixer_close(self._mixer_t))
         self._test(_alsamixer.snd_mixer_selem_id_free(self._mixer_selem))
 
-    def __enter__(self) -> object:
+    def __enter__(self) -> Any:
         """Provide the ability to use pythons with statement."""
         try:
             return self

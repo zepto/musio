@@ -124,8 +124,6 @@ class MP3File(AudioIO):
 
             self._encoding = encoding
 
-            self._id3_dict = {}
-
             _check(_mpg123.mpg123_init())
             self._mpg123_handle = self._read_open(filename)
             self._length = _mpg123.mpg123_length(self._mpg123_handle)
@@ -470,7 +468,7 @@ class MP3File(AudioIO):
         elif title:
             id3_dict['name'] = title.strip()
 
-        self._id3_dict = self._info_dict = id3_dict
+        self._info_dict |= id3_dict
 
     @io_wrapper
     def read(self, size: int = -1) -> bytes:

@@ -19,39 +19,39 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Module for audio IO.
+"""Module for audio IO."""
 
-"""
+from .io_util import open_device, open_file
 
-from .io_util import open_file, open_device
-
-__all__ = ['aac_file',
-           'all_file',
-           'alsa_io',
-           'audiality_file',
-           'conversion_util',
-           'dumb_file',
-           'dummy_file',
-           'dummy_io',
-           'espeak_file',
-           'espeak_io',
-           'ffmpeg_file',
-           'fluidsynth_file',
-           'gme_file',
-           'import_util',
-           'io_base',
-           'io_util',
-           'mikmod_file',
-           'modplug_file',
-           'mp4_file',
-           'mpg123_file',
-           'opus_file',
-           'oss_io',
-           'player_util',
-           'portaudio_io',
-           'queued_io',
-           'raw_file',
-           'text_file',
-           'vorbis_file',
-           'wave_file',
-           'xmp_file']
+__all__ = [
+    "aac_file",
+    "all_file",
+    "alsa_io",
+    "audiality_file",
+    "conversion_util",
+    "dumb_file",
+    "dummy_file",
+    "dummy_io",
+    "espeak_file",
+    "espeak_io",
+    "ffmpeg_file",
+    "fluidsynth_file",
+    "gme_file",
+    "import_util",
+    "io_base",
+    "io_util",
+    "mikmod_file",
+    "modplug_file",
+    "mp4_file",
+    "mpg123_file",
+    "opus_file",
+    "oss_io",
+    "player_util",
+    "portaudio_io",
+    "queued_io",
+    "raw_file",
+    "text_file",
+    "vorbis_file",
+    "wave_file",
+    "xmp_file",
+]

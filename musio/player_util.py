@@ -26,13 +26,10 @@ from functools import wraps as functools_wraps
 from io import SEEK_CUR, SEEK_END, SEEK_SET
 from multiprocessing import Manager, Pipe, Process
 from multiprocessing.connection import Connection
-from platform import python_implementation
 from time import sleep as time_sleep
-from typing import Any, Callable, Union
+from typing import Callable
 
 from .io_util import open_device, open_file
-
-py_imp = python_implementation()
 
 
 def _play_proc(msg_dict: dict):
@@ -134,13 +131,9 @@ class AudioPlayer(object):
         """Return a python expression to recreate this instance."""
         return f"{self.__class__.__name__}(filename={self._filename})"
 
-    def __enter__(self) -> Union[object, None]:
+    def __enter__(self) -> 'AudioPlayer':
         """Provide the ability to use pythons with statement."""
-        try:
-            return self
-        except Exception as err:
-            print(err)
-            return None
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> bool:
         """Stop playback when finished."""
@@ -165,8 +158,8 @@ class AudioPlayer(object):
         """Get the length of the file if it has one."""
         return self.length if self.length >= 0 else 0
 
-    def playing_wrapper(func: Callable):
-        """Wrap methods and only call them if the stream is playing"""
+    def playing_wrapper(func: Callable) -> Callable:
+        """Wrap methods and only call them if the stream is playing."""
         @functools_wraps(func)
         def wrapper(self, *args, **kwargs) -> Callable:
             """Check if stream is playing.
@@ -174,17 +167,16 @@ class AudioPlayer(object):
             Check if stream is playing and if it is then call func otherwise
             print a message and exit.
             """
-
             if not self.playing:
-                print("%(filename)s is not playing." % self._msg_dict)
-                return None
+                print(f"{self._msg_dict['filename']} is not playing.")
+                return lambda **a: print(a)
 
             return func(self, *args, **kwargs)
 
         return wrapper
 
     def _play_proc(self, msg_dict: dict, pipe: Connection):
-        """Player process"""
+        """Player process."""
         # Open the file to play.
         try:
             with open_file(**msg_dict) as fileobj:
@@ -204,7 +196,6 @@ class AudioPlayer(object):
 
                     # Initialize variable.
                     buf = b'\x00' * device.buffer_size
-                    written = 0
 
                     # Loop until stopped.
                     while msg_dict.get('playing', True):
@@ -250,8 +241,6 @@ class AudioPlayer(object):
                             except KeyboardInterrupt:
                                 break
 
-                            # if device._rate != fileobj._rate \
-                            #         and py_imp != 'PyPy' and fileobj._rate != 0:
                             if device._rate != fileobj._rate \
                                     and fileobj._rate != 0:
                                 # Convert the input sample rate to that of
@@ -313,7 +302,6 @@ class AudioPlayer(object):
                         device.close()
 
         except IOError as err:
-            from time import sleep
             msg_dict['error'] = err
             msg_dict['info'] = ''
             msg_dict['length'] = 0

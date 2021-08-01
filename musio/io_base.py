@@ -194,13 +194,9 @@ class AudioIO(RawIOBase):
         """Return True always."""
         return True
 
-    def __enter__(self) -> RawIOBase:
+    def __enter__(self) -> 'AudioIO':
         """Provide the ability to use pythons with statement."""
-        try:
-            return self
-        except Exception as err:
-            print(err)
-            return super()
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> bool:
         """Close the file when finished."""
@@ -211,7 +207,7 @@ class AudioIO(RawIOBase):
             print(err)
             return False
 
-    def __iter__(self) -> RawIOBase:
+    def __iter__(self) -> 'AudioIO':
         """Return an iter of this object."""
         return self
 
@@ -490,7 +486,7 @@ class DevIO(RawIOBase):
         """Open the pcm audio output."""
         raise NotImplementedError("Open method not implemented.")
 
-    def __iter__(self) -> RawIOBase:
+    def __iter__(self) -> 'DevIO':
         """Return an iter of this object."""
         return self
 
@@ -498,13 +494,9 @@ class DevIO(RawIOBase):
         """Return the next buffer."""
         return self.read(self.buffer_size)
 
-    def __enter__(self) -> RawIOBase:
+    def __enter__(self) -> 'DevIO':
         """Provide the ability to use pythons with statement."""
-        try:
-            return self
-        except Exception as err:
-            print(err)
-            return super()
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> bool:
         """Close the pcm when finished."""
