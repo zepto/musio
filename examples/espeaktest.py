@@ -1,12 +1,13 @@
+"""Test espeaktext module."""
+
 from audioop import add
-from musio.io_util import open_device, open_file
+
 from musio.espeak_text import EspeakText
-# from clipspeak.espeak_text import EspeakText
-from sys import argv
-with EspeakText('') as e:
+from musio.io_util import open_device
+
+with EspeakText("") as e:
     e.loops = 0
     e.speed /= 1.5
-    # e.volume = 1000
     data = e.read()
     with open_device(e) as d:
         print(d)
@@ -16,9 +17,8 @@ with EspeakText('') as e:
                 d.stop_stream()
                 text = input()
                 d.start_stream()
-            except:
+            except (KeyboardInterrupt, EOFError):
                 break
-            print(text)
             e.pitch = 50
             e.range = 50
             e.write(text)
@@ -33,6 +33,3 @@ with EspeakText('') as e:
                 data += bytearray(len(data2) - len(data))
             data3 = add(data, data2, 1)
             d.write(data3)
-
-
-

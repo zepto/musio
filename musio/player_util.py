@@ -260,7 +260,7 @@ class AudioPlayer(object):
                                 filler = b'\x00' * \
                                     (device.buffer_size - len(buf))
                             else:
-                                filler = b''
+                                filler = ''
 
                             # Write buf.
                             try:
