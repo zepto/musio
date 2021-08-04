@@ -208,9 +208,9 @@ fluid_event_system_reset.restype = None
 
 # Only for removing events 
 #FLUIDSYNTH_API void fluid_event_any_control_change(fluid_event_t* evt, int channel);
-fluid_event_any_control_change = _fluid_lib.fluid_event_any_control_change
-fluid_event_any_control_change.argtypes = [POINTER(fluid_event_t), c_int]
-fluid_event_any_control_change.restype = None
+# fluid_event_any_control_change = _fluid_lib.fluid_event_any_control_change
+# fluid_event_any_control_change.argtypes = [POINTER(fluid_event_t), c_int]
+# fluid_event_any_control_change.restype = None
 
 
 # Only when unregistering clients 
