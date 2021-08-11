@@ -179,7 +179,7 @@ class Mixer(object):
     @property
     def volume(self) -> int:
         """Get volume."""
-        return self.get_volume(0)
+        return (self.get_volume(0) + self.get_volume(1)) // 2
 
     @volume.setter
     def volume(self, value: int):
