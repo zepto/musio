@@ -19,16 +19,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Musio pipe either reads a file or files and writes raw audio data to
-stdout, or it reads from stdin and writes to an audio device.
+"""Musio pipe utility.
 
+Musio pipe either reads a file or files and writes raw audio data to
+stdout, or it reads from stdin and writes to an audio device.
 """
 
 
-from sys import stdin as sys_stdin
-from sys import stdout as sys_stdout
-from sys import stderr as sys_stderr
 import select
+from sys import stdin as sys_stdin
+from sys import stderr as sys_stderr
+from sys import stdout as sys_stdout
 
 
 def pipe_in() -> int:

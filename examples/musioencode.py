@@ -19,9 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Test the vorbis encoder.
-
-"""
+"""Test the vorbis encoder."""
 
 
 def main(args: dict) -> None:
