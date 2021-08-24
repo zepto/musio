@@ -22,37 +22,32 @@
 """Test the vorbis encoder."""
 
 
-def main(args: dict) -> None:
-    """ Encode args['filename'] times.
-
-    """
-
-    from os.path import basename as os_basename
-    from os.path import isfile as os_isfile
-    from os.path import splitext as os_splitext
-    from sys import stdin as sys_stdin
+def main(args: dict) -> bool:
+    """Encode args['filename'] times."""
+    from os.path import basename, isfile, splitext
     from select import select
-    from time import sleep as time_sleep
-    from termios import tcgetattr, tcsetattr, ECHO, ICANON, TCSANOW
-    from termios import VMIN, VTIME
+    from sys import stdin
+    from termios import (ECHO, ICANON, TCSANOW, VMIN, VTIME, tcgetattr,
+                         tcsetattr)
 
-    from musio import open_file, open_device
+    from musio import open_file
 
     if args['debug']:
         from musio import io_util
         io_util.DEBUG = True
 
     filename = args['filename']
-    output = os_splitext(os_basename(filename))[0] + '.' + args['filetype']
+    output = splitext(basename(filename))[0] + '.' + args['filetype']
     output_bytes = output.encode('utf-8', 'surrogateescape')
     output_printable = output_bytes.decode('utf-8', 'ignore')
-    if os_isfile(output):
-        if input("Overwrite %s (y/n): " % output_printable).lower().startswith('n'):
-            return
+    if isfile(output):
+        overwrite = input(f"Overwrite {output_printable} (y/n): ").lower()
+        if overwrite.startswith("n"):
+            return False
 
     # Save the current terminal state.
-    normal = tcgetattr(sys_stdin)
-    quiet = tcgetattr(sys_stdin)
+    normal = tcgetattr(stdin)
+    quiet = tcgetattr(stdin)
 
     # Do not wait for key press and don't echo.
     quiet[3] &= ~(ECHO | ICANON)
@@ -60,7 +55,7 @@ def main(args: dict) -> None:
     quiet[6][VTIME] = 0
 
     # Set the new terminal state.
-    tcsetattr(sys_stdin, TCSANOW, quiet)
+    tcsetattr(stdin, TCSANOW, quiet)
 
     # Value returned to tell the calling function whether to quit or
     # not.
@@ -74,7 +69,7 @@ def main(args: dict) -> None:
     try:
         with open_file(**args) as in_file:
             in_file_title = in_file._info_dict.get('title',
-                                                in_file._info_dict['name'])
+                                                   in_file._info_dict['name'])
             comment_dict = {'title': in_file_title}
             comment_dict.update(in_file._info_dict)
             for i in ['title', 'artist', 'album', 'year', 'comment',
@@ -82,15 +77,19 @@ def main(args: dict) -> None:
                 if args.get(i, ''):
                     comment_dict[i] = args[i]
 
-            with open_file(output, 'w', depth=in_file.depth, rate=in_file.rate,
-                        channels=in_file.channels, quality=quality,
-                        comment_dict=comment_dict) as out_file:
+            with open_file(output, 'w', depth=in_file.depth,
+                           rate=in_file.rate, channels=in_file.channels,
+                           quality=quality,
+                           comment_dict=comment_dict) as out_file:
                 in_file.loops = 0
 
                 if args['show_position']:
-                    filename_bytes = filename.encode('utf-8', 'surrogateescape')
-                    filename_printable = filename_bytes.decode('utf-8', 'ignore')
-                    print("Encoding: %s to %s" % (filename_printable, output_printable))
+                    filename_bytes = filename.encode('utf-8',
+                                                     'surrogateescape')
+                    filename_printable = filename_bytes.decode('utf-8',
+                                                               'ignore')
+                    print(f"Encoding: {filename_printable} to "
+                          f"{output_printable}")
                     print(in_file)
 
                 for data in in_file:
@@ -100,19 +99,19 @@ def main(args: dict) -> None:
                             pos = (in_file.position * 100) / in_file.length
 
                             # Make the string.
-                            pos_str = 'Position: %.2f%%' % pos
+                            pos_str = f"Position: {pos:.2f}%"
 
                             # Find the length of the string.
                             format_len = len(pos_str) + 2
 
                             # Print the string and after erasing the old
                             # one using ansi escapes.
-                            print('\033[%dD\033[K%s' % (format_len, pos_str),
-                                  end='', flush=True)
+                            print(f"\033[{format_len}D\033[K{pos_str}", end='',
+                                  flush=True)
                     out_file.write(data)
 
                     # Check for input.
-                    r, _, _ = select([sys_stdin], [], [], 0)
+                    r, _, _ = select([stdin], [], [], 0)
 
                     # Get input if there was any otherwise continue.
                     if r:
@@ -129,7 +128,7 @@ def main(args: dict) -> None:
         raise(err)
     finally:
         # Re-set the terminal state.
-        tcsetattr(sys_stdin, TCSANOW, normal)
+        tcsetattr(stdin, TCSANOW, normal)
 
     if args['show_position']:
         print("\nDone.")
@@ -140,8 +139,9 @@ def main(args: dict) -> None:
 if __name__ == '__main__':
     from argparse import ArgumentParser
     parser = ArgumentParser(description="Musio encoder")
-    parser.add_argument('-e', '--quality', action='store', default=-10, type=int,
-                        help='Encoding quality (1-10)', dest='quality')
+    parser.add_argument('-e', '--quality', action='store', default=-10,
+                        type=int, help='Encoding quality (1-10)',
+                        dest='quality')
     parser.add_argument('-t', '--track', action='store', default=0, type=int,
                         help='Track to play', dest='track')
     parser.add_argument('-tt', '--title', action='store', default='',
@@ -176,7 +176,7 @@ if __name__ == '__main__':
                         help='Don\'t show playback percentage.',
                         dest='show_position')
     parser.add_argument('-lg', '--list-genres', action='store_true',
-                        default=False, 
+                        default=False,
                         help='Print a list of valid genres and exit.',
                         dest='list_genres')
     parser.add_argument('-d', '--debug', action='store_true', default=False,

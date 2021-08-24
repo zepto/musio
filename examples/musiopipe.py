@@ -27,37 +27,31 @@ stdout, or it reads from stdin and writes to an audio device.
 
 
 import select
-from sys import stdin as sys_stdin
-from sys import stderr as sys_stderr
-from sys import stdout as sys_stdout
+from sys import stdin, stdout
 
 
 def pipe_in() -> int:
-    """ Read from stdin and write to an audio device.
-
-    """
-
+    """Read from stdin and write to an audio device."""
     from musio import alsa_io
+
+    count = 0
 
     # Open the alsa output device.
     with alsa_io.Alsa() as out_dev:
         # Setup polling to look for a hung up event.
         poll_obj = select.poll()
-        poll_obj.register(sys_stdin.buffer, select.POLLHUP)
+        poll_obj.register(stdin.buffer, select.POLLHUP)
 
         # Loop until the input pipe ends.
         while not poll_obj.poll(1):
-            data = sys_stdin.buffer.read(out_dev.buffer_size)
+            data = stdin.buffer.read(out_dev.buffer_size)
             count = out_dev.write(data)
 
-    return 0
+    return count
 
 
 def pipe_out(filename_list: list) -> int:
-    """ Read from the specified file and write to stdout.
-
-    """
-
+    """Read from the specified file and write to stdout."""
     if filename_list:
         from musio import open_file
 
@@ -67,7 +61,7 @@ def pipe_out(filename_list: list) -> int:
             with open_file(filename, loops=0) as infile:
                 # Loop until the end of the file.
                 for data in infile:
-                    sys_stdout.buffer.write(data)
+                    stdout.buffer.write(data)
 
     return 0
 

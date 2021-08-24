@@ -23,20 +23,16 @@
 
 
 def main(args: dict) -> int:
-    """ Play args['filename'] args['loops'] times.
-
-    """
-
-    from sys import stdin as sys_stdin
+    """Play args['filename'] args['loops'] times."""
     from select import select
-    from time import sleep as time_sleep
-    from termios import tcgetattr, tcsetattr, ECHO, ICANON, TCSANOW
-    from termios import VMIN, VTIME
-    from os.path import splitext as os_splitext
+    from sys import stdin
+    from termios import (ECHO, ICANON, TCSANOW, VMIN, VTIME, tcgetattr,
+                         tcsetattr)
+    from time import sleep
 
-    from musio.player_util import AudioPlayer
-    from musio.io_util import open_file, get_codec
     from musio.dummy_file import DummyFile
+    from musio.io_util import get_codec
+    from musio.player_util import AudioPlayer
 
     if args['debug']:
         from musio import io_util
@@ -54,8 +50,8 @@ def main(args: dict) -> int:
     player = AudioPlayer(**args)
 
     # Save the current terminal state.
-    normal = tcgetattr(sys_stdin)
-    quiet = tcgetattr(sys_stdin)
+    normal = tcgetattr(stdin)
+    quiet = tcgetattr(stdin)
 
     # Do not wait for key press and don't echo.
     quiet[3] &= ~(ECHO | ICANON)
@@ -63,7 +59,7 @@ def main(args: dict) -> int:
     quiet[6][VTIME] = 0
 
     # Set the new terminal state.
-    tcsetattr(sys_stdin, TCSANOW, quiet)
+    tcsetattr(stdin, TCSANOW, quiet)
 
     # Value to break out of outer loop and quit all playback.
     quit_command = False
@@ -72,12 +68,8 @@ def main(args: dict) -> int:
         # Loop over the filenames playing each one with the same
         # AudioPlayer object.
         for filename in filenames:
-            # if filename[-3:] not in ['mp3']:
-            #     continue
             # Skip unsupported files.
             try:
-                # temp = open_file(filename, soundfont=args.get('soundfont', ''))
-                # temp.close()
                 temp = get_codec(filename, blacklist=['all'])
                 if temp == DummyFile:
                     raise(IOError(f"File {filename} not supported."))
@@ -92,12 +84,12 @@ def main(args: dict) -> int:
             try:
                 player.open(filename, **args)
                 player.loops = args['loops']
-            except IOError as err:
-                print("Unsupported audio format: %s" % filename_printable)
+            except IOError:
+                print(f"Unsupported audio format: {filename_printable}")
                 return 1
 
             if args['show_position']:
-                print("\nPlaying: %s" % filename_printable)
+                print(f"\nPlaying: {filename_printable}")
                 print(player)
 
             # Start the playback.
@@ -106,14 +98,14 @@ def main(args: dict) -> int:
             # Process user input until song finishes.
             while player.playing:
                 # Check for input.
-                r, _, _ = select([sys_stdin], [], [], 0)
+                r, _, _ = select([stdin], [], [], 0)
 
                 # Get input if there was any otherwise continue.
                 if r:
                     command = r[0].readline().lower()
                 else:
                     try:
-                        time_sleep(0.1)
+                        sleep(0.1)
                         continue
                     except KeyboardInterrupt:
                         break
@@ -135,10 +127,11 @@ def main(args: dict) -> int:
                 player.stop()
                 print("\nDone.")
 
-            if quit_command: break
+            if quit_command:
+                break
 
     except Exception as err:
-        print("Error: %s" % err, flush=True)
+        print(f"Error: {err}", flush=True)
     finally:
         try:
             # Always stop the player.
@@ -148,29 +141,25 @@ def main(args: dict) -> int:
             pass
 
         # Re-set the terminal state.
-        tcsetattr(sys_stdin, TCSANOW, normal)
+        tcsetattr(stdin, TCSANOW, normal)
 
     return 0
 
 
 def get_files(file_list):
-    """ Returns a list of all the files in filename.
-
-    """
-
-    from os.path import isdir as os_isdir
-    from os.path import isdir as os_isfile
-    from os.path import join as os_join
-    from os import walk as os_walk
+    """Return a list of all the files in filename."""
+    from os import walk
+    from os.path import isdir, join
     from pathlib import Path
 
     out_list = []
     ext = ['.mp3', '.flac', '.ogg', '.s3m', '.mod', '.xm', '.it']
 
     for name in file_list:
-        if os_isdir(name):
-            for root, sub, files in os_walk(name):
-                join_list = [os_join(root, f) for f in files if Path(f.lower()).suffix in ext]
+        if isdir(name):
+            for root, _, files in walk(name):
+                join_list = [join(root, f) for f in files
+                             if Path(f.lower()).suffix in ext]
                 out_list.extend(join_list)
         else:
             out_list.append(name)
@@ -205,8 +194,8 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--device', action='store', default='default',
                         help='Specify the device.',
                         dest='device')
-    parser.add_argument('-r', '--recursive', action='store_true', default=False,
-                        help='Recurse through all directories.',
+    parser.add_argument('-r', '--recursive', action='store_true',
+                        default=False, help='Recurse through all directories.',
                         dest='recurse')
     parser.add_argument('--list-devices', action='store_true', default=False,
                         help='List available devices.',
@@ -216,23 +205,25 @@ if __name__ == '__main__':
 
     if args.list_devices:
         try:
-            from musio.portaudio import portaudio
+            from sys import stderr
+
             from musio.io_util import silence
-            from sys import stderr as sys_stderr
+            from musio.portaudio import portaudio
 
             _portaudio = portaudio.Portaudio()
 
             # Silence stderr
-            with silence(sys_stderr):
+            with silence(stderr):
                 _portaudio.initialize()
                 dev_count = _portaudio.device_count
                 for i in range(dev_count):
                     dev_name = _portaudio.device_name(i)
                     print(i, dev_name)
-        except:
+        except Exception:
             from musio.alsa import control
             hints = control.POINTER(control.c_void_p)()
-            err = control.snd_device_name_hint(-1, b'pcm', control.byref(hints))
+            err = control.snd_device_name_hint(-1, b'pcm',
+                                               control.byref(hints))
             for i in hints:
                 if not i:
                     break
