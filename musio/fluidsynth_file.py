@@ -21,10 +21,12 @@
 """Fluidsynth module."""
 
 from functools import partial
+from sys import stderr
 from typing import Any, Callable, Generator, Union
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
+from .io_util import silence
 
 _fluidsynth = LazyImport('fluidsynth.fluidsynth', globals(), locals(),
                          ['fluidsynth'], 1)
@@ -70,7 +72,8 @@ class Settings(object):
 
     def __init__(self):
         """Create new fluidsynth settings."""
-        self._settings = _fluidsynth.new_fluid_settings()
+        with silence(stderr):
+            self._settings = _fluidsynth.new_fluid_settings()
 
         self.setstr = partial(_fluidsynth.fluid_settings_setstr,
                               self._settings)
@@ -445,12 +448,12 @@ class FluidsynthFile(AudioIO):
                      'roomsize': 0.2,
                      'damping': 0.0,
                      'width': 0.5,
-                     'level': 0.9
+                     'level': 0.0
                  }, chorus: dict = {
                      'nr': 3,
                      'level': 2.0,
                      'speed': 0.3,
-                     'depth_ms': 8.0,
+                     'depth_ms': 0.0,
                      'type': 0
                  }, **_):
         """Initialize the playback settings of the player."""

@@ -185,6 +185,16 @@ if __name__ == '__main__':
                         default='/usr/share/soundfonts/FluidR3_GM.sf2',
                         help='Soundfont to use when playing midis',
                         dest='soundfont')
+    parser.add_argument('-ab', '--bank', action='store', type=int,
+                        default=-1,
+                        help='Bank used by adlmidi.',
+                        dest='bank')
+    parser.add_argument('-ae', '--opl3-emu', action='store', type=int,
+                        default=0,
+                        help=("Select OPL3 emulator for adlmidi.  "
+                              "Nuked = 0, Nuked 1.74 = 1, Dosbox = 2, "
+                              "Opal = 3, Java = 4"),
+                        dest='emulator')
     parser.add_argument('-q', '--quiet', action='store_false', default=True,
                         help='Don\'t show playback percentage.',
                         dest='show_position')
@@ -200,6 +210,9 @@ if __name__ == '__main__':
     parser.add_argument('--list-devices', action='store_true', default=False,
                         help='List available devices.',
                         dest='list_devices')
+    parser.add_argument('--list-banks', action='store_true', default=False,
+                        help='List available banks (adlmidi).',
+                        dest='list_banks')
     parser.add_argument(dest='filename', nargs='+')
     args = parser.parse_args()
 
@@ -230,6 +243,9 @@ if __name__ == '__main__':
                 name = control.snd_device_name_get_hint(i, b'NAME').decode()
                 desc = control.snd_device_name_get_hint(i, b'DESC').decode()
                 print('%s: %s' % (name, desc))
+    elif args.list_banks:
+        from musio.adlmidi_file import AdlmidiFile
+        AdlmidiFile.print_bank_list()
     else:
         if args.filename:
             if args.blacklist:
