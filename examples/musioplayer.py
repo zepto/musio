@@ -169,6 +169,13 @@ def get_files(file_list):
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
+    from typing import Union
+    def bank(value: Union[str, int]) -> Union[str, int]:
+        return value
+        try:
+            return int(value)
+        except TypeError:
+            return value
     parser = ArgumentParser(description="Musio music player")
     parser.add_argument('-l', '--loops', action='store', default=-1, type=int,
                         help='How many times to loop (-1 = infinite)',
@@ -185,10 +192,35 @@ if __name__ == '__main__':
                         default='/usr/share/soundfonts/FluidR3_GM.sf2',
                         help='Soundfont to use when playing midis',
                         dest='soundfont')
-    parser.add_argument('-ab', '--bank', action='store', type=int,
-                        default=-1,
+    parser.add_argument('-ab', '--bank', action='store', type=str,
+                        default='-1',
                         help='Bank used by adlmidi.',
                         dest='bank')
+    parser.add_argument('-av', '--volume-model', action='store', type=int,
+                        default=0,
+                        help=('Set the volume range model. (0-11) '
+                              '0 = Auto, '
+                              '1 = Generic, '
+                              '2 = NativeOPL3, '
+                              '3 = DMX, '
+                              '4 = APPOGEE, '
+                              '5 = 9x, '
+                              '6 = DMX Fixed, '
+                              '7 = APPOGEE Fixed, '
+                              '8 = AIL, '
+                              '9 = 9X Generic FM, '
+                              '10 = HMI, '
+                              '11 = HMI Old.'),
+                        dest='volume_model')
+    parser.add_argument('-ac', '--chips', action='store', type=int,
+                        default=-1,
+                        help='Number of chips for adlmidi to emulate. (1-100)',
+                        dest='num_chips')
+    parser.add_argument('-af', '--four-ops', action='store', type=int,
+                        default=-1,
+                        help=('Number of four-op channels for adlmidi to '
+                              'emulate. (1-100)'),
+                        dest='four_ops')
     parser.add_argument('-ae', '--opl3-emu', action='store', type=int,
                         default=0,
                         help=("Select OPL3 emulator for adlmidi.  "

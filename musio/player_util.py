@@ -412,7 +412,7 @@ class AudioPlayer(object):
     @playing_wrapper
     def position(self, value: int):
         """Set the current position."""
-        self._control_conn.send({'setposition': int(value)})
+        self._control_conn.send({'setposition': value})
 
     @property
     @playing_wrapper

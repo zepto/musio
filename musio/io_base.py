@@ -350,15 +350,17 @@ class AudioIO(RawIOBase):
 
     @property
     @io_wrapper
-    def position(self) -> int:
+    def position(self) -> Union[int, float]:
         """Get the current position."""
-        return self._get_position()
+        func_annotations = getattr(self._get_position, '__annotations__', {})
+        return func_annotations.get('return', int)(self._get_position())
 
     @position.setter
     @io_wrapper
-    def position(self, position: int):
+    def position(self, position: Union[int, float]):
         """Set the position."""
-        self._set_position(int(position))
+        func_annotations = getattr(self._set_position, '__annotations__', {})
+        self._set_position(func_annotations.get('position', int)(position))
 
     @property
     def mode(self) -> str:
