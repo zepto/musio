@@ -55,6 +55,7 @@ class AdlmidiFile(AudioIO):
         super(AdlmidiFile, self).__init__(filename, 'r', 16, rate, 2)
 
         self._rate = rate
+        self._markers = []
         self._data_buffer = b''
         self._position = 0
         self._length = 0
@@ -208,10 +209,10 @@ class AdlmidiFile(AudioIO):
 
         marker_count = _adlmidi.adl_metaMarkerCount(self._adlmidi_device)
         if marker_count:
-            print(f"{marker_count=}")
             for i in range(marker_count):
                 marker = _adlmidi.adl_metaMarker(self._adlmidi_device, i)
-                print(dir(marker))
+                # info_dict[f"marker {marker.pos_time}"] = marker.label
+                self._markers.append([marker.pos_time, marker.label, False])
 
         return info_dict
 
@@ -273,6 +274,14 @@ class AdlmidiFile(AudioIO):
                 buf_size,
                 _adlmidi.cast(byte_buffer, _adlmidi.POINTER(_adlmidi.c_short))
             )
+
+            # Print some midi info about the correct time.
+            for marker in self._markers:
+                if int(self.position) == int(marker[0]) and not marker[2]:
+                    print(f"({marker[1]}) ", end='', flush=True)
+                    marker[2] = True
+                elif int(self.position) < int(marker[0]) and marker[2]:
+                    marker[2] = False
 
             # Check for the end of the stream.
             if old_position > self.position or bytes_read <= 0:

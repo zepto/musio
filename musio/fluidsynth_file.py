@@ -340,6 +340,7 @@ class Player(object):
         self.play = partial(_fluidsynth.fluid_player_play, self.object)
         self.stop = partial(_fluidsynth.fluid_player_stop, self.object)
         self.join = partial(_fluidsynth.fluid_player_join, self.object)
+        self.ticks = partial(_fluidsynth.fluid_player_get_total_ticks, self.object)
         self.set_loop = partial(_fluidsynth.fluid_player_set_loop, self.object)
         self.set_loop.__doc__ = \
             """set_loop(loop) -> Set the number of times to loop.  A

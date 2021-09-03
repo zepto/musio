@@ -305,3 +305,8 @@ fluid_player_set_bpm.restype = c_int
 fluid_player_get_status = _fluid_lib.fluid_player_get_status
 fluid_player_get_status.argtypes = [POINTER(fluid_player_t)]
 fluid_player_get_status.restype = c_int
+
+#FLUIDSYNTH_API int fluid_player_get_total_ticks(fluid_player_t *player);
+fluid_player_get_total_ticks = _fluid_lib.fluid_player_get_status
+fluid_player_get_total_ticks.argtypes = [POINTER(fluid_player_t)]
+fluid_player_get_total_ticks.restype = c_int
