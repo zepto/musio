@@ -196,16 +196,25 @@ class AdlmidiFile(AudioIO):
 
         title = _adlmidi.adl_metaMusicTitle(self._adlmidi_device)
         if title:
-            info_dict['name'] = title.decode()
+            try:
+                info_dict['name'] = title.decode()
+            except UnicodeDecodeError:
+                info_dict['name'] = title.decode('latin-1')
 
         copyright = _adlmidi.adl_metaMusicCopyright(self._adlmidi_device)
         if copyright:
-            info_dict['copyright'] = copyright.decode()
+            try:
+                info_dict['copyright'] = copyright .decode()
+            except UnicodeDecodeError:
+                info_dict['copyright'] = copyright .decode('latin-1')
 
         title_count = _adlmidi.adl_metaTrackTitleCount(self._adlmidi_device)
         for i in range(title_count):
             track_title = _adlmidi.adl_metaTrackTitle(self._adlmidi_device, i)
-            info_dict[f"Track {i}"] = track_title.decode()
+            try:
+                info_dict[f"Track {i}"] = track_title.decode()
+            except UnicodeDecodeError:
+                info_dict[f"Track {i}"] = track_title.decode('latin-1')
 
         marker_count = _adlmidi.adl_metaMarkerCount(self._adlmidi_device)
         if marker_count:
