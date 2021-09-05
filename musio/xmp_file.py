@@ -108,7 +108,7 @@ class XMPFile(AudioIO):
         ret = _xmp.xmp_load_module(xmp_context, filename_b)
         if ret != 0:
             raise IOError(
-                f"Can't load module: {filename_b} error number {ret}"
+                f"Can't load module: {filename} error number {ret}"
             )
 
         module_info = _xmp.xmp_module_info()

@@ -55,7 +55,7 @@ class MikModFile(AudioIO):
     _supported_modes = 'r'
 
     def __init__(self, filename: str, depth: int = 16, rate: int = 44100,
-                 channels: int = 2, **kwargs):
+                 channels: int = 2, **_):
         """Initialize the playback settings of the player."""
         super(MikModFile, self).__init__(filename, 'r', depth, rate, channels)
 
@@ -188,7 +188,13 @@ class MikModFile(AudioIO):
 
         module = _mikmod.Player_Load(filename_b, 64, 1)
 
-        self._load_info(module)
+        try:
+            self._load_info(module)
+        except ValueError:
+            self.close()
+            raise IOError(
+                f"Can't load module: {filename}"
+            )
 
         self._closed = False
 
