@@ -244,7 +244,7 @@ class Stream(object):
         else:
             in_str = b''
 
-        data = self._callback(frame_count, in_str)
+        data = self._callback(frame_count, in_str, user_data)
 
         if out_buffer and not data:
             print("Done.")
