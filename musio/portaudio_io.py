@@ -57,7 +57,7 @@ class Portaudio(DevIO):
                  channels: int = 2, unsigned: bool = False,
                  floatp: bool = False, buffer_size: int = 0,
                  latency: float = 0.0500000, device: Any = 'default',
-                 callback: Callable = None, **kwargs):
+                 callback: Callable = None, callback_data: Any = None, **kwargs):
         """Initialize the portaudio device."""
         super(Portaudio, self).__init__(
             mode,
@@ -91,6 +91,7 @@ class Portaudio(DevIO):
         self._devindex = device
 
         self._callback = callback
+        self._user_data = callback_data
 
         self._devname = ''
 
@@ -233,7 +234,8 @@ class Portaudio(DevIO):
             buffer_size=self._buffer_size,
             input_params=in_params,
             output_params=out_params,
-            callback=self._callback
+            callback=self._callback,
+            user_data=self._user_data
         )
 
         stream.open()

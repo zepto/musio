@@ -172,12 +172,9 @@ class Stream(object):
 
     def __init__(self, input_params: StreamParams = None,
                  output_params: StreamParams = None,
-                 callback: Callable = None, flags: int = 0,
-                 rate: int = 0, buffer_size: int = 0):
-        """ Open a new portaudio stream.
-
-        """
-
+                 callback: Callable = None, user_data: Any = None,
+                 flags: int = 0, rate: int = 0, buffer_size: int = 0):
+        """Open a new portaudio stream."""
         if not input_params and not output_params:
             raise ValueError("Specify either input parameters or output "
                              "parameters or both.")
@@ -198,6 +195,7 @@ class Stream(object):
         self._input_params = input_params
         self._output_params = output_params
         self._callback = callback
+        self._user_data = user_data
         self._rate = rate
         self._buffer_size = buffer_size
         self._flags = flags
@@ -227,7 +225,7 @@ class Stream(object):
             buffer_size,
             self._flags,
             self._pa_stream_callback,
-            None
+            self._user_data
         )
 
     def close(self) -> int:
