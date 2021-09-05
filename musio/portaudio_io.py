@@ -119,6 +119,11 @@ class Portaudio(DevIO):
 
         return [name_func(i) for i in range(dev_count)]
 
+    @property
+    def is_stream_active(self) -> bool:
+        """Return whether or not the stream is active."""
+        return self._stream.active
+
     def stop_stream(self) -> Union[int, bool]:
         """Temporaraly stop the stream.
 
