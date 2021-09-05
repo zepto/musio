@@ -22,7 +22,6 @@
 """A module for playing midi files through opnmidi."""
 
 from os import get_terminal_size
-from typing import Any, Union
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
@@ -49,21 +48,34 @@ class OpnmidiFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
+    volume_model_list = [
+        'Auto',
+        'Generic',
+        'Native OPN2',
+        'DMX',
+        'Apogee Sound System',
+        '9X (SB16)',
+    ]
+
     def __init__(self, filename: str,
                  bank: str = '/usr/share/sounds/wopn/xg.wopn',
-                 emulator: int = 0, num_chips: int = -1, four_ops: int = -1,
+                 emulator: int = 0, num_chips: int = -1,
                  volume_model: int = 0, rate: int = 44100, **_):
         """Initialize the playback settings of the player."""
         super(OpnmidiFile, self).__init__(filename, 'r', 16, rate, 2)
 
         self._rate = rate
-        self._markers = []
         self._data_buffer = b''
         self._position = 0
         self._length = 0
-        if bank == '-1':
+
+        self._markers = []
+        self._emulator = emulator
+
+        try:
+            assert(int(bank))
             self._bank = '/usr/share/sounds/wopn/xg.wopn'
-        else:
+        except ValueError:
             self._bank = bank
 
         self._opnmidi_device = _opnmidi.opn2_init(self._rate)
@@ -74,10 +86,11 @@ class OpnmidiFile(AudioIO):
             _opnmidi.opn2_setSoftPanEnabled(self._opnmidi_device, 1)
             _opnmidi.opn2_setAutoArpeggio(self._opnmidi_device, 1)
             _opnmidi.opn2_setFullRangeBrightness(self._opnmidi_device, 1)
+
+            self.switch_emulator(emulator)
             self.set_bank(self._bank)
-            self._emulator = self.switch_emulator(emulator)
-            self._num_chips = self.set_num_chips(num_chips)
-            self._volume_model = self.set_volume_model(volume_model)
+            self.num_chips = num_chips
+            self.volume_model = volume_model
 
             if self._open(filename):
                 self._length = _opnmidi.opn2_totalTimeLength(
@@ -94,6 +107,17 @@ class OpnmidiFile(AudioIO):
         else:
             raise(Exception("Failed to init opnmidi"))
 
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        return (f'{self.__class__.__name__}(filename="{self._filename}", '
+                f'bank="{self._bank}", emulator={self._emulator}, '
+                f"num_chips={self.num_chips}, "
+                f"volume_model={self.volume_model}, rate={self._rate})")
+
+    def to_seconds(self, _: int) -> float:
+        """Return the curren position."""
+        return self.position
+
     def _get_position(self) -> float:
         """Update the position variable."""
         # Update the position.
@@ -104,39 +128,54 @@ class OpnmidiFile(AudioIO):
         """Change the position of playback."""
         _opnmidi.opn2_positionSeek(self._opnmidi_device, position)
 
-    def switch_emulator(self, emulator: int = 0) -> int:
+    def switch_emulator(self, emulator: int = 0):
         """Switch the emulator core."""
         if emulator in range(0, 8):
             err = _opnmidi.opn2_switchEmulator(self._opnmidi_device, emulator)
             if err < 0:
                 err_b = _opnmidi.opn2_errorInfo(self._opnmidi_device)
                 print(f"{err_b.decode()}")
+                self._emulator = 0
+            else:
+                self._emulator = emulator
+
+    @property
+    def emulator_name(self) -> str:
+        """Get the current emulator name."""
         return _opnmidi.opn2_chipEmulatorName(self._opnmidi_device).decode()
 
-    def set_volume_model(self, volume_model: int) -> int:
+    @property
+    def volume_model_name(self) -> str:
+        """Get the volume model name."""
+        return self.volume_model_list[self.volume_model]
+
+    @property
+    def volume_model(self) -> int:
+        """Get the volume model number."""
+        return _opnmidi.opn2_getVolumeRangeModel(self._opnmidi_device)
+
+    @volume_model.setter
+    def volume_model(self, volume_model: int):
         """Set the volume model."""
         if volume_model not in range(0, 6):
             return 0
         _opnmidi.opn2_setVolumeRangeModel(self._opnmidi_device,
-                                         volume_model)
-        return _opnmidi.opn2_getVolumeRangeModel(self._opnmidi_device)
+                                          volume_model)
 
-    def set_num_chips(self, num_chips: int) -> int:
-        """Set the number of chips to emulate.
-
-        Returns the number of chips obtained.
-        """
-        num_chips = num_chips if num_chips in range(1, 101) else 4
-
-        _opnmidi.opn2_setNumChips(self._opnmidi_device, num_chips)
-
+    @property
+    def num_chips(self) -> int:
+        """Return the number of chips obtained."""
         return _opnmidi.opn2_getNumChipsObtained(self._opnmidi_device)
 
-    def set_bank(self, bank: Union[int, str]):
+    @num_chips.setter
+    def num_chips(self, num_chips: int):
+        """Set the number of chips to emulate."""
+        num_chips = num_chips if num_chips in range(1, 101) else 4
+        _opnmidi.opn2_setNumChips(self._opnmidi_device, num_chips)
+
+    def set_bank(self, bank: str):
         """Set the bank."""
-        err = -1
-        if type(bank) == str:
-            err = _opnmidi.opn2_openBankFile(self._opnmidi_device, bank)
+        err = _opnmidi.opn2_openBankFile(self._opnmidi_device, bank)
         if err < 0:
             self._bank = -1
         else:
@@ -148,17 +187,9 @@ class OpnmidiFile(AudioIO):
 
         info_dict['bank'] = self._bank
 
-        volume_model_list = [
-            'Auto',
-            'Generic',
-            'Native OPN2',
-            'DMX',
-            'Apogee Sound System',
-            '9X (SB16)',
-        ]
-        info_dict['volume model'] = volume_model_list[self._volume_model]
-        info_dict['chips'] = self._num_chips
-        info_dict['emulator'] = self._emulator
+        info_dict['volume model'] = self.volume_model_name
+        info_dict['chips'] = self.num_chips
+        info_dict['emulator'] = self.emulator_name
 
         track_count = _opnmidi.opn2_trackCount(self._opnmidi_device)
         info_dict['tracks'] = track_count
@@ -236,11 +267,28 @@ class OpnmidiFile(AudioIO):
     @loops.setter
     def loops(self, value: int):
         """Override loops setter so internal looping can be changed."""
-        self._loops = value if self._emulator != 'VGM Writer' else 0
+        self._loops = value if self._emulator != 7 else 0
         if self._loops == 0:
             _opnmidi.opn2_setLoopEnabled(self._opnmidi_device, 0)
         else:
             _opnmidi.opn2_setLoopEnabled(self._opnmidi_device, 1)
+
+    def print_midi_markers(self):
+        """Print midi marker info."""
+        # Print some midi info at the correct time.
+        for marker in self._markers:
+            marker_time = int(marker['pos_time'])
+            if int(self.position) == marker_time and not marker['shown']:
+                if marker['column'] == 0:
+                    print("\033[2K")
+                print("\0337", end='', flush=True)
+                print("\033[1A", end='', flush=True)
+                print(f"\033[{marker['column']}G", end='', flush=True)
+                print(f"\033[0K{marker['label']}", end='', flush=True)
+                print("\0338", end='', flush=True)
+                marker['shown'] = True
+            elif int(self.position) < marker_time and marker['shown']:
+                marker['shown'] = False
 
     @io_wrapper
     def read(self, size: int = -1) -> bytes:
@@ -261,21 +309,6 @@ class OpnmidiFile(AudioIO):
                 buf_size,
                 _opnmidi.cast(byte_buffer, _opnmidi.POINTER(_opnmidi.c_short))
             )
-
-            # Print some midi info about the correct time.
-            for marker in self._markers:
-                marker_time = int(marker['pos_time'])
-                if int(self.position) == marker_time and not marker['shown']:
-                    if marker['column'] == 0:
-                        print("\033[2K")
-                    print("\0337", end='', flush=True)
-                    print("\033[1A", end='', flush=True)
-                    print(f"\033[{marker['column']}G", end='', flush=True)
-                    print(f"\033[0K{marker['label']}", end='', flush=True)
-                    print("\0338", end='', flush=True)
-                    marker['shown'] = True
-                elif int(self.position) < marker_time and marker['shown']:
-                    marker['shown'] = False
 
             # Check for the end of the stream.
             if old_position > self.position or bytes_read <= 0:
@@ -301,7 +334,7 @@ class OpnmidiFile(AudioIO):
 
         self._data_buffer = data[size:]
 
-        if self._emulator == 'VGM Writer' and len(data):
+        if self._emulator == 7 and len(data):
             return b'\x00' * size
 
         return data[:size]

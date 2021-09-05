@@ -209,6 +209,8 @@ class AudioPlayer(object):
                             # Only print the position if the stream has a
                             # length.
                             if fileobj.length > 0:
+                                fileobj.print_midi_markers()
+
                                 # Calculate the percentage played.
                                 pos = (fileobj.position * 100) / fileobj.length
 

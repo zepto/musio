@@ -415,6 +415,10 @@ class AudioIO(RawIOBase):
         """Whether the player is using bigendian."""
         return self._bigendian
 
+    def print_midi_markers(self):
+        """Print midi marker info at the correct time."""
+        pass
+
 
 class DevIO(RawIOBase):
     """File like access to audio device."""
