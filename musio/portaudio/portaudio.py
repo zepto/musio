@@ -210,7 +210,7 @@ class Stream(object):
         return self._buffer_size
 
     def open(self) -> int:
-        """Opens a portaudio stream."""
+        """Open a portaudio stream."""
         if self._pa_stream_callback:
             buffer_size = self._buffer_size
         else:
@@ -225,7 +225,7 @@ class Stream(object):
             buffer_size,
             self._flags,
             self._pa_stream_callback,
-            self._user_data
+            None
         )
 
     def close(self) -> int:
@@ -244,15 +244,14 @@ class Stream(object):
         else:
             in_str = b''
 
-        data = self._callback(frame_count, in_str, user_data)
+        data = self._callback(frame_count, in_str, self._user_data)
 
         if out_buffer and not data:
-            print("Done.")
             return _portaudio.paComplete
         elif out_buffer:
             _portaudio.memmove(
                 out_buffer,
-                _portaudio.c_buffer(data),
+                _portaudio.create_string_buffer(data),
                 len(data)
             )
 
