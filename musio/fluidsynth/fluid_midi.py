@@ -252,9 +252,11 @@ delete_fluid_midi_driver.restype = None
 # @since 1.1.0
 #
 fluid_player_status = c_int
-FLUID_PLAYER_READY = 0           # *< Player is ready 
-FLUID_PLAYER_PLAYING = 1         # *< Player is currently playing 
-FLUID_PLAYER_DONE = 2            # *< Player is finished playing 
+FLUID_PLAYER_READY = 0           # /**< Player is ready */
+FLUID_PLAYER_PLAYING = 1         # /**< Player is currently playing */
+FLUID_PLAYER_STOPPING = 2        # /**< Player is stopping, but hasn't finished
+                                 # yet (currently unused) */
+FLUID_PLAYER_DONE = 3            # /**< Player is finished playing */
 
 #FLUIDSYNTH_API fluid_player_t* new_fluid_player(fluid_synth_t* synth);
 new_fluid_player = _fluid_lib.new_fluid_player
@@ -307,6 +309,16 @@ fluid_player_get_status.argtypes = [POINTER(fluid_player_t)]
 fluid_player_get_status.restype = c_int
 
 #FLUIDSYNTH_API int fluid_player_get_total_ticks(fluid_player_t *player);
-fluid_player_get_total_ticks = _fluid_lib.fluid_player_get_status
+fluid_player_get_total_ticks = _fluid_lib.fluid_player_get_total_ticks
 fluid_player_get_total_ticks.argtypes = [POINTER(fluid_player_t)]
 fluid_player_get_total_ticks.restype = c_int
+
+# FLUIDSYNTH_API int fluid_player_get_current_tick(fluid_player_t *player);
+fluid_player_get_current_tick = _fluid_lib.fluid_player_get_current_tick
+fluid_player_get_current_tick.argtypes = [POINTER(fluid_player_t)]
+fluid_player_get_current_tick.restype = c_int
+
+#FLUIDSYNTH_API int fluid_player_seek(fluid_player_t *player, int ticks);
+fluid_player_seek = _fluid_lib.fluid_player_seek
+fluid_player_seek.argtypes = [POINTER(fluid_player_t), c_int]
+fluid_player_seek.restype = c_int

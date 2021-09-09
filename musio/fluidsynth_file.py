@@ -340,7 +340,11 @@ class Player(object):
         self.play = partial(_fluidsynth.fluid_player_play, self.object)
         self.stop = partial(_fluidsynth.fluid_player_stop, self.object)
         self.join = partial(_fluidsynth.fluid_player_join, self.object)
-        self.ticks = partial(_fluidsynth.fluid_player_get_total_ticks, self.object)
+        self.total_ticks = partial(_fluidsynth.fluid_player_get_total_ticks,
+                                   self.object)
+        self.current_tick = partial(_fluidsynth.fluid_player_get_current_tick,
+                                    self.object)
+        self.seek = partial(_fluidsynth.fluid_player_seek, self.object)
         self.set_loop = partial(_fluidsynth.fluid_player_set_loop, self.object)
         self.set_loop.__doc__ = \
             """set_loop(loop) -> Set the number of times to loop.  A
@@ -488,6 +492,8 @@ class FluidsynthFile(AudioIO):
         # Create player object using synth.
         self._player = Player(self._synth)
 
+        self._length = self._player.total_ticks()
+
         # Load the midi and soundfont.
         if not self._open(filename, soundfont):
             raise IOError(f"Error loading midi '{filename}' and "
@@ -499,6 +505,15 @@ class FluidsynthFile(AudioIO):
                 f"soundfont='{self._soundfont}', rate={self._rate}, "
                 f"gain={self._gain}, revert={self._reverb}, "
                 f"chorus={self._chorus})")
+
+    def _get_position(self) -> int:
+        """Get the current position."""
+        self._position = self._player.current_tick()
+        return self._position
+
+    def _set_position(self, position: int):
+        """Set the position."""
+        self._player.seek(position)
 
     @property
     def loops(self) -> int:
@@ -607,10 +622,13 @@ class FluidsynthFile(AudioIO):
             # Start rendering the midi to audio data that we can read when
             # we want it.
             self._player.play()
+        elif not self._length:
+            self._length = self._player.total_ticks()
 
         size //= self._channels * 2
 
-        return self._synth.read_s16(size)
+        with silence(stderr):
+            return self._synth.read_s16(size)
 
     def close(self):
         """Close and clean up."""
