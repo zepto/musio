@@ -158,6 +158,7 @@ class AudioIO(RawIOBase):
         str_list = ['\n']
 
         max_key_len = max(len(key) for key in self._info_dict.keys())
+        self._info_dict['musio module'] = f" ({self.__class__.__name__})"
 
         for key, value in self._info_dict.items():
             if not str(value).strip():
@@ -180,7 +181,7 @@ class AudioIO(RawIOBase):
         """Return a python expression to recreate this instance."""
         return (f'{self.__class__.__name__}(filename="{self._filename}", '
                 f'depth={self._depth}, rate={self._rate}, '
-                f'channels={self._channels}')
+                f'channels={self._channels})')
 
     def __getitem__(self, item: Any) -> Any:
         """Return the attribute."""
