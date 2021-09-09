@@ -24,6 +24,7 @@
 import audioop
 import math
 from array import array
+from musio.sndfile.sndfile import SFC_SET_SCALE_FLOAT_INT_READ
 from os.path import isfile
 from pathlib import Path
 from typing import Any, Callable
@@ -240,6 +241,15 @@ class SndfileFile(AudioIO):
                 self._floatp = True
             else:
                 self._scale = 0.0
+
+            # Scale floating point data when read as integers.
+            if subformat in [_sndfile.SF_FORMAT_VORBIS,
+                             _sndfile.SF_FORMAT_OPUS] and not self._floatp:
+                _sndfile.sf_command(
+                    self._snd_file,
+                    _sndfile.SFC_SET_SCALE_FLOAT_INT_READ,
+                    None,
+                    _sndfile.SF_TRUE)
 
             if self._snd_info.seekable:
                 self._length = self._snd_info.frames
