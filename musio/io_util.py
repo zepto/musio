@@ -343,7 +343,9 @@ def open_file(filename: str, mode: str = 'r', mod_path: list[str] = [],
         )
 
         if not codec:
-            raise IOError(f"Error opening codec {codec}.")
+            import sys
+            print("No valid codec was found.")
+            sys.exit()
 
         try:
             open_codec = codec(filename, mode=mode, **kwargs)
@@ -408,35 +410,38 @@ def silence(fd: IO):
     """Silence any output from fd."""
     from os import close, dup, dup2, fdopen, pipe
 
-    # Backup the file
-    old_fd = fd
+    # Do not silence when debugging.
+    if not DEBUG:
+        # Backup the file
+        old_fd = fd
 
-    # Flush the file so it can be silenced properly.
-    fd.flush()
+        # Flush the file so it can be silenced properly.
+        fd.flush()
 
-    # Create a duplicate of fd
-    new_fd = dup(fd.fileno())
+        # Create a duplicate of fd
+        new_fd = dup(fd.fileno())
 
-    # Create a pipe to write to.
-    read, write = pipe()
+        # Create a pipe to write to.
+        read, write = pipe()
 
-    # Set the write to the fd filenumber
-    dup2(write, fd.fileno())
+        # Set the write to the fd filenumber
+        dup2(write, fd.fileno())
 
-    # Close the pipe.
-    close(write)
-    close(read)
+        # Close the pipe.
+        close(write)
+        close(read)
 
-    # Set fd to the new fd
-    fd = fdopen(new_fd, 'w')
+        # Set fd to the new fd
+        fd = fdopen(new_fd, 'w')
 
     try:
         # Run the commands in the 'with' statement.
         yield
     finally:
-        # Return the fd back to its original state.
-        dup2(fd.fileno(), old_fd.fileno())
-        fd = old_fd
+        if not DEBUG:
+            # Return the fd back to its original state.
+            dup2(fd.fileno(), old_fd.fileno())
+            fd = old_fd
 
 
 @contextmanager
