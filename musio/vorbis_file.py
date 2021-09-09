@@ -37,7 +37,7 @@ _vorbisenc = LazyImport('ogg.vorbisenc_wrapper', globals(), locals(),
 
 
 __supported_dict = {
-    'ext': ['.ogg', '.ogv'],
+    'ext': ['.ogg', '.ogv', '.oga'],
     'handler': 'VorbisFile',
     'dependencies': {
         'ctypes': ['vorbis', 'vorbisenc', 'vorbisfile', 'ogg'],
