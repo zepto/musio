@@ -100,11 +100,11 @@ class MP3File(AudioIO):
                  unsigned: bool = False, quality: int = 2,
                  comment_dict: dict = {}, **kwargs):
         """Initialize the playback settings of the player."""
-        if depth == 24:
+        if depth in [32, 24]:
+            self._from_width = depth // 8
             depth = 16
-            self._from_24 = True
         else:
-            self._from_24 = False
+            self._from_width = None
 
         self._state = None
 
@@ -508,9 +508,11 @@ class MP3File(AudioIO):
     @io_wrapper
     def write(self, data: bytes) -> int:
         """Encode and writes str to an mp3 file."""
-        if self._from_24:
-            data = audioop.lin2lin(data, 3, self._depth // 8)
+        # Scale all bit-width data above 16-bit down to 16-bit.
+        if self._from_width:
+            data = audioop.lin2lin(data, self._from_width, self._depth // 8)
 
+        # Resample all audio data above 44100 down to 44100.
         if self._rate > 44100:
             data, self._state = audioop.ratecv(
                 data,
