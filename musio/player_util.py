@@ -29,7 +29,7 @@ from multiprocessing.connection import Connection
 from time import sleep as time_sleep
 from typing import Callable
 
-from .io_util import open_device, open_file
+from .io_util import msg_out, open_device, open_file
 
 
 def _play_proc(msg_dict: dict):
@@ -189,6 +189,10 @@ class AudioPlayer(object):
                 # Open an audio output device that can handle the data
                 # from fileobj.
                 device = open_device(fileobj, 'w', **msg_dict)
+
+                msg_out(f"\nFile: {repr(fileobj)}\n")
+                msg_out(f"\nDevice: {repr(device)}\n")
+
                 try:
 
                     # Set the default number of loops to infinite.
@@ -242,6 +246,11 @@ class AudioPlayer(object):
                                 buf = fileobj.readline()
                             except KeyboardInterrupt:
                                 break
+
+                            # Sometimes a read needs to be made before the
+                            # length is available.
+                            if not msg_dict['length']:
+                                msg_dict['length'] = fileobj.length
 
                             if device._rate != fileobj._rate \
                                     and fileobj._rate != 0:
@@ -297,6 +306,8 @@ class AudioPlayer(object):
                                 fileobj.loops = command['setloops']
                             elif 'getloopcount' in command:
                                 pipe.send(fileobj.loop_count)
+                            elif 'getlength' in command:
+                                pipe.send(fileobj.length)
                 except Exception as err:
                     print(err)
                 finally:
@@ -401,6 +412,8 @@ class AudioPlayer(object):
     @property
     def length(self) -> int:
         """Get the length of audio."""
+        # self._control_conn.send('getlength')
+        # return self._control_conn.recv()
         return self._msg_dict.get('length', 0)
 
     @property
