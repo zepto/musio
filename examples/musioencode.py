@@ -65,6 +65,8 @@ def main(args: dict) -> bool:
         quality = args['quality'] / 10 if args['quality'] in range(-1, 11) else 0.5
     elif args['filetype'].lower() == 'mp3':
         quality = args['quality'] if args['quality'] in range(0, 10) else 2
+    else:
+        quality = 5
 
     try:
         with open_file(**args) as in_file:
@@ -79,9 +81,15 @@ def main(args: dict) -> bool:
 
             with open_file(output, 'w', depth=in_file.depth,
                            rate=in_file.rate, channels=in_file.channels,
-                           quality=quality,
-                           comment_dict=comment_dict) as out_file:
+                           quality=quality, floatp=in_file._floatp,
+                           unsigned=in_file._unsigned,
+                           comment_dict=comment_dict,
+                           blacklist=args['blacklist']
+                           ) as out_file:
                 in_file.loops = 0
+                if args['debug']:
+                    print(repr(in_file))
+                    print(repr(out_file))
 
                 if args['show_position']:
                     filename_bytes = filename.encode('utf-8',
@@ -161,13 +169,50 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--path', action='store', default=[],
                         type=lambda a: a.split(','), help='Codec path',
                         dest='mod_path')
-    parser.add_argument('-b', '--blacklist', action='store', default=[],
-                        type=lambda a: a.split(','), help='Blacklist a Codec',
+    parser.add_argument('-b', '--blacklist', action='extend',
+                        default=['dummy'],
+                        type=lambda a: a.split(','),
+                        help='Blacklist a Codec',
                         dest='blacklist')
     parser.add_argument('-s', '--soundfont', action='store',
-                        default='/usr/share/soundfonts/fluidr3/FluidR3GM.SF2',
+                        default='/usr/share/soundfonts/FluidR3_GM.sf2',
                         help='Soundfont to use when playing midis',
                         dest='soundfont')
+    parser.add_argument('-ab', '--bank', action='store', type=str,
+                        default='-1',
+                        help='Bank used by adlmidi.',
+                        dest='bank')
+    parser.add_argument('-av', '--volume-model', action='store', type=int,
+                        default=0,
+                        help=('Set the volume range model. (0-11) '
+                              '0 = Auto, '
+                              '1 = Generic, '
+                              '2 = NativeOPL3, '
+                              '3 = DMX, '
+                              '4 = APPOGEE, '
+                              '5 = 9x, '
+                              '6 = DMX Fixed, '
+                              '7 = APPOGEE Fixed, '
+                              '8 = AIL, '
+                              '9 = 9X Generic FM, '
+                              '10 = HMI, '
+                              '11 = HMI Old.'),
+                        dest='volume_model')
+    parser.add_argument('-ac', '--chips', action='store', type=int,
+                        default=-1,
+                        help='Number of chips for adlmidi to emulate. (1-100)',
+                        dest='num_chips')
+    parser.add_argument('-af', '--four-ops', action='store', type=int,
+                        default=-1,
+                        help=('Number of four-op channels for adlmidi to '
+                              'emulate. (1-100)'),
+                        dest='four_ops')
+    parser.add_argument('-ae', '--opl3-emu', action='store', type=int,
+                        default=0,
+                        help=("Select OPL3 emulator for adlmidi.  "
+                              "Nuked = 0, Nuked 1.74 = 1, Dosbox = 2, "
+                              "Opal = 3, Java = 4"),
+                        dest='emulator')
     parser.add_argument('-f', '--filetype', action='store',
                         default='ogg',
                         help='The output format',
@@ -182,6 +227,11 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--debug', action='store_true', default=False,
                         help='Enable debug error messages.',
                         dest='debug')
+    parser.add_argument('-fp', '--floating-point', action='store_true',
+                        default=False,
+                        help=("Use floating point for the input file when "
+                              "possible."),
+                        dest="floatp")
     parser.add_argument('-i', '--input', dest='input_filename', nargs='+')
     args = parser.parse_args()
 

@@ -24,6 +24,7 @@
 
 def main(args: dict) -> int:
     """Play args['filename'] args['loops'] times."""
+    from pathlib import Path
     from select import select
     from sys import stdin
     from termios import (ECHO, ICANON, TCSANOW, VMIN, VTIME, tcgetattr,
@@ -68,6 +69,10 @@ def main(args: dict) -> int:
         # Loop over the filenames playing each one with the same
         # AudioPlayer object.
         for filename in filenames:
+           # Skip non-files.
+            if not Path(filename).is_file():
+                continue
+
             # Skip unsupported files.
             try:
                 temp = get_codec(filename, blacklist=['all'])
@@ -153,7 +158,8 @@ def get_files(file_list):
     from pathlib import Path
 
     out_list = []
-    ext = ['.mp3', '.flac', '.ogg', '.s3m', '.mod', '.xm', '.it']
+    ext = ['.mp3', '.flac', '.ogg', '.s3m', '.mod', '.xm',
+           '.it', '.opus', '.wav', '.mid', '.imf', '.nsf']
 
     for name in file_list:
         if isdir(name):
@@ -230,6 +236,10 @@ if __name__ == '__main__':
     parser.add_argument('-q', '--quiet', action='store_false', default=True,
                         help='Don\'t show playback percentage.',
                         dest='show_position')
+    parser.add_argument('-fp', '--floating-point', action='store_true',
+                        default=False,
+                        help="Use floating point playback when possible.",
+                        dest="floatp")
     parser.add_argument('--debug', action='store_true', default=False,
                         help='Enable debug error messages.',
                         dest='debug')
