@@ -156,6 +156,7 @@ class GMEFile(AudioIO):
         self._length = info_t.contents.play_length
 
         info_dict = {"track": f"{self._track + 1}/{self._track_count}"}
+        info_dict['name'] = info_t.contents.game.decode('cp437', 'replace')
 
         for i in ('system', 'song', 'copyright', 'author',
                   'comment', 'dumper', 'game'):
@@ -178,7 +179,8 @@ class GMEFile(AudioIO):
 
         data = _gme.ctypes.string_at(c_buffer, _gme.ctypes.sizeof(c_buffer))
 
-        if _gme.gme_track_ended(self._music_emu):
+        if _gme.gme_track_ended(self._music_emu) or (self.position >
+                                                     self.length):
             if self._loops == -1 or self._loops > self._loop_count:
                 self._loop_count += 1
                 self.seek(0)
