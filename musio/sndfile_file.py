@@ -217,7 +217,8 @@ class SndfileFile(AudioIO):
                 if line.lower().strip().startswith('bit'):
                     bit_depth = line.split()[-1]
                     if bit_depth.isdigit():
-                        self._depth = 32 if int(bit_depth) > 16 else 16
+                        self._depth = (32 if int(bit_depth) > 16
+                                       else int(bit_depth))
                         self._floatp = floatp if self._depth > 16 else False
                         break
 
@@ -264,7 +265,16 @@ class SndfileFile(AudioIO):
 
             self._snd_file, self._snd_info = self._write_open(filename)
 
-            # subformat = self._snd_info.format & _sndfile.SF_FORMAT_SUBMASK
+            subformat = self._snd_info.format & _sndfile.SF_FORMAT_SUBMASK
+            # Scale integer data when written as floating point.
+            if subformat not in [_sndfile.SF_FORMAT_VORBIS,
+                                 _sndfile.SF_FORMAT_OPUS] and self._floatp:
+                _sndfile.sf_command(
+                    self._snd_file,
+                    _sndfile.SFC_SET_SCALE_INT_FLOAT_WRITE,
+                    None,
+                    _sndfile.SF_TRUE)
+
             # if subformat in [_sndfile.SF_FORMAT_FLOAT,
             #                  _sndfile.SF_FORMAT_DOUBLE,
             #                  _sndfile.SF_FORMAT_VORBIS,
@@ -383,7 +393,7 @@ class SndfileFile(AudioIO):
         """
         bytes_read = -1
 
-        # Create the read buffer.
+        # create the read buffer.
         # data_buffer = (self._buffer_func * (self._buffer_size *
         #                                     self._channels))()
         data_buffer = _sndfile.create_string_buffer(
@@ -443,7 +453,12 @@ class SndfileFile(AudioIO):
         self._data = data[size:]
 
         # Only return the amount asked for.
-        return data[:size]
+        if self._depth == 8:
+            # Convert the data to 8 bit.
+            return audioop.lin2lin(data[:size], 2, 1)
+        else:
+            return data[:size]
+
 
     def _read_close(self):
         """Close and cleans up."""
@@ -572,22 +587,25 @@ class SndfileFile(AudioIO):
                 self._floatp = False
             else:
                 if format_major == _sndfile.SF_FORMAT_WAV and self._depth == 8:
-                    self._unsigned = True
+                    self._to_unsigned = True
                 elif format_major == _sndfile.SF_FORMAT_FLAC:
                     self._unsigned = False
                     if self._depth == 32:
                         self._out_depth = self._depth = 24
                 elif format_major in [_sndfile.SF_FORMAT_SVX,
-                                      _sndfile.SF_FORMAT_HTK,
                                       _sndfile.SF_FORMAT_SDS]:
                     snd_info.channels = 1
                     self._out_depth = 16 if self._depth > 8 else 8
-                elif format_major in [_sndfile.SF_FORMAT_VOC,
-                                      _sndfile.SF_FORMAT_AVR,
-                                      _sndfile.SF_FORMAT_MPC2K]:
+                elif format_major == _sndfile.SF_FORMAT_HTK:
+                    snd_info.channels = 1
+                    self._out_depth = 16
+                elif format_major == _sndfile.SF_FORMAT_AVR:
                     self._out_depth = 16 if self._depth > 8 else 8
+                elif format_major in [_sndfile.SF_FORMAT_VOC,
+                                      _sndfile.SF_FORMAT_MPC2K]:
+                    self._out_depth = 16
                 signed_char = ('' if self._out_depth != 8
-                               else 'U' if self._unsigned else 'S')
+                               else 'U' if self._to_unsigned else 'S')
                 snd_info.format = (
                     file_format | getattr(
                         _sndfile, (
@@ -649,7 +667,7 @@ class SndfileFile(AudioIO):
         """Encode and writes str to an ogg file."""
         data = self._convert_data(
             data,
-            self._out_depth,
+            self._out_depth if self._out_depth >= 16 else 16,
             self._snd_info.channels,
             self._snd_info.samplerate,
             self._to_unsigned
