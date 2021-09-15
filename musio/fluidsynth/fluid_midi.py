@@ -322,3 +322,17 @@ fluid_player_get_current_tick.restype = c_int
 fluid_player_seek = _fluid_lib.fluid_player_seek
 fluid_player_seek.argtypes = [POINTER(fluid_player_t), c_int]
 fluid_player_seek.restype = c_int
+
+# typedef int (*handle_midi_event_func_t)(void *data, fluid_midi_event_t *event);
+handle_midi_event_func_t = CFUNCTYPE(
+    c_void_p, POINTER(fluid_midi_event_t)
+)
+
+# FLUIDSYNTH_API int fluid_player_set_playback_callback(fluid_player_t *player, handle_midi_event_func_t handler, void *handler_data);
+fluid_player_set_playback_callback = _fluid_lib.fluid_player_set_playback_callback
+fluid_player_set_playback_callback.argtypes = [
+    POINTER(fluid_player_t),
+    CFUNCTYPE(c_void_p, POINTER(fluid_midi_event_t)),
+    c_void_p
+]
+fluid_player_set_playback_callback.restype = c_int
