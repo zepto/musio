@@ -22,9 +22,7 @@
 """Read and write audio using libsndfile."""
 
 import audioop
-import math
 from array import array
-from musio.sndfile.sndfile import SFC_SET_SCALE_FLOAT_INT_READ
 from os.path import isfile
 from pathlib import Path
 from typing import Any, Callable
@@ -356,7 +354,7 @@ class SndfileFile(AudioIO):
             repr_str = (f"filename='{self._filename}', mode={self._mode}, "
                         f"depth={self._depth}, rate={self._rate}, "
                         f"channels={self._channels}, "
-                        f"unsigned={self._unsigned}, floatp={self._floatp}, "
+                        f"floatp={self._floatp}, unsigned={self._unsigned}, "
                         f"comment_dict={self._comment_dict}")
 
         return f"{self.__class__.__name__}({repr_str})"
@@ -389,7 +387,7 @@ class SndfileFile(AudioIO):
     def read(self, size: int = -1) -> bytes:
         """Read size amount of data and returns it.
 
-        If size is None then read a buffer size.
+        If size is -1 then read the entire file.
         """
         bytes_read = -1
 
@@ -458,7 +456,6 @@ class SndfileFile(AudioIO):
             return audioop.lin2lin(data[:size], 2, 1)
         else:
             return data[:size]
-
 
     def _read_close(self):
         """Close and cleans up."""

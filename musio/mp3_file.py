@@ -474,7 +474,7 @@ class MP3File(AudioIO):
     def read(self, size: int = -1) -> bytes:
         """Read size amount of data and returns it.
 
-        If size is None then read a buffer size.
+        If size is -1 then read the entire file.
         """
         byte_buffer = (_mpg123.c_ubyte * size)()
         bytes_read = _mpg123.c_size_t(-1)

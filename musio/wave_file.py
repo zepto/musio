@@ -42,9 +42,11 @@ class WaveFile(AudioIO):
     _supported_modes = 'rw'
 
     def __init__(self, filename: str, mode: str = 'r', depth: int = 16,
-                 rate: int = 44100, channels: int = 2, **_):
+                 rate: int = 44100, channels: int = 2, unsigned: int = False,
+                 **_):
         """Initialize the playback settings of the player."""
         self._mode = mode
+        self._unsigned = unsigned
 
         self._wave = self._open(filename)
 
@@ -79,7 +81,7 @@ class WaveFile(AudioIO):
         """Return a python expression to recreate this instance."""
         return (f'{self.__class__.__name__}(filename="{self._filename}", '
                 f'mode={self._mode}, depth={self._depth}, rate={self._rate}, '
-                f'channels={self._channels}')
+                f'channels={self._channels}, unsigned={self._unsigned})')
 
     def _set_position(self, position: int):
         """Change the position of playback."""
