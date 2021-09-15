@@ -69,7 +69,7 @@ def main(args: dict) -> bool:
         quality = 5
 
     try:
-        with open_file(**args) as in_file:
+        with open_file(blacklist=args['input_blacklist'], **args) as in_file:
             in_file_title = in_file._info_dict.get('title',
                                                    in_file._info_dict['name'])
             comment_dict = {'title': in_file_title}
@@ -85,7 +85,7 @@ def main(args: dict) -> bool:
                            unsigned=in_file._unsigned,
                            comment_dict=comment_dict,
                            bit_rate=args['bit_rate'],
-                           blacklist=args['blacklist']
+                           blacklist=args['output_blacklist']
                            ) as out_file:
                 in_file.loops = 0
                 if args['debug']:
@@ -170,11 +170,16 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--path', action='store', default=[],
                         type=lambda a: a.split(','), help='Codec path',
                         dest='mod_path')
-    parser.add_argument('-b', '--blacklist', action='extend',
+    parser.add_argument('-ib', '--input-blacklist', action='extend',
                         default=['dummy'],
                         type=lambda a: a.split(','),
-                        help='Blacklist a Codec',
-                        dest='blacklist')
+                        help='Blacklist an input Codec',
+                        dest='input_blacklist')
+    parser.add_argument('-ob', '--output-blacklist', action='extend',
+                        default=['dummy'],
+                        type=lambda a: a.split(','),
+                        help='Blacklist an output Codec',
+                        dest='output_blacklist')
     parser.add_argument('-s', '--soundfont', action='store',
                         default='/usr/share/soundfonts/FluidR3_GM.sf2',
                         help='Soundfont to use when playing midis',
