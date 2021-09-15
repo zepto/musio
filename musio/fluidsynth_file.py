@@ -96,15 +96,21 @@ class Settings(object):
             value: Union[bytes, int, float]) -> Union[Callable, int]:
         """Set the setting item 'key' to value 'value'."""
         if type(value) is str:
+            type_cast = _fluidsynth.c_char_p
             set_func = self.setstr
         elif type(value) is int:
+            type_cast = _fluidsynth.c_int
             set_func = self.setint
         elif type(value) is float:
+            type_cast = _fluidsynth.c_double
             set_func = self.setnum
         else:
             return -1
 
-        return set_func(key, value)
+        return set_func(
+            key.encode(),
+            type_cast(value.encode() if type(value) == str else value)
+        )
     __setitem__ = set
 
     def get(self, key: str) -> Union[bytes, int, float]:
@@ -212,6 +218,13 @@ class Synth(object):
         self.delete = partial(_fluidsynth.delete_fluid_synth, self._synth)
         self.set_sample_rate = partial(_fluidsynth.fluid_synth_set_sample_rate,
                                        self.object)
+
+        self.set_polyphony = partial(_fluidsynth.fluid_synth_set_polyphony,
+                                     self.object)
+        self.handle_midi_event = partial(
+            _fluidsynth.fluid_synth_handle_midi_event,
+            self.object
+        )
 
         self.set_interp_method = partial(
             _fluidsynth.fluid_synth_set_interp_method.restype, self.object)
@@ -363,6 +376,10 @@ class Player(object):
 
         self.get_status = partial(_fluidsynth.fluid_player_get_status,
                                   self.object)
+        self.set_playback_callback = partial(
+            _fluidsynth.fluid_player_set_playback_callback,
+            self.object
+        )
 
         self.delete = partial(_fluidsynth.delete_fluid_player, self._player)
 
@@ -477,6 +494,7 @@ class FluidsynthFile(AudioIO):
 
         # Setup the synth object.
         self._synth = Synth(self._settings)
+        # self._synth.set_polyphony(64)
 
         self._synth.gain = gain
         self._synth.set_sample_rate(rate)
@@ -491,6 +509,15 @@ class FluidsynthFile(AudioIO):
 
         # Create player object using synth.
         self._player = Player(self._synth)
+        # event_callback = _fluidsynth.CFUNCTYPE(
+        #     _fluidsynth.c_void_p,
+        #     _fluidsynth.POINTER(_fluidsynth.fluid_midi_event_t)
+        # )
+        # self._event_callback_f = event_callback(self._callback)
+        # self._player.set_playback_callback(
+        #     self._event_callback_f,
+        #     None
+        # )
 
         self._length = self._player.total_ticks()
 
@@ -514,6 +541,12 @@ class FluidsynthFile(AudioIO):
     def _set_position(self, position: int):
         """Set the position."""
         self._player.seek(position)
+
+    def _callback(self, event):
+        print(dir(event))
+        # print(_fluidsynth.fluid_midi_event_get_type(event))
+        # print(data, event)
+        # return self._synth.handle_midi_event(event)
 
     @property
     def loops(self) -> int:
