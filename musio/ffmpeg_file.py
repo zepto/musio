@@ -28,14 +28,71 @@ from typing import Any
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
 from .io_util import msg_out, silence
-from .portaudio_io import Portaudio
 
 _av = LazyImport('ffmpeg.av', globals(), locals(), ['av'], 1)
 
 __supported_dict = {
-    'ext': ['.webm', '.flv', '.iflv', '.wma', '.wmv', '.avi', '.mpg', '.m4a',
-            '.oga', '.aac', '.flac', '.mp4',
-            '.m4v', '.mp2'],
+    "in_ext": [".str", ".aa", ".aac", ".aax", ".ac3", ".acm", ".adf", ".adp",
+               ".dtk", ".ads", ".ss2", ".adx", ".aea", ".afc", ".aix", ".al",
+               ".ape", ".apl", ".mac", ".aptx", ".aptxhd", ".aqt", ".ast",
+               ".obu", ".avi", ".avs", ".avr", ".avs", ".avs2", ".avs3",
+               ".bfstm", ".bcstm", ".binka", ".bit", ".bmv", ".brstm", ".cdg",
+               ".cdxl", ".xl", ".c2", ".302", ".daud", ".str", ".adp", ".dav",
+               ".dss", ".dts", ".dtshd", ".dv", ".dif", ".cdata", ".eac3",
+               ".paf", ".fap", ".flm", ".flac", ".flv", ".fsb", ".fwse",
+               ".g722", ".722", ".tco", ".rco", ".g723_1", ".g729", ".genh",
+               ".gsm", ".h261", ".h26l", ".h264", ".264", ".avc", ".hca",
+               ".hevc", ".h265", ".265", ".idf", ".ifv", ".cgi", ".ipu",
+               ".sf", ".ircam", ".ivr", ".kux", ".669", ".abc", ".amf",
+               ".ams", ".dbm", ".dmf", ".dsm", ".far", ".it", ".mdl", ".med",
+               ".mid", ".mod", ".mt2", ".mtm", ".okt", ".psm", ".ptm", ".s3m",
+               ".stm", ".ult", ".umx", ".xm", ".itgz", ".itr", ".itz",
+               ".mdgz", ".mdr", ".mdz", ".s3gz", ".s3r", ".s3z", ".xmgz",
+               ".xmr", ".xmz", ".flv", ".dat", ".lvf", ".m4v", ".mkv",
+               ".mk3d", ".mka", ".mks", ".webm", ".mca", ".mcc", ".mjpg",
+               ".mjpeg", ".mpo", ".j2k", ".mlp", ".mods", ".moflex", ".mov",
+               ".mp4", ".m4a", ".3gp", ".3g2", ".mj2", ".psp", ".m4b", ".ism",
+               ".ismv", ".isma", ".f4v", ".mp2", ".mp3", ".m2a", ".mpa",
+               ".mpc", ".mjpg", ".txt", ".mpl2", ".sub", ".msf", ".mtaf",
+               ".ul", ".musx", ".mvi", ".mxg", ".v", ".nist", ".sph", ".nsp",
+               ".nut", ".obu", ".ogg", ".oma", ".omg", ".aa3", ".pjs", ".pvf",
+               ".yuv", ".cif", ".qcif", ".rgb", ".rt", ".rsd", ".rsd", ".rso",
+               ".sw", ".sb", ".smi", ".sami", ".sbc", ".msbc", ".sbg", ".scc",
+               ".sdr2", ".sds", ".sdx", ".ser", ".sga", ".shn", ".vb", ".son",
+               ".imx", ".sln", ".mjpg", ".stl", ".sub", ".sub", ".sup",
+               ".svag", ".svs", ".tak", ".thd", ".tta", ".ans", ".art",
+               ".asc", ".diz", ".ice", ".nfo", ".txt", ".vt", ".ty", ".ty+",
+               ".uw", ".ub", ".v210", ".yuv10", ".vag", ".vc1", ".rcv",
+               ".viv", ".idx", ".vpk", ".txt", ".vqf", ".vql", ".vqe", ".vtt",
+               ".wsd", ".xmv", ".xvag", ".yop", ".y4m"],
+    "out_ext": [".3g2", ".3gp", ".a64", ".ac3", ".aac", ".adts", ".adx",
+                ".aif", ".aiff", ".afc", ".aifc", ".al", ".tun", ".pcm",
+                ".amr", ".amv", ".apm", ".apng", ".aptx", ".aptxhd", ".asf",
+                ".wmv", ".wma", ".asf", ".wmv", ".wma", ".ass", ".ssa",
+                ".ast", ".au", ".avi", ".avs", ".avs2", ".bit", ".caf",
+                ".cavs", ".c2", ".mpd", ".302", ".drc", ".vc2", ".dnxhd",
+                ".dnxhr", ".dts", ".dv", ".dvd", ".eac3", ".f4v", ".ffmeta",
+                ".cpk", ".flm", ".fits", ".flac", ".flv", ".g722", ".tco",
+                ".rco", ".gif", ".gsm", ".gxf", ".h261", ".h263", ".h264",
+                ".264", ".hevc", ".h265", ".265", ".m3u8", ".ico", ".lbc",
+                ".bmp", ".dpx", ".exr", ".jls", ".jpeg", ".jpg", ".ljpg",
+                ".pam", ".pbm", ".pcx", ".pfm", ".pgm", ".pgmyuv", ".png",
+                ".ppm", ".sgi", ".tga", ".tif", ".tiff", ".jp2", ".j2c",
+                ".j2k", ".xwd", ".sun", ".ras", ".rs", ".im1", ".im8",
+                ".im24", ".sunras", ".xbm", ".xface", ".pix", ".y", ".m4v",
+                ".m4a", ".m4b", ".sf", ".ircam", ".ismv", ".isma", ".ivf",
+                ".jss", ".js", ".vag", ".latm", ".loas", ".lrc", ".m4v",
+                ".mkv", ".sub", ".mjpg", ".mjpeg", ".mlp", ".mmf", ".mov",
+                ".mp2", ".m2a", ".mpa", ".mp3", ".mp4", ".mpg", ".mpeg",
+                ".mpg", ".mpeg", ".m1v", ".m2v", ".ts", ".m2t", ".m2ts",
+                ".mts", ".mjpg", ".ul", ".mxf", ".mxf", ".nut", ".oga",
+                ".ogg", ".ogv", ".oma", ".opus", ".mp4", ".psp", ".yuv",
+                ".rgb", ".rm", ".ra", ".roq", ".rso", ".sw", ".sb", ".sbc",
+                ".msbc", ".scc", ".sox", ".spdif", ".spx", ".srt", ".sup",
+                ".vob", ".swf", ".thd", ".tta", ".ttml", ".uw", ".ub", ".vc1",
+                ".rcv", ".vob", ".voc", ".w64", ".wav", ".webm", ".chk",
+                ".xml", ".webp", ".vtt", ".wtv", ".wv", ".y4m"],
+    "ext": [],
     'protocol': ['http'],
     'handler': 'FFmpegFile',
     'dependencies': {
@@ -43,6 +100,9 @@ __supported_dict = {
         'python': []
     }
 }
+__supported_dict["ext"] = set(
+    __supported_dict["out_ext"] + __supported_dict["in_ext"]
+)
 
 
 class FFmpegFile(AudioIO):
@@ -153,15 +213,6 @@ class FFmpegFile(AudioIO):
                 self.__codec_context.contents.channel_layout,
                 self.__codec_context.contents.channels
             )
-
-            # dev_depth = _av.av_get_bytes_per_sample(
-            #     self.__frame.contents.format) * 8
-            # self._dev = Portaudio(depth=dev_depth,
-            #                       rate=self.__frame.contents.sample_rate,
-            #                       channels=self.__frame.contents.channels,
-            #                       floatp=(self.__frame.contents.format in
-            #                               (3, 4, 8, 9)))
-            # # self._dev = open_device(self)
 
             sample_size = _av.av_get_bytes_per_sample(self._sample_fmt)
 
@@ -452,9 +503,6 @@ class FFmpegFile(AudioIO):
             sys.exit(1)
         elif not out_linesize and not data:
             return 0
-
-        # test = self._get_interleaved_data(self.__frame)
-        # self._dev.write(test)
 
         ret = self._check(_av.avcodec_send_frame(
             self.__codec_context,
