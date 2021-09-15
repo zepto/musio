@@ -84,6 +84,7 @@ def main(args: dict) -> bool:
                            quality=quality, floatp=in_file._floatp,
                            unsigned=in_file._unsigned,
                            comment_dict=comment_dict,
+                           bit_rate=args['bit_rate'],
                            blacklist=args['blacklist']
                            ) as out_file:
                 in_file.loops = 0
@@ -232,6 +233,10 @@ if __name__ == '__main__':
                         help=("Use floating point for the input file when "
                               "possible."),
                         dest="floatp")
+    parser.add_argument('-br', '--bit-rate', action='store',
+                        default=128000, type=int,
+                        help=("Set the output bit rate."),
+                        dest="bit_rate")
     parser.add_argument('-i', '--input', dest='input_filename', nargs='+')
     args = parser.parse_args()
 

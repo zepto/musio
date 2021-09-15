@@ -9616,53 +9616,53 @@ AVDeviceRect = struct_AVDeviceRect# /home/josiah/ctypesgen_test/av/avdevice.h: 1
 
 enum_AVAppToDevMessageType = c_int# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_NONE = (((ord('E') | (ord('N') << 8)) | (ord('O') << 16)) | ((c_uint (ord_if_char(b'N'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_NONE = (((b'E' | (b'N' << 8)) | (b'O' << 16)) | ((c_uint (ord_if_char(b'N'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_WINDOW_SIZE = (((ord('M') | (ord('O') << 8)) | (ord('E') << 16)) | ((c_uint (ord_if_char(b'G'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_WINDOW_SIZE = (((b'M' | (b'O' << 8)) | (b'E' << 16)) | ((c_uint (ord_if_char(b'G'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_WINDOW_REPAINT = (((ord('A') | (ord('P') << 8)) | (ord('E') << 16)) | ((c_uint (ord_if_char(b'R'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_WINDOW_REPAINT = (((b'A' | (b'P' << 8)) | (b'E' << 16)) | ((c_uint (ord_if_char(b'R'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_PAUSE = (((ord(' ') | (ord('U') << 8)) | (ord('A') << 16)) | ((c_uint (ord_if_char(b'P'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_PAUSE = (((b' ' | (b'U' << 8)) | (b'A' << 16)) | ((c_uint (ord_if_char(b'P'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_PLAY = (((ord('Y') | (ord('A') << 8)) | (ord('L') << 16)) | ((c_uint (ord_if_char(b'P'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_PLAY = (((b'Y' | (b'A' << 8)) | (b'L' << 16)) | ((c_uint (ord_if_char(b'P'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_TOGGLE_PAUSE = (((ord('T') | (ord('U') << 8)) | (ord('A') << 16)) | ((c_uint (ord_if_char(b'P'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_TOGGLE_PAUSE = (((b'T' | (b'U' << 8)) | (b'A' << 16)) | ((c_uint (ord_if_char(b'P'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_SET_VOLUME = (((ord('L') | (ord('O') << 8)) | (ord('V') << 16)) | ((c_uint (ord_if_char(b'S'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_SET_VOLUME = (((b'L' | (b'O' << 8)) | (b'V' << 16)) | ((c_uint (ord_if_char(b'S'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_MUTE = (((ord('T') | (ord('U') << 8)) | (ord('M') << 16)) | ((c_uint (ord_if_char(b' '))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_MUTE = (((b'T' | (b'U' << 8)) | (b'M' << 16)) | ((c_uint (ord_if_char(b' '))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_UNMUTE = (((ord('T') | (ord('U') << 8)) | (ord('M') << 16)) | ((c_uint (ord_if_char(b'U'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_UNMUTE = (((b'T' | (b'U' << 8)) | (b'M' << 16)) | ((c_uint (ord_if_char(b'U'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_TOGGLE_MUTE = (((ord('T') | (ord('U') << 8)) | (ord('M') << 16)) | ((c_uint (ord_if_char(b'T'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_TOGGLE_MUTE = (((b'T' | (b'U' << 8)) | (b'M' << 16)) | ((c_uint (ord_if_char(b'T'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_GET_VOLUME = (((ord('L') | (ord('O') << 8)) | (ord('V') << 16)) | ((c_uint (ord_if_char(b'G'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_GET_VOLUME = (((b'L' | (b'O' << 8)) | (b'V' << 16)) | ((c_uint (ord_if_char(b'G'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
-AV_APP_TO_DEV_GET_MUTE = (((ord('T') | (ord('U') << 8)) | (ord('M') << 16)) | ((c_uint (ord_if_char(b'G'))).value << 24))# /usr/include/libavdevice/avdevice.h: 119
+AV_APP_TO_DEV_GET_MUTE = (((b'T' | (b'U' << 8)) | (b'M' << 16)) | ((c_uint (ord_if_char(b'G'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 119
 
 enum_AVDevToAppMessageType = c_int# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_NONE = (((ord('E') | (ord('N') << 8)) | (ord('O') << 16)) | ((c_uint (ord_if_char(b'N'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_NONE = (((b'E' | (b'N' << 8)) | (b'O' << 16)) | ((c_uint (ord_if_char(b'N'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_CREATE_WINDOW_BUFFER = (((ord('E') | (ord('R') << 8)) | (ord('C') << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_CREATE_WINDOW_BUFFER = (((b'E' | (b'R' << 8)) | (b'C' << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_PREPARE_WINDOW_BUFFER = (((ord('E') | (ord('R') << 8)) | (ord('P') << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_PREPARE_WINDOW_BUFFER = (((b'E' | (b'R' << 8)) | (b'P' << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_DISPLAY_WINDOW_BUFFER = (((ord('S') | (ord('I') << 8)) | (ord('D') << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_DISPLAY_WINDOW_BUFFER = (((b'S' | (b'I' << 8)) | (b'D' << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_DESTROY_WINDOW_BUFFER = (((ord('S') | (ord('E') << 8)) | (ord('D') << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_DESTROY_WINDOW_BUFFER = (((b'S' | (b'E' << 8)) | (b'D' << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_BUFFER_OVERFLOW = (((ord('L') | (ord('F') << 8)) | (ord('O') << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_BUFFER_OVERFLOW = (((b'L' | (b'F' << 8)) | (b'O' << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_BUFFER_UNDERFLOW = (((ord('L') | (ord('F') << 8)) | (ord('U') << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_BUFFER_UNDERFLOW = (((b'L' | (b'F' << 8)) | (b'U' << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_BUFFER_READABLE = (((ord(' ') | (ord('D') << 8)) | (ord('R') << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_BUFFER_READABLE = (((b' ' | (b'D' << 8)) | (b'R' << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_BUFFER_WRITABLE = (((ord(' ') | (ord('R') << 8)) | (ord('W') << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_BUFFER_WRITABLE = (((b' ' | (b'R' << 8)) | (b'W' << 16)) | ((c_uint (ord_if_char(b'B'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_MUTE_STATE_CHANGED = (((ord('T') | (ord('U') << 8)) | (ord('M') << 16)) | ((c_uint (ord_if_char(b'C'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_MUTE_STATE_CHANGED = (((b'T' | (b'U' << 8)) | (b'M' << 16)) | ((c_uint (ord_if_char(b'C'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
-AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = (((ord('L') | (ord('O') << 8)) | (ord('V') << 16)) | ((c_uint (ord_if_char(b'C'))).value << 24))# /usr/include/libavdevice/avdevice.h: 198
+AV_DEV_TO_APP_VOLUME_LEVEL_CHANGED = (((b'L' | (b'O' << 8)) | (b'V' << 16)) | ((c_uint (ord_if_char(b'C'))).value << 24))# /home/josiah/ctypesgen_test/av/avdevice.h: 198
 
 # /home/josiah/ctypesgen_test/av/avdevice.h: 306
 if _libs["avdevice"].has("avdevice_app_to_dev_control_message", "cdecl"):

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: UTF8 -*-
 #
-# ffmpeg library python wrapper.
-# Copyright (C) 2011 Josiah Gordon <josiahg@gmail.com>
+# Imports all the fluidsynth module.
+# Copyright (C) 2010 Josiah Gordon <josiahg@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,4 +18,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-"""ffmpeg library python wrapper."""
+"""Import all the fluidsynth module."""
+
+from .avutil import *
+from .avcodec import *
+from .avdevice import *
+from .avformat import *
+from .swscale import *
+from .swresample import *
