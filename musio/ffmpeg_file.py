@@ -317,8 +317,22 @@ class FFmpegFile(AudioIO):
         )
         # Loop over all the items.
         while prev_item:
-            key = str(prev_item.contents.key).replace('_', ' ')
-            value = str(prev_item.contents.value)
+            try:
+                key = prev_item.contents.key.data.decode()
+            except UnicodeDecodeError:
+                try:
+                    key = prev_item.contents.key.data.decode('cp437', 'replace')
+                except UnicodeDecodeError:
+                    continue
+
+            try:
+                value = prev_item.contents.value.data.decode()
+            except UnicodeDecodeError:
+                try:
+                    value = prev_item.contents.value.data.decode('cp437', 'replace')
+                except UnicodeDecodeError:
+                    continue
+
             return_dict[key] = value
             # Get the next item.
             prev_item = _av.av_dict_get(
