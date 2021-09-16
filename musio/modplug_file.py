@@ -31,7 +31,8 @@ _modplug = LazyImport('modplug._modplug', globals(), locals(),
                       ['_modplug'], 1)
 
 __supported_dict = {
-    'ext': ['.mod', '.xm', '.s3m', '.it'],
+    'ext': ['.mod', '.xm', '.s3m', '.it', '.mtm', '.mid', '.mptm', '.umx',
+            '.stm', '.mo3', '.669'],
     'handler': 'ModPlugFile',
     'default': True,
     'dependencies': {
