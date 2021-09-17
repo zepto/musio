@@ -19,9 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-""" Build musio package.
-
-"""
+"""Build musio package."""
 
 from distutils.core import setup
 
@@ -32,7 +30,8 @@ setup(
               'musio.fluidsynth', 'musio.gme', 'musio.id3tag', 'musio.lame',
               'musio.magic', 'musio.mikmod', 'musio.modplug', 'musio.mp4v2',
               'musio.mpg123', 'musio.ogg', 'musio.opus', 'musio.portaudio',
-              'musio.xmp', 'musio.adlmidi', 'musio.opnmidi', 'musio.sndfile'],
+              'musio.xmp', 'musio.adlmidi', 'musio.opnmidi', 'musio.sndfile',
+              'musio.wildmidi'],
     version='0.5.0',
     description='Audio I/O library',
     long_description=open('README.mkd').read(),
