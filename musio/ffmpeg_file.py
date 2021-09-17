@@ -23,7 +23,7 @@
 
 import sys
 from array import array
-from typing import Any
+from typing import Any, Callable
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
@@ -96,7 +96,7 @@ __supported_dict = {
     'protocol': ['http'],
     'handler': 'FFmpegFile',
     'dependencies': {
-        'ctypes': ['avcodec', 'avdevice', 'avformat', 'postproc', 'swscale'],
+        'ctypes': ['avcodec', 'avdevice', 'avformat', 'swresample', 'swscale'],
         'python': []
     }
 }
@@ -230,10 +230,11 @@ class FFmpegFile(AudioIO):
                 self._channels
             )
 
-            ret = self._check(_av.av_frame_make_writable(self.__input_frame))
-            if ret < 0:
-                print('Unable to make input frame writable.')
-                sys.exit(1)
+            _ = self._check(
+                _av.av_frame_make_writable(self.__input_frame),
+                "Unable to make input frame writable.",
+                IOError
+            )
 
             self._next_pts = 0
             self._samples_count = 0
@@ -254,12 +255,15 @@ class FFmpegFile(AudioIO):
 
         return f"{self.__class__.__name__}({repr_str})"
 
-    def _check(self, ret: int) -> int:
+    def _check(self, ret: int, msg: str = '',
+               raise_err: Callable = None) -> int:
         """Check if there was an error and print the result."""
         if ret < 0:
             errbuf = _av.create_string_buffer(128)
             _av.av_strerror(ret, errbuf, _av.sizeof(errbuf))
             msg_out(f"{ret}: {errbuf.raw.decode('utf8', 'replace')}")
+            if raise_err:
+                raise(raise_err(msg))
 
         return ret
 
@@ -321,7 +325,10 @@ class FFmpegFile(AudioIO):
                 key = prev_item.contents.key.data.decode()
             except UnicodeDecodeError:
                 try:
-                    key = prev_item.contents.key.data.decode('cp437', 'replace')
+                    key = prev_item.contents.key.data.decode(
+                        'cp437',
+                        'replace'
+                    )
                 except UnicodeDecodeError:
                     continue
 
@@ -329,7 +336,10 @@ class FFmpegFile(AudioIO):
                 value = prev_item.contents.value.data.decode()
             except UnicodeDecodeError:
                 try:
-                    value = prev_item.contents.value.data.decode('cp437', 'replace')
+                    value = prev_item.contents.value.data.decode(
+                        'cp437',
+                        'replace'
+                    )
                 except UnicodeDecodeError:
                     continue
 
@@ -364,29 +374,24 @@ class FFmpegFile(AudioIO):
                 None,
                 b'opus',
                 filename_b
-            ))
-        if ret < 0:
-            sys.exit(1)
+            ), "avformat failed to allocat context", Exception)
 
         codec_id = format_context.contents.oformat.contents.audio_codec
         if codec_id == _av.AV_CODEC_ID_NONE:
-            print("No output codec found.")
-            sys.exit(1)
+            raise(Exception("No output codec found."))
 
         codec = _av.avcodec_find_encoder(codec_id)
         if not codec:
-            print(f"No encoder found for {_av.avcodec_get_name(codec_id)}")
-            sys.exit(1)
+            raise(Exception(f"No encoder found for "
+                            f"{_av.avcodec_get_name(codec_id)}"))
 
         output_stream = _av.avformat_new_stream(format_context, None)
         if not output_stream:
-            print("Could not create stream.")
-            sys.exit(1)
+            raise(Exception("Could not create stream."))
 
         codec_context = _av.avcodec_alloc_context3(codec)
         if not codec_context:
-            print("Could not create codec context.")
-            sys.exit(1)
+            raise(Exception("Could not create codec context."))
 
         codec_sample_fmts = codec.contents.sample_fmts
         if codec_sample_fmts:
@@ -452,19 +457,14 @@ class FFmpegFile(AudioIO):
             _av.byref(format_context.contents.pb),
             filename_b,
             _av.AVIO_FLAG_WRITE
-        ))
-        if ret < 0:
-            print(f"Error opening {filename}")
-            sys.exit(1)
+        ), f"Error opening {filename}", IOError)
 
         # Set the metadata.
         self._set_metadata(format_context.contents.metadata)
 
         # Write the header.
-        ret = self._check(_av.avformat_write_header(format_context, None))
-        if ret < 0:
-            print(f"Error writing the header in {filename}")
-            sys.exit(1)
+        ret = self._check(_av.avformat_write_header(format_context, None),
+                          f"Error writing the header in {filename}", IOError)
 
         self._closed = False
 
@@ -490,8 +490,7 @@ class FFmpegFile(AudioIO):
         if nb_samples:
             ret = _av.av_frame_get_buffer(frame, 0)
             if ret < 0:
-                print("Unable to allocate frame buffer.")
-                sys.exit()
+                raise(MemoryError("Unable to allocate frame buffer."))
 
         return frame
 
@@ -513,18 +512,14 @@ class FFmpegFile(AudioIO):
         out_linesize = self._resample_from_bytes(data)
 
         if out_linesize < 0:
-            print("Error resampling.")
-            sys.exit(1)
+            raise(BufferError("Error resampling."))
         elif not out_linesize and not data:
             return 0
 
         ret = self._check(_av.avcodec_send_frame(
             self.__codec_context,
             self.__frame
-        ))
-        if ret < 0:
-            print('problem with send frame')
-            return 0
+        ), "avcodec_send_frame failed", Exception)
         packet = _av.av_packet_alloc()
         while ret >= 0:
             ret = self._check(_av.avcodec_receive_packet(
@@ -534,7 +529,7 @@ class FFmpegFile(AudioIO):
             if ret in (-11, -541478725):  # EAGAIN, AVERROR_EOF
                 break
             elif ret < 0:
-                print("Error")
+                print("Error in recieve packet.")
                 break
 
             _av.av_packet_rescale_ts(
@@ -548,6 +543,8 @@ class FFmpegFile(AudioIO):
                 self.__format_context,
                 packet if data else None
             ))
+            if ret < 0:
+                print("Error writing frame.")
             _av.av_packet_unref(packet)
 
         return len(data)
@@ -600,10 +597,7 @@ class FFmpegFile(AudioIO):
             -1,
             _av.byref(codec),
             0
-        ))
-        if audio_stream_index < 0:
-            msg_out("No audio stream was found.")
-            sys.exit()
+        ), "No audio stream was found.", Exception)
 
         with silence(sys.stderr):
             _av.av_dump_format(
@@ -645,7 +639,7 @@ class FFmpegFile(AudioIO):
             codec_context,
             codec,
             None
-        ))
+        ), "avcodec_open2 Failed to open codec_context", IOError)
 
         # The file is now open.
         self._closed = False
@@ -697,7 +691,8 @@ class FFmpegFile(AudioIO):
             None
         )
 
-        self._check(_av.swr_init(swr))
+        self._check(_av.swr_init(swr), "Failed to initialize swr context",
+                    Exception)
 
         return swr
 
@@ -868,10 +863,10 @@ class FFmpegFile(AudioIO):
     def _resample_from_bytes(self, data: bytes) -> int:
         """Resample the data into self.__frame and return out_linesize."""
         # Don't resample null data.
-        ret = self._check(_av.av_frame_make_writable(self.__frame))
-        if ret < 0:
-            print('av_frame_make_writable')
-            sys.exit(1)
+        _ = self._check(
+            _av.av_frame_make_writable(self.__frame),
+            "av_frame_make_writable Failed", Exception
+        )
 
         self.__input_frame.contents.extended_data[0] = _av.cast(
             _av.create_string_buffer(data),
