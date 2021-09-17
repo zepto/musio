@@ -255,6 +255,9 @@ if __name__ == '__main__':
     parser.add_argument('--list-banks', action='store_true', default=False,
                         help='List available banks (adlmidi).',
                         dest='list_banks')
+    parser.add_argument('-wc', '--wildmidi-config', action='store',
+                        default='', help='Specify the wildmidi config.',
+                        dest='wildmidi_config')
     parser.add_argument(dest='filename', nargs='+')
     args = parser.parse_args()
 
