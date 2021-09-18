@@ -150,21 +150,23 @@ class FFmpegFile(AudioIO):
         # Open the file.
         if mode == 'r':
             (
-                self.__codec_context,
-                self.__audio_stream,
-                self.__format_context
+                self.__codec_context_ptr,
+                self.__audio_stream_index,
+                self.__format_context_ptr
             ) = self._read_open(filename)
 
-            self._bit_rate = self.__codec_context.contents.bit_rate
+            self._bit_rate = self.__codec_context_ptr.contents.bit_rate
 
             # Update the file info.
             if not resample:
-                self._rate = int(self.__codec_context.contents.sample_rate)
-                self._channels = int(self.__codec_context.contents.channels)
+                self._rate = int(self.__codec_context_ptr.contents.sample_rate)
+                self._channels = int(
+                    self.__codec_context_ptr.contents.channels
+                )
 
                 # Get the bit depth.
                 codec_depth = _av.av_get_bytes_per_sample(
-                    self.__codec_context.contents.sample_fmt
+                    self.__codec_context_ptr.contents.sample_fmt
                 )
 
                 self._depth = codec_depth * 8
@@ -172,7 +174,7 @@ class FFmpegFile(AudioIO):
                 # Use the sample format string to determine the depth and
                 # whether it is signed.
                 d_str = _av.av_get_sample_fmt_name(
-                    self.__codec_context.contents.sample_fmt
+                    self.__codec_context_ptr.contents.sample_fmt
                 )
                 d_str = d_str.decode()
 
@@ -187,31 +189,31 @@ class FFmpegFile(AudioIO):
             self._sample_fmt = self._get_sample_fmt()
 
             # Create the resampling context.
-            self._swr = self._get_swr(self.__codec_context)
+            self.__swr_ptr = self._get_swr(self.__codec_context_ptr.contents)
 
             # The length of the file is in av time base units.  To get the
             # actual time devide it by 1000, but we use this to seek.
-            self._length = self.__format_context.contents.duration
+            self._length = self.__format_context_ptr.contents.duration
         else:
+            # Open the file for encoding.
             self._comment_dict = comment_dict
             (
-                self.__format_context,
-                self.__codec_context
+                self.__format_context_ptr,
+                self.__codec_context_ptr
             ) = self._write_open(filename)
 
             self._unsigned = True if depth < 16 else self._unsigned
-
             self._sample_fmt = self._get_sample_fmt()
 
             # Create the resampling context.
-            self._swr = self._get_swr(self.__codec_context)
+            self.__swr_ptr = self._get_swr(self.__codec_context_ptr.contents)
 
             # Create the frame to hold the output data for encoding.
-            self.__frame = self._alloc_frame(
-                self.__codec_context.contents.sample_rate,
-                self.__codec_context.contents.sample_fmt,
-                self.__codec_context.contents.channel_layout,
-                self.__codec_context.contents.channels
+            self.__frame_ptr = self._alloc_frame(
+                self.__codec_context_ptr.contents.sample_rate,
+                self.__codec_context_ptr.contents.sample_fmt,
+                self.__codec_context_ptr.contents.channel_layout,
+                self.__codec_context_ptr.contents.channels
             )
 
             sample_size = _av.av_get_bytes_per_sample(self._sample_fmt)
@@ -219,11 +221,12 @@ class FFmpegFile(AudioIO):
             # The size of the input buffer is the number of samples per channel
             # times the number of channels times the sample size.
             self._buffer_len = (
-                self.__frame.contents.nb_samples * self._channels * sample_size
+                self.__frame_ptr.contents.nb_samples
+                * self._channels * sample_size
             )
 
             # Create the frame to hold the input data for resampling.
-            self.__input_frame = self._alloc_frame(
+            self.__input_frame_ptr = self._alloc_frame(
                 self._rate,
                 self._sample_fmt,
                 self._channel_layout,
@@ -231,7 +234,7 @@ class FFmpegFile(AudioIO):
             )
 
             _ = self._check(
-                _av.av_frame_make_writable(self.__input_frame),
+                _av.av_frame_make_writable(self.__input_frame_ptr),
                 "Unable to make input frame writable.",
                 IOError
             )
@@ -359,9 +362,9 @@ class FFmpegFile(AudioIO):
         # Create a bytes version of the filename to use with ctypes functions.
         filename_b = filename.encode('utf-8', 'surrogateescape')
 
-        format_context = _av.POINTER(_av.AVFormatContext)()
+        format_context_ptr = _av.POINTER(_av.AVFormatContext)()
         ret = self._check(_av.avformat_alloc_output_context2(
-            _av.byref(format_context),
+            _av.byref(format_context_ptr),
             None,
             None,
             filename_b
@@ -370,13 +373,13 @@ class FFmpegFile(AudioIO):
         if ret < 0:
             print("Could not deduce output format from filename: using opus.")
             ret = self._check(_av.avformat_alloc_output_context2(
-                _av.byref(format_context),
+                _av.byref(format_context_ptr),
                 None,
                 b'opus',
                 filename_b
             ), "avformat failed to allocat context", Exception)
 
-        codec_id = format_context.contents.oformat.contents.audio_codec
+        codec_id = format_context_ptr.contents.oformat.contents.audio_codec
         if codec_id == _av.AV_CODEC_ID_NONE:
             raise(Exception("No output codec found."))
 
@@ -385,99 +388,101 @@ class FFmpegFile(AudioIO):
             raise(Exception(f"No encoder found for "
                             f"{_av.avcodec_get_name(codec_id)}"))
 
-        output_stream = _av.avformat_new_stream(format_context, None)
-        if not output_stream:
+        output_stream_ptr = _av.avformat_new_stream(format_context_ptr, None)
+        if not output_stream_ptr:
             raise(Exception("Could not create stream."))
 
-        codec_context = _av.avcodec_alloc_context3(codec)
-        if not codec_context:
+        codec_context_ptr = _av.avcodec_alloc_context3(codec)
+        if not codec_context_ptr:
             raise(Exception("Could not create codec context."))
 
         codec_sample_fmts = codec.contents.sample_fmts
         if codec_sample_fmts:
-            codec_context.contents.sample_fmt = codec_sample_fmts[0]
+            codec_context_ptr.contents.sample_fmt = codec_sample_fmts[0]
         else:
-            codec_context.contents.sample_fmt = _av.AV_SAMPLE_FMT_FLTP
+            codec_context_ptr.contents.sample_fmt = _av.AV_SAMPLE_FMT_FLTP
 
-        codec_context.contents.bit_rate = self._bit_rate
+        codec_context_ptr.contents.bit_rate = self._bit_rate
 
-        codec_context.contents.sample_rate = self._rate
+        codec_context_ptr.contents.sample_rate = self._rate
         if codec.contents.supported_samplerates:
-            codec_context.contents.sample_rate = (
+            codec_context_ptr.contents.sample_rate = (
                 codec.contents.supported_samplerates[0]
             )
             i = 0
             while codec.contents.supported_samplerates[i]:
                 if codec.contents.supported_samplerates[i] == self._rate:
-                    codec_context.contents.sample_rate = self._rate
+                    codec_context_ptr.contents.sample_rate = self._rate
                 i += 1
 
-        codec_context.contents.channels = self._channels
+        codec_context_ptr.contents.channels = self._channels
 
-        codec_context.contents.channel_layout = self._channel_layout
+        codec_context_ptr.contents.channel_layout = self._channel_layout
         codec_channel_layouts = codec.contents.channel_layouts
         if codec_channel_layouts:
-            codec_context.contents.channel_layout = codec_channel_layouts[0]
+            codec_context_ptr.contents.channel_layout = (
+                codec_channel_layouts[0]
+            )
             i = 0
             while codec_channel_layouts[i]:
                 if codec_channel_layouts[i] == self._channel_layout:
-                    codec_context.contents.channel_layout = (
+                    codec_context_ptr.contents.channel_layout = (
                         self._channel_layout
                     )
                 i += 1
-        codec_context.contents.channels = (
+        codec_context_ptr.contents.channels = (
             _av.av_get_channel_layout_nb_channels(
-                codec_context.contents.channel_layout
+                codec_context_ptr.contents.channel_layout
             )
         )
 
         time_base = _av.AVRational()
         time_base.num = 1
-        time_base.den = codec_context.contents.sample_rate
-        codec_context.contents.time_base = time_base
+        time_base.den = codec_context_ptr.contents.sample_rate
+        codec_context_ptr.contents.time_base = time_base
 
         # Open the codec context.
-        self._check(_av.avcodec_open2(codec_context, codec, None))
+        self._check(_av.avcodec_open2(codec_context_ptr, codec, None))
 
         # Set the stream parameters from the codec_context.
         self._check(_av.avcodec_parameters_from_context(
-            output_stream.contents.codecpar, codec_context
+            output_stream_ptr.contents.codecpar, codec_context_ptr
         ))
 
         # Show the format information.
         with silence(sys.stderr):
             _av.av_dump_format(
-                format_context,
+                format_context_ptr,
                 0,
                 filename_b,
                 1
             )
 
         ret = self._check(_av.avio_open(
-            _av.byref(format_context.contents.pb),
+            _av.byref(format_context_ptr.contents.pb),
             filename_b,
             _av.AVIO_FLAG_WRITE
         ), f"Error opening {filename}", IOError)
 
         # Set the metadata.
-        self._set_metadata(format_context.contents.metadata)
+        self._set_metadata(format_context_ptr.contents.metadata)
 
         # Write the header.
-        ret = self._check(_av.avformat_write_header(format_context, None),
+        ret = self._check(_av.avformat_write_header(format_context_ptr, None),
                           f"Error writing the header in {filename}", IOError)
 
         self._closed = False
 
-        return format_context, codec_context
+        return format_context_ptr, codec_context_ptr
 
     def _alloc_frame(self, sample_rate: int, sample_fmt: int,
                      channel_layout: int, channels: int) -> Any:
         """Allocate a frame and set its parameters."""
-        if (self.__codec_context.contents.codec.contents.capabilities
+        if (self.__codec_context_ptr.contents.codec.contents.capabilities
                 & _av.AV_CODEC_CAP_VARIABLE_FRAME_SIZE):
             nb_samples = 10000
         else:
-            nb_samples = self.__codec_context.contents.frame_size
+            nb_samples = self.__codec_context_ptr.contents.frame_size
 
         frame = _av.av_frame_alloc()
 
@@ -506,8 +511,8 @@ class FFmpegFile(AudioIO):
 
     def _encode(self, data: bytes) -> int:
         """Encode the data and return the length."""
-        self.__frame.contents.pts = self._next_pts
-        self._next_pts += self.__frame.contents.nb_samples
+        self.__frame_ptr.contents.pts = self._next_pts
+        self._next_pts += self.__frame_ptr.contents.nb_samples
 
         out_linesize = self._resample_from_bytes(data)
 
@@ -517,14 +522,15 @@ class FFmpegFile(AudioIO):
             return 0
 
         ret = self._check(_av.avcodec_send_frame(
-            self.__codec_context,
-            self.__frame
+            self.__codec_context_ptr,
+            self.__frame_ptr
         ), "avcodec_send_frame failed", Exception)
-        packet = _av.av_packet_alloc()
+        packet_ptr = _av.av_packet_alloc()
+        stream_ptr = self.__format_context_ptr.contents.streams[0]
         while ret >= 0:
             ret = self._check(_av.avcodec_receive_packet(
-                self.__codec_context,
-                packet
+                self.__codec_context_ptr,
+                packet_ptr
             ))
             if ret in (-11, -541478725):  # EAGAIN, AVERROR_EOF
                 break
@@ -533,19 +539,19 @@ class FFmpegFile(AudioIO):
                 break
 
             _av.av_packet_rescale_ts(
-                packet,
-                self.__codec_context.contents.time_base,
-                self.__format_context.contents.streams[0].contents.time_base
+                packet_ptr,
+                self.__codec_context_ptr.contents.time_base,
+                stream_ptr.contents.time_base
             )
-            packet.contents.stream_index = 0
+            packet_ptr.contents.stream_index = 0
 
             ret = self._check(_av.av_interleaved_write_frame(
-                self.__format_context,
-                packet if data else None
+                self.__format_context_ptr,
+                packet_ptr if data else None
             ))
             if ret < 0:
                 print("Error writing frame.")
-            _av.av_packet_unref(packet)
+            _av.av_packet_unref(packet_ptr)
 
         return len(data)
 
@@ -560,15 +566,15 @@ class FFmpegFile(AudioIO):
             self.__network_stream = True
 
         # Create a format context, and open the file.
-        format_context = _av.avformat_alloc_context()
+        format_context_ptr = _av.avformat_alloc_context()
         self._check(_av.avformat_open_input(
-            format_context,
+            format_context_ptr,
             filename_b,
             None,
             None
         ))
         # Find the stream info.
-        self._check(_av.avformat_find_stream_info(format_context, None))
+        self._check(_av.avformat_find_stream_info(format_context_ptr, None))
 
         # Temorary variables used for finding the audio stream.
         # nb_streams = format_context.contents.nb_streams
@@ -586,48 +592,48 @@ class FFmpegFile(AudioIO):
         #         break
 
         # Allocate space for the decoder codec.
-        codec = _av.POINTER(_av.AVCodec)()
+        codec_ptr = _av.POINTER(_av.AVCodec)()
 
         # Determine which stream is the audio stream and put the decoder for it
         # in codec.
         audio_stream_index = self._check(_av.av_find_best_stream(
-            format_context,
+            format_context_ptr,
             _av.AVMEDIA_TYPE_AUDIO,
             -1,
             -1,
-            _av.byref(codec),
+            _av.byref(codec_ptr),
             0
         ), "No audio stream was found.", Exception)
 
         with silence(sys.stderr):
             _av.av_dump_format(
-                format_context,
+                format_context_ptr,
                 audio_stream_index,
                 filename_b,
                 0
             )
 
         # Get the stream.
-        stream = format_context.contents.streams[audio_stream_index]
+        stream_ptr = format_context_ptr.contents.streams[audio_stream_index]
 
         # Grab the files metadata.
         self._info_dict.update(self._get_metadata(
-            format_context.contents.metadata
+            format_context_ptr.contents.metadata
         ))
         # Grab the stream metadata.
         self._info_dict.update(self._get_metadata(
-            stream.contents.metadata
+            stream_ptr.contents.metadata
         ))
 
         # Allocate space for the codec context.
-        codec_context = _av.avcodec_alloc_context3(None)
+        codec_context_ptr = _av.avcodec_alloc_context3(None)
 
         # Create a codec context from the stream parameters.
         self._check(_av.avcodec_parameters_to_context(
-            codec_context,
-            stream.contents.codecpar
+            codec_context_ptr,
+            stream_ptr.contents.codecpar
         ))
-        codec_context.contents.pkt_timebase = stream.contents.time_base
+        codec_context_ptr.contents.pkt_timebase = stream_ptr.contents.time_base
 
         # Find the codec to decode the audio.
         # codec = _av.avcodec_find_decoder(
@@ -636,33 +642,33 @@ class FFmpegFile(AudioIO):
 
         # Get the codec and open a codec context from it.
         self._check(_av.avcodec_open2(
-            codec_context,
-            codec,
+            codec_context_ptr,
+            codec_ptr,
             None
         ), "avcodec_open2 Failed to open codec_context", IOError)
 
         # The file is now open.
         self._closed = False
 
-        return codec_context, audio_stream_index, format_context
+        return codec_context_ptr, audio_stream_index, format_context_ptr
 
     def _get_swr(self, codec_context: Any) -> Any:
         """Return an allocated SWResamleContext."""
-        swr = _av.swr_alloc()
-        if not swr:
+        swr_ptr = _av.swr_alloc()
+        if not swr_ptr:
             raise(Exception("Unable to allocate avresample context"))
 
         if self._mode == 'r':
-            if codec_context.contents.channel_layout == 0:
+            if codec_context.channel_layout == 0:
                 # If the channel layout is invalid set it based on the number
                 # of channels defined in the codec_context.
                 in_channel_layout = _av.av_get_default_channel_layout(
-                    codec_context.contents.channels
+                    codec_context.channels
                 )
             else:
-                in_channel_layout = codec_context.contents.channel_layout
-            in_sample_fmt = codec_context.contents.sample_fmt
-            in_sample_rate = codec_context.contents.sample_rate
+                in_channel_layout = codec_context.channel_layout
+            in_sample_fmt = codec_context.sample_fmt
+            in_sample_rate = codec_context.sample_rate
 
             out_channel_layout = self._channel_layout
             out_sample_fmt = self._sample_fmt
@@ -672,12 +678,12 @@ class FFmpegFile(AudioIO):
             in_sample_fmt = self._sample_fmt
             in_sample_rate = self._rate
 
-            out_channel_layout = codec_context.contents.channel_layout
-            out_sample_fmt = codec_context.contents.sample_fmt
-            out_sample_rate = codec_context.contents.sample_rate
+            out_channel_layout = codec_context.channel_layout
+            out_sample_fmt = codec_context.sample_fmt
+            out_sample_rate = codec_context.sample_rate
 
         _av.swr_alloc_set_opts(
-            swr,
+            swr_ptr,
             # Output options.
             out_channel_layout,
             out_sample_fmt,
@@ -691,21 +697,21 @@ class FFmpegFile(AudioIO):
             None
         )
 
-        self._check(_av.swr_init(swr), "Failed to initialize swr context",
+        self._check(_av.swr_init(swr_ptr), "Failed to initialize swr context",
                     Exception)
 
-        return swr
+        return swr_ptr
 
     def _drain_decoder(self, av_packet: Any, frame: Any) -> bytes:
         """Drain the decoder and return the resulting bytes."""
         # Send packet to the decoder to decode.
         ret = self._check(_av.avcodec_send_packet(
-            self.__codec_context, av_packet
+            self.__codec_context_ptr, av_packet
         ))
         if ret == 0:
             # Recieve the decoded data, from the decoder, into frame.
             ret = self._check(_av.avcodec_receive_frame(
-                self.__codec_context,
+                self.__codec_context_ptr,
                 frame
             ))
             # Return nothing on and error other than EOF and EAGAIN.
@@ -738,7 +744,7 @@ class FFmpegFile(AudioIO):
         if self._seek_pos > -1:
             with silence(sys.stderr):
                 ret = _av.avformat_seek_file(
-                    self.__format_context,
+                    self.__format_context_ptr,
                     -1,
                     -sys.maxsize - 1,
                     self._seek_pos,
@@ -747,14 +753,14 @@ class FFmpegFile(AudioIO):
                 )
             self._check(ret)
 
-            _av.avcodec_flush_buffers(self.__codec_context)
+            _av.avcodec_flush_buffers(self.__codec_context_ptr)
 
             # Reset the seek so we don't continue seeking.
             self._seek_pos = -1
 
         while not data or len(data) < size:
             # Read the next frame.
-            if _av.av_read_frame(self.__format_context, av_packet) < 0:
+            if _av.av_read_frame(self.__format_context_ptr, av_packet) < 0:
                 data += self._drain_decoder(av_packet, frame)
                 # If no data was read then we have reached the end of the
                 # file so restart or exit.
@@ -775,8 +781,8 @@ class FFmpegFile(AudioIO):
                 break
 
             # Calculate the current position.
-            stream = self.__format_context.contents.streams[
-                self.__audio_stream
+            stream = self.__format_context_ptr.contents.streams[
+                self.__audio_stream_index
             ]
             self._position = (1000000 *
                               (av_packet.contents.pts *
@@ -784,7 +790,7 @@ class FFmpegFile(AudioIO):
                                 stream.contents.time_base.den)))
 
             # If the packet read is not audio then skip it.
-            if av_packet.contents.stream_index != self.__audio_stream:
+            if av_packet.contents.stream_index != self.__audio_stream_index:
                 _av.av_packet_unref(av_packet)
                 continue
 
@@ -838,9 +844,10 @@ class FFmpegFile(AudioIO):
                             _av.c_int16 if sample_size == 2 else
                             _av.c_uint8)
 
-            # Interleave data into data_array
             nb_samples = frame.contents.nb_samples
-            # Loop over the number of samples.
+
+            # Loop over the number of samples and interleave data into
+            # data_array
             for s in range(nb_samples):
                 # Loop over the channels.
                 for c in range(frame.contents.channels):
@@ -862,47 +869,46 @@ class FFmpegFile(AudioIO):
 
     def _resample_from_bytes(self, data: bytes) -> int:
         """Resample the data into self.__frame and return out_linesize."""
-        # Don't resample null data.
         _ = self._check(
-            _av.av_frame_make_writable(self.__frame),
+            _av.av_frame_make_writable(self.__frame_ptr),
             "av_frame_make_writable Failed", Exception
         )
 
-        self.__input_frame.contents.extended_data[0] = _av.cast(
+        self.__input_frame_ptr.contents.extended_data[0] = _av.cast(
             _av.create_string_buffer(data),
             _av.POINTER(_av.c_uint8)
         )
 
         return _av.swr_convert_frame(
-            self._swr,
-            self.__frame,
-            self.__input_frame if data else None
+            self.__swr_ptr,
+            self.__frame_ptr,
+            self.__input_frame_ptr if data else None
         )
 
         # out_samples = _av.av_rescale_rnd(
         #     # Set the delay to output samples.
         #     _av.swr_get_delay(
-        #         self._swr,
+        #         self.__swr_ptr,
         #         self._rate
-        #     ) + self.__frame.contents.nb_samples,      # Samples per channel.
-        #     self.__codec_context.contents.sample_rate,  # Output sample rate.
-        #     self._rate,                                 # Input sample rate.
+        #     ) + self.__frame_ptr.contents.nb_samples,
+        #     self.__codec_context_ptr.contents.sample_rate,
+        #     self._rate,
         #     _av.AV_ROUND_UP
         # )
-        # assert(self.__frame.contents.nb_samples == out_samples)
+        # assert(self.__frame_ptr.contents.nb_samples == out_samples)
         #
         # # Resample the data.
         # return _av.swr_convert(
-        #     self._swr,
+        #     self.__swr_ptr,
         #     # Output.
-        #     self.__frame.contents.extended_data,
+        #     self.__frame_ptr.contents.extended_data,
         #     out_samples,
         #     # Input.
         #     _av.cast(
         #         _av.create_string_buffer(data),
         #         _av.POINTER(_av.c_uint8)
         #     ) if data else None,
-        #     self.__frame.contents.nb_samples if data else 0
+        #     self.__frame_ptr.contents.nb_samples if data else 0
         # )
 
     def _resample_from_frame(self, frame: Any) -> bytes:
@@ -912,25 +918,25 @@ class FFmpegFile(AudioIO):
             return b''
 
         output = _av.POINTER(_av.c_uint8)()
-        out_linesize = _av.c_int()
+        dest_linesize = _av.c_int()
 
         # Calculate how many resampled samples there will be.
         out_samples = _av.av_rescale_rnd(
             # Set the delay to output samples.
             _av.swr_get_delay(
-                self._swr,
-                self.__codec_context.contents.sample_rate
-            ) + frame.contents.nb_samples,              # Samples per channel.
-            self._rate,                                 # Output sample rate.
-            self.__codec_context.contents.sample_rate,  # Input sample rate.
+                self.__swr_ptr,
+                self.__codec_context_ptr.contents.sample_rate
+            ) + frame.contents.nb_samples,
+            self._rate,
+            self.__codec_context_ptr.contents.sample_rate,
             _av.AV_ROUND_UP
         )
 
         # Allocate a buffer large enough to hold the resampled data.
         _av.av_samples_alloc(
             _av.byref(output),          # Array for pointers to each channel.
-            # _av.byref(out_linesize),    # Aligned size of audio buffers.
-            None,
+            _av.byref(dest_linesize),   # Aligned size of audio buffers.
+            # None,
             self._channels,             # Use output channels here.
             out_samples,                # Number of samples per channel.
             self._sample_fmt,           # Output sample format.
@@ -939,7 +945,7 @@ class FFmpegFile(AudioIO):
 
         # Resample the data in the frame to match the settings in avr.
         out_linesize = _av.swr_convert(
-            self._swr,
+            self.__swr_ptr,
             # Output.
             _av.byref(output),             # Destination of the resampled data.
             out_samples,                   # Number of samples per channel.
@@ -950,17 +956,26 @@ class FFmpegFile(AudioIO):
 
         data = b''
         while out_linesize > 0:
-            # Get the bytes in the output buffer.
-            data += _av.string_at(
-                output,
-                out_linesize
-                * self._channels
-                * _av.av_get_bytes_per_sample(self._sample_fmt)
+            data_size = _av.av_samples_get_buffer_size(
+                _av.byref(dest_linesize),
+                self._channels,
+                out_linesize,
+                self._sample_fmt,
+                1
             )
+            data += _av.string_at(output, data_size)
+
+            # Get the bytes in the output buffer.
+            # data += _av.string_at(
+            #     output,
+            #     out_linesize
+            #     * self._channels
+            #     * _av.av_get_bytes_per_sample(self._sample_fmt)
+            # )
 
             # Flush the resample buffer.
             out_linesize = _av.swr_convert(
-                self._swr,
+                self.__swr_ptr,
                 # Output.
                 _av.byref(output),    # Destination of the resampled data.
                 out_samples,          # Number of samples per channel.
@@ -968,13 +983,6 @@ class FFmpegFile(AudioIO):
                 None,                 # Input data.
                 0                     # Number of samples per channel.
             )
-
-        # data = _av.string_at(
-        #     output,
-        #     out_linesize
-        #     * self._channels
-        #     * _av.av_get_bytes_per_sample(self._sample_fmt)
-        # )
 
         # Free the output buffer.
         _av.av_freep(_av.byref(output))
@@ -989,27 +997,29 @@ class FFmpegFile(AudioIO):
                     pass
                 self._encode(b'')
 
-                _av.av_write_trailer(self.__format_context)
+                _av.av_write_trailer(self.__format_context_ptr)
 
             # Close and free the resample context.
-            _av.swr_close(self._swr)
-            _av.swr_free(self._swr)
+            _av.swr_close(self.__swr_ptr)
+            _av.swr_free(self.__swr_ptr)
 
             # Close the file and free all other contexts.
             if self._mode == 'w':
-                _av.av_frame_free(_av.byref(self.__frame))
-                _av.av_frame_free(self.__input_frame)
-                _av.avio_closep(_av.byref(self.__format_context.contents.pb))
+                _av.av_frame_free(_av.byref(self.__frame_ptr))
+                _av.av_frame_free(self.__input_frame_ptr)
+                _av.avio_closep(_av.byref(
+                    self.__format_context_ptr.contents.pb
+                ))
             else:
-                _av.avformat_close_input(self.__format_context)
+                _av.avformat_close_input(self.__format_context_ptr)
 
-            _av.avcodec_free_context(self.__codec_context)
+            _av.avcodec_free_context(self.__codec_context_ptr)
 
-            _av.avformat_free_context(self.__format_context)
+            _av.avformat_free_context(self.__format_context_ptr)
 
             # Delete the data structures.
-            del(self.__format_context)
-            del(self.__codec_context)
+            del(self.__format_context_ptr)
+            del(self.__codec_context_ptr)
 
             # Deinit the network if the file read was a network stream.
             if self.__network_stream:
