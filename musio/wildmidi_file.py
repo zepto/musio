@@ -97,9 +97,13 @@ class WildMidiFile(AudioIO):
         info_dict = {}
         info_ptr = _wildmidi.WildMidi_GetInfo(self._midi_file)
 
-        copyright = info_ptr.contents.copyright
-        if copyright:
-            info_dict['copyright'] = copyright.decode()
+        copyright_ptr = info_ptr.contents.copyright
+        if copyright_ptr:
+            copyright_str = _wildmidi.ctypes.string_at(copyright_ptr)
+            try:
+                info_dict['copyright'] = copyright_str.decode()
+            except UnicodeDecodeError:
+                info_dict['copyright'] = copyright_str.decode('latin1')
 
         return info_dict
 
