@@ -240,8 +240,11 @@ if __name__ == '__main__':
                         dest="floatp")
     parser.add_argument('-br', '--bit-rate', action='store',
                         default=128000, type=int,
-                        help=("Set the output bit rate."),
+                        help=("Set the output bit rate. (default is 128000)"),
                         dest="bit_rate")
+    parser.add_argument('-wc', '--wildmidi-config', action='store',
+                        default='', help='Specify the wildmidi config.',
+                        dest='wildmidi_config')
     parser.add_argument('-i', '--input', dest='input_filename', nargs='+')
     args = parser.parse_args()
 
