@@ -26,7 +26,7 @@ from typing import Any
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
-from .io_util import msg_out
+from .io_util import bytes_to_str, msg_out
 
 _wildmidi = LazyImport('wildmidi.wildmidi', globals(),
                        locals(), ['wildmidi'], 1)
@@ -100,10 +100,7 @@ class WildMidiFile(AudioIO):
         copyright_ptr = info_ptr.contents.copyright
         if copyright_ptr:
             copyright_str = _wildmidi.ctypes.string_at(copyright_ptr)
-            try:
-                info_dict['copyright'] = copyright_str.decode()
-            except UnicodeDecodeError:
-                info_dict['copyright'] = copyright_str.decode('latin1')
+            info_dict['copyright'] = bytes_to_str(copyright_str)
 
         return info_dict
 
@@ -126,17 +123,17 @@ class WildMidiFile(AudioIO):
             | _wildmidi.WM_MO_ROUNDTEMPO
         )
         if ret < 0:
-            err_msg = _wildmidi.ctypes.string_at(
+            err_msg = bytes_to_str(_wildmidi.ctypes.string_at(
                 _wildmidi.WildMidi_GetError()
-            ).decode()
+            ))
             msg_out(f"Error initializing wildmidi: {err_msg}")
             return None
 
         midi = _wildmidi.WildMidi_Open(filename_b)
         if not midi:
-            err_msg = _wildmidi.ctypes.string_at(
+            err_msg = bytes_to_str(_wildmidi.ctypes.string_at(
                 _wildmidi.WildMidi_GetError()
-            ).decode()
+            ))
             msg_out(f"Error opening {filename}: {err_msg}")
             return None
 
@@ -156,7 +153,7 @@ class WildMidiFile(AudioIO):
         """Print midi lyrics."""
         lyric_ptr = _wildmidi.WildMidi_GetLyric(self._midi_file)
         if lyric_ptr:
-            lyric = _wildmidi.ctypes.string_at(lyric_ptr).decode()
+            lyric = bytes_to_str(_wildmidi.ctypes.string_at(lyric_ptr))
             if self._lyric_column == 0:
                 lyric += ' '
                 print("\033[2K")
@@ -190,9 +187,9 @@ class WildMidiFile(AudioIO):
             )
 
             if bytes_read < 0:
-                err_msg = _wildmidi.ctypes.string_at(
+                err_msg = bytes_to_str(_wildmidi.ctypes.string_at(
                     _wildmidi.WildMidi_GetError()
-                ).decode()
+                ))
                 msg_out(f"Error reading: {err_msg}")
 
             # Check for the end of the stream.

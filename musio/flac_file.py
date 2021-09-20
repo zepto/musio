@@ -27,7 +27,7 @@ from typing import Any
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
-from .io_util import msg_out
+from .io_util import bytes_to_str, msg_out
 
 _flac = LazyImport('flac.flac', globals(), locals(), ['flac'], 1)
 
@@ -83,7 +83,7 @@ class FlacFile(AudioIO):
         _flac.FLAC__stream_decoder_seek_absolute(self._decoder, position)
 
     def _update_info(self, filename: str) -> dict:
-        """Updatesthe id3 info for the opened flac."""
+        """Updates the id3 info for the opened flac."""
         info_dict = {}
         metadata = _flac.POINTER(_flac.FLAC__StreamMetadata)()
         filename_b = filename.encode('utf-8', 'surrogateescape')
@@ -95,7 +95,7 @@ class FlacFile(AudioIO):
                     entry_s = _flac.string_at(entry, length)
                     if not entry_s:
                         break
-                    name, value = entry_s.decode('utf-8', 'replace').split('=')
+                    name, value = bytes_to_str(entry_s).split('=')
                     info_dict[name.lower()] = value
             except ValueError:
                 # Probably no comments.

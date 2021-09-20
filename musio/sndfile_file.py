@@ -29,7 +29,7 @@ from typing import Any, Callable
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
-from .io_util import msg_out
+from .io_util import bytes_to_str, msg_out
 
 _sndfile = LazyImport('sndfile.sndfile', globals(), locals(),
                       ['_sndfile'], 1)
@@ -210,7 +210,7 @@ class SndfileFile(AudioIO):
                 log_len
             )
             # Extract the bit-width value from the log.
-            log_str = _sndfile.string_at(log_buf).decode()
+            log_str = bytes_to_str(_sndfile.string_at(log_buf))
             for line in log_str.split('\n'):
                 if line.lower().strip().startswith('bit'):
                     bit_depth = line.split()[-1]
@@ -376,7 +376,7 @@ class SndfileFile(AudioIO):
         for name, i in self._tags_dict.items():
             snd_str = _sndfile.sf_get_string(snd, i)
             if snd_str:
-                self._info_dict[name] = snd_str.decode().strip(chr(34))
+                self._info_dict[name] = bytes_to_str(snd_str).strip(chr(34))
 
         # The file is now open.
         self._closed = False

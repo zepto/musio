@@ -49,6 +49,29 @@ __io_cache = {}
 DEBUG = False
 
 
+class Magic(object):
+    """Magic object for testing string encoding."""
+
+    def __init__(self, flags: int = 1024):
+        """Object for testing text encoding.
+
+        Default flags: magic.MAGIC_MIME_ENCODING
+        """
+        if not _magic:
+            return None
+
+        self._magic = _magic.magic_open(flags)
+        if _magic.magic_load(self._magic, None) != 0:
+            print(f"Error: {_magic.magic_error(self._magic).decode()}")
+
+    def check(self, data):
+        """Return the encoding of data."""
+        if not _magic:
+            return b'utf8'
+
+        return _magic.magic_buffer(self._magic, data, len(data))
+
+
 def msg_out(message: str, *args):
     """Print message if DEBUG is True."""
     if DEBUG:
@@ -471,24 +494,20 @@ def py_silence(new_stdout: IO = None, new_stderr: IO = None):
         sys.stderr = old_stderr
 
 
-class Magic(object):
-    """Magic object for testing string encoding."""
+def bytes_to_str(data: bytes, codec_list: list = ['ascii', 'utf-8', 'latin-1',
+                                                  'cp437']) -> str:
+    """Decode bytes data in to a string.
 
-    def __init__(self, flags: int = 1024):
-        """Object for testing text encoding.
-
-        Default flags: magic.MAGIC_MIME_ENCODING
-        """
-        if not _magic:
-            return None
-
-        self._magic = _magic.magic_open(flags)
-        if _magic.magic_load(self._magic, None) != 0:
-            print(f"Error: {_magic.magic_error(self._magic).decode()}")
-
-    def check(self, data):
-        """Return the encoding of data."""
-        if not _magic:
-            return b'utf8'
-
-        return _magic.magic_buffer(self._magic, data, len(data))
+    Try utf-8 first then latin-1 then cp437 and finally just use
+    surrogateescape.
+    """
+    # Try to detect the encoding of the data.
+    codec_type = Magic().check(data).decode()
+    # Loop over each codec, and return the first one that works.
+    for codec in [codec_type, *codec_list]:
+        try:
+            return data.decode(codec)
+        except UnicodeDecodeError:
+            continue
+    # If all else fails try utf-8 escaping characters that cannot be decoded.
+    return data.decode('utf-8', 'surrogateescape')

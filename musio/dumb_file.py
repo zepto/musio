@@ -28,6 +28,7 @@ from typing import Any, Callable
 from .conversion_util import swap_endian
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
+from .io_util import bytes_to_str
 
 _dumb = LazyImport('dumb._dumb', globals(), locals(), ['_dumb'], 1)
 
@@ -207,11 +208,11 @@ class DumbFile(AudioIO):
             fill_list = []
 
             for i in range(count):
-                name = name_func(sig_data, i).decode('cp437', 'replace')
+                name = bytes_to_str(name_func(sig_data, i))
                 if name:
                     name = name.replace('\r', '\n')
                     filename = filename_func(sig_data, i)
-                    filename = filename.decode('cp437', 'replace')
+                    filename = bytes_to_str(filename)
                     filename = filename.replace('\r', '\n')
                     fill_list.append(f"{key.capitalize():8} {i:03} {name} "
                                      f"{filename}")
@@ -244,12 +245,12 @@ class DumbFile(AudioIO):
                 self._info_dict['instruments'] = tmp_list
 
         name = _dumb.duh_get_tag(self._duh, b'TITLE')
-        name = name.decode('cp437', 'replace')
+        name = bytes_to_str(name)
         self._info_dict['name'] = name
 
         message = _dumb.dumb_it_sd_get_song_message(sig_data)
         if message:
-            message = message.decode('cp437', 'replace').replace('\r', '\n')
+            message = bytes_to_str(message).replace('\r', '\n')
             self._info_dict['message'] = message
 
     @io_wrapper

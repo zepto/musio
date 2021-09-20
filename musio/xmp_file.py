@@ -26,6 +26,7 @@ from typing import Any
 from musio.io_base import AudioIO, io_wrapper
 
 from .import_util import LazyImport
+from .io_util import bytes_to_str
 
 _xmp = LazyImport('xmp._xmp', globals(), locals(), ['_xmp'], 1)
 
@@ -137,7 +138,7 @@ class XMPFile(AudioIO):
 
             for i in range(count):
                 tmp = getattr(self.__module_info.mod.contents, index)[i]
-                name = tmp.name.decode('cp437', 'replace')
+                name = bytes_to_str(tmp.name)
                 if name:
                     fill_list.append(f"{key.capitalize():8} {i:02} {name}")
 
@@ -158,17 +159,17 @@ class XMPFile(AudioIO):
                 self._info_dict['samples'] = tmp_list
 
         # Get the module name.
-        name = self.__module_info.mod.contents.name.decode('cp437', 'replace')
+        name = bytes_to_str(self.__module_info.mod.contents.name)
         self._info_dict['name'] = name
 
         # Get the mod type.
         mod_type = self.__module_info.mod.contents.type
-        self._info_dict['type'] = mod_type.decode('cp437', 'replace')
+        self._info_dict['type'] = bytes_to_str(mod_type)
 
         # Get any comment.
         comment = self.__module_info.comment
         if comment:
-            self._info_dict['comment'] = comment.decode('cp437', 'replace')
+            self._info_dict['comment'] = bytes_to_str(comment)
 
     @io_wrapper
     def read(self, size: int = -1) -> bytes:

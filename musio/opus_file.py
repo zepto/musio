@@ -25,7 +25,7 @@ from typing import Any
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
-from .io_util import msg_out
+from .io_util import bytes_to_str, msg_out
 
 _opus = LazyImport('opus.opus', globals(), locals(), ['opus'], 1)
 
@@ -89,10 +89,7 @@ class OpusFile(AudioIO):
                 comment_len = tags.contents.comment_lengths[i]
                 comment_str = _opus.string_at(comment, comment_len)
                 if b'METADATA_BLOCK_PICTURE' not in comment_str:
-                    name, value = comment_str.decode(
-                        'utf-8',
-                        'replace'
-                    ).split('=')
+                    name, value = bytes_to_str(comment_str).split('=')
                     info_dict[name] = value
             except Exception:
                 continue

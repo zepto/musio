@@ -26,12 +26,13 @@ from typing import Any, Callable
 from .conversion_util import swap_endian
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
+from .io_util import bytes_to_str
 
 _modplug = LazyImport('modplug._modplug', globals(), locals(),
                       ['_modplug'], 1)
 
 __supported_dict = {
-    'ext': ['.mod', '.xm', '.s3m', '.it', '.mtm', '.mid', '.mptm', '.umx',
+    'ext': ['.mod', '.xm', '.s3m', '.it', '.mtm', '.mptm', '.umx',
             '.stm', '.mo3', '.669'],
     'handler': 'ModPlugFile',
     'default': True,
@@ -145,7 +146,7 @@ class ModPlugFile(AudioIO):
             for i in range(count):
                 name_func(modplug_file, i, name_buffer)
                 if name_buffer:
-                    name = name_buffer.value.decode('cp437', 'replace')
+                    name = bytes_to_str(name_buffer.value, ['cp437'])
                     fill_list.append(f"{key.capitalize():8} {i:03} {name}")
 
             return fill_list
@@ -173,7 +174,7 @@ class ModPlugFile(AudioIO):
                 self._info_dict['instruments'] = tmp_list
 
         name = _modplug.ModPlug_GetName(modplug_file)
-        name = name.decode('cp437', 'replace')
+        name = bytes_to_str(name, ['cp437'])
         self._info_dict['name'] = name
 
         mod_type = _modplug.ModPlug_GetModuleType(modplug_file)
@@ -181,7 +182,7 @@ class ModPlugFile(AudioIO):
 
         message = _modplug.ModPlug_GetMessage(modplug_file)
         if message:
-            message = message.decode('cp437', 'replace').replace('\r', '\n')
+            message = bytes_to_str(message, ['cp437']).replace('\r', '\n')
             self._info_dict['message'] = message
 
     def _update_settings(self):

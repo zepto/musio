@@ -30,7 +30,7 @@ from typing import Any
 from .id3_util import ID3Tags
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
-from .io_util import Magic, msg_out, silence
+from .io_util import Magic, bytes_to_str, msg_out, silence
 
 _mpg123 = LazyImport('mpg123._mpg123', globals(), locals(), ['_mpg123'], 1)
 _lame = LazyImport('lame.lame', globals(), locals(), ['lame'], 1)
@@ -56,7 +56,7 @@ def get_genre_list() -> list[str]:
     def _make_genre_list(genre_id: int, genre: bytes, _):
         """Make a list of id3 tags and their id's."""
         try:
-            genre_list[genre_id] = genre.decode('utf8', 'replace')
+            genre_list[genre_id] = bytes_to_str(genre)
         except Exception:
             print(genre_id)
 
@@ -80,7 +80,7 @@ def _check(err: Any) -> Any:
         err = err.value
 
     if err != _mpg123.MPG123_OK:
-        err_str = _mpg123.mpg123_plain_strerror(err).decode('cp437', 'replace')
+        err_str = bytes_to_str(_mpg123.mpg123_plain_strerror(err), ['cp437'])
         msg_out(f"Error in {__file__}: {err_str}")
 
     return err
@@ -353,7 +353,7 @@ class MP3File(AudioIO):
         try:
             if id3v2.contents.extras > 0:
                 tag_type = id3v2.contents.extra.contents.description.p
-                tag_type = tag_type.decode('utf8', 'replace')
+                tag_type = bytes_to_str(tag_type)
                 id3_dict[tag_type] = id3v2.contents.extra.contents.text.p
         except Exception:
             pass
@@ -364,20 +364,13 @@ class MP3File(AudioIO):
         except Exception:
             pass
 
-        magic = Magic()
         for key, value in dict(id3_dict.items()).items():
             if type(value) is not int:
                 if not value.strip():
                     id3_dict.pop(key)
                 elif type(value) is bytes:
                     id3_dict.pop(key)
-                    enc = magic.check(value).decode()
-                    enc = getenv('MUSIO_LANG', enc)
-                    try:
-                        id3_dict[key.lower()] = value.decode(enc, 'ignore')
-                    except LookupError:
-                        id3_dict[key.lower()] = value.decode('utf8', 'ignore')
-
+                    id3_dict[key.lower()] = bytes_to_str(value)
             else:
                 id3_dict.pop(key)
                 id3_dict[key.lower()] = value
@@ -428,7 +421,7 @@ class MP3File(AudioIO):
             if tag_name == 'genre':
                 ucs4 = _id3tag.id3_genre_name(ucs4)
             field_val = _id3tag.id3_ucs4_utf8duplicate(ucs4)
-            tag_val = _id3tag.string_at(field_val).decode('utf8', 'replace')
+            tag_val = bytes_to_str(_id3tag.string_at(field_val))
             id3_dict[tag_name] = tag_val
 
         i = 0
@@ -444,7 +437,7 @@ class MP3File(AudioIO):
             ucs4 = _id3tag.id3_field_getfullstring(
                 _id3tag.id3_frame_field(frame, 3))
             field_val = _id3tag.id3_ucs4_utf8duplicate(ucs4)
-            tag_val = _id3tag.string_at(field_val).decode('utf8', 'replace')
+            tag_val = bytes_to_str(_id3tag.string_at(field_val))
             id3_dict['comment'] = tag_val
             break
 

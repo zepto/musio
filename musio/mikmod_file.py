@@ -25,6 +25,7 @@ from typing import Any
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
+from .io_util import bytes_to_str
 
 _mikmod = LazyImport('mikmod._mikmod', globals(), locals(), ['_mikmod'], 1)
 _mikmod_drv = LazyImport('mikmod.driver', globals(), locals(), ['driver'], 1)
@@ -181,7 +182,7 @@ class MikModFile(AudioIO):
 
         err_int = _mikmod.MikMod_Init(b"")
         if err_int:
-            raise Exception(_mikmod.MikMod_strerror(err_int).decode())
+            raise Exception(bytes_to_str(_mikmod.MikMod_strerror(err_int)))
 
         if _mikmod.MikMod_InitThreads() == 0:
             print("Not thread safe")
@@ -264,11 +265,15 @@ class MikModFile(AudioIO):
         if num_smp > 0:
             tmp_list = []
             for i in range(num_smp):
-                try:
-                    name = module.contents.samples[i].samplename
-                    name = name.decode('cp437', 'replace')
-                except Exception:
-                    continue
+                if module.contents.samples:
+                    name = bytes_to_str(
+                        module.contents.samples[i].samplename, ['cp437']
+                    )
+                # try:
+                #     name = module.contents.samples[i].samplename
+                #     name = name.decode('cp437', 'replace')
+                # except Exception:
+                #     continue
                 if name:
                     key_str = f'{"Sample":8} {i:3}'
                     value_str = f'{name} {""}'
@@ -280,11 +285,15 @@ class MikModFile(AudioIO):
         if num_ins > 0:
             tmp_list = []
             for i in range(num_ins):
-                try:
-                    name = module.contents.instruments[i].insname
-                    name = name.decode('cp437', 'replace')
-                except Exception:
-                    continue
+                if module.contents.instruments:
+                    name = bytes_to_str(
+                        module.contents.instruments[i].insname, ['cp437']
+                    )
+                # try:
+                #     name = module.contents.instruments[i].insname
+                #     name = name.decode('cp437', 'replace')
+                # except Exception:
+                #     continue
                 if name:
                     key_str = f'{"Instrument":8} {i:3}'
                     value_str = f'{name} {""}'
@@ -292,13 +301,13 @@ class MikModFile(AudioIO):
             if any(tmp_list):
                 self._info_dict['instruments'] = tmp_list
 
-        mod_type = module.contents.modtype.decode('cp437', 'replace')
+        mod_type = bytes_to_str(module.contents.modtype, ['cp437'])
         self._info_dict['type'] = mod_type
 
         name = module.contents.songname
-        self._info_dict['name'] = name.decode('cp437', 'replace')
+        self._info_dict['name'] = bytes_to_str(name, ['cp437'])
 
         comment = module.contents.comment
         if comment:
-            message = comment.decode('cp437', 'replace')
+            message = bytes_to_str(comment, ['cp437'])
             self._info_dict['message'] = message.replace('\n', '\n')

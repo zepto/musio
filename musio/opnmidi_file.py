@@ -25,7 +25,7 @@ from os import get_terminal_size
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
-from .io_util import msg_out
+from .io_util import bytes_to_str, msg_out
 
 _opnmidi = LazyImport('opnmidi.opnmidi', globals(), locals(), ['opnmidi'], 1)
 
@@ -102,7 +102,7 @@ class OpnmidiFile(AudioIO):
                 err_b = _opnmidi.opn2_errorInfo(self._opnmidi_device)
                 raise(OSError(
                     f"Failed to open midi: {filename}."
-                    f" {err_b.decode()}"
+                    f" {bytes_to_str(err_b)}"
                 ))
         else:
             raise(Exception("Failed to init opnmidi"))
@@ -134,7 +134,7 @@ class OpnmidiFile(AudioIO):
             err = _opnmidi.opn2_switchEmulator(self._opnmidi_device, emulator)
             if err < 0:
                 err_b = _opnmidi.opn2_errorInfo(self._opnmidi_device)
-                print(f"{err_b.decode()}")
+                print(f"{bytes_to_str(err_b)}")
                 self._emulator = 0
             else:
                 self._emulator = emulator
@@ -142,7 +142,9 @@ class OpnmidiFile(AudioIO):
     @property
     def emulator_name(self) -> str:
         """Get the current emulator name."""
-        return _opnmidi.opn2_chipEmulatorName(self._opnmidi_device).decode()
+        return bytes_to_str(_opnmidi.opn2_chipEmulatorName(
+            self._opnmidi_device
+        ))
 
     @property
     def volume_model_name(self) -> str:
@@ -196,25 +198,16 @@ class OpnmidiFile(AudioIO):
 
         title = _opnmidi.opn2_metaMusicTitle(self._opnmidi_device)
         if title:
-            try:
-                info_dict['name'] = title.decode()
-            except UnicodeDecodeError:
-                info_dict['name'] = title.decode('latin-1')
+            info_dict['name'] = bytes_to_str(title)
 
         copyright = _opnmidi.opn2_metaMusicCopyright(self._opnmidi_device)
         if copyright:
-            try:
-                info_dict['copyright'] = copyright .decode()
-            except UnicodeDecodeError:
-                info_dict['copyright'] = copyright .decode('latin-1')
+            info_dict['copyright'] = bytes_to_str(copyright)
 
         title_count = _opnmidi.opn2_metaTrackTitleCount(self._opnmidi_device)
         for i in range(title_count):
             track_title = _opnmidi.opn2_metaTrackTitle(self._opnmidi_device, i)
-            try:
-                info_dict[f"Track {i}"] = track_title.decode()
-            except UnicodeDecodeError:
-                info_dict[f"Track {i}"] = track_title.decode('latin-1')
+            info_dict[f"Track {i}"] = bytes_to_str(track_title)
 
         marker_count = _opnmidi.opn2_metaMarkerCount(self._opnmidi_device)
         if marker_count:

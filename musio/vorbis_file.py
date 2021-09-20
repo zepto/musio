@@ -28,7 +28,7 @@ from typing import Any
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
-from .io_util import slice_buffer
+from .io_util import bytes_to_str, slice_buffer
 
 _vorbisfile = LazyImport('ogg.vorbisfile', globals(), locals(),
                          ['_vorbisfile'], 1)
@@ -161,7 +161,7 @@ class VorbisFile(AudioIO):
         self._channels = info.contents.channels
         self._rate = info.contents.rate
 
-        vendor = comments.contents.vendor.decode('ascii', 'ignore')
+        vendor = bytes_to_str(comments.contents.vendor, ['ascii'])
         self._info_dict['Vendor'] = vendor
 
         # Get comments from file.
@@ -174,7 +174,7 @@ class VorbisFile(AudioIO):
             if not comment or b'metadata' in comment.lower():
                 break
 
-            comment_list = comment.decode('utf8', 'replace').split('=')
+            comment_list = bytes_to_str(comment).split('=')
 
             # Handle invalid comments (without '=')
             if b'=' not in comment:

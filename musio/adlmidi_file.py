@@ -26,7 +26,7 @@ from typing import Union
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
-from .io_util import msg_out
+from .io_util import bytes_to_str, msg_out
 
 _adlmidi = LazyImport('adlmidi.adlmidi', globals(), locals(), ['adlmidi'], 1)
 
@@ -108,7 +108,7 @@ class AdlmidiFile(AudioIO):
                 err_b = _adlmidi.adl_errorInfo(self._adlmidi_device)
                 raise(OSError(
                     f"Failed to open midi: {filename}."
-                    f" {err_b.decode()}"
+                    f" {bytes_to_str(err_b)}"
                 ))
         else:
             raise(Exception("Failed to init adlmidi"))
@@ -140,7 +140,7 @@ class AdlmidiFile(AudioIO):
             err = _adlmidi.adl_switchEmulator(self._adlmidi_device, emulator)
             if err < 0:
                 err_b = _adlmidi.adl_errorInfo(self._adlmidi_device)
-                print(f"{err_b.decode()}")
+                print(f"{bytes_to_str(err_b)}")
                 self._emulator = 0
             else:
                 self._emulator = emulator
@@ -148,7 +148,9 @@ class AdlmidiFile(AudioIO):
     @property
     def emulator_name(self) -> str:
         """Get the current emulator name."""
-        return _adlmidi.adl_chipEmulatorName(self._adlmidi_device).decode()
+        return bytes_to_str(_adlmidi.adl_chipEmulatorName(
+            self._adlmidi_device
+        ))
 
     @property
     def volume_model_name(self) -> str:
@@ -198,7 +200,7 @@ class AdlmidiFile(AudioIO):
         # print(f"{'Number':<12}Name")
         print("Bank:", end="")
         for i in range(_adlmidi.adl_getBanksCount()):
-            name = _adlmidi.string_at(banknames[i]).decode()
+            name = bytes_to_str(_adlmidi.string_at(banknames[i]))
             print(f"\t{i:02}{' ':<10}{name}")
 
     def set_bank(self, bank: Union[int, str]):
@@ -221,9 +223,9 @@ class AdlmidiFile(AudioIO):
 
         if self._bank in range(_adlmidi.adl_getBanksCount()):
             banknames = _adlmidi.adl_getBankNames()
-            info_dict['bank'] = _adlmidi.string_at(
+            info_dict['bank'] = bytes_to_str(_adlmidi.string_at(
                 banknames[self._bank]
-            ).decode()
+            ))
         elif type(self._bank) == str:
             info_dict['bank'] = self._bank
 
@@ -237,25 +239,16 @@ class AdlmidiFile(AudioIO):
 
         title = _adlmidi.adl_metaMusicTitle(self._adlmidi_device)
         if title:
-            try:
-                info_dict['name'] = title.decode()
-            except UnicodeDecodeError:
-                info_dict['name'] = title.decode('latin-1')
+            info_dict['name'] = bytes_to_str(title)
 
         copyright = _adlmidi.adl_metaMusicCopyright(self._adlmidi_device)
         if copyright:
-            try:
-                info_dict['copyright'] = copyright .decode()
-            except UnicodeDecodeError:
-                info_dict['copyright'] = copyright .decode('latin-1')
+            info_dict['copyright'] = bytes_to_str(copyright)
 
         title_count = _adlmidi.adl_metaTrackTitleCount(self._adlmidi_device)
         for i in range(title_count):
             track_title = _adlmidi.adl_metaTrackTitle(self._adlmidi_device, i)
-            try:
-                info_dict[f"Track {i}"] = track_title.decode()
-            except UnicodeDecodeError:
-                info_dict[f"Track {i}"] = track_title.decode('latin-1')
+            info_dict[f"Track {i}"] = bytes_to_str(track_title)
 
         marker_count = _adlmidi.adl_metaMarkerCount(self._adlmidi_device)
         if marker_count:
