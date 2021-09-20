@@ -507,7 +507,7 @@ def bytes_to_str(data: bytes, codec_list: list = ['ascii', 'utf-8', 'latin-1',
     for codec in [codec_type, *codec_list]:
         try:
             return data.decode(codec)
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, LookupError):
             continue
     # If all else fails try utf-8 escaping characters that cannot be decoded.
     return data.decode('utf-8', 'surrogateescape')
