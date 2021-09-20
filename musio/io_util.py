@@ -67,7 +67,7 @@ class Magic(object):
     def check(self, data):
         """Return the encoding of data."""
         if not _magic:
-            return b'utf8'
+            return b"utf-8"
 
         return _magic.magic_buffer(self._magic, data, len(data))
 

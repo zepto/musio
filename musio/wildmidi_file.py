@@ -50,8 +50,8 @@ class WildMidiFile(AudioIO):
     # Only reading is supported
     _supported_modes = 'r'
 
-    def __init__(self, filename: str, wildmidi_config: str, rate: int = 44100,
-                 **_):
+    def __init__(self, filename: str, wildmidi_config: str = '',
+                 rate: int = 44100, **_):
         """Initialize the playback settings of the player."""
         super(WildMidiFile, self).__init__(filename, mode='r', depth=16,
                                            rate=rate, channels=2)
