@@ -63,10 +63,15 @@ class WildMidiFile(AudioIO):
         self._lyric_column = 0
 
         self._midi_file = self._open(filename, wildmidi_config)
-        if self._midi_file:
-            info_ptr = _wildmidi.WildMidi_GetInfo(self._midi_file)
-            self._length = info_ptr.contents.approx_total_samples
-            self._info_dict |= self._update_info()
+        if not self._midi_file:
+            if not wildmidi_config:
+                raise(IOError("No config file found"))
+            else:
+                raise(IOError(f"Failed to open {filename}"))
+
+        info_ptr = _wildmidi.WildMidi_GetInfo(self._midi_file)
+        self._length = info_ptr.contents.approx_total_samples
+        self._info_dict |= self._update_info()
 
     def __repr__(self) -> str:
         """Return a python expression to recreate this instance."""
