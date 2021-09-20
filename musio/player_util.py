@@ -36,9 +36,8 @@ def _play_proc(msg_dict: dict):
     """Player process."""
     # from oss_io import Oss as AudioIO
     # from alsa_io import Alsa as AudioIO
-    from portaudio_io import Portaudio as AudioIO
-
-    from all_file import AllFile as Music
+    from .all_file import AllFile as Music
+    from .portaudio_io import Portaudio as AudioIO
 
     with Music(**msg_dict) as music, AudioIO(rate=music.rate,
                                              channels=music.channels,

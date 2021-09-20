@@ -24,6 +24,7 @@
 
 def main(args: dict) -> int:
     """Play args['filename'] args['loops'] times."""
+    import atexit
     from pathlib import Path
     from select import select
     from sys import stdin
@@ -62,6 +63,9 @@ def main(args: dict) -> int:
     # Set the new terminal state.
     tcsetattr(stdin, TCSANOW, quiet)
 
+    # Re-set the terminal state.
+    atexit.register(tcsetattr, stdin, TCSANOW, normal)
+
     # Value to break out of outer loop and quit all playback.
     quit_command = False
 
@@ -69,7 +73,7 @@ def main(args: dict) -> int:
         # Loop over the filenames playing each one with the same
         # AudioPlayer object.
         for filename in filenames:
-           # Skip non-files.
+            # Skip non-files.
             if not Path(filename).is_file():
                 continue
 
@@ -145,9 +149,6 @@ def main(args: dict) -> int:
         except BrokenPipeError:
             pass
 
-        # Re-set the terminal state.
-        tcsetattr(stdin, TCSANOW, normal)
-
     return 0
 
 
@@ -175,13 +176,14 @@ def get_files(file_list):
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
-    from typing import Union
-    def bank(value: Union[str, int]) -> Union[str, int]:
-        return value
-        try:
-            return int(value)
-        except TypeError:
-            return value
+
+    # from typing import Union
+    # def bank(value: Union[str, int]) -> Union[str, int]:
+    #     return value
+    #     try:
+    #         return int(value)
+    #     except TypeError:
+    #         return value
     parser = ArgumentParser(description="Musio music player")
     parser.add_argument('-l', '--loops', action='store', default=-1, type=int,
                         help='How many times to loop (-1 = infinite)',
@@ -287,7 +289,7 @@ if __name__ == '__main__':
                     break
                 name = control.snd_device_name_get_hint(i, b'NAME').decode()
                 desc = control.snd_device_name_get_hint(i, b'DESC').decode()
-                print('%s: %s' % (name, desc))
+                print(f"{name}: {desc}")
     elif args.list_banks:
         from musio.adlmidi_file import AdlmidiFile
         AdlmidiFile.print_bank_list()
