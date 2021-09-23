@@ -45,7 +45,7 @@ __codec_cache = {}
 # Audio IO device cache dictionary
 __io_cache = {}
 
-# Set to True to enable debut output
+# Set to True to enable debug output
 DEBUG = False
 
 
@@ -72,7 +72,7 @@ class Magic(object):
         return _magic.magic_buffer(self._magic, data, len(data))
 
 
-def msg_out(message: str, *args):
+def msg_out(message: object, *args):
     """Print message if DEBUG is True."""
     if DEBUG:
         print(message, *args)
@@ -366,9 +366,7 @@ def open_file(filename: str, mode: str = 'r', mod_path: list[str] = [],
         )
 
         if not codec:
-            import sys
-            print("No valid codec was found.")
-            sys.exit()
+            raise(IOError(f"No valid codec was found for '{filename}'."))
 
         try:
             open_codec = codec(filename, mode=mode, **kwargs)
@@ -494,17 +492,14 @@ def py_silence(new_stdout: IO = None, new_stderr: IO = None):
         sys.stderr = old_stderr
 
 
-def bytes_to_str(data: bytes, codec_list: list = ['ascii', 'utf-8', 'latin-1',
-                                                  'cp437']) -> str:
+def bytes_to_str(data: bytes, codec_list: list = ['ascii', 'utf-8', 'cp1251',
+                                                  'latin-1', 'cp437']) -> str:
     """Decode bytes data in to a string.
 
-    Try utf-8 first then latin-1 then cp437 and finally just use
-    surrogateescape.
+    Try each codec in codec_list.
     """
-    # Try to detect the encoding of the data.
-    codec_type = Magic().check(data).decode()
     # Loop over each codec, and return the first one that works.
-    for codec in [codec_type, *codec_list]:
+    for codec in codec_list:
         try:
             return data.decode(codec)
         except (UnicodeDecodeError, LookupError):

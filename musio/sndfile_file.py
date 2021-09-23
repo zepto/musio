@@ -392,10 +392,10 @@ class SndfileFile(AudioIO):
         bytes_read = -1
 
         # create the read buffer.
-        # data_buffer = (self._buffer_func * (self._buffer_size *
-        #                                     self._channels))()
+        # data_buffer = (self._buffer_func * (self.buffer_size *
+        #                                     self.channels))()
         data_buffer = _sndfile.create_string_buffer(
-            self._buffer_size * _sndfile.sizeof(self._buffer_func)
+            self.buffer_size * _sndfile.sizeof(self._buffer_func)
         )
 
         # Start with any unused data from the last read.
@@ -408,9 +408,9 @@ class SndfileFile(AudioIO):
                 _sndfile.cast(
                     data_buffer, _sndfile.POINTER(self._buffer_func)
                 ),
-                self._buffer_size
+                self.buffer_size
                 # data_buffer,
-                # self._buffer_size * self._channels
+                # self.buffer_size * self.channels
             )
 
             # Scale the output.

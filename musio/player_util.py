@@ -22,14 +22,18 @@
 """Player functions."""
 
 import audioop
+import weakref
 from functools import wraps as functools_wraps
 from io import SEEK_CUR, SEEK_END, SEEK_SET
 from multiprocessing import Manager, Pipe, Process
 from multiprocessing.connection import Connection
-from time import sleep as time_sleep
-from typing import Callable
+from pathlib import Path
+from time import sleep
+from typing import Any, Callable
 
-from .io_util import msg_out, open_device, open_file
+from .dummy_file import DummyFile
+from .io_util import get_codec, msg_out, open_device, open_file
+from .portaudio_io import Portaudio
 
 
 def _play_proc(msg_dict: dict):
@@ -75,6 +79,29 @@ def stop(player_tup: tuple):
     playing, play_t = player_tup
     playing['playing'] = False
     play_t.join()
+
+
+def get_files(file_list):
+    """Return a list of all the files in filename."""
+    from os import walk
+    from os.path import isdir, join
+    from pathlib import Path
+
+    out_list = []
+    ext = ['.mp3', '.flac', '.ogg', '.s3m', '.mod', '.xm',
+           '.it', '.opus', '.wav', '.mid', '.imf', '.nsf',
+           '.wma', '.wlf', '.mtm', '.flv', '.wav']
+
+    for name in file_list:
+        if isdir(name):
+            for root, _, files in walk(name):
+                join_list = [join(root, f) for f in files
+                             if Path(f.lower()).suffix in ext]
+                out_list.extend(join_list)
+        else:
+            out_list.append(name)
+
+    return out_list
 
 
 class AudioPlayer(object):
@@ -147,11 +174,7 @@ class AudioPlayer(object):
 
     def __del__(self):
         """Stop playback before deleting."""
-        if self._control_dict.get('playing', False):
-            try:
-                self.stop()
-            except IOError:
-                pass
+        self.close()
 
     def __len__(self) -> int:
         """Get the length of the file if it has one."""
@@ -284,7 +307,7 @@ class AudioPlayer(object):
                             if not device.closed:
                                 device.close()
 
-                            time_sleep(0.05)
+                            sleep(0.05)
 
                             # Write a buffer of null bytes so the audio
                             # system can keep its buffer full.
@@ -329,6 +352,17 @@ class AudioPlayer(object):
         """Open an audio file to play."""
         # Stop the current file from playing.
         self.stop()
+
+        # Skip non-files.
+        if not Path(filename).is_file():
+            raise(IOError(f"{filename} is not a file."))
+
+        # Skip unsupported files.
+        if get_codec(
+            filename,
+            blacklist=[*kwargs.get('blacklist', []), 'all']
+        ) == DummyFile:
+            raise(IOError(f"File {filename} not supported."))
 
         # Set the new filename.
         self._filename = filename
@@ -464,3 +498,290 @@ class AudioPlayer(object):
     def tell(self) -> int:
         """Return the current position."""
         return self.position
+
+    def close(self):
+        """Close the audio file and device."""
+        if self._control_dict.get('playing', False):
+            try:
+                self.stop()
+            except IOError:
+                pass
+
+
+class PortAudioPlayer():
+    """An audio player."""
+
+    def __init__(self, **kwargs):
+        """Audio player.
+
+        Plays audio in the background using the portaudio callback.
+        """
+        self._kwargs = kwargs
+
+        self._cmd_dict = {
+            "position": [],
+        }
+
+        self._device = None
+        self._audio_file = None
+
+        if kwargs.get("filename", ""):
+            self.open(self._kwargs.pop('filename'), **self._kwargs)
+
+        # Make sure close is called before exiting.
+        weakref.finalize(self, self.close)
+
+    def __pa_callback_f(self, frame_count: int, _, userdata: tuple) -> bytes:
+        """Read and return audio data."""
+        audio_file, cmd_dict = userdata
+
+        # Check and run each command in cmd_dict.
+        for command, args in cmd_dict.items():
+            if command == 'position' and args:
+                audio_file.position = args[0]
+                args.clear()
+
+        # Only print the position if the stream has a length.
+        if self._kwargs.get('show_position', False) and audio_file.length > 0:
+            audio_file.print_midi_markers()
+
+            # Calculate the percentage played.
+            pos = (audio_file.position * 100) / audio_file.length
+
+            # Make the string.
+            pos_str = f"Position: {pos:.2f}%"
+
+            # Find the length of the string.
+            format_len = len(pos_str) + 2
+
+            # Print the string after erasing the old one using ansi escapes.
+            print(f"\033[{format_len}D\033[K{pos_str}", end='', flush=True)
+
+        buffer_size = frame_count * ((audio_file.depth // 8)
+                                     * audio_file.channels)
+        return audio_file.read(buffer_size)
+
+    def __str__(self) -> str:
+        """Return string representation of audio file."""
+        if self._audio_file:
+            return str(self._audio_file)
+        return "No open file."
+
+    def __repr__(self) -> str:
+        """Return a python expression to recreate this instance."""
+        kwargs_lst = []
+        for key, value in self._kwargs.items():
+            if type(value) == str:
+                value = f'"{value}"'
+            kwargs_lst.append(f"{key}={value}")
+
+        return f"{self.__class__.__name__}({', '.join(kwargs_lst)})"
+
+    def __del__(self):
+        """Stop playback before deleting."""
+        self.close()
+
+    def __bool__(self) -> bool:
+        """Return True."""
+        return True
+
+    def __len__(self) -> int:
+        """Get the length of the file if it has one."""
+        return self.length
+
+    def _open_device(self) -> Any:
+        """Return an opened portaudio device."""
+        callback_tuple = (self._audio_file, self._cmd_dict)
+        return self._device if self._device else Portaudio(
+            mode="w",
+            device=self._kwargs.get("device", "default"),
+            rate=self._audio_file.rate,
+            channels=self._audio_file.channels,
+            depth=self._audio_file.depth,
+            unsigned=self._audio_file.unsigned,
+            floatp=self._audio_file.floatp,
+            callback=self.__pa_callback_f,
+            callback_data=callback_tuple
+        )
+
+    def open(self, filename: str, **kwargs):
+        """Open the named file and return True on success False otherwise."""
+        # Close all open devices and files first.
+        self.close()
+
+        # Update arguments.
+        self._kwargs |= kwargs
+
+        # Make sure these are always blacklisted.
+        self._kwargs |= {
+            'blacklist': self._kwargs.get("blacklist", []) + [
+                'all', 'dummy', 'text'
+            ]
+        }
+
+        # Skip non-files.
+        if not Path(filename).is_file():
+            raise(IOError(f"{filename} is not a file."))
+
+        self._audio_file = open_file(filename, **self._kwargs)
+        if not self._audio_file:
+            raise(IOError(f"Could not open {filename}."))
+
+    @property
+    def loop_count(self) -> int:
+        """Return the number of times the song has looped."""
+        return self._audio_file.loop_count
+
+    @property
+    def loops(self) -> int:
+        """Get the number of times the playback should loop.
+
+        -1 = infinite looping.
+        """
+        return self._kwargs.get('loops', self._audio_file.loops)
+
+    @loops.setter
+    def loops(self, loops):
+        """Set the number of times playback should loop.
+
+        -1 = infinite looping.
+        """
+        self._audio_file.loops = self._kwargs['loops'] = loops
+
+    @property
+    def position(self) -> int:
+        """Get the current position."""
+        if not self._audio_file:
+            position_list = self._cmd_dict.get('position', [])
+            return position_list[0] if position_list else 0
+
+        return self._audio_file.position
+
+    @position.setter
+    def position(self, position):
+        """Set the current position."""
+        self._cmd_dict.get('position', []).insert(0, position)
+
+    @property
+    def show_position(self) -> bool:
+        """Return whether the position will be shown."""
+        return self._kwargs.get("show_position", False)
+
+    @show_position.setter
+    def show_position(self, show: bool):
+        """Set whether the position will be shown."""
+        self._kwargs["show_position"] = show
+
+    @property
+    def playing(self) -> bool:
+        """Return true if playing otherwise false."""
+        if not self._device:
+            return False
+        return (self._device.is_stream_active
+                and not self._device.is_stream_stopped)
+
+    @property
+    def paused(self) -> bool:
+        """Return true if paused else false."""
+        if not self._device:
+            return False
+        return (not self._device.is_stream_active
+                and self._device.is_stream_stopped)
+
+    @property
+    def done(self) -> bool:
+        """Return true if playback has finished."""
+        if not self._device:
+            return True
+        return (not self._device.is_stream_active
+                and not self._device.is_stream_stopped)
+
+    def restart(self):
+        """Restart playback."""
+        if self.done:
+            self._device.close()
+            self._device = None
+            self.seek(0)
+            self.play()
+        else:
+            self.stop()
+            self.play()
+
+    def play(self):
+        """Open the device and start the playback."""
+        if not self._audio_file:
+            print("No file opened.")
+        elif not self._device:
+            self._device = self._open_device()
+
+            # Print out some debug information.
+            msg_out(f"\n{repr(self._audio_file)}\n"
+                    f"\n{repr(self._device)}\n")
+        elif not self.playing and not self.done:
+            self._device.start_stream()
+
+    def stop(self):
+        """Stop the playback and rewind the file to the start."""
+        if not self._device or not self._audio_file:
+            msg_out("No file or no device open.")
+        elif (self._device.is_stream_active
+                and not self._device.is_stream_stopped):
+            self._device.abort_stream()
+            self._audio_file.seek(0)
+
+    def pause(self):
+        """Pause audio playback."""
+        if not self._device or not self._audio_file:
+            msg_out("No file or no device open.")
+
+        if (self._device.is_stream_active
+                and not self._device.is_stream_stopped):
+            self._device.stop_stream()
+
+    def seek(self, offset: int, whence: int = SEEK_SET) -> int:
+        """Seek to position in mod."""
+        if whence == SEEK_CUR:
+            self.position += offset
+        elif whence == SEEK_END:
+            self.position = self.length - offset
+        else:
+            self.position = offset
+
+        return self.position
+
+    def tell(self) -> int:
+        """Return the position in the file."""
+        return self.position
+
+    @property
+    def length(self) -> int:
+        """Get the audio_file length."""
+        return self._audio_file.length if self._audio_file else 0
+
+    def close(self):
+        """Close the audio file and device."""
+        if self._device:
+            self._device.abort_stream()
+            self._device.close()
+        if self._audio_file:
+            self._audio_file.close()
+
+        self._device = None
+        self._audio_file = None
+
+    def __enter__(self) -> Any:
+        """Provide the ability to use pythons with statement."""
+        try:
+            return self
+        except Exception as err:
+            print(err)
+            return None
+
+    def __exit__(self, exc_type, exc_value, traceback) -> bool:
+        """Close the pcm when finished."""
+        try:
+            self.close()
+            return not bool(exc_type)
+        except Exception as err:
+            print(err)
+            return False

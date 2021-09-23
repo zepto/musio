@@ -208,13 +208,13 @@ class DumbFile(AudioIO):
             fill_list = []
 
             for i in range(count):
-                name = bytes_to_str(name_func(sig_data, i))
+                name = bytes_to_str(name_func(sig_data, i), ['cp437'])
                 if name:
                     name = name.replace('\r', '\n')
                     filename = filename_func(sig_data, i)
                     filename = bytes_to_str(filename)
                     filename = filename.replace('\r', '\n')
-                    fill_list.append(f"{key.capitalize():8} {i:03} {name} "
+                    fill_list.append(f"{key.capitalize():8} {i:03}: {name} "
                                      f"{filename}")
 
             return fill_list
@@ -250,7 +250,7 @@ class DumbFile(AudioIO):
 
         message = _dumb.dumb_it_sd_get_song_message(sig_data)
         if message:
-            message = bytes_to_str(message).replace('\r', '\n')
+            message = bytes_to_str(message, ['cp437']).replace('\r', '\n')
             self._info_dict['message'] = message
 
     @io_wrapper

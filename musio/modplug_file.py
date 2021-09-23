@@ -147,7 +147,7 @@ class ModPlugFile(AudioIO):
                 name_func(modplug_file, i, name_buffer)
                 if name_buffer:
                     name = bytes_to_str(name_buffer.value, ['cp437'])
-                    fill_list.append(f"{key.capitalize():8} {i:03} {name}")
+                    fill_list.append(f"{key.capitalize():8} {i:03}: {name}")
 
             return fill_list
 

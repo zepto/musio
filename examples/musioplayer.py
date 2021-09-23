@@ -25,16 +25,13 @@
 def main(args: dict) -> int:
     """Play args['filename'] args['loops'] times."""
     import atexit
-    from pathlib import Path
     from select import select
     from sys import stdin
     from termios import (ECHO, ICANON, TCSANOW, VMIN, VTIME, tcgetattr,
                          tcsetattr)
     from time import sleep
 
-    from musio.dummy_file import DummyFile
-    from musio.io_util import get_codec
-    from musio.player_util import AudioPlayer
+    from musio.player_util import AudioPlayer, PortAudioPlayer, get_files
 
     if args['debug']:
         from musio import io_util
@@ -49,7 +46,13 @@ def main(args: dict) -> int:
         filenames = get_files(filenames)
 
     # Start player with no filename, and set the loops.
-    player = AudioPlayer(**args)
+    if 'portaudio' in args['blacklist'] or 'portaudio_io' in args['blacklist']:
+        player = AudioPlayer(**args)
+    else:
+        player = PortAudioPlayer(**args)
+
+    # Close the player at exit.
+    atexit.register(player.close)
 
     # Save the current terminal state.
     normal = tcgetattr(stdin)
@@ -73,18 +76,8 @@ def main(args: dict) -> int:
         # Loop over the filenames playing each one with the same
         # AudioPlayer object.
         for filename in filenames:
-            # Skip non-files.
-            if not Path(filename).is_file():
-                continue
-
-            # Skip unsupported files.
-            try:
-                temp = get_codec(filename, blacklist=['all'])
-                if temp == DummyFile:
-                    raise(IOError(f"File {filename} not supported."))
-            except Exception as err:
-                print(err)
-                continue
+            if quit_command:
+                break
 
             filename_bytes = filename.encode('utf-8', 'surrogateescape')
             filename_printable = filename_bytes.decode('utf-8', 'ignore')
@@ -93,19 +86,19 @@ def main(args: dict) -> int:
             try:
                 player.open(filename, **args)
                 player.loops = args['loops']
-            except IOError:
-                print(f"Unsupported audio format: {filename_printable}")
-                return 1
+            except IOError as err:
+                print(err)
+                continue
 
             if args['show_position']:
                 print(f"\nPlaying: {filename_printable}")
-                print(player)
+                print(f"\n{player}")
 
             # Start the playback.
             player.play()
 
             # Process user input until song finishes.
-            while player.playing:
+            while player.playing or player.paused:
                 # Check for input.
                 r, _, _ = select([stdin], [], [], 0)
 
@@ -126,18 +119,14 @@ def main(args: dict) -> int:
                     player.position += player.length / 100
                 if command.startswith('h') or command.endswith('\033[d'):
                     player.position -= player.length / 100
-                elif command == '\n':
+                elif command == "\n" or command.startswith("q"):
+                    quit_command = command.startswith("q")
                     break
-                elif command.startswith('q'):
-                    quit_command = True
-                    break
+
+            player.stop()
 
             if args['show_position']:
-                player.stop()
                 print("\nDone.")
-
-            if quit_command:
-                break
 
     except Exception as err:
         print(f"Error: {err}", flush=True)
@@ -150,28 +139,6 @@ def main(args: dict) -> int:
             pass
 
     return 0
-
-
-def get_files(file_list):
-    """Return a list of all the files in filename."""
-    from os import walk
-    from os.path import isdir, join
-    from pathlib import Path
-
-    out_list = []
-    ext = ['.mp3', '.flac', '.ogg', '.s3m', '.mod', '.xm',
-           '.it', '.opus', '.wav', '.mid', '.imf', '.nsf']
-
-    for name in file_list:
-        if isdir(name):
-            for root, _, files in walk(name):
-                join_list = [join(root, f) for f in files
-                             if Path(f.lower()).suffix in ext]
-                out_list.extend(join_list)
-        else:
-            out_list.append(name)
-
-    return out_list
 
 
 if __name__ == '__main__':

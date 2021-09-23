@@ -277,7 +277,7 @@ class MikModFile(AudioIO):
                 if name:
                     key_str = f'{"Sample":8} {i:3}'
                     value_str = f'{name} {""}'
-                    tmp_list.append(f"{key_str} {value_str}")
+                    tmp_list.append(f"{key_str}: {value_str}")
             if any(tmp_list):
                 self._info_dict['samples'] = tmp_list
 

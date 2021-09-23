@@ -57,7 +57,8 @@ class Portaudio(DevIO):
                  channels: int = 2, unsigned: bool = False,
                  floatp: bool = False, buffer_size: int = 0,
                  latency: float = 0.0500000, device: Any = 'default',
-                 callback: Callable = None, callback_data: Any = None, **kwargs):
+                 callback: Callable = None, callback_data: Any = None,
+                 **_):
         """Initialize the portaudio device."""
         super(Portaudio, self).__init__(
             mode,
@@ -109,7 +110,7 @@ class Portaudio(DevIO):
                 f'channels={self._channels}, unsigned={self._unsigned}, '
                 f'floatp={self._floatp}, buffer_size={self._buffer_size}, '
                 f'latency={self._latency}, devindex={self._devindex}, '
-                f'callback={self._callback})')
+                f'callback={self._callback}, callback_data={self._user_data})')
 
     def device_list(self, device: Any = None) -> list[str]:
         """Return a list of the devices with thier names."""
@@ -123,6 +124,18 @@ class Portaudio(DevIO):
     def is_stream_active(self) -> bool:
         """Return whether or not the stream is active."""
         return self._stream.active
+
+    @property
+    def is_stream_stopped(self) -> bool:
+        """Return whether or not the stream is stopped."""
+        return self._stream.stopped
+
+    def abort_stream(self) -> Union[int, bool]:
+        """Abort the stream.
+
+        Stops the stream and drops all buffers.
+        """
+        return self._stream.abort()
 
     def stop_stream(self) -> Union[int, bool]:
         """Temporaraly stop the stream.
@@ -252,7 +265,7 @@ class Portaudio(DevIO):
 
     def close(self) -> None:
         """Close the pcm."""
-        if not self.closed:
+        if not self._closed:
             self._stream.stop()
             # Wait for the stream to stop.
             while not self._stream.stopped:

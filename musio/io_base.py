@@ -27,6 +27,7 @@ AudioIO         Abstract class for audio file IO
 DevIO           Abstract class for audio device IO
 """
 
+import weakref
 from functools import wraps
 from io import SEEK_CUR, SEEK_END, SEEK_SET, RawIOBase
 from os.path import basename, isfile
@@ -153,9 +154,12 @@ class AudioIO(RawIOBase):
         self._info_dict = {}
         self._info_dict['name'] = name
 
+        # Call the close method before this object is garbage collected.
+        self.__close_ref = weakref.finalize(self, self.close)
+
     def __str__(self) -> str:
         """Return a string representation of the module information."""
-        str_list = ['\n']
+        str_list = []
 
         max_key_len = max(len(key) for key in self._info_dict.keys())
         self._info_dict['musio module'] = f" ({self.__class__.__name__})"
@@ -166,7 +170,7 @@ class AudioIO(RawIOBase):
 
             if type(value) in (list, tuple, set):
                 str_list.insert(0, f'\t{f"{chr(10)}{chr(9)}".join(value)}')
-                str_list.insert(0, f"\n{key.lower().capitalize()}")
+                str_list.insert(0, f"\n{key.lower().capitalize()}:")
                 continue
             value = str(value).strip()
 
@@ -203,6 +207,7 @@ class AudioIO(RawIOBase):
         """Close the file when finished."""
         try:
             self.close()
+            self.__close_ref.detach()
             return not bool(exc_type)
         except Exception as err:
             print(err)
@@ -323,6 +328,10 @@ class AudioIO(RawIOBase):
     def _open(self) -> Any:
         """Open the classes file and set it up for read/write access."""
         raise NotImplementedError("Open method not implemented.")
+
+    def close(self):
+        """Cleanup and close any open resources."""
+        pass
 
     def to_seconds(self, position: int) -> float:
         """Convert the provided position/length to seconds."""
@@ -460,6 +469,9 @@ class DevIO(RawIOBase):
 
         self._closed = True
 
+        # Call the close method before this object is garbage collected.
+        self.__close_ref = weakref.finalize(self, self.close)
+
     def __repr__(self) -> str:
         """Return a python expression to recreate this instance."""
         return (f'{self.__class__.__name__}(mode="{self._mode}", '
@@ -493,6 +505,10 @@ class DevIO(RawIOBase):
         """Open the pcm audio output."""
         raise NotImplementedError("Open method not implemented.")
 
+    def close(self):
+        """Finalize and close any open resources."""
+        pass
+
     def __iter__(self) -> 'DevIO':
         """Return an iter of this object."""
         return self
@@ -509,6 +525,7 @@ class DevIO(RawIOBase):
         """Close the pcm when finished."""
         try:
             self.close()
+            self.__close_ref.detach()
             return not bool(exc_type)
         except Exception as err:
             print(err)

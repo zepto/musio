@@ -138,9 +138,9 @@ class XMPFile(AudioIO):
 
             for i in range(count):
                 tmp = getattr(self.__module_info.mod.contents, index)[i]
-                name = bytes_to_str(tmp.name)
+                name = bytes_to_str(tmp.name, ['cp437'])
                 if name:
-                    fill_list.append(f"{key.capitalize():8} {i:02} {name}")
+                    fill_list.append(f"{key.capitalize():8} {i:02}: {name}")
 
             return fill_list
 
@@ -159,17 +159,17 @@ class XMPFile(AudioIO):
                 self._info_dict['samples'] = tmp_list
 
         # Get the module name.
-        name = bytes_to_str(self.__module_info.mod.contents.name)
+        name = bytes_to_str(self.__module_info.mod.contents.name, ['cp437'])
         self._info_dict['name'] = name
 
         # Get the mod type.
         mod_type = self.__module_info.mod.contents.type
-        self._info_dict['type'] = bytes_to_str(mod_type)
+        self._info_dict['type'] = bytes_to_str(mod_type, ['cp437'])
 
         # Get any comment.
         comment = self.__module_info.comment
         if comment:
-            self._info_dict['comment'] = bytes_to_str(comment)
+            self._info_dict['comment'] = bytes_to_str(comment, ['cp437'])
 
     @io_wrapper
     def read(self, size: int = -1) -> bytes:

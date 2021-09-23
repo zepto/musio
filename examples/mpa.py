@@ -22,49 +22,20 @@
 """Example of portaudio callback player."""
 
 
-def callback(framecount, _, userdata):
-    """Portaudio callback."""
-    audio_file, cmd_dict = userdata
-
-    if cmd_dict.get("show_position", False):
-        # Calculate the percentage played.
-        pos = (audio_file.position * 100) / audio_file.length
-
-        # Make the string.
-        pos_str = f"Position: {pos:.2f}%"
-
-        # Find the length of the string.
-        format_len = len(pos_str) + 2
-
-        # Print the string and after erasing the old
-        # one using ansi escapes.
-        print(f"\033[{format_len}D\033[K{pos_str}", end="",
-                flush=True)
-
-    if cmd_dict.get('position', []):
-        audio_file.position = cmd_dict['position'][0]
-        cmd_dict['position'].clear()
-
-    buffer_size = framecount * ((audio_file.depth // 8)
-                                * audio_file.channels)
-    return audio_file.read(buffer_size)
-
-
 def main(args: dict):
-    """Play args['filename'] args['loops'] times."""
+    """Play args['filenames'] args['loops'] times."""
     import atexit
     import time
-    from pathlib import Path
     from select import select
     from sys import stdin
     from termios import (ECHO, ICANON, TCSANOW, VMIN, VTIME, tcgetattr,
                          tcsetattr)
 
-    from musio import open_file
-    from musio.dummy_file import DummyFile
-    from musio.io_util import get_codec
-    from musio.player_util import get_files
-    from musio.portaudio_io import Portaudio
+    from musio.player_util import AudioPlayer, PortAudioPlayer, get_files
+
+    if args['debug']:
+        from musio import io_util
+        io_util.DEBUG = True
 
     # Save the current terminal state.
     normal = tcgetattr(stdin)
@@ -81,84 +52,76 @@ def main(args: dict):
     # Re-set the terminal state.
     atexit.register(tcsetattr, stdin, TCSANOW, normal)
 
-    quit_command = False
-
     # Pop the filenames list out of the args dict.
-    filenames = args.pop('filename')
+    filenames = args.pop('filenames')
 
     # Recursively get all the files.
     recurse = args.pop('recurse')
     if recurse:
         filenames = get_files(filenames)
 
-    for filename in filenames:
-        if quit_command:
-            break
-        if not Path(filename).is_file():
-            continue
+    quit_command = False
 
-        # Skip unsupported files.
-        try:
-            temp = get_codec(filename, blacklist=[*args['blacklist'], 'all'])
-            if temp == DummyFile:
-                raise(IOError(f"File {filename} not supported."))
-        except Exception as err:
-            print(err)
-            continue
+    # Start player with no filename, and set the loops.
+    if 'portaudio' in args['blacklist'] or 'portaudio_io' in args['blacklist']:
+        player_cls = AudioPlayer
+    else:
+        player_cls = PortAudioPlayer
 
-        command_dict = {
-            'position': [],
-            'show_position': args['show_position']
-        }
-        with open_file(filename, blacklist=args['blacklist']) as audio_file:
-            audio_file.loops = args['loops']
+    with player_cls(**args) as player:
+        for filename in filenames:
+            if quit_command:
+                break
+
+            # Open the file.
+            try:
+                player.open(filename, **args)
+            except Exception as err:
+                print(err)
+                continue
+
             if args['show_position']:
-                print(f"\n{audio_file}")
-            with Portaudio(mode="w", rate=audio_file.rate,
-                           channels=audio_file.channels, device="default",
-                           floatp=audio_file.floatp,
-                           unsigned=audio_file.unsigned,
-                           depth=audio_file.depth, callback=callback,
-                           callback_data=(audio_file,
-                                          command_dict)) as device:
-                # Loop until playing stops.
-                while device.is_stream_active or device.is_stream_stopped:
-                    # Check for input.
-                    r, _, _ = select([stdin], [], [], 0)
+                print(f"\nPlaying: {filename}")
+                print(f"\n{player}")
 
-                    # Get input if there was any otherwise continue.
-                    if r:
-                        command = r[0].readline().lower()
-                    else:
-                        try:
-                            time.sleep(0.1)
-                            continue
-                        except KeyboardInterrupt:
-                            break
+            # Start playback.
+            player.play()
 
-                    # Handle input commands.
-                    if command.startswith("p") or command.startswith(" "):
-                        (device.stop_stream() if device.is_stream_active
-                         else device.start_stream())
-                    elif (command.startswith("l") or command.endswith("\033[c")):
-                        new_pos = audio_file.position + audio_file.length / 100
-                        command_dict['position'].append(new_pos)
-                    elif (command.startswith("h") or command.endswith("\033[d")):
-                        new_pos = audio_file.position - audio_file.length / 100
-                        command_dict['position'].append(new_pos)
-                    elif command == "\n" or command.startswith("q"):
-                        quit_command = command.startswith("q")
+            while player.playing or player.paused:
+                # Check for input.
+                r, _, _ = select([stdin], [], [], 0)
+
+                # Get input if there was any otherwise continue.
+                if r:
+                    command = r[0].readline().lower()
+                else:
+                    try:
+                        time.sleep(0.1)
+                        continue
+                    except KeyboardInterrupt:
                         break
 
-                device.abort_stream()
-                if args['show_position']:
-                    print("\nDone.")
+                # Handle input commands.
+                if command.startswith("p") or command.startswith(" "):
+                    player.play() if player.paused else player.pause()
+                elif (command.startswith("l") or command.endswith("\033[c")):
+                    player.position += player.length / 100
+                elif (command.startswith("h") or command.endswith("\033[d")):
+                    player.position -= player.length / 100
+                elif command == "\n" or command.startswith("q"):
+                    quit_command = command.startswith("q")
+                    break
+
+            player.stop()
+
+            if args['show_position']:
+                print("\nDone.")
 
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
 
-    parser = ArgumentParser(description="Musio portaudio music player")
+    parser = ArgumentParser(description="Musio music player")
     parser.add_argument('-l', '--loops', action='store', default=-1, type=int,
                         help='How many times to loop (-1 = infinite)',
                         dest='loops')
@@ -234,41 +197,29 @@ if __name__ == '__main__':
     parser.add_argument('-wc', '--wildmidi-config', action='store',
                         default='', help='Specify the wildmidi config.',
                         dest='wildmidi_config')
-    parser.add_argument(dest='filename', nargs='+')
+    parser.add_argument(dest='filenames', nargs='+')
     args = parser.parse_args()
 
     if args.list_devices:
-        try:
-            from sys import stderr
+        from sys import stderr
 
-            from musio.io_util import silence
-            from musio.portaudio import portaudio
+        from musio.io_util import silence
+        from musio.portaudio import portaudio
 
-            _portaudio = portaudio.Portaudio()
+        _portaudio = portaudio.Portaudio()
 
-            # Silence stderr
-            with silence(stderr):
-                _portaudio.initialize()
-                dev_count = _portaudio.device_count
-                for i in range(dev_count):
-                    dev_name = _portaudio.device_name(i)
-                    print(i, dev_name)
-        except Exception:
-            from musio.alsa import control
-            hints = control.POINTER(control.c_void_p)()
-            err = control.snd_device_name_hint(-1, b'pcm',
-                                               control.byref(hints))
-            for i in hints:
-                if not i:
-                    break
-                name = control.snd_device_name_get_hint(i, b'NAME').decode()
-                desc = control.snd_device_name_get_hint(i, b'DESC').decode()
-                print(f"{name}: {desc}")
+        # Silence stderr
+        with silence(stderr):
+            _portaudio.initialize()
+            dev_count = _portaudio.device_count
+            for i in range(dev_count):
+                dev_name = _portaudio.device_name(i)
+                print(i, dev_name)
     elif args.list_banks:
         from musio.adlmidi_file import AdlmidiFile
         AdlmidiFile.print_bank_list()
     else:
-        if args.filename:
+        if args.filenames:
             if args.blacklist:
                 # Fix comma seperated input.
                 for i, j in enumerate(args.blacklist):

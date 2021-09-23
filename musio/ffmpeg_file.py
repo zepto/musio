@@ -325,9 +325,11 @@ class FFmpegFile(AudioIO):
         )
         # Loop over all the items.
         while prev_item:
-            key = bytes_to_str(prev_item.contents.key.data)
-            value = bytes_to_str(prev_item.contents.value.data)
+            key = bytes_to_str(prev_item.contents.key.data, ['cp437'])
+            value = bytes_to_str(prev_item.contents.value.data, ['cp437'])
+            value = value.split('\n') if '\n' in value else value
             return_dict[key] = value
+
             # Get the next item.
             prev_item = _av.av_dict_get(
                 metadata,
