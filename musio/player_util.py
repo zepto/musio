@@ -761,7 +761,8 @@ class PortAudioPlayer():
     def close(self):
         """Close the audio file and device."""
         if self._device:
-            self._device.abort_stream()
+            if self.playing or self.paused:
+                self._device.abort_stream()
             self._device.close()
         if self._audio_file:
             self._audio_file.close()
