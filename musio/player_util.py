@@ -110,23 +110,11 @@ class AudioPlayer(object):
     An audio player object.
     """
 
-    def __init__(self, filename: str = '', show_position: bool = False,
-                 **kwargs):
-        """__init__.
-
-        Parameters
-        ----------
-        self :
-            self
-        filename : str
-            filename
-        show_position : bool
-            show_position
-        kwargs :
-            kwargs
-        """
-        self._filename = filename
-        self._show_position = show_position
+    def __init__(self, **kwargs):
+        """Play audio in the background using a subprocess."""
+        self._kwargs = kwargs
+        self._filename = kwargs.pop("filename", "")
+        self._show_position = kwargs.pop("show_position", False)
 
         # Setup the msg_dict for sending messages to the child process.
         self._msg_dict = Manager().dict()
@@ -137,8 +125,8 @@ class AudioPlayer(object):
         self._control_conn, self._player_conn = Pipe()
 
         # Open the file.
-        if filename:
-            self.open(filename, **kwargs)
+        if self._filename:
+            self.open(self._filename, **kwargs)
 
     def __str__(self) -> str:
         """Get the information about the open file."""
@@ -155,7 +143,13 @@ class AudioPlayer(object):
 
     def __repr__(self) -> str:
         """Return a python expression to recreate this instance."""
-        return f"{self.__class__.__name__}(filename={self._filename})"
+        kwargs_lst = []
+        for key, value in self._kwargs.items():
+            if type(value) == str:
+                value = f'"{value}"'
+            kwargs_lst.append(f"{key}={value}")
+
+        return f"{self.__class__.__name__}({', '.join(kwargs_lst)})"
 
     def __enter__(self) -> 'AudioPlayer':
         """Provide the ability to use pythons with statement."""
@@ -526,7 +520,7 @@ class PortAudioPlayer():
         self._audio_file: Any = None
 
         if kwargs.get("filename", ""):
-            self.open(self._kwargs.pop('filename'), **self._kwargs)
+            self.open(self._kwargs.pop("filename", ""), **self._kwargs)
 
         # Make sure close is called before exiting.
         weakref.finalize(self, self.close)
@@ -761,7 +755,9 @@ class PortAudioPlayer():
     def close(self):
         """Close the audio file and device."""
         if self._device:
-            self._device.close()
+            if not self._device.closed:
+                self._device.abort_stream()
+                self._device.close()
         if self._audio_file:
             self._audio_file.close()
 
