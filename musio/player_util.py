@@ -634,7 +634,8 @@ class PortAudioPlayer():
         """
         return self._kwargs.get(
             'loops',
-            self.__audio_file.loops if self.__audio_file else -1
+            (self.__audio_file.loops if self.__audio_file
+             else self._kwargs.get("loops", -1))
         )
 
     @loops.setter
@@ -644,7 +645,7 @@ class PortAudioPlayer():
         -1 = infinite looping.
         """
         if self.__audio_file:
-            self.__audio_file.loops = self._kwargs['loops'] = loops
+            self.__audio_file.loops = self._kwargs["loops"] = loops
 
     @property
     def position(self) -> int:
