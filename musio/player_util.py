@@ -516,8 +516,8 @@ class PortAudioPlayer():
             "position": [],
         }
 
-        self._device: Any = None
-        self._audio_file: Any = None
+        self.__device: Any = None
+        self.__audio_file: Any = None
 
         if kwargs.get("filename", ""):
             self.open(self._kwargs.pop("filename", ""), **self._kwargs)
@@ -557,8 +557,8 @@ class PortAudioPlayer():
 
     def __str__(self) -> str:
         """Return string representation of audio file."""
-        if self._audio_file:
-            return str(self._audio_file)
+        if self.__audio_file:
+            return str(self.__audio_file)
         return "No open file."
 
     def __repr__(self) -> str:
@@ -577,23 +577,23 @@ class PortAudioPlayer():
 
     def __bool__(self) -> bool:
         """Return True."""
-        return True
+        return bool(self.__audio_file)
 
     def __len__(self) -> int:
         """Get the length of the file if it has one."""
         return self.length
 
-    def _open_device(self) -> Any:
+    def __open_device(self) -> Any:
         """Return an opened portaudio device."""
-        callback_tuple = (self._audio_file, self._cmd_dict)
-        return self._device if self._device else Portaudio(
+        callback_tuple = (self.__audio_file, self._cmd_dict)
+        return self.__device if self.__device else Portaudio(
             mode="w",
             device=self._kwargs.get("device", "default"),
-            rate=self._audio_file.rate,
-            channels=self._audio_file.channels,
-            depth=self._audio_file.depth,
-            unsigned=self._audio_file.unsigned,
-            floatp=self._audio_file.floatp,
+            rate=self.__audio_file.rate,
+            channels=self.__audio_file.channels,
+            depth=self.__audio_file.depth,
+            unsigned=self.__audio_file.unsigned,
+            floatp=self.__audio_file.floatp,
             callback=self.__pa_callback_f,
             callback_data=callback_tuple
         )
@@ -617,14 +617,14 @@ class PortAudioPlayer():
         if not Path(filename).is_file():
             raise(IOError(f"{filename} is not a file."))
 
-        self._audio_file = open_file(filename, **self._kwargs)
-        if not self._audio_file:
+        self.__audio_file = open_file(filename, **self._kwargs)
+        if not self.__audio_file:
             raise(IOError(f"Could not open {filename}."))
 
     @property
     def loop_count(self) -> int:
         """Return the number of times the song has looped."""
-        return self._audio_file.loop_count
+        return self.__audio_file.loop_count if self.__audio_file else 0
 
     @property
     def loops(self) -> int:
@@ -632,7 +632,10 @@ class PortAudioPlayer():
 
         -1 = infinite looping.
         """
-        return self._kwargs.get('loops', self._audio_file.loops)
+        return self._kwargs.get(
+            'loops',
+            self.__audio_file.loops if self.__audio_file else -1
+        )
 
     @loops.setter
     def loops(self, loops):
@@ -640,16 +643,17 @@ class PortAudioPlayer():
 
         -1 = infinite looping.
         """
-        self._audio_file.loops = self._kwargs['loops'] = loops
+        if self.__audio_file:
+            self.__audio_file.loops = self._kwargs['loops'] = loops
 
     @property
     def position(self) -> int:
         """Get the current position."""
-        if not self._audio_file:
+        if not self.__audio_file:
             position_list = self._cmd_dict.get('position', [])
             return position_list[0] if position_list else 0
 
-        return self._audio_file.position
+        return self.__audio_file.position
 
     @position.setter
     def position(self, position):
@@ -669,32 +673,32 @@ class PortAudioPlayer():
     @property
     def playing(self) -> bool:
         """Return true if playing otherwise false."""
-        if not self._device:
+        if not self.__device:
             return False
-        return (self._device.is_stream_active
-                and not self._device.is_stream_stopped)
+        return (self.__device.is_stream_active
+                and not self.__device.is_stream_stopped)
 
     @property
     def paused(self) -> bool:
         """Return true if paused else false."""
-        if not self._device:
+        if not self.__device:
             return False
-        return (not self._device.is_stream_active
-                and self._device.is_stream_stopped)
+        return (not self.__device.is_stream_active
+                and self.__device.is_stream_stopped)
 
     @property
     def done(self) -> bool:
         """Return true if playback has finished."""
-        if not self._device:
+        if not self.__device:
             return True
-        return (not self._device.is_stream_active
-                and not self._device.is_stream_stopped)
+        return (not self.__device.is_stream_active
+                and not self.__device.is_stream_stopped)
 
     def restart(self):
         """Restart playback."""
         if self.done:
-            self._device.close()
-            self._device = None
+            self.__device.close()
+            self.__device = None
             self.seek(0)
             self.play()
         else:
@@ -703,34 +707,34 @@ class PortAudioPlayer():
 
     def play(self):
         """Open the device and start the playback."""
-        if not self._audio_file:
+        if not self.__audio_file:
             print("No file opened.")
-        elif not self._device:
-            self._device = self._open_device()
+        elif not self.__device:
+            self.__device = self.__open_device()
 
             # Print out some debug information.
-            msg_out(f"\n{repr(self._audio_file)}\n"
-                    f"\n{repr(self._device)}\n")
+            msg_out(f"\n{repr(self.__audio_file)}\n"
+                    f"\n{repr(self.__device)}\n")
         elif not self.playing and not self.done:
-            self._device.start_stream()
+            self.__device.start_stream()
 
     def stop(self):
         """Stop the playback and rewind the file to the start."""
-        if not self._device or not self._audio_file:
+        if not self.__device or not self.__audio_file:
             msg_out("No file or no device open.")
-        elif (self._device.is_stream_active
-                and not self._device.is_stream_stopped):
-            self._device.abort_stream()
-            self._audio_file.seek(0)
+        elif (self.__device.is_stream_active
+                and not self.__device.is_stream_stopped):
+            self.__device.abort_stream()
+            self.__audio_file.seek(0)
 
     def pause(self):
         """Pause audio playback."""
-        if not self._device or not self._audio_file:
+        if not self.__device or not self.__audio_file:
             msg_out("No file or no device open.")
 
-        if (self._device.is_stream_active
-                and not self._device.is_stream_stopped):
-            self._device.stop_stream()
+        if (self.__device.is_stream_active
+                and not self.__device.is_stream_stopped):
+            self.__device.stop_stream()
 
     def seek(self, offset: int, whence: int = SEEK_SET) -> int:
         """Seek to position in mod."""
@@ -750,19 +754,19 @@ class PortAudioPlayer():
     @property
     def length(self) -> int:
         """Get the audio_file length."""
-        return self._audio_file.length if self._audio_file else 0
+        return self.__audio_file.length if self.__audio_file else 0
 
     def close(self):
         """Close the audio file and device."""
-        if self._device:
-            if not self._device.closed:
-                self._device.abort_stream()
-                self._device.close()
-        if self._audio_file:
-            self._audio_file.close()
+        if self.__device:
+            if not self.__device.closed:
+                self.__device.abort_stream()
+                self.__device.close()
+        if self.__audio_file:
+            self.__audio_file.close()
 
-        self._device = None
-        self._audio_file = None
+        self.__device = None
+        self.__audio_file = None
 
     def __enter__(self) -> Any:
         """Provide the ability to use pythons with statement."""
