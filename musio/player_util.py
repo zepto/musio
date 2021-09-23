@@ -522,8 +522,8 @@ class PortAudioPlayer():
             "position": [],
         }
 
-        self._device = None
-        self._audio_file = None
+        self._device: Any = None
+        self._audio_file: Any = None
 
         if kwargs.get("filename", ""):
             self.open(self._kwargs.pop('filename'), **self._kwargs)

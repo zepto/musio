@@ -121,15 +121,18 @@ class Portaudio(DevIO):
         return [name_func(i) for i in range(dev_count)]
 
     @property
+    @io_wrapper
     def is_stream_active(self) -> bool:
         """Return whether or not the stream is active."""
         return self._stream.active
 
     @property
+    @io_wrapper
     def is_stream_stopped(self) -> bool:
         """Return whether or not the stream is stopped."""
         return self._stream.stopped
 
+    @io_wrapper
     def abort_stream(self) -> Union[int, bool]:
         """Abort the stream.
 
@@ -137,6 +140,7 @@ class Portaudio(DevIO):
         """
         return self._stream.abort()
 
+    @io_wrapper
     def stop_stream(self) -> Union[int, bool]:
         """Temporaraly stop the stream.
 
@@ -146,6 +150,7 @@ class Portaudio(DevIO):
         """
         return self._stream.stop()
 
+    @io_wrapper
     def start_stream(self) -> Union[int, bool]:
         """Start the stream.
 
@@ -263,6 +268,7 @@ class Portaudio(DevIO):
 
         return stream, portaudio
 
+    @io_wrapper
     def close(self) -> None:
         """Close the pcm."""
         if not self._closed:
