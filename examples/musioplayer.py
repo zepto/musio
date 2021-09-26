@@ -46,10 +46,7 @@ def main(args: dict) -> int:
         filenames = get_files(filenames)
 
     # Start player with no filename, and set the loops.
-    if 'portaudio' in args['blacklist'] or 'portaudio_io' in args['blacklist']:
-        player = AudioPlayer(**args)
-    else:
-        player = PortAudioPlayer(**args)
+    player = AudioPlayer(**args)
 
     # Close the player at exit.
     atexit.register(player.close)

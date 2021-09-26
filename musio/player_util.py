@@ -32,6 +32,7 @@ from time import sleep
 from typing import Any, Callable
 
 from .dummy_file import DummyFile
+from .io_base import AudioIO
 from .io_util import get_codec, msg_out, open_device, open_file
 from .portaudio_io import Portaudio
 
@@ -102,6 +103,26 @@ def get_files(file_list):
             out_list.append(name)
 
     return out_list
+
+
+def print_position(audio_file: AudioIO):
+    """Print the position."""
+    audio_file.print_midi_markers()
+
+    # Only print the position if the stream has a
+    # length.
+    if audio_file.length > 0:
+        # Calculate the percentage played.
+        pos = (audio_file.position * 100) / audio_file.length
+
+        # Make the string.
+        pos_str = f"Position: {pos:.2f}%"
+
+        # Find the length of the string.
+        format_len = len(pos_str) + 2
+
+        # Print the string after erasing the old one using ansi escapes.
+        print(f"\033[{format_len}D\033[K{pos_str}", end='', flush=True)
 
 
 class AudioPlayer(object):
@@ -226,24 +247,7 @@ class AudioPlayer(object):
 
                         # Print the stream position.
                         if msg_dict.get('show_position', False):
-                            # Only print the position if the stream has a
-                            # length.
-                            if fileobj.length > 0:
-                                fileobj.print_midi_markers()
-
-                                # Calculate the percentage played.
-                                pos = (fileobj.position * 100) / fileobj.length
-
-                                # Make the string.
-                                pos_str = f"Position: {pos:.2f}%"
-
-                                # Find the length of the string.
-                                format_len = len(pos_str) + 2
-
-                                # Print the string and after erasing the old
-                                # one using ansi escapes.
-                                print(f"\033[{format_len}D\033[K{pos_str}",
-                                      end='', flush=True)
+                            print_position(fileobj)
 
                         # Keep playing if not paused.
                         if not msg_dict.get('paused', False):
@@ -525,35 +529,32 @@ class PortAudioPlayer():
         # Make sure close is called before exiting.
         weakref.finalize(self, self.close)
 
-    def __pa_callback_f(self, frame_count: int, _, userdata: tuple) -> bytes:
+    def __pa_callback_f(self, frame_count: int, _, user_data: tuple) -> bytes:
         """Read and return audio data."""
-        audio_file, cmd_dict = userdata
+        audio_file, cmd_dict = user_data
 
         # Check and run each command in cmd_dict.
         for command, args in cmd_dict.items():
             if command == 'position' and args:
                 audio_file.position = args[0]
                 args.clear()
+            if command == "callback_f" and args:
+                callback_f = args[0]
+                callback_data = args[1:]
 
-        # Only print the position if the stream has a length.
-        if self._kwargs.get('show_position', False) and audio_file.length > 0:
-            audio_file.print_midi_markers()
+        if self._kwargs.get('show_position', False):
+            print_position(audio_file)
 
-            # Calculate the percentage played.
-            pos = (audio_file.position * 100) / audio_file.length
+        buffer_size = frame_count * (audio_file.width * audio_file.channels)
 
-            # Make the string.
-            pos_str = f"Position: {pos:.2f}%"
-
-            # Find the length of the string.
-            format_len = len(pos_str) + 2
-
-            # Print the string after erasing the old one using ansi escapes.
-            print(f"\033[{format_len}D\033[K{pos_str}", end='', flush=True)
-
-        buffer_size = frame_count * ((audio_file.depth // 8)
-                                     * audio_file.channels)
-        return audio_file.read(buffer_size)
+        if callback_f:
+            return callback_f(
+                self,
+                audio_file.read(buffer_size),
+                callback_data
+            )
+        else:
+            return audio_file.read(buffer_size)
 
     def __str__(self) -> str:
         """Return string representation of audio file."""
@@ -583,6 +584,16 @@ class PortAudioPlayer():
         """Get the length of the file if it has one."""
         return self.length
 
+    def __getattr__(self, name: str) -> Any:
+        """If the attribute is not found try the audio_file and device."""
+        if name in ('rate', 'width', 'depth', 'channels', 'unsigned'):
+            if hasattr(self.__audio_file, name):
+                return getattr(self.__audio_file, name)
+            if hasattr(self.__device, name):
+                return getattr(self.__device, name)
+
+        raise(AttributeError(f"{name} not a member of {__class__}."))
+
     def __open_device(self) -> Any:
         """Return an opened portaudio device."""
         callback_tuple = (self.__audio_file, self._cmd_dict)
@@ -610,6 +621,14 @@ class PortAudioPlayer():
         self._kwargs |= {
             'blacklist': self._kwargs.get("blacklist", []) + [
                 'all', 'dummy', 'text'
+            ]
+        }
+
+        # Update cmd_dict with the callback function data.
+        self._cmd_dict |= {
+            "callback_f": [
+                self._kwargs.get("callback", []),
+                self._kwargs.get("user_data", [])
             ]
         }
 
