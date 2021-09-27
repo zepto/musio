@@ -548,11 +548,14 @@ class PortAudioPlayer():
         buffer_size = frame_count * (audio_file.width * audio_file.channels)
 
         if callback_f:
-            return callback_f(
-                self,
-                audio_file.read(buffer_size),
-                callback_data
-            )
+            try:
+                return callback_f(
+                    self,
+                    audio_file.read(buffer_size),
+                    callback_data
+                )
+            except Exception as err:
+                msg_out(f"Error in callback: {err}")
         else:
             return audio_file.read(buffer_size)
 
