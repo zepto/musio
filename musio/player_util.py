@@ -125,7 +125,7 @@ def print_position(audio_file: AudioIO):
         print(f"\033[{format_len}D\033[K{pos_str}", end='', flush=True)
 
 
-class AudioPlayer(object):
+class AudioPlayer:
     """AudioPlayer.
 
     An audio player object.
@@ -506,7 +506,7 @@ class AudioPlayer(object):
                 pass
 
 
-class PortAudioPlayer():
+class PortAudioPlayer:
     """An audio player."""
 
     def __init__(self, **kwargs):

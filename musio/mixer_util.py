@@ -38,7 +38,7 @@ if not _check_dependencies(_dependencies):
     print("Mixer disabled: missing dependencies.")
 
 
-class Mixer(object):
+class Mixer:
     """Mixer object to control the alsa mixer."""
 
     def __init__(self, card: str = 'default', mixer: str = 'PCM'):

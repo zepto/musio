@@ -47,7 +47,7 @@ def bytes_to_pointer(data_type: Any, data: bytes) -> Any:
     return c_pointer.from_buffer_copy(data)
 
 
-class AACDecoder(object):
+class AACDecoder:
     """An object to decode AAC audio data."""
 
     def __init__(self, init_buf: Any, init_size: int, depth: int = 16,

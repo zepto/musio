@@ -49,7 +49,7 @@ __io_cache = {}
 DEBUG = False
 
 
-class Magic(object):
+class Magic:
     """Magic object for testing string encoding."""
 
     def __init__(self, flags: int = 1024):

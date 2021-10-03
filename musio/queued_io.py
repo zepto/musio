@@ -57,7 +57,7 @@ def _queue_writer(func: Callable, in_queue: Queue, out_queue: Queue):
     out_queue.put(written)
 
 
-class QueuedWriter(object):
+class QueuedWriter:
     """A queued multiprocess writter."""
 
     def __init__(self, func: Callable):

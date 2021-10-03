@@ -197,7 +197,7 @@ class GMEFile(AudioIO):
             self._closed = True
 
 
-class MusicEmu(object):
+class MusicEmu:
     """GME wrapper. libgme music emu wrapper."""
 
     def __init__(self, filename: str, rate: int = 44100):

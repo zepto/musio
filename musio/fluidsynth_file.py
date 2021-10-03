@@ -67,7 +67,7 @@ FLUID_REVERB_DEFAULT_WIDTH = 0.5
 FLUID_REVERB_DEFAULT_LEVEL = 0.9
 
 
-class Settings(object):
+class Settings:
     """Fluidsynth settings wrapper."""
 
     def __init__(self):
@@ -139,7 +139,7 @@ class Settings(object):
         return self._settings
 
 
-class Synth(object):
+class Synth:
     """Fluidsynth synth wrapper."""
 
     def __init__(self, settings: Settings, address: Any = None):
@@ -343,7 +343,7 @@ class Synth(object):
         return _fluidsynth.fluid_synth_t.from_address(address)
 
 
-class Player(object):
+class Player:
     """A fluidsynth player."""
 
     def __init__(self, synth: Synth):
@@ -404,7 +404,7 @@ class Player(object):
         return self.get_status() == _fluidsynth.FLUID_PLAYER_PLAYING
 
 
-class AudioDriver(object):
+class AudioDriver:
     """A fluidsynth audio driver."""
 
     def __init__(self, settings: Settings, synth: Synth,

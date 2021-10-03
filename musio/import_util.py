@@ -109,7 +109,7 @@ class LazyImport(ModuleType):
         return getattr(self, attr)
 
 
-class OnDemand(object):
+class OnDemand:
     """Load modules when accessed."""
 
     def __init__(self, module_name: str, globals: dict = {}, locals: dict = {},
@@ -175,7 +175,7 @@ class LazyModule(ModuleType):
 
 
 # Test class
-class LazyImp(object):
+class LazyImp:
     """ LazyImporter uses LazyModule to load the module when one of its
     attributes is accessed.
 
@@ -241,7 +241,7 @@ def _build_mod_list(mod_path: list) -> Generator[str, None, None]:
     return mod_list
 
 
-class LazyImporter(object):
+class LazyImporter:
     """Import module when it is accessed.
 
     LazyImporter uses LazyImport to load the module when one of its attributes
