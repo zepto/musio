@@ -30,7 +30,7 @@ from ctypes.util import find_library
 from importlib import import_module
 from os import listdir
 from os.path import abspath, basename, dirname, isdir, splitext
-from typing import IO, Any, Generator, Union
+from typing import IO, Any, Generator
 
 try:
     from .magic import magic as _magic
@@ -144,7 +144,7 @@ def _check_dependencies(dependencies: dict) -> bool:
 
 
 def get_codec(filename: str, mod_path: list[str] = [], cached: bool = True,
-              blacklist: list[str] = []) -> Union[AudioIO, None]:
+              blacklist: list[str] = []) -> AudioIO | None:
     """Load a codec that can handle the file.
 
     Load the codecs in the path and return the first one that can play the
@@ -253,7 +253,7 @@ def get_codec(filename: str, mod_path: list[str] = [], cached: bool = True,
 
 
 def get_io(fileobj: AudioIO, mod_path: list[str] = [], cached: bool = True,
-           blacklist: list[str] = []) -> Union[Any, DevIO, None]:
+           blacklist: list[str] = []) -> Any | DevIO | None:
     """Get a matching audio device.
 
     Find a audio device that can take the data read from fileobj and returns

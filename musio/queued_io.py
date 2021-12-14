@@ -28,7 +28,7 @@ the read.
 
 from multiprocessing import Process, Queue
 from queue import Empty
-from typing import Callable, Union
+from typing import Callable
 
 
 def _queue_writer(func: Callable, in_queue: Queue, out_queue: Queue):
@@ -80,7 +80,7 @@ class QueuedWriter:
         """Return a python expression to recreate this instance."""
         return f"{self.__class__.__name__}(func={self._func})"
 
-    def write(self, data: Union[str, bytes]):
+    def write(self, data: str | bytes):
         """Send more data down the queue to the processing function."""
         self._data_queue.put(data)
 

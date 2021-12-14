@@ -22,7 +22,6 @@
 """A module for reading adlib midi files."""
 
 from os import get_terminal_size
-from typing import Union
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
@@ -203,7 +202,7 @@ class AdlmidiFile(AudioIO):
             name = bytes_to_str(_adlmidi.string_at(banknames[i]))
             print(f"\t{i:02}{' ':<10}{name}")
 
-    def set_bank(self, bank: Union[int, str]):
+    def set_bank(self, bank: int | str):
         """Set the bank."""
         err = -1
         if type(bank) == str:

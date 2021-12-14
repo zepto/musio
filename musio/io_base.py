@@ -31,7 +31,7 @@ import weakref
 from functools import wraps
 from io import SEEK_CUR, SEEK_END, SEEK_SET, RawIOBase
 from os.path import basename, isfile
-from typing import Any, Callable, Union
+from typing import Any, Callable
 
 # If True errors will only print a message.
 IO_SOFT_ERRORS = True
@@ -40,7 +40,7 @@ IO_SOFT_ERRORS = True
 def io_wrapper(func: Callable) -> Callable:
     """Wrap io methods."""
     @wraps(func)
-    def wrapper(self, *args) -> Union[int, bytes]:
+    def wrapper(self, *args) -> int | bytes:
         """Call the wrapped function."""
         class_name = self.__class__.__name__
         func_name = func.__name__
@@ -217,7 +217,7 @@ class AudioIO(RawIOBase):
         """Return an iter of this object."""
         return self
 
-    def __next__(self) -> Union[bytes, str]:
+    def __next__(self) -> bytes | str:
         """Return the next buffer."""
         data = self.read(self.buffer_size)
 
@@ -256,12 +256,12 @@ class AudioIO(RawIOBase):
         return self.position
 
     @io_wrapper
-    def read(self, size: int = -1) -> Union[bytes, str]:
+    def read(self, size: int = -1) -> bytes | str:
         """Read size amount of data and returns it."""
         raise NotImplementedError("Read method not implemented.")
 
     @io_wrapper
-    def readall(self) -> Union[bytes, str]:
+    def readall(self) -> bytes | str:
         """Read and return all the data until the end of the stream."""
         # Get the return type of the read method or bytes.
         annotations = getattr(self.read, '__annotations__', {})
@@ -306,7 +306,7 @@ class AudioIO(RawIOBase):
         return bytes_read
 
     @io_wrapper
-    def readline(self, size: int = -1) -> Union[bytes, str]:
+    def readline(self, size: int = -1) -> bytes | str:
         """Return the next line or size bytes."""
         if size == -1:
             # Return a whole buffer.
@@ -316,7 +316,7 @@ class AudioIO(RawIOBase):
             return self.read(size)
 
     @io_wrapper
-    def write(self, data: Union[bytes, str]) -> int:
+    def write(self, data: bytes | str) -> int:
         """Write data to file."""
         raise NotImplementedError("Write method not implemented.")
 
@@ -360,14 +360,14 @@ class AudioIO(RawIOBase):
 
     @property
     @io_wrapper
-    def position(self) -> Union[int, float]:
+    def position(self) -> int | float:
         """Get the current position."""
         func_annotations = getattr(self._get_position, '__annotations__', {})
         return func_annotations.get('return', int)(self._get_position())
 
     @position.setter
     @io_wrapper
-    def position(self, position: Union[int, float]):
+    def position(self, position: int | float):
         """Set the position."""
         func_annotations = getattr(self._set_position, '__annotations__', {})
         self._set_position(func_annotations.get('position', int)(position))
@@ -506,7 +506,7 @@ class DevIO(RawIOBase):
         """Return true if closed."""
         return self._closed
 
-    def _open(self) -> Union[Any, None]:
+    def _open(self) -> Any | None:
         """Open the pcm audio output."""
         raise NotImplementedError("Open method not implemented.")
 
@@ -518,7 +518,7 @@ class DevIO(RawIOBase):
         """Return an iter of this object."""
         return self
 
-    def __next__(self) -> Union[str, bytes]:
+    def __next__(self) -> str | bytes:
         """Return the next buffer."""
         return self.read(self.buffer_size)
 
@@ -537,7 +537,7 @@ class DevIO(RawIOBase):
             return False
 
     @io_wrapper
-    def read(self, length: int) -> Union[bytes, str]:
+    def read(self, length: int) -> bytes | str:
         """Read from pcm."""
         raise NotImplementedError("Read method not implemented.")
 
@@ -564,7 +564,7 @@ class DevIO(RawIOBase):
         return bytes_read
 
     @io_wrapper
-    def write(self, data: Union[bytes, str]) -> int:
+    def write(self, data: bytes | str) -> int:
         """Write to the pcm device."""
         raise NotImplementedError("Write method not implemented.")
 

@@ -22,7 +22,7 @@
 
 from functools import partial
 from sys import stderr
-from typing import Any, Callable, Generator, Union
+from typing import Any, Callable, Generator
 
 from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
@@ -93,7 +93,7 @@ class Settings:
                               self._settings)
 
     def set(self, key: str,
-            value: Union[bytes, int, float]) -> Union[Callable, int]:
+            value: bytes | int | float) -> Callable | int:
         """Set the setting item 'key' to value 'value'."""
         if type(value) is str:
             type_cast = _fluidsynth.c_char_p
@@ -113,7 +113,7 @@ class Settings:
         )
     __setitem__ = set
 
-    def get(self, key: str) -> Union[bytes, int, float]:
+    def get(self, key: str) -> bytes | int | float:
         """Return the current setting for 'key'."""
         key_b = key.encode('utf8', 'replace')
         key_type = _fluidsynth.fluid_settings_get_type(self._settings, key_b)

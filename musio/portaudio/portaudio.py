@@ -21,7 +21,7 @@
 
 """Portaudio module."""
 
-from typing import Any, Callable, Union
+from typing import Any, Callable
 # from ._portaudio import *
 from . import _portaudio
 
@@ -267,7 +267,7 @@ class Stream(object):
         """Return a boolean indecating whether the stream is stopped."""
         return bool(_portaudio.Pa_IsStreamStopped(self._stream))
 
-    def start(self) -> Union[int, bool]:
+    def start(self) -> int | bool:
         """Start the stream."""
         if not self.active:
             ret_val = _portaudio.Pa_StartStream(self._stream)
@@ -286,14 +286,14 @@ class Stream(object):
         else:
             return False
 
-    def stop(self) -> Union[int, bool]:
+    def stop(self) -> int | bool:
         """Stop an active stream."""
         if not self.stopped:
             return _portaudio.Pa_StopStream(self._stream)
 
         return False
 
-    def abort(self) -> Union[int, bool]:
+    def abort(self) -> int | bool:
         """Abort the stream and drops any pending buffers."""
         if self.active:
             return _portaudio.Pa_AbortStream(self._stream)

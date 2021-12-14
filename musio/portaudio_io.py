@@ -23,7 +23,7 @@
 """A wrapper for portaudio to allow it to be used with the 'with' statement."""
 
 from sys import stderr as sys_stderr
-from typing import Any, Callable, Union
+from typing import Any, Callable
 
 from .import_util import LazyImport
 from .io_base import DevIO, io_wrapper
@@ -133,7 +133,7 @@ class Portaudio(DevIO):
         return self._stream.stopped
 
     @io_wrapper
-    def abort_stream(self) -> Union[int, bool]:
+    def abort_stream(self) -> int | bool:
         """Abort the stream.
 
         Stops the stream and drops all buffers.
@@ -141,7 +141,7 @@ class Portaudio(DevIO):
         return self._stream.abort()
 
     @io_wrapper
-    def stop_stream(self) -> Union[int, bool]:
+    def stop_stream(self) -> int | bool:
         """Temporaraly stop the stream.
 
         Use after a write if there won't be another for a while.  Instead of
@@ -151,7 +151,7 @@ class Portaudio(DevIO):
         return self._stream.stop()
 
     @io_wrapper
-    def start_stream(self) -> Union[int, bool]:
+    def start_stream(self) -> int | bool:
         """Start the stream.
 
         Use before writing and after calling stop_stream.
