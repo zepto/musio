@@ -533,6 +533,8 @@ class PortAudioPlayer:
         """Read and return audio data."""
         audio_file, cmd_dict = user_data
 
+        callback_f = callback_data = None
+
         # Check and run each command in cmd_dict.
         for command, args in cmd_dict.items():
             if command == 'position' and args:
@@ -556,6 +558,7 @@ class PortAudioPlayer:
                 )
             except Exception as err:
                 msg_out(f"Error in callback: {err}")
+                return b'\x00' * buffer_size
         else:
             return audio_file.read(buffer_size)
 

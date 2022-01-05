@@ -28,7 +28,7 @@ from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
 from .io_util import msg_out
 
-_espeak = LazyImport('espeak._espeak', globals(), locals(), ['_espeak'], 1)
+_espeak = LazyImport('espeak.espeak-ng', globals(), locals(), ['_espeak'], 1)
 
 
 def issupported(filename, *_):
@@ -55,7 +55,7 @@ __supported_dict = {
     'handler': 'EspeakFile',
     # 'default': True,
     'dependencies': {
-        'ctypes': ['espeak'],
+        'ctypes': ['espeak-ng'],
         'python': []
     }
 }
@@ -74,7 +74,7 @@ class EspeakFile(AudioIO):
                  **_):
         """Espeak tts object."""
         # Initialize espeak and get the sample rate.
-        output = _espeak.AUDIO_OUTPUT_RETRIEVAL
+        output = _espeak.AUDIO_OUTPUT_SYNCHRONOUS
         rate = self._err_check(_espeak.espeak_Initialize(output, 0, None, 0))
 
         super(EspeakFile, self).__init__(filename, 'r', 16, rate, 1)
@@ -138,8 +138,10 @@ class EspeakFile(AudioIO):
             return 1
 
         # Append the data to the buffer.
-        self._data_buffer += _espeak.string_at(wav, numsamples *
-                                               _espeak.sizeof(_espeak.c_short))
+        self._data_buffer += _espeak.ctypes.string_at(
+            wav,
+            numsamples * _espeak.ctypes.sizeof(_espeak.ctypes.c_short)
+        )
 
         # Update length
         self._length = len(self._data_buffer)
@@ -290,6 +292,7 @@ class EspeakFile(AudioIO):
                     # Increment the loop counter and seek to the start
                     self._loop_count += 1
                     self.seek(0)
-                    continue
+                    data += b'\x00' * (size - len(data))
+                    break
 
         return data

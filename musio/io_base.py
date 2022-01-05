@@ -400,6 +400,7 @@ class AudioIO(RawIOBase):
     @property
     def width(self) -> int:
         """Get the current bit width."""
+        self._width = self._depth // 8
         return self._width
 
     @property

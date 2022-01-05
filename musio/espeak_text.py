@@ -28,9 +28,7 @@ from .import_util import LazyImport
 from .io_base import AudioIO, io_wrapper
 from .io_util import silence
 
-_espeak = LazyImport('espeak._espeak', globals(), locals(), ['_espeak'], 1)
-
-_espeak = LazyImport('espeak._espeak', globals(), locals(), ['_espeak'], 1)
+_espeak = LazyImport('espeak.espeak-ng', globals(), locals(), ['_espeak'], 1)
 
 
 __supported_dict = {
@@ -38,7 +36,7 @@ __supported_dict = {
     'input': [bytes],
     'handler': 'EspeakText',
     'default': True,
-    'dependencies': {'ctypes': ['espeak'], 'python': []}
+    'dependencies': {'ctypes': ['espeak-ng'], 'python': []}
 }
 
 
@@ -51,7 +49,7 @@ class EspeakText(AudioIO):
     def __init__(self, text: str, voice: str = 'en-us', **_):
         """Espeak tts object."""
         # Initialize espeak and get the sample rate.
-        output = _espeak.AUDIO_OUTPUT_RETRIEVAL
+        output = _espeak.AUDIO_OUTPUT_SYNCHRONOUS
         rate = self._err_check(_espeak.espeak_Initialize(output, 0, None, 0))
 
         super(EspeakText, self).__init__(filename='', mode='rw', depth=16,
@@ -76,17 +74,17 @@ class EspeakText(AudioIO):
 
         self._speak(text)
 
-    def _speak(self, text):
+    def _speak(self, text: str):
         """Open the classes file and set it up for read/write access."""
         self._speaking = True
 
-        text = text.strip().encode() + b'\0'
-        text_length = len(text)
+        text_b = text.strip().encode() + b'\0'
+        text_b_length = len(text_b)
 
         # Speak the text.
         self._err_check(_espeak.espeak_Synth(
-            text,
-            text_length,
+            text_b,
+            text_b_length,
             0,
             _espeak.POS_CHARACTER,
             0,
@@ -117,8 +115,10 @@ class EspeakText(AudioIO):
             return 1
 
         # Append the data to the buffer.
-        self._data_buffer += _espeak.string_at(wav, numsamples *
-                                               _espeak.sizeof(_espeak.c_short))
+        self._data_buffer += _espeak.ctypes.string_at(
+            wav,
+            numsamples * _espeak.ctypes.sizeof(_espeak.ctypes.c_short)
+        )
 
         # Update length
         self._length = len(self._data_buffer)

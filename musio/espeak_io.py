@@ -28,14 +28,14 @@ from .import_util import LazyImport
 from .io_base import DevIO, io_wrapper
 from .io_util import msg_out, silence
 
-_espeak = LazyImport('espeak._espeak', globals(), locals(), ['_espeak'], 1)
+_espeak = LazyImport('espeak.espeak-ng', globals(), locals(), ['_espeak'], 1)
 
 __supported_dict = {
     'output': [str],
     'input': [None],
     'handler': 'Espeak',
     'default': True,
-    'dependencies': {'ctypes': ['espeak'], 'python': []}
+    'dependencies': {'ctypes': ['espeak-ng'], 'python': []}
 }
 
 
@@ -50,7 +50,7 @@ class Espeak(DevIO):
 
     def __init__(self, mode: str = 'w', voice: str = 'en-us', **kwargs):
         """Open espeak and set it up for writing."""
-        output = _espeak.AUDIO_OUTPUT_PLAYBACK
+        output = _espeak.AUDIO_OUTPUT_SYNCHRONOUS
         rate = self._err_check(_espeak.espeak_Initialize(output, 0, None, 0))
 
         super(Espeak, self).__init__(mode='w', depth=16,  rate=rate,
