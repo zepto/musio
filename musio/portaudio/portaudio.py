@@ -206,15 +206,14 @@ class Stream(object):
 
     @property
     def buffer_size(self) -> int:
-        """The optimal buffer size for this stream."""
+        """Return the optimal buffer size for this stream."""
         return self._buffer_size
 
     def open(self) -> int:
         """Open a portaudio stream."""
-        if self._pa_stream_callback:
+        if not self._pa_stream_callback:
             buffer_size = self._buffer_size
         else:
-            # Jack will segfault unless this is zero.
             buffer_size = 0
 
         return _portaudio.Pa_OpenStream(
