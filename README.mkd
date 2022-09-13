@@ -4,7 +4,6 @@ Musio
 Musio provides an easy interface to audio devices and media files.  It can
 be used in the following way::
 
-
     #!/usr/bin/env python
 
     from musio.io_util import open_file, open_device
@@ -14,6 +13,10 @@ be used in the following way::
         with open_device(media_file) as audio_device:
             audio_device.write(media_file.readall())
 
+Musio can use several libraries to encode/decode audio data.  If ffmpeg is
+installed musio can use it to encode/decode all formats supported by ffmpeg.
+If installed sndfile can also be used to encode/decode all supported audio
+formats.
 
 Player util
 -----------
@@ -94,7 +97,6 @@ following example::
 
         if args.filename:
             main(args.__dict__)
-
 
 License
 -------
