@@ -642,6 +642,8 @@ class FluidsynthFile(AudioIO):
         if self._synth.load_soundfont(soundfont_b, True) < 0:
             return False
 
+        self._info_dict['soundfont'] = soundfont
+
         self._closed = False
 
         return True
