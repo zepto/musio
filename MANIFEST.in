@@ -1,5 +1,5 @@
 include *.txt
-include *.mkd
+include *.md
 include MANIFEST.in
 recursive-include docs *.txt
 recursive-include examples *.py
