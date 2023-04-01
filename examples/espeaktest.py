@@ -9,14 +9,14 @@ with EspeakText("") as e:
     e.loops = 0
     e.speed /= 1.5
     data = e.read()
-    with open_device(e) as d:
+    with open_device(e, blacklist=['portaudio']) as d:
         print(d)
         print(repr(e))
         while True:
             try:
-                d.stop_stream()
+                # d.stop_stream()
                 text = input()
-                d.start_stream()
+                # d.start_stream()
             except (KeyboardInterrupt, EOFError):
                 break
             e.pitch = 50
